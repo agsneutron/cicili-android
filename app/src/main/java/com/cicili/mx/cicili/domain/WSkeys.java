@@ -76,6 +76,9 @@ public class WSkeys {
 
 
 
+    //https://cicili.com.mx:8443/app/mv/cliente/password/solicitar
+    public static final String URL_GENERIC_CONTRACT= "app/documentos/cliente";
+
     //Request password
     //https://cicili.com.mx:8443/app/mv/cliente/password/solicitar
     public static final String URL_REQUESTPASSWORD = "app/mv/cliente/password/solicitar";
@@ -297,7 +300,7 @@ public class WSkeys {
     public static final String comentario="comentario";
 
 
-    public static final Boolean log = false; //true
+    public static final Boolean log = true; //true
 
 
     //Actualizar Pedido

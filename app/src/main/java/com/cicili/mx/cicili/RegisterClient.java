@@ -51,6 +51,7 @@ public class RegisterClient extends AppCompatActivity {
     private TextInputEditText mPasswordView;
     private TextInputEditText mCPasswordView;
     private TextInputEditText mCellPhoneView;
+
     private View mProgressView;
     private View mRegisterFormView;
     private CheckBox chkContrato;

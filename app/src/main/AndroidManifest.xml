@@ -13,6 +13,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".domain.Client"
@@ -22,8 +23,7 @@
         android:roundIcon="@mipmap/ic_cicili_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:usesCleartextTraffic="true">
         <activity android:name=".contratoActivity"></activity>
         <activity
             android:name=".RateService"

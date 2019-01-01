@@ -7,4 +7,9 @@
     <color name="black">#000000</color>
     <color name="textDark">#313B4D</color>
     <color name="gray">#4B4B49</color>
+
+    <color name="colorSecondary">#f5821f</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorYellow">#fedd00</color>
+    <color name="colorRed">#ff3100</color>
 </resources>
