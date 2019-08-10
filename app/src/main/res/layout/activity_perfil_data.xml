@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilData">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+       <!-- <LinearLayout
+            android:id="@+id/stepper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/per"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@mipmap/ic_step_incomplete"
+                android:contentDescription="@string/stepper"/>
+            <ImageView
+                android:id="@+id/per_li"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:srcCompat="@mipmap/ic_line_incomplete"
+                android:contentDescription="@string/stepper"/>
+            <ImageView
+                android:id="@+id/dom"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@mipmap/ic_step_incomplete"
+                android:contentDescription="@string/stepper"/>
+            <ImageView
+                android:id="@+id/dom_li"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:srcCompat="@mipmap/ic_line_incomplete"
+                android:contentDescription="@string/stepper"/>
+            <ImageView
+                android:id="@+id/pag"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@mipmap/ic_step_incomplete"
+                android:contentDescription="@string/stepper"/>
+        </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+
+    </ScrollView>
+
+   <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

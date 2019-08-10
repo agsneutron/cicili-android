@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_qc_flSelectWorkDone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_marginTop="6dp"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:layout_marginTop="5dp"
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:textSize="12sp"
+            android:spinnerMode="dropdown"
+            android:layout_height="30dp"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/pais"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="9sp"
+        android:text="@string/pais"
+        android:background="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</FrameLayout>

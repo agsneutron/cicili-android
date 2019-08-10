@@ -1,0 +1,321 @@
+package com.cicili.mx.cicili;
+
+import android.Manifest;
+import android.app.Application;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
+import android.os.Bundle;
+
+import com.cicili.mx.cicili.domain.AddressData;
+import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.PaymentData;
+import com.cicili.mx.cicili.domain.RfcData;
+import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.dummy.DummyContent;
+import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import android.view.Gravity;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MenuActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        MapMainFragment.OnFragmentInteractionListener,
+        AddressMainFragment.OnListFragmentInteractionListener,
+        OrderMainFragment.OnListFragmentInteractionListener,
+        MenuListDialogFragment.Listener,
+        UserProfileFragment.OnFragmentInteractionListener,
+        PaymentMainFragment.OnListFragmentInteractionListener,
+        AddressDetailFragment.OnFragmentInteractionListener,
+        PaymentDetailFragment.OnFragmentInteractionListener,
+        RfcMainFragment.OnListFragmentInteractionListener,
+        RfcDetailFragment.OnFragmentInteractionListener{
+
+
+    Application application = (Application) Client.getContext();
+    Client client = (Client) application;
+
+    final Fragment fragmentMain = new MapMainFragment();
+    final Fragment fragmentAddress = new AddressMainFragment();
+    final Fragment fragmentOrder = new OrderMainFragment();
+    final Fragment fragmenUserProfile = new UserProfileFragment();
+    final Fragment fragmentPayment= new PaymentMainFragment();
+    final Fragment fragmentRfc = new RfcMainFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = fragmentMain;
+    BottomNavigationView nv;
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    fm.beginTransaction().hide(active).show(fragmentMain).commit();
+                    active = fragmentMain;
+                    return true;
+                /*case R.id.navigation_perfil:
+                    //MenuListDialogFragment.newInstance(30).show(getSupportFragmentManager(), "dialog");
+                    Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+                    //intent.putExtra("token", token);
+                    startActivity(intent);
+                    //active = fragmenPerfil;
+                    return true;*/
+                case R.id.navigation_address:
+                    fm.beginTransaction().hide(active).show(fragmentAddress).commit();
+                    active = fragmentAddress;
+                    return true;
+                case R.id.navigation_orders:
+                    fm.beginTransaction().hide(active).show(fragmentOrder).commit();
+                    active = fragmentOrder;
+                    return true;
+                case R.id.navigation_payment:
+                    fm.beginTransaction().hide(active).show(fragmentPayment).commit();
+                    active = fragmentPayment;
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        /*fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        //PErfil update data
+        View headerView = navigationView.getHeaderView(0);
+        TextView tvname = (TextView)headerView.findViewById(R.id.tv_name);
+        tvname.setText(client.getName());
+        TextView tvarea = (TextView)headerView.findViewById(R.id.tv_email);
+        tvarea.setText(client.getEmail());
+        //
+
+
+        //BOTTOMNAVIGATION OPTIONS
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+
+
+        if (client.getStatus().equals(WSkeys.datos_personales)){
+            Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+            intent.putExtra("active","PE");
+            startActivity(intent);
+        }else if (client.getStatus().equals(WSkeys.datos_pago)){
+                    Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+                    intent.putExtra("active","PA");
+                    startActivity(intent);
+        }else if (client.getStatus().equals(WSkeys.datos_direccion)){
+            Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+            intent.putExtra("active","PD");
+            startActivity(intent);
+        } else {
+            fm.beginTransaction().add(R.id.main_container, fragmentMain, "3").hide(fragmentAddress).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(fragmentPayment).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(fragmentRfc).commit();
+            fm.beginTransaction().hide(active).show(fragmentMain).commit();
+
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment fragment;
+
+        if (id == R.id.navigation_perfil) {
+
+            //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //ft.replace(R.id.mainFrame, fragmenUserProfile);
+            //ft.commit();
+            //fm.beginTransaction().hide(active).show(fragmenUserProfile).commit();
+            //active = fragmenUserProfile;
+
+            //fm.beginTransaction().hide(active).show(fragmenUserProfile).commit();
+            //active = fragmenUserProfile;
+
+            UserProfileFragment userProfileFragment = new UserProfileFragment();
+            userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
+            //ShowPerfilDialog();
+
+
+        } else if (id == R.id.navigation_address) {
+            fm.beginTransaction().hide(active).show(fragmentAddress).commit();
+            active = fragmentAddress;
+
+        } else if (id == R.id.navigation_payment) {
+            fm.beginTransaction().hide(active).show(fragmentPayment).commit();
+            active = fragmentPayment;
+
+
+        } else if (id == R.id.navigation_rfc) {
+            fm.beginTransaction().hide(active).show(fragmentRfc).commit();
+            active = fragmentRfc;
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(AddressData item) {
+        //al dar clic en el elemento de la lista de direccioes
+
+        Utilities.SetLog("MENUACTIVITYADRS", item.getId(), WSkeys.log);
+        String index = String.valueOf(client.getAddressDataArrayList().indexOf(item));
+        AddressDetailFragment addressDetailFragment = new AddressDetailFragment();
+        addressDetailFragment = AddressDetailFragment.newInstance(index,"");
+        addressDetailFragment.setCancelable(false);
+        addressDetailFragment.show(getSupportFragmentManager(),"fragmenAddressDetail");
+    }
+
+    @Override
+    public void onListFragmentInteraction(PaymentData item) {
+        Utilities.SetLog("MENUACTIVITYPAYMNT", String.valueOf(item.getId()), WSkeys.log);
+        String index = String.valueOf(client.getPaymentDataArrayList().indexOf(item));
+        PaymentDetailFragment paymentDetailFragment = new PaymentDetailFragment();
+        paymentDetailFragment = PaymentDetailFragment.newInstance(index,"");
+        paymentDetailFragment.setCancelable(false);
+        paymentDetailFragment.show(getSupportFragmentManager(),"fragmentPaymentDetail");
+    }
+
+    @Override
+    public void onListFragmentInteraction(RfcData item) {
+
+        Utilities.SetLog("MENUACTIVITYRFC", String.valueOf(item.getId()), WSkeys.log);
+        String index = String.valueOf(client.getRfcDataArrayList().indexOf(item));
+        RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();
+        rfcDetailFragment = RfcDetailFragment.newInstance(index,"");
+        rfcDetailFragment.setCancelable(false);
+        rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");
+    }
+}

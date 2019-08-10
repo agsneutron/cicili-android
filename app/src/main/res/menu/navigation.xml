@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/title_perfil" />-->
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_address"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/title_address" />
+
+    <item
+        android:id="@+id/navigation_payment"
+        android:icon="@drawable/ic_payment"
+        android:title="@string/title_pago" />
+
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/title_orders" />
+
+</menu>
