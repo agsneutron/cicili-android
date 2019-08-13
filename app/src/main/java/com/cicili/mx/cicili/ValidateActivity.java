@@ -69,15 +69,15 @@ public class ValidateActivity extends AppCompatActivity {
             finish();
         }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        });*/
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         mCodeView = (TextInputEditText) findViewById(R.id.code);

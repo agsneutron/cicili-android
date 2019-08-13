@@ -62,14 +62,17 @@ public class RegisterClient extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         mEmailView = (TextInputEditText) findViewById(R.id.email);
         mCellPhoneView = (TextInputEditText) findViewById(R.id.cellphone);
@@ -109,6 +112,11 @@ public class RegisterClient extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     /**
      * Attempts to  register the account specified by the cellphone,email and password.
      * If there are form errors (invalid email, missing fields, etc.), the

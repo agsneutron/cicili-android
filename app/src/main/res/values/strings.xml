@@ -6,6 +6,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Iniciar Sesión</string>
     <string name="action_register">Registrarse</string>
+    <string name="action_no_account">¿No tiénes una cuenta?</string>
     <string name="action_forgotpsw">¿Olvidaste tu contraseña?</string>
     <string name="action_sign_in_short">Iniciar Sesion</string>
     <string name="error_invalid_email">Correo Electrónico incorrecto</string>
