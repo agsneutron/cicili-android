@@ -38,6 +38,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.AddressData;
+import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.AutotanquesDisponibles;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
@@ -99,7 +100,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
-    ArrayList<AutotanquesDisponibles> autotanquesDisponiblesAux = new ArrayList<AutotanquesDisponibles>();
+    ArrayList<AutotanquesCercanos> autotanquesCercanosAux = new ArrayList<AutotanquesCercanos>();
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     View view;
@@ -479,26 +480,27 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 try {
                     JSONObject jo_data = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("DATA ARRAY",jo_data.toString(),WSkeys.log);
-                    Utilities.SetLog("JO_CONCESIONARIO",jo_data.getJSONObject(WSkeys.concesionario).toString(),WSkeys.log);
-                    Utilities.SetLog("JO_PERFILCONDUCTOR",jo_data.getJSONObject(WSkeys.perfilconductor).toString(),WSkeys.log);
-                    Utilities.SetLog("JO_PERFILCONDUCTOR_CND",jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).toString(),WSkeys.log);
-                    Utilities.SetLog("JO_AUTOTANQUE",jo_data.getJSONObject(WSkeys.autotanque).toString(),WSkeys.log);
+                    //Utilities.SetLog("JO_CONCESIONARIO",jo_data.getJSONObject(WSkeys.concesionario).toString(),WSkeys.log);
+                    //Utilities.SetLog("JO_PERFILCONDUCTOR",jo_data.getJSONObject(WSkeys.perfilconductor).toString(),WSkeys.log);
+                    //Utilities.SetLog("JO_PERFILCONDUCTOR_CND",jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).toString(),WSkeys.log);
+                    //Utilities.SetLog("JO_AUTOTANQUE",jo_data.getJSONObject(WSkeys.autotanque).toString(),WSkeys.log);
                     Gson gson = new Gson();
-                    AutotanquesDisponibles autotanquesData= gson.fromJson(jo_data.toString() , AutotanquesDisponibles.class);
-                    autotanquesDisponiblesAux.add(autotanquesData);
+                    AutotanquesCercanos autotanquesData= gson.fromJson(jo_data.toString() , AutotanquesCercanos.class);
+                    autotanquesCercanosAux.add(autotanquesData);
 
                     //autotanquesDisponiblesAux = new ArrayList<AutotanquesDisponibles>();
                     //AutotanquesDisponibles autotanquesDisponibles= gson.fromJson(jo_data.toString() , AutotanquesDisponibles.class);
                     //autotanquesDisponiblesAux.add(autotanquesDisponibles);
                     //AddMarker(autotanquesDisponiblesAux.get(i).getAutotanque().getLatitud(),autotanquesDisponiblesAux.get(i).getAutotanque().getLongitud(),autotanquesDisponiblesAux.get(i).getPerfilConductor().getConductor().getNombre(),autotanquesDisponiblesAux.get(i).getConcecionario().getNombre());
-                    AddMarker(jo_data.getJSONObject(WSkeys.autotanque).getDouble("latitud"),jo_data.getJSONObject(WSkeys.autotanque).getDouble("longitud"),jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).getString("nombre"),jo_data.getJSONObject(WSkeys.concesionario).getString("nombre"), jo_data.getDouble("precio"), i);
+                    //AddMarker(jo_data.getJSONObject(WSkeys.autotanque).getDouble("latitud"),jo_data.getJSONObject(WSkeys.autotanque).getDouble("longitud"),jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).getString("nombre"),jo_data.getJSONObject(WSkeys.concesionario).getString("nombre"), jo_data.getDouble("precio"), i);
+                    AddMarker(jo_data.getDouble("latitud"),jo_data.getDouble("longitud"),jo_data.getString("conductor"),jo_data.getString("concesionario"), jo_data.getDouble("precio"),jo_data.getString("tiempoLlegada"), i);
                     //jo_data.getJSONObject(WSkeys.concesionario);
                     //jo_data.getJSONObject(WSkeys.conductor);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            client.setAutotanquesDisponiblesArrayList(autotanquesDisponiblesAux);
+            client.setAutotanquesCercanosArrayList(autotanquesCercanosAux);
 
             //direcciones.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,direccionArray));
 
@@ -536,12 +538,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     }
 
 
-    public void AddMarker(Double lat, Double lon, String conductor, String concesionario,Double precio, Integer id){
+    public void AddMarker(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
         Marker mMarker = mMap.addMarker(new MarkerOptions()
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_local_gas_station_black_24dp))
                 .position(new LatLng(lat,lon))
                 .title("Concesionario: "+concesionario)
-                .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio)));
+                .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
         mMarker.showInfoWindow();
         mMarker.setTag(id);
     }

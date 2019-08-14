@@ -31,7 +31,7 @@ public class Client extends Application {
     private ArrayList<PaymentData> paymentDataArrayList;
     private ArrayList<AddressData> addressDataArrayList;
     private ArrayList<RfcData> rfcDataArrayList;
-    private ArrayList<AutotanquesDisponibles> autotanquesDisponiblesArrayList;
+    private ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList;
 
 
     private static Context mContext;
@@ -49,7 +49,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesDisponibles> autotanquesDisponiblesArrayList) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -70,7 +70,7 @@ public class Client extends Application {
         this.paymentDataArrayList = paymentDataArrayList;
         this.addressDataArrayList = addressDataArrayList;
         this.rfcDataArrayList = rfcDataArrayList;
-        this.autotanquesDisponiblesArrayList = autotanquesDisponiblesArrayList;
+        this.autotanquesCercanosArrayList = autotanquesCercanosArrayList;
     }
 
     public String getUsername() {
@@ -226,12 +226,12 @@ public class Client extends Application {
     }
 
 
-    public ArrayList<AutotanquesDisponibles> getAutotanquesDisponiblesArrayList() {
-        return autotanquesDisponiblesArrayList;
+    public ArrayList<AutotanquesCercanos> getAutotanquesCercanosArrayList() {
+        return autotanquesCercanosArrayList;
     }
 
-    public void setAutotanquesDisponiblesArrayList(ArrayList<AutotanquesDisponibles> autotanquesDisponiblesArrayList) {
-        this.autotanquesDisponiblesArrayList = autotanquesDisponiblesArrayList;
+    public void setAutotanquesCercanosArrayList(ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList) {
+        this.autotanquesCercanosArrayList = autotanquesCercanosArrayList;
     }
 
     public static Context getmContext() {
