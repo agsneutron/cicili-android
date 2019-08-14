@@ -40,7 +40,7 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        Integer itipopago = mValues.get(position).getTipoTarjeta();
+        Integer itipopago = mValues.get(position).getTipoPago();
         String stipopago ="";
 
         if(itipopago == WSkeys.efectivo) {
@@ -52,7 +52,7 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
         }
 
         holder.mIdView.setText(stipopago);
-        holder.mContentView.setText(String.valueOf(mValues.get(position).getNombreTitular()));
+        holder.mContentView.setText(String.valueOf(mValues.get(position).getVencimiento()));
         holder.mDescriptionView.setText(String.valueOf(mValues.get(position).getNumero()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

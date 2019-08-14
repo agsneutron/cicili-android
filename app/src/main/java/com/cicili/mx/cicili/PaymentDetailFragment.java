@@ -111,15 +111,15 @@ public class PaymentDetailFragment extends DialogFragment {
         Utilities.SetLog(LOG+ "pos", String.valueOf(pos), WSkeys.log);
 
 
-        Utilities.SetLog(LOG,client.getPaymentDataArrayList().get(pos).getNombreTitular(),WSkeys.log);
+        //Utilities.SetLog(LOG,client.getPaymentDataArrayList().get(pos).getNombreTitular(),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getTipoTarjeta()),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getTipoPago()),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv()),WSkeys.log);
         Utilities.SetLog(LOG,client.getPaymentDataArrayList().get(pos).getVencimiento(),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero()),WSkeys.log);
-        Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()),WSkeys.log);
+        //Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()),WSkeys.log);
 
-        titular.setText(client.getPaymentDataArrayList().get(pos).getNombreTitular());
+        //titular.setText(client.getPaymentDataArrayList().get(pos).getNombreTitular());
         if (client.getPaymentDataArrayList().get(pos).getTipoPago().equals(WSkeys.TDD)){
             tipocta.setText(R.string.tdd);
         }else if (client.getPaymentDataArrayList().get(pos).getTipoPago().equals(WSkeys.TDC)){
@@ -139,7 +139,7 @@ public class PaymentDetailFragment extends DialogFragment {
         cvv.setText(String.valueOf(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv())));
         numero.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero()));
         vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento());
-        pais.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()));
+        //pais.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()));
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);

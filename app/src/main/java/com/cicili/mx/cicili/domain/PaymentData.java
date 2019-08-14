@@ -5,29 +5,28 @@ public class PaymentData {
     private Integer id;
     private String status;
     private Integer tipoPago;
-    private String nombreTitular;
+    //private String nombreTitular;
     private long numero;
-    private Integer tipoTarjeta;
-    private Integer tipoCuenta;
+    private String tipoTarjeta;
+    //private Integer tipoCuenta;
     private String vencimiento;
     private Integer cvv;
-    private Integer pais;
+    private String banco;
+    //private Integer pais;
 
 
     public PaymentData() {
     }
 
-    public PaymentData(Integer id, String status, Integer tipoPago, String nombreTitular, Integer numero, Integer tipoTarjeta, Integer tipoCuenta, String vencimiento, Integer cvv, Integer pais) {
+    public PaymentData(Integer id, String status, Integer tipoPago, long numero, String tipoTarjeta, String vencimiento, Integer cvv, String banco) {
         this.id = id;
         this.status = status;
         this.tipoPago = tipoPago;
-        this.nombreTitular = nombreTitular;
         this.numero = numero;
         this.tipoTarjeta = tipoTarjeta;
-        this.tipoCuenta = tipoCuenta;
         this.vencimiento = vencimiento;
         this.cvv = cvv;
-        this.pais = pais;
+        this.banco = banco;
     }
 
     public Integer getId() {
@@ -54,13 +53,6 @@ public class PaymentData {
         this.tipoPago = tipoPago;
     }
 
-    public String getNombreTitular() {
-        return nombreTitular;
-    }
-
-    public void setNombreTitular(String nombreTitular) {
-        this.nombreTitular = nombreTitular;
-    }
 
     public long getNumero() {
         return numero;
@@ -70,20 +62,12 @@ public class PaymentData {
         this.numero = numero;
     }
 
-    public Integer getTipoTarjeta() {
+    public String getTipoTarjeta() {
         return tipoTarjeta;
     }
 
-    public void setTipoTarjeta(Integer tipoTarjeta) {
+    public void setTipoTarjeta(String tipoTarjeta) {
         this.tipoTarjeta = tipoTarjeta;
-    }
-
-    public Integer getTipoCuenta() {
-        return tipoCuenta;
-    }
-
-    public void setTipoCuenta(Integer tipoCuenta) {
-        this.tipoCuenta = tipoCuenta;
     }
 
     public String getVencimiento() {
@@ -102,11 +86,4 @@ public class PaymentData {
         this.cvv = cvv;
     }
 
-    public Integer getPais() {
-        return pais;
-    }
-
-    public void setPais(Integer pais) {
-        this.pais = pais;
-    }
 }

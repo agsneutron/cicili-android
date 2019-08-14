@@ -60,6 +60,7 @@ public class WSkeys {
     public static final String status="status";
     public static final String formapago="formaPago";
     public static final String direcciones="direcciones";
+    public static final String sexo ="sexo";
     public static final String idcta="id";
     //public static final String ="status";
     public static final String tpopag="tipoPago";
@@ -140,6 +141,10 @@ public class WSkeys {
     public static final Integer visa = 1;
     public static final Integer mc = 2;
     public static final Integer amex = 3;
+
+    public static final String hombre = "Hombre";
+    public static final String mujer = "Mujer";
+    public static final String noindicar = "No Indicar";
 
     //Paises
     //app/catalogos/paises

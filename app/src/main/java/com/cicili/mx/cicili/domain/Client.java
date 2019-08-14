@@ -27,6 +27,7 @@ public class Client extends Application {
     private String email;
     private String cellphone;
     private String photo;
+    private String sexo;
     private ArrayList<PaymentData> paymentDataArrayList;
     private ArrayList<AddressData> addressDataArrayList;
     private ArrayList<RfcData> rfcDataArrayList;
@@ -48,7 +49,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesDisponibles> autotanquesDisponiblesArrayList) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesDisponibles> autotanquesDisponiblesArrayList) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -65,6 +66,7 @@ public class Client extends Application {
         this.email = email;
         this.cellphone = cellphone;
         this.photo = photo;
+        this.sexo = sexo;
         this.paymentDataArrayList = paymentDataArrayList;
         this.addressDataArrayList = addressDataArrayList;
         this.rfcDataArrayList = rfcDataArrayList;
@@ -240,4 +242,11 @@ public class Client extends Application {
         Client.mContext = mContext;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 }

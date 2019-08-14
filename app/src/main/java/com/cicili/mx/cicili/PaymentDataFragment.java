@@ -64,7 +64,7 @@ import static android.view.View.GONE;
  * Use the {@link PaymentDataFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PaymentDataFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class PaymentDataFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,9 +82,9 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
     View view;
     private Spinner spinner;
     private Adapter adapter;
-    private RadioGroup tipo, forma;
-    private RadioButton uno, dos, tres, visa, masterc,amex;
-    private TextInputEditText titular,numero, vencimiento, cvv;
+    private RadioGroup forma;
+    private RadioButton uno, dos, tres; // visa, masterc,amex;
+    private TextInputEditText titular,numero, vencimiento, cvv, tipotarjeta;
     private Button registra_pago;
     private LinearLayoutCompat vtarjeta;
     private Boolean error =false;
@@ -142,23 +142,23 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
         spinner = (Spinner) view.findViewById(R.id.spinner1);
 
         // Spinner click listener
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        //spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
-        LlenaPaises("p");
+        //LlenaPaises("p");
         // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
+        //List<String> categories = new ArrayList<String>();
 
-        categories.add("Paises");
+        //categories.add("Paises");
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
+        //ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        tipo = (RadioGroup) view.findViewById(R.id.rgTipo);
+        //spinner.setAdapter(dataAdapter);
+        //tipo = (RadioGroup) view.findViewById(R.id.rgTipo);
         forma = (RadioGroup) view.findViewById(R.id.rgForma);
         vtarjeta = (LinearLayoutCompat) view.findViewById(R.id.viewTarjeta);
         /*forma.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -168,24 +168,25 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                     vtarjeta.setVisibility(GONE);
                     Utilities.SetLog("Forma Selected",String.valueOf(forma.getCheckedRadioButtonId()), WSkeys.log);
                 }
-                else if ((forma.getCheckedRadioButtonId() == R.id.dos) || (tipo.getCheckedRadioButtonId() == R.id.dos)){
+                else if ((forma.getCheckedRadioButtonId() == R.id.dos) || (forma.getCheckedRadioButtonId() == R.id.dos)){
                     vtarjeta.setVisibility(View.VISIBLE);
                     Utilities.SetLog("Forma Selected",String.valueOf(forma.getCheckedRadioButtonId()), WSkeys.log);
 
                 }
             }
         });*/
-        titular = view.findViewById(R.id.titular);
+        //titular = view.findViewById(R.id.titular);
         numero = view.findViewById(R.id.tarjeta);
         vencimiento = view.findViewById(R.id.vencimiento);
+        tipotarjeta = view.findViewById(R.id.tipotarjeta);
 
         cvv = view.findViewById(R.id.cvv);
         //uno = view.findViewById(R.id.uno);
         dos = view.findViewById(R.id.dos);
         tres = view.findViewById(R.id.tres);
-        visa = view.findViewById(R.id.visa);
-        masterc = view.findViewById(R.id.mc);
-        amex = view.findViewById(R.id.amx);
+        //visa = view.findViewById(R.id.visa);
+        //masterc = view.findViewById(R.id.mc);
+        //amex = view.findViewById(R.id.amx);
         registra_pago = (Button) view.findViewById(R.id.register_payment);
 
 
@@ -193,11 +194,12 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
 
         //If is called the fragment to edit data
         if (pos != null) {
-            titular.setText(client.getPaymentDataArrayList().get(pos).getNombreTitular());
+            //titular.setText(client.getPaymentDataArrayList().get(pos).getNombreTitular());
             numero.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero()));
             vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento());
             cvv.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv()));
-            /*if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.efectivo)){
+            tipotarjeta.setText(client.getPaymentDataArrayList().get(pos).getTipoTarjeta());
+            /*if (client.getPaymentDataArrayList().get(pos).getTipoPago().equals(WSkeys.efectivo)){
                 //forma.check(R.id.uno);
             }else*/
                 if (client.getPaymentDataArrayList().get(pos).getTipoPago().equals(WSkeys.TDD)){
@@ -205,7 +207,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
             }else if (client.getPaymentDataArrayList().get(pos).getTipoPago().equals(WSkeys.TDC)){
                 forma.check(R.id.tres);
             }
-            if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta()!=null) {
+            /*if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta()!=null) {
                 if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.amex)) {
                     tipo.check(R.id.amx);
                 } else if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.mc)) {
@@ -213,7 +215,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                 } else if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.visa)) {
                     tipo.check(R.id.visa);
                 }
-            }
+            }*/
 
 
             registra_pago.setText("ACTUALIZAR");
@@ -261,8 +263,9 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                     String sNumero = numero.getText()+"";
                     String sVencimiento = vencimiento.getText()+"";
                     String sCvv = cvv.getText()+"";
+                    String sTipoTarjeta = tipotarjeta.getText()+"";
 
-                    if (sTitular.isEmpty() || sTitular.length()<10){
+                    /*if (sTitular.isEmpty() || sTitular.length()<10){
                         titular.setError(getString(R.string.error_field_required));
                         error = true;
                         focusView = titular;
@@ -270,7 +273,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                     }
                     else{
                         paymentData.setNombreTitular(sTitular);
-                    }
+                    }*/
                     if (sNumero.isEmpty() ||sNumero.length() < 8){
                         numero.setError(getString(R.string.error_field_required));
                         error =  true;
@@ -296,7 +299,17 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                     }else{
                     paymentData.setCvv(Integer.parseInt(sCvv));
                     }
-                    if(tipo.getCheckedRadioButtonId() == R.id.visa){
+
+                    if (sTipoTarjeta.isEmpty() || sTipoTarjeta.equals("")){
+                        tipotarjeta.setError(getString(R.string.error_field_required));
+                        error = true;
+                        focusView = tipotarjeta;
+                        Utilities.SetLog("Tipo de Tarjeta",sTipoTarjeta,WSkeys.log);
+                    }
+                    else{
+                        paymentData.setTipoTarjeta(sTipoTarjeta);
+                    }
+                    /*if(tipo.getCheckedRadioButtonId() == R.id.visa){
                         tp = WSkeys.visa;
                     }
 
@@ -313,9 +326,9 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                         Utilities.SetLog("tipo",tp.toString(),WSkeys.log);
                     }else{
                         paymentData.setTipoTarjeta(tp);
-                    }
+                    }*/
 
-                    paymentData.setPais(paisselected);
+                    //paymentData.setPais(paisselected);
 
 
                     if (error){
@@ -347,7 +360,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
         return view;
     }
 
-    @Override
+   /* @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         // paisselected = parent.getItemAtPosition(position).toString();
@@ -363,7 +376,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
-
+*/
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -502,7 +515,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
             }
 
 
-            Snackbar.make(tipo, R.string.successpaymentvalidation, Snackbar.LENGTH_LONG)
+            Snackbar.make(view, R.string.successpaymentvalidation, Snackbar.LENGTH_LONG)
                     .show();
             Intent intent = new Intent(getContext(),MenuActivity.class);
             intent.putExtra("active", "PA");
@@ -512,7 +525,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(tipo, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
     }
@@ -539,11 +552,11 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
         final public void onTextChanged(CharSequence s, int start, int before, int count) { /* Don't care */ }
     }
 
-    public void LlenaPaises(final String text){
+    /*public void LlenaPaises(final String text) {
 
 
-        String url = WSkeys.URL_BASE + WSkeys.URL_COUNTRIES ;
-        Utilities.SetLog("paymentfr llena pais",url,WSkeys.log);
+        String url = WSkeys.URL_BASE + WSkeys.URL_COUNTRIES;
+        Utilities.SetLog("paymentfr llena pais", url, WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -593,9 +606,9 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
 
         queue.add(jsonObjectRequest);
 
-    }
+    }*/
 
-    public void ParserCountry(String response) throws JSONException {
+    /*public void ParserCountry(String response) throws JSONException {
 
         //Log.e("CodeResponse", response);
         paisAux = new ArrayList<Paises>();
@@ -627,7 +640,7 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
 
             spinner.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,paisArray));
 
-            /*for(int i=0; i<respuesta.length(); i++){
+            *//*for(int i=0; i<respuesta.length(); i++){
                 Paises paises = new Paises();
                 try {
                     if(i==0){
@@ -646,12 +659,12 @@ public class PaymentDataFragment extends Fragment implements AdapterView.OnItemS
                 }
             }
             spinner.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,paisArray));
-*/
+*//*
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
             Snackbar.make(numero, "Ocurrio un error al cargar los paises", Snackbar.LENGTH_SHORT)
                     .show();
         }
-    }
+    }*/
 }

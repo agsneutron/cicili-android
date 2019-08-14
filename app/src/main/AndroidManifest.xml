@@ -48,7 +48,8 @@
             android:name=".PerfilData"
             android:label="@string/title_activity_perfil_data"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:background="@color/white" />
         <activity
             android:name=".ValidateActivity"
             android:label="@string/title_activity_validate"
