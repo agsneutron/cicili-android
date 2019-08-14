@@ -25,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -40,6 +41,7 @@ import com.cicili.mx.cicili.domain.PersonalData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.snackbar.SnackbarContentLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -63,7 +65,7 @@ import java.util.Map;
  * Use the {@link PersonalDataFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonalDataFragment extends DialogFragment {
+public class PersonalDataFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,6 +84,7 @@ public class PersonalDataFragment extends DialogFragment {
     RadioGroup sexo;
     Button bRegister;
     View view;
+    ViewGroup viewgroup;
     String ts ="";
     private static final String CERO = "0";
     private static final String BARRA = "-";
@@ -139,6 +142,7 @@ public class PersonalDataFragment extends DialogFragment {
          mmat = (TextInputEditText) view.findViewById(R.id.appmat);
          mnac = (EditText) view.findViewById(R.id.fecha);
          sexo = (RadioGroup) view.findViewById(R.id.rgSexo);
+         viewgroup = container;
 
 
         ibCalendario = (ImageButton) view.findViewById(R.id.ib_obtener_fecha);
@@ -296,6 +300,7 @@ public class PersonalDataFragment extends DialogFragment {
         params.put(WSkeys.apepat, vpat);
         params.put(WSkeys.apemat, vmat);
         params.put(WSkeys.fechanacimiento, vnac);
+        params.put(WSkeys.sexo, ts);
 
 
 
@@ -371,9 +376,21 @@ public class PersonalDataFragment extends DialogFragment {
 
 
                 JSONObject jousuario = respuesta.getJSONObject(WSkeys.data);
-                Utilities.SetClientData(jousuario,client);
-                Snackbar.make(mname, R.string.successpersonalvalidation, Snackbar.LENGTH_LONG)
-                        .show();
+                if (bRegister.getText().equals("Actualizar")){
+                    Utilities.SetPerfilData(jousuario,client);
+                    Toast toast = Toast.makeText(getContext(),  R.string.successpersonalupdate, Toast.LENGTH_LONG);
+                    toast.show();
+                }else {
+                    Utilities.SetClientData(jousuario, client);
+                    Toast toast = Toast.makeText(getContext(),  R.string.successpersonalvalidation, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+
+                //Snackbar.make(viewgroup.getChildAt(0), R.string.successpersonalvalidation, Snackbar.LENGTH_LONG)
+                //        .show();
+
+
 
                 if (client.getStatus().equals(WSkeys.completo)){
                 Intent intent = new Intent(getContext(),MenuActivity.class);
@@ -387,16 +404,18 @@ public class PersonalDataFragment extends DialogFragment {
                     transaction.remove(this);
                     transaction.show(fragmentAddress).commit();
                     transaction.commit();
-
                 }
                 else{
                     getActivity().onBackPressed();
+                    //getActivity().getFragmentManager().popBackStack();
+                    //getActivity().finish();
+
                 }
 
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(mname, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
     }

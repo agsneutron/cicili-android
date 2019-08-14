@@ -59,7 +59,7 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cps"
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                     android:inputType="number" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>-->
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +92,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
+       <!-- <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/calles"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
@@ -146,7 +146,7 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>-->
 
         <FrameLayout
 
@@ -170,13 +170,13 @@
             </FrameLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/asentamiento"
+                android:id="@+id/usocfdi"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="15dp"
                 android:textSize="12sp"
-                android:text="@string/Colonia"
+                android:text="@string/usocfdi"
                 android:background="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

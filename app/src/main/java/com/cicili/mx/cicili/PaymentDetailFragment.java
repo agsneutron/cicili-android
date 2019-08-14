@@ -54,7 +54,7 @@ public class PaymentDetailFragment extends DialogFragment {
     private Spinner spinner;
     private Adapter adapter;
     private TextView tipocta, tipotrj;
-    private TextView titular,numero,vencimiento, cvv,pais;
+    private TextView numero,vencimiento, cvv,banco;
     private String LOG = "PaymentDetail";
     private  Integer pos;
 
@@ -98,13 +98,13 @@ public class PaymentDetailFragment extends DialogFragment {
 
 
         //Find the textviews objects
-        titular = (TextView) view.findViewById(R.id.titular);
+        //titular = (TextView) view.findViewById(R.id.titular);
         tipocta = (TextView) view.findViewById(R.id.tipocta);
         tipotrj = (TextView) view.findViewById(R.id.tipotrj);
         cvv = (TextView) view.findViewById(R.id.cvv);
         numero = (TextView) view.findViewById(R.id.numt);
         vencimiento = (TextView) view.findViewById(R.id.vencimiento);
-        pais = (TextView) view.findViewById(R.id.pais);
+        banco = (TextView) view.findViewById(R.id.banco);
 
         Utilities.SetLog(LOG,mParam1, WSkeys.log);
         pos = Integer.parseInt(mParam1);
@@ -113,6 +113,7 @@ public class PaymentDetailFragment extends DialogFragment {
 
         //Utilities.SetLog(LOG,client.getPaymentDataArrayList().get(pos).getNombreTitular(),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getTipoTarjeta()),WSkeys.log);
+        Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getBanco()),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getTipoPago()),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv()),WSkeys.log);
         Utilities.SetLog(LOG,client.getPaymentDataArrayList().get(pos).getVencimiento(),WSkeys.log);
@@ -127,7 +128,7 @@ public class PaymentDetailFragment extends DialogFragment {
         }
         //tipocta.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getTipoPago()));
         //tipotrj.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getTipoTarjeta()));
-        if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta()!=null) {
+        /*if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta()!=null) {
             if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.amex)) {
                 tipotrj.setText(R.string.amx);
             } else if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.mc)) {
@@ -135,10 +136,12 @@ public class PaymentDetailFragment extends DialogFragment {
             } else if (client.getPaymentDataArrayList().get(pos).getTipoTarjeta().equals(WSkeys.visa)) {
                 tipotrj.setText(R.string.visa);
             }
-        }
+        }*/
         cvv.setText(String.valueOf(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv())));
         numero.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero()));
         vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento());
+        banco.setText(client.getPaymentDataArrayList().get(pos).getBanco());
+        tipotrj.setText(client.getPaymentDataArrayList().get(pos).getTipoTarjeta());
         //pais.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()));
 
 

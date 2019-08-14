@@ -33,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -279,7 +280,12 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             LlenaColonia(cp.getText().toString());
             LatFTA = client.getAddressDataArrayList().get(pos).getLatitud();
             LonFTA = client.getAddressDataArrayList().get(pos).getLongitud();
-            //favorito.setChecked(client.getAddressDataArrayList().get(pos).getFavorito());
+            if (client.getAddressDataArrayList().get(pos).getFavorito().equals(1)){
+                favorito.setChecked(true);
+            }else{
+                favorito.setChecked(false);
+            }
+
 
 
             button.setText("Actualizar");
@@ -544,11 +550,15 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             JSONObject jo_address = respuesta.getJSONObject(WSkeys.data);
             if(pos!=null){
                 Utilities.UpdateAddressData(jo_address,client,pos);
+                Toast toast = Toast.makeText(getContext(),  R.string.successaddressupdate, Toast.LENGTH_LONG);
+                toast.show();
             }else {
                 Utilities.AddAddressData(jo_address, client);
+                Toast toast = Toast.makeText(getContext(),  R.string.successaddressvalidation, Toast.LENGTH_LONG);
+                toast.show();
             }
-            Snackbar.make(calle, R.string.successaddressvalidation, Snackbar.LENGTH_LONG)
-                    .show();
+            //Snackbar.make(calle, R.string.successaddressvalidation, Snackbar.LENGTH_LONG)
+            //        .show();
             Intent intent = new Intent(getContext(),MenuActivity.class);
             startActivity(intent);
             getActivity().finish();

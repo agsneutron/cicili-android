@@ -146,5 +146,11 @@
     <string name="noindicar">No indicar</string>
     <string name="banco">Banco</string>
     <string name="e_sexo">Seleccionar Sexo</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="successpersonalupdate">Datos personales actualizados correctamente.</string>
+    <string name="vefifycardnumber">Verifica el Número de Tarjeta</string>
+    <string name="successpaymentupdate">Datos de pago actualizados correctamente.</string>
+    <string name="successaddressupdate">Dirección actualizada correctamente.</string>
+    <string name="usocfdi">Uso de CFDI</string>
 
 </resources>

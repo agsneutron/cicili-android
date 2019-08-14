@@ -52,8 +52,8 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
         }
 
         holder.mIdView.setText(stipopago);
-        holder.mContentView.setText(String.valueOf(mValues.get(position).getVencimiento()));
-        holder.mDescriptionView.setText(String.valueOf(mValues.get(position).getNumero()));
+        holder.mContentView.setText(String.valueOf(mValues.get(position).getNumero()));
+        holder.mDescriptionView.setText(String.valueOf(mValues.get(position).getVencimiento()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
