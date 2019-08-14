@@ -1,23 +1,19 @@
 package com.cicili.mx.cicili;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.cicili.mx.cicili.domain.Client;
-import com.google.android.gms.plus.PlusOneButton;
+import com.cicili.mx.cicili.domain.WSkeys;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 /**
  * A fragment with a Google +1 button.
@@ -32,10 +28,6 @@ public class UserProfileFragment extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    // The request code must be 0 or greater.
-    private static final int PLUS_ONE_REQUEST_CODE = 0;
-    // The URL to +1.  Must be a valid URL.
-    private final String PLUS_ONE_URL = "http://developer.android.com";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -44,7 +36,8 @@ public class UserProfileFragment extends DialogFragment {
 
 
     //widgets
-    TextView name,email,phone,date;
+    private TextView name,email,phone,date,sexo;
+
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -91,13 +84,14 @@ public class UserProfileFragment extends DialogFragment {
         email = (TextView) view.findViewById(R.id.email);
         phone = (TextView) view.findViewById(R.id.phone);
         date = (TextView) view.findViewById(R.id.date);
+        sexo = (TextView) view.findViewById(R.id.sexo);
 
-        name.setText(client.getName() + " " + client.getLastname() + " " + client.getLastsname());
+
+        name.setText(String.format("%s %s %s", client.getName(), client.getLastname(), client.getLastsname()));
         email.setText(client.getEmail());
         phone.setText(client.getCellphone());
         date.setText(client.getDate());
-
-
+        sexo.setText(client.getSexo());
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +110,8 @@ public class UserProfileFragment extends DialogFragment {
         });
 
         return view;
+
+
     }
 
     @Override

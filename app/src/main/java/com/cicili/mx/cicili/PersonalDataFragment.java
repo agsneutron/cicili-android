@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -77,8 +79,10 @@ public class PersonalDataFragment extends DialogFragment {
     TextInputEditText mmat;
     EditText mnac;
     ImageButton ibCalendario;
+    RadioGroup sexo;
     Button bRegister;
     View view;
+    String ts ="";
     private static final String CERO = "0";
     private static final String BARRA = "-";
 
@@ -134,6 +138,7 @@ public class PersonalDataFragment extends DialogFragment {
          mpat = (TextInputEditText) view.findViewById(R.id.apppat);
          mmat = (TextInputEditText) view.findViewById(R.id.appmat);
          mnac = (EditText) view.findViewById(R.id.fecha);
+         sexo = (RadioGroup) view.findViewById(R.id.rgSexo);
 
 
         ibCalendario = (ImageButton) view.findViewById(R.id.ib_obtener_fecha);
@@ -152,6 +157,19 @@ public class PersonalDataFragment extends DialogFragment {
             mpat.setText(client.getLastname());
             mmat.setText(client.getLastsname());
             mnac.setText(client.getDate());
+            if (!client.getSexo().equals("")) {
+                switch (client.getSexo()) {
+                    case WSkeys.hombre:
+                        sexo.check(R.id.hombre);
+                        break;
+                    case WSkeys.mujer:
+                        sexo.check(R.id.mujer);
+                        break;
+                    case WSkeys.noindicar:
+                        sexo.check(R.id.no_indicar);
+                        break;
+                }
+            }
             bRegister.setText("Actualizar");
         }
 
@@ -192,6 +210,27 @@ public class PersonalDataFragment extends DialogFragment {
                     cancel=true;
                 }
 
+                if(sexo.getCheckedRadioButtonId() == R.id.hombre){
+                    ts = WSkeys.hombre;
+                }
+
+                if (sexo.getCheckedRadioButtonId() == R.id.mujer){
+                    ts = WSkeys.mujer;
+                }
+
+                if (sexo.getCheckedRadioButtonId() == R.id.no_indicar){
+                    ts = WSkeys.noindicar;
+                }
+
+                if (ts.equals("")){
+                    Snackbar.make(view, getString(R.string.e_sexo), Snackbar.LENGTH_LONG)
+                            .show();
+                    cancel = true;
+                    Utilities.SetLog("SEXO",ts,WSkeys.log);
+                }else{
+                    client.setSexo(ts);
+                }
+
                 if (!cancel){
                     try {
                         PersonalDataTask(vname,vpat,vmat, vnac);
@@ -199,10 +238,8 @@ public class PersonalDataFragment extends DialogFragment {
                         e.printStackTrace();
                     }
                 }
-
             }
         });
-
         return view;
     }
 

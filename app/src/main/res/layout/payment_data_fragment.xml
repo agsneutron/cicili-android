@@ -79,7 +79,7 @@
                 android:padding="16dp">
 
 
-               <com.google.android.material.textfield.TextInputLayout
+               <!--<com.google.android.material.textfield.TextInputLayout
                    android:id="@+id/titulars"
                    style="@style/TextInputLayout"
                    android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:inputType="textCapWords" />
-               </com.google.android.material.textfield.TextInputLayout>
+               </com.google.android.material.textfield.TextInputLayout>-->
 
 
                <com.google.android.material.textfield.TextInputLayout
@@ -110,7 +110,7 @@
                        android:inputType="number" />
                </com.google.android.material.textfield.TextInputLayout>
 
-               <TextView
+               <!--<TextView
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:text="@string/TipoT"
@@ -141,7 +141,7 @@
                    android:text="@string/amx"
                    android:layout_weight="1"/>
 
-               </RadioGroup>
+               </RadioGroup>-->
 
 
                <androidx.appcompat.widget.LinearLayoutCompat
@@ -185,7 +185,7 @@
 
                </androidx.appcompat.widget.LinearLayoutCompat>
 
-               <FrameLayout
+               <!--<FrameLayout
 
                    android:id="@+id/fragment_qc_flSelectWorkDone"
                    android:layout_width="match_parent"
@@ -220,7 +220,36 @@
                        />
 
 
-               </FrameLayout>
+               </FrameLayout>-->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tipotrj"
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/banco"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tipotarjeta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bancos"
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/banco"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/banco"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -231,7 +260,6 @@
                android:id="@+id/register_payment"
                android:text="@string/action_savee"
                android:layout_gravity="end"
-               android:layout_marginBottom="96dp"
                android:layout_marginEnd="16dp"
                />
 

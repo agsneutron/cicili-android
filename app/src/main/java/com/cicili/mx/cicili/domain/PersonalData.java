@@ -7,16 +7,18 @@ public class PersonalData {
     public String apellidoPaterno;
     public String apellidoMaterno;
     public String nacimiento;
+    public String sexo;
 
 
     public PersonalData() {
     }
 
-    public PersonalData(String nombre, String apellidoPaterno, String apellidoMaterno, String nacimiento) {
+    public PersonalData(String nombre, String apellidoPaterno, String apellidoMaterno, String nacimiento, String sexo) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.nacimiento = nacimiento;
+        this.sexo = sexo;
     }
 
     public String getNombre() {
@@ -49,5 +51,13 @@ public class PersonalData {
 
     public void setNacimiento(String nacimiento) {
         this.nacimiento = nacimiento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 }

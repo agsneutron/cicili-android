@@ -5,9 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +35,7 @@ import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,7 +58,9 @@ public class RegisterClient extends AppCompatActivity {
     private View mProgressView;
     private View mRegisterFormView;
     private String token ="";
-
+    //ProgressBar progressBar;
+    //TextView strengthStatus;
+    private TextInputLayout tilpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +82,12 @@ public class RegisterClient extends AppCompatActivity {
         mCellPhoneView = (TextInputEditText) findViewById(R.id.cellphone);
         mPasswordView = (TextInputEditText) findViewById(R.id.password);
         mCPasswordView = (TextInputEditText) findViewById(R.id.cpassword);
+        //progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        //strengthStatus = (TextView) findViewById(R.id.passwordStrength);
+        tilpassword = (TextInputLayout) findViewById(R.id.password_text_input);
 
 
+        mPasswordView.addTextChangedListener(passwordStrength);
         mCPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -109,6 +120,61 @@ public class RegisterClient extends AppCompatActivity {
 
     }
 
+    private final TextWatcher passwordStrength = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        public void afterTextChanged(Editable s) {
+            verifyPasswordStrength(s.toString());
+        }
+    };
+
+
+    private void verifyPasswordStrength(String password) {
+
+
+
+        //if (TextView.VISIBLE != strengthStatus.getVisibility())
+        //    return;
+
+        if (password.isEmpty()) {
+            tilpassword.setError("");
+            //progressBar.setProgress(0);
+            return;
+        }
+
+        /*if(Utilities.PasswordStrength.calculateStrength(password).getValue() < Utilities.PasswordStrength.STRONG.getValue())
+        {
+            strengthStatus.setText("Password should contain min of 6 characters and at least 1 lowercase, 1 uppercase and 1 numeric value");
+
+        }*/
+        Utilities.PasswordStrength str = Utilities.PasswordStrength.calculateStrength(password);
+
+        Utilities.SetLog("VALUE", String.valueOf(str.getValue()) + str, WSkeys.log);
+        //strengthStatus.setText(String.valueOf(str.getValue()));
+
+        //strengthStatus.setTextColor(str.getColor());
+
+        tilpassword.setError("La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.");
+        tilpassword.setErrorTextColor(ColorStateList.valueOf(str.getColor()));
+
+
+        /*progressBar.getProgressDrawable().setColorFilter(str.getColor(), android.graphics.PorterDuff.Mode.SRC_IN);
+        if (str.getValue() == 0) {
+            progressBar.setProgress(25);
+        } else if (str.getValue() == 1) {
+            progressBar.setProgress(50);
+        } else if (str.getValue()==2) {
+            progressBar.setProgress(75);
+        } else {
+            progressBar.setProgress(100);
+        }*/
+    }
     /**
      * Attempts to  register the account specified by the cellphone,email and password.
      * If there are form errors (invalid email, missing fields, etc.), the

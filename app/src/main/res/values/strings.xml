@@ -140,5 +140,11 @@
     <string name="rfc">RFC</string>
     <string name="razonsocial">Razón Social</string>
     <string name="successrfcvalidation">RFC registrado correctamente</string>
+    <string name="sexo">Sexo</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="noindicar">No indicar</string>
+    <string name="banco">Banco</string>
+    <string name="e_sexo">Seleccionar Sexo</string>
 
 </resources>

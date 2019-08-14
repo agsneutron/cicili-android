@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        //mPasswordView.addTextChangedListener(passwordStrenght);
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -137,26 +137,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
     }
-
-
-
-    private final TextWatcher passwordStrenght = new TextWatcher() {
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            //textView.setVisibility(View.VISIBLE);
-        }
-
-        public void afterTextChanged(Editable s) {
-            if(Utilities.PasswordStrength.calculateStrength(s.toString()).getValue() < Utilities.PasswordStrength.STRONG.getValue())
-            {
-                //message = "Password should contain min of 6 characters and at least 1 lowercase, 1 uppercase and 1 numeric value";
-                //return null;
-            }
-        }
-    };
 
     /**
      * Callback received when a permissions request has been completed.
@@ -384,6 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             client.setEmail(jousuario.getString(WSkeys.email));
             client.setCellphone(jousuario.getString(WSkeys.cel));
             client.setUsername(userName);
+            client.setSexo(jousuario.getString(WSkeys.sexo));
             Utilities.SetClientData(jousuario,client);
 
 
