@@ -259,7 +259,7 @@ public class PaymentDataFragment extends Fragment {
 
                     }
                     paymentData.setTipoPago(fp);
-                    String sTitular = titular.getText()+"";
+                    //String sTitular = titular.getText()+"";
                     String sNumero = numero.getText()+"";
                     String sVencimiento = vencimiento.getText()+"";
                     String sCvv = cvv.getText()+"";

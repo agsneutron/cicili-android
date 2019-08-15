@@ -7,6 +7,21 @@
     tools:context=".PaymentDataFragment">
 
 
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="9dp"
+        android:layout_marginRight="20dp"
+        >
+
+
     <!--<androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,55 +44,71 @@
     </androidx.appcompat.widget.LinearLayoutCompat>-->
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/forma_de_pago" />
-
-
-    <RadioGroup
-        android:id="@+id/rgForma"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
-
-
-        <!--<RadioButton
-                   android:id="@+id/uno"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/efectivo"
-                   android:layout_weight="1"/>-->
-        <RadioButton
-            android:id="@+id/dos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/tdd" />
-
-        <RadioButton
-            android:id="@+id/tres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/TDC" />
-
-    </RadioGroup>
-
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/viewTarjeta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/forma_de_pago"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/payment_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
+       <!-- <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/forma_de_pago" />-->
 
 
+        <RadioGroup
+            android:id="@+id/rgForma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="20dp"
+            android:paddingRight="16dp">
+
+
+            <!--<RadioButton
+                       android:id="@+id/uno"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/efectivo"
+                       android:layout_weight="1"/>-->
+            <RadioButton
+                android:id="@+id/dos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/tdd" />
+
+            <RadioButton
+                android:id="@+id/tres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/TDC" />
+
+        </RadioGroup>
         <!--<com.google.android.material.textfield.TextInputLayout
                    android:id="@+id/titulars"
                    style="@style/TextInputLayout"
@@ -255,28 +286,30 @@
                 android:inputType="text"
                 android:textColor="@color/colorPrimaryDark" />
         </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="8.4dp"
+            android:layout_marginRight="36dp"
+            android:orientation="vertical">
 
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/register_payment"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/action_savee"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="38.4dp"
-        android:layout_marginRight="36dp"
-        android:orientation="vertical">
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/register_payment"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="@string/action_savee"
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:cornerRadius="20dp" />
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
  <!--   <Button
         android:id="@+id/register_payment"
         android:layout_width="wrap_content"

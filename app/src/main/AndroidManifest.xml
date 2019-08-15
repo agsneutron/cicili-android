@@ -46,7 +46,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PerfilData"
-            android:label="@string/title_activity_perfil_data"
+            android:label="Completar información"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:background="@color/white" />
