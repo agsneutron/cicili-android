@@ -2,12 +2,17 @@ package com.cicili.mx.cicili;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
+
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -85,7 +90,12 @@ public class UserProfileFragment extends DialogFragment {
         phone = (TextView) view.findViewById(R.id.phone);
         date = (TextView) view.findViewById(R.id.date);
         sexo = (TextView) view.findViewById(R.id.sexo);
+        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
 
+        byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        imageView.setImageBitmap(decodedByte);
 
         name.setText(String.format("%s %s %s", client.getName(), client.getLastname(), client.getLastsname()));
         email.setText(client.getEmail());

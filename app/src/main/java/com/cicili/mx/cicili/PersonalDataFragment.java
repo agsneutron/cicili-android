@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +54,15 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -80,14 +88,16 @@ public class PersonalDataFragment extends Fragment {
     TextInputEditText mpat ;
     TextInputEditText mmat;
     EditText mnac;
-    ImageButton ibCalendario;
+    EditText ibCalendario;
     RadioGroup sexo;
     Button bRegister;
     View view;
     ViewGroup viewgroup;
     String ts ="";
+    Button picture;
     private static final String CERO = "0";
     private static final String BARRA = "-";
+    private static final int SETPHOTO = 100;
 
 
     //values to getDate
@@ -142,10 +152,20 @@ public class PersonalDataFragment extends Fragment {
          mmat = (TextInputEditText) view.findViewById(R.id.appmat);
          mnac = (EditText) view.findViewById(R.id.fecha);
          sexo = (RadioGroup) view.findViewById(R.id.rgSexo);
+         picture = (Button) view.findViewById(R.id.picture);
          viewgroup = container;
 
 
-        ibCalendario = (ImageButton) view.findViewById(R.id.ib_obtener_fecha);
+        picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, SETPHOTO);
+            }
+        });
+
+        ibCalendario = (EditText) view.findViewById(R.id.fecha);
         ibCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,6 +321,7 @@ public class PersonalDataFragment extends Fragment {
         params.put(WSkeys.apemat, vmat);
         params.put(WSkeys.fechanacimiento, vnac);
         params.put(WSkeys.sexo, ts);
+        params.put(WSkeys.img,client.getPhoto());
 
 
 
@@ -446,5 +467,36 @@ public class PersonalDataFragment extends Fragment {
         //show widget
         recogerFecha.show();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case SETPHOTO:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = data.getData();
+                    if(selectedImage !=null){
+                        InputStream imageStream = null;
+                        try {
+                            imageStream = getContext().getContentResolver().openInputStream(selectedImage);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        Bitmap selectedImagebt = BitmapFactory.decodeStream(imageStream);
+                        String encodedImage = encodeImage(selectedImagebt);
+                        client.setPhoto(encodedImage);
+                    }
+                }
+        }
+    }
+
+    private String encodeImage(Bitmap bm)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG,50/100,baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
     }
 }

@@ -6,6 +6,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Iniciar Sesión</string>
     <string name="action_register">Registrarse</string>
+    <string name="action_no_account">¿No tiénes una cuenta?</string>
     <string name="action_forgotpsw">¿Olvidaste tu contraseña?</string>
     <string name="action_sign_in_short">Iniciar Sesion</string>
     <string name="error_invalid_email">Correo Electrónico incorrecto</string>
@@ -24,6 +25,7 @@
     <string name="title_notifications">Notificaciones</string>
     <string name="title_activity_request_password">Recuperar Contraseña</string>
     <string name="title_activity_register_client">Registro</string>
+    <string name="register_content">Ingresa los datos para tu registro en Cicili</string>
     <string name="title_activity_forgot_psw">Recuperar Contraseña</string>
     <string name="hint_text">hint text</string>
     <string name="error_invalid_cpassword">Las contraseñas no coinciden.</string>
@@ -84,6 +86,7 @@
     <string name="cvv">CVV</string>
     <string name="numt">Número de Tarjeta</string>
     <string name="paymentregister">Registrar</string>
+    <string name="payment_title">Ingresa datos de tu tarjeta</string>
     <string name="tipopago">Selecciona un tipo de tarjeta.</string>
     <string name="formapago">Selecciona una forma de pago.</string>
     <string name="action_savee">Guardar</string>
@@ -152,5 +155,6 @@
     <string name="successpaymentupdate">Datos de pago actualizados correctamente.</string>
     <string name="successaddressupdate">Dirección actualizada correctamente.</string>
     <string name="usocfdi">Uso de CFDI</string>
+    <string name="foto_de_perfil">Foto de Perfil</string>
 
 </resources>

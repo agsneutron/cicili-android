@@ -5,6 +5,8 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -28,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 
@@ -54,6 +57,7 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -153,6 +157,12 @@ public class MenuActivity extends AppCompatActivity
         tvname.setText(client.getName());
         TextView tvarea = (TextView)headerView.findViewById(R.id.tv_email);
         tvarea.setText(client.getEmail());
+        ImageView imageView = (ImageView)headerView.findViewById(R.id.imageView);
+
+        byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        imageView.setImageBitmap(decodedByte);
         //
 
 

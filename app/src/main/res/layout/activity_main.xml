@@ -6,7 +6,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cicili.mx.cicili.MainActivity">
+    tools:context="com.cicili.mx.cicili.MainActivity"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
