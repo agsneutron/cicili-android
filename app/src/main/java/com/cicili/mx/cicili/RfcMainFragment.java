@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +23,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.RfcData;
-import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -226,6 +223,8 @@ public class RfcMainFragment extends Fragment {
         else{
             Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
+
+            Utilities.SetLog("ERRORPARSER",response,WSkeys.log);
         }
     }
 }
