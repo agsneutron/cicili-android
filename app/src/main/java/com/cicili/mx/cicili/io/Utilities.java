@@ -142,7 +142,7 @@ public class Utilities {
         Gson gson = new Gson();
         ArrayList<AddressData> direccionAux = new ArrayList<AddressData>();
         ArrayList<PaymentData> paymentAux = new ArrayList<PaymentData>();
-        //ccessdata
+        //accessdata
         client.setIdcte(jousuario.getInt(WSkeys.idcte));
         client.setStatus(jousuario.getString(WSkeys.status));
         //client.setToken(jousuario.getString(WSkeys.token));
@@ -184,7 +184,30 @@ public class Utilities {
         }
     }
 
-    public static void SetClientPaymentData(JSONObject jousuario, Client client) throws JSONException {
+    public static void SetPerfilData(JSONObject jousuario, Client client) throws JSONException {
+        Gson gson = new Gson();
+        ArrayList<AddressData> direccionAux = new ArrayList<AddressData>();
+        ArrayList<PaymentData> paymentAux = new ArrayList<PaymentData>();
+        //accessdata
+        client.setIdcte(jousuario.getInt(WSkeys.idcte));
+        client.setStatus(jousuario.getString(WSkeys.status));
+        //client.setToken(jousuario.getString(WSkeys.token));
+        client.setEmail(jousuario.getString(WSkeys.email));
+        client.setCellphone(jousuario.getString(WSkeys.cel));
+        client.setUsername(jousuario.getString(WSkeys.email));
+
+        //personal data
+        client.setName(jousuario.getString(WSkeys.name));
+        client.setLastname(jousuario.getString(WSkeys.apepat));
+        client.setLastsname(jousuario.getString(WSkeys.apemat));
+        client.setDate(jousuario.getString(WSkeys.fecnac));
+        client.setPhoto(jousuario.getString(WSkeys.img));
+        client.setSexo(jousuario.getString(WSkeys.sexo));
+
+    }
+
+
+        public static void SetClientPaymentData(JSONObject jousuario, Client client) throws JSONException {
         client.setIdcte(jousuario.getInt(WSkeys.idcte));
         client.setStatus(jousuario.getString(WSkeys.status));
         client.setToken(jousuario.getString(WSkeys.token));
@@ -194,6 +217,7 @@ public class Utilities {
 
 
     }
+
     public static void AddAddressData(JSONObject jo_address, Client client){
         Gson gson = new Gson();
         ArrayList<AddressData> direccionAux = new ArrayList<AddressData>();
@@ -224,6 +248,21 @@ public class Utilities {
         RfcData rfcData= gson.fromJson(jo_rfc.toString() , RfcData.class);
         rfcAux.add(rfcData);
         client.getRfcDataArrayList().set(pos,rfcData);
+    }
+
+    public static  void SetRfcData(JSONArray ja_rfc,Client client) throws JSONException {
+        ArrayList<RfcData> rfcAux = new ArrayList<RfcData>();
+        Gson gson = new Gson();
+        if (ja_rfc.length() > 0) {
+            Utilities.SetLog("LOGIN ja_rfc", ja_rfc.toString(), WSkeys.log);
+            for(int i=0; i<ja_rfc.length(); i++) {
+                JSONObject jo_rfc = (JSONObject) ja_rfc.get(i);
+                Utilities.SetLog("jo_ddress",jo_rfc.toString(),WSkeys.log);
+                RfcData rfcData= gson.fromJson(jo_rfc.toString() , RfcData.class);
+                rfcAux.add(rfcData);
+            }
+            client.setRfcDataArrayList(rfcAux);
+        }
     }
 
     public static void AddPaymentData(String js_payment, Client client){

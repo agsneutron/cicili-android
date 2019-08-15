@@ -88,7 +88,7 @@ public class OrderIntentFragment extends DialogFragment {
         phone = (TextView) view.findViewById(R.id.phone);
         date = (TextView) view.findViewById(R.id.date);
 
-        name.setText(client.getAutotanquesDisponiblesArrayList().get(mParam1).getId());
+        name.setText(client.getAutotanquesCercanosArrayList().get(mParam1).getId());
         email.setText(client.getEmail());
         phone.setText(client.getCellphone());
         date.setText(client.getDate());

@@ -86,4 +86,11 @@ public class PaymentData {
         this.cvv = cvv;
     }
 
+    public String getBanco() {
+        return banco;
+    }
+
+    public void setBanco(String banco) {
+        this.banco = banco;
+    }
 }

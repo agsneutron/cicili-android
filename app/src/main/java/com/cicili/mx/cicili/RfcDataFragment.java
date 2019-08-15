@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Asentamiento;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.RfcData;
+import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -76,7 +77,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
     private String LOG = "RFC_DATA_FRAGMENT";
     View view;
-    Spinner colonia;
+    Spinner usoCFDI;
     TextInputEditText rfc,calle,numint,numext,cp, razonsocial;
     SwitchCompat favorito;
     AppCompatButton button;
@@ -84,11 +85,11 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
     Client client = (Client) application;
 
 
-    private ArrayList<String> asentamientoArray;
-    private ArrayList<Asentamiento> asentamientoAux;
-    private Integer asentamientosel;
-    private String asentamientoname = "";
-    private Integer selectedtown=0;
+    private ArrayList<String> cfdiArray;
+    private ArrayList<UsoCfdi> cfdiAux;
+    private Integer cfdisel;
+    private String cfdiname = "";
+    private Integer selectedcfdi=0;
 
     public RfcDataFragment() {
         // Required empty public constructor
@@ -135,12 +136,12 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
         view = inflater.inflate(R.layout.rfc_data_fragment, container, false);
         rfc = view.findViewById(R.id.rfc);
-        cp = view.findViewById(R.id.cp);
+        //cp = view.findViewById(R.id.cp);
         razonsocial = view.findViewById(R.id.razonsocial);
-        colonia = (Spinner) view.findViewById(R.id.spinner1);
-        calle = view.findViewById(R.id.calle);
-        numext = view.findViewById(R.id.numext);
-        numint = view.findViewById(R.id.numint);
+        usoCFDI = (Spinner) view.findViewById(R.id.spinner1);
+        //calle = view.findViewById(R.id.calle);
+        //numext = view.findViewById(R.id.numext);
+        //numint = view.findViewById(R.id.numint);
         /*favorito = view.findViewById(R.id.favorita);
         favorito.setChecked(false);*/
 
@@ -157,32 +158,32 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
                     error=true;
                     focusView = rfc;
                 }
-                if (!Utilities.isFieldValid(cp)){
+                /*if (!Utilities.isFieldValid(cp)){
                     cp.setError(getString(R.string.error_field_required));
                     error=true;
                     focusView = cp;
-                }
-                if(colonia.getSelectedItemId()==0){
-                    Snackbar.make(colonia, "Selecciona una Colonia", Snackbar.LENGTH_LONG)
+                }*/
+                if(usoCFDI.getSelectedItemId()==0){
+                    Snackbar.make(usoCFDI, "Selecciona el uso del CFDI", Snackbar.LENGTH_LONG)
                             .show();
                     error=true;
-                    focusView = colonia;
+                    focusView = usoCFDI;
                 }
-                if (!Utilities.isFieldValid(calle)){
+                /*if (!Utilities.isFieldValid(calle)){
                     calle.setError(getString(R.string.error_field_required));
                     error=true;
                     focusView = calle;
-                }
+                }*/
                 if (!Utilities.isFieldValid(razonsocial)){
                     razonsocial.setError(getString(R.string.error_field_required));
                     error=true;
                     focusView = razonsocial;
                 }
-                if (!Utilities.isFieldValid(numext)){
+                /*if (!Utilities.isFieldValid(numext)){
                     numext.setError(getString(R.string.error_field_required));
                     error=true;
                     focusView = numext;
-                }
+                }*/
 
 
                 /*if(favorito.isChecked()){
@@ -194,16 +195,11 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
 
                 if (!error){
-                    Asentamiento asentamiento = new Asentamiento();
-                    asentamiento.setId(asentamientosel);
-                    //asentamiento.setText(asentamientoname);
+                    UsoCfdi usoCfdi = new UsoCfdi();
+                    usoCfdi.setId(cfdisel);
                     rfcData.setRfc(rfc.getText().toString());
-                    rfcData.setCp(cp.getText().toString());
-                    rfcData.setAsentamiento(asentamiento);
-                    rfcData.setCalle(calle.getText().toString());
-                    rfcData.setExterior(numext.getText().toString());
-                    rfcData.setInterior(numint.getText().toString());
                     rfcData.setRazonSocial(razonsocial.getText().toString());
+                    rfcData.setUsoCfdi(usoCfdi);
                     try {
                         RfcDataTask(rfcData);
                     } catch (JSONException e) {
@@ -212,8 +208,9 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
                 }
             }
         });
+        LlenaCFDI();
 
-        cp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*cp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if((Utilities.isFieldValid(cp)) && cp.length()>= WSkeys.cplenght){
@@ -225,37 +222,37 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
                 }
 
             }
-        });
+        });*/
 
         // Spinner click listener
-        colonia.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        usoCFDI.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
 
-        categories.add("Colonia");
+        categories.add("Uso de CFDI");
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        colonia.setAdapter(dataAdapter);
+        usoCFDI.setAdapter(dataAdapter);
 
 
 
         //If is called the fragment to edit data
         if (pos != null) {
             rfc.setText(client.getRfcDataArrayList().get(pos).getRfc());
-            cp.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()));
+           /* cp.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()));
             calle.setText(client.getRfcDataArrayList().get(pos).getCalle());
             numext.setText(client.getRfcDataArrayList().get(pos).getExterior());
             numint.setText(client.getRfcDataArrayList().get(pos).getInterior());
-            selectedtown= client.getRfcDataArrayList().get(pos).getAsentamiento().getId();
-            Utilities.SetLog(LOG+"town",String.valueOf(selectedtown),WSkeys.log);
-            LlenaColonia(cp.getText().toString());
+            selectedtown= client.getRfcDataArrayList().get(pos).getAsentamiento().getId();*/
+            selectedcfdi= client.getRfcDataArrayList().get(pos).getUsoCfdi().getId();
+            Utilities.SetLog(LOG+"town",String.valueOf(selectedcfdi),WSkeys.log);
+            LlenaCFDI();
             razonsocial.setText(client.getRfcDataArrayList().get(pos).getRazonSocial());
-
             button.setText("Actualizar");
         }
         // Inflate the layout for this fragment
@@ -291,8 +288,8 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
         Log.e("onItemSelected",String.valueOf(i));
         if (i!=0) {
-            asentamientosel = asentamientoAux.get(i).getId();
-            asentamientoname = asentamientoAux.get(i).getText();
+            cfdisel = cfdiAux.get(i).getId();
+            cfdiname = cfdiAux.get(i).getText();
 
         }
 
@@ -320,17 +317,17 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
 
 
-    public void LlenaColonia(final String text){
+    public void LlenaCFDI(){
 
 
-        String url = WSkeys.URL_BASE + WSkeys.URL_SEARCHBYCP + text;
-        Utilities.SetLog("CALLLLENACOLONIAS",url,WSkeys.log);
+        String url = WSkeys.URL_BASE + WSkeys.URL_CFDI;
+        Utilities.SetLog("LLENAUSOCFDI",url,WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    ParserTown(response);
+                    ParserCFDI(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -375,51 +372,49 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    public void ParserTown(String response) throws JSONException {
+    public void ParserCFDI(String response) throws JSONException {
 
+        Utilities.SetLog("RESPONSE_CFDI",response,WSkeys.log);
         //Log.e("CodeResponse", response);
-        asentamientoAux = new ArrayList<Asentamiento>();
-        asentamientoArray = new ArrayList<String>();
+        cfdiAux = new ArrayList<UsoCfdi>();
+        cfdiArray = new ArrayList<String>();
         JSONObject respuesta = new JSONObject(response);
         Integer posselected =0;
 
         // si el response regresa ok, entonces si inicia la sesión
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
-            //obtener nivel data
-            String data = respuesta.getString(WSkeys.data);
-            JSONObject jo_data = new JSONObject(data);
-            //ontener nivel de
+            //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
-            JSONArray ja_asentamientos = jo_data.getJSONArray(WSkeys.asentamientos);
-            Utilities.SetLog("ASENTAMIENTOSARRAY",ja_asentamientos.toString(),WSkeys.log);
-            for(int i=0; i<ja_asentamientos.length(); i++){
-                Asentamiento asentamiento = new Asentamiento();
+            JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            Utilities.SetLog("CFDIARRAY",ja_usocfdi.toString(),WSkeys.log);
+            for(int i=0; i<ja_usocfdi.length(); i++){
+                UsoCfdi usoCfdi = new UsoCfdi();
                 try {
                     if(i==0){
-                        asentamiento.setId(0);
-                        asentamiento.setText("Selecciona Colonia");
-                        asentamientoAux.add(asentamiento);
-                        asentamientoArray.add("Selecciona Colonia");
+                        usoCfdi.setId(0);
+                        usoCfdi.setText("Selecciona uso de CFDI");
+                        cfdiAux.add(usoCfdi);
+                        cfdiArray.add("Selecciona uso de CFDI");
                     }
-                    JSONObject jsonObject = (JSONObject) ja_asentamientos.get(i);
-                    asentamiento.setId(jsonObject.getInt("id"));
-                    asentamiento.setText(jsonObject.getString("text"));
-                    asentamientoAux.add(asentamiento);
-                    asentamientoArray.add(jsonObject.getString("text"));
-                    Utilities.SetLog(LOG+"id",String.valueOf(jsonObject.getInt("id")) + "-" + String.valueOf(selectedtown)+ "-"+i,WSkeys.log);
-                    if(jsonObject.getInt("id") == selectedtown){
+                    JSONObject jsonObject = (JSONObject) ja_usocfdi.get(i);
+                    usoCfdi.setId(jsonObject.getInt("id"));
+                    usoCfdi.setText(jsonObject.getString("text"));
+                    cfdiAux.add(usoCfdi);
+                    cfdiArray.add(jsonObject.getString("text"));
+                    Utilities.SetLog(LOG+"id",String.valueOf(jsonObject.getInt("id")) + "-" + String.valueOf(selectedcfdi)+ "-"+i,WSkeys.log);
+                    if(jsonObject.getInt("id") == selectedcfdi){
                         posselected = i+1;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            colonia.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,asentamientoArray));
-            colonia.setSelection(posselected);
+            usoCFDI.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,cfdiArray));
+            usoCFDI.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(rfc, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
     }
@@ -464,7 +459,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(calle, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
         }) {

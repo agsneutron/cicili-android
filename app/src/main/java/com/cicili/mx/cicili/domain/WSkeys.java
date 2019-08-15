@@ -178,9 +178,22 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/mv/cliente/rfc/actualizar
     public  static  final  String URL_RFCUPDATE ="app/mv/cliente/rfc/actualizar";
 
+    //RFC view
+    public  static  final  String URL_RFCVIEW ="app/mv/cliente/rfc/obtener";
+
     //MainSearch
     //https://cicili.com.mx:8443/app/mv/cliente/autotanques/disponibles
     public static final String URL_MAINSEARCH = "app/mv/cliente/autotanques/disponibles";
+
+    //Banco
+    //https://api.cicili.com.mx:8443/app/mv/cliente/banco/
+    public static final String URL_BANKSEARCH = "app/mv/cliente/banco/";
+
+    //CFDI
+    //https://api.cicili.com.mx:8443/app/mv/cliente/banco/
+    public static final String URL_CFDI = "app/catalogos/usocfdi";
+
+
 
     public static final Boolean log = true;
     public static int cplenght = 4;

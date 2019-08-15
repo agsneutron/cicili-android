@@ -59,7 +59,7 @@ public class RfcDetailFragment extends DialogFragment {
     private OnFragmentInteractionListener mListener;
 
     //widgets
-    TextView street,town,state,cp, rfc, razonsocial;
+    TextView street,town,state,cp, rfc, razonsocial, usocfdi;
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -111,30 +111,33 @@ public class RfcDetailFragment extends DialogFragment {
 
 
         //Find the textviews objects
-        street = (TextView) view.findViewById(R.id.street);
+        //street = (TextView) view.findViewById(R.id.street);
         rfc = (TextView) view.findViewById(R.id.rfc);
-        cp = (TextView) view.findViewById(R.id.cp);
-        town = (TextView) view.findViewById(R.id.town);
+        //cp = (TextView) view.findViewById(R.id.cp);
+        //town = (TextView) view.findViewById(R.id.town);
         razonsocial = (TextView) view.findViewById(R.id.razonsocial);
+        usocfdi = (TextView) view.findViewById(R.id.usocfdi);
 
         Utilities.SetLog(LOG,mParam1,WSkeys.log);
         pos = Integer.parseInt(mParam1);
         Utilities.SetLog(LOG+ "pos",String.valueOf(pos),WSkeys.log);
 
 
-        Utilities.SetLog(LOG,client.getRfcDataArrayList().get(pos).getCalle(),WSkeys.log);
-        Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getExterior()),WSkeys.log);
-        Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getInterior()),WSkeys.log);
+        //Utilities.SetLog(LOG,client.getRfcDataArrayList().get(pos).getCalle(),WSkeys.log);
+        //Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getExterior()),WSkeys.log);
+        //Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getInterior()),WSkeys.log);
         Utilities.SetLog(LOG,client.getRfcDataArrayList().get(pos).getRfc(),WSkeys.log);
         Utilities.SetLog(LOG,client.getRfcDataArrayList().get(pos).getRazonSocial(),WSkeys.log);
-        Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()),WSkeys.log);
-        Utilities.SetLog(LOG,client.getRfcDataArrayList().get(pos).getAsentamiento().getNombre(),WSkeys.log);
+        Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getUsoCfdi().getId()),WSkeys.log);
+        //Utilities.SetLog(LOG,String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()),WSkeys.log);
+        //Utilities.SetLog(LOG,client.getRfcDataArrayList().get(pos).getAsentamiento().getNombre(),WSkeys.log);
 
-        street.setText(client.getRfcDataArrayList().get(pos).getCalle() + "," + String.valueOf(client.getRfcDataArrayList().get(pos).getExterior()) + " " + String.valueOf(client.getRfcDataArrayList().get(pos).getInterior()));
+        //street.setText(client.getRfcDataArrayList().get(pos).getCalle() + "," + String.valueOf(client.getRfcDataArrayList().get(pos).getExterior()) + " " + String.valueOf(client.getRfcDataArrayList().get(pos).getInterior()));
         rfc.setText(client.getRfcDataArrayList().get(pos).getRfc());
         razonsocial.setText(client.getRfcDataArrayList().get(pos).getRazonSocial());
-        cp.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()));
-        town.setText(client.getRfcDataArrayList().get(pos).getAsentamiento().getNombre());
+        usocfdi.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getUsoCfdi().getId()));
+        //cp.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()));
+        //town.setText(client.getRfcDataArrayList().get(pos).getAsentamiento().getNombre());
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

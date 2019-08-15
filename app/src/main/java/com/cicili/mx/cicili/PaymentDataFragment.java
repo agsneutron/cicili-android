@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -79,12 +80,13 @@ public class PaymentDataFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    ViewGroup viewGroup;
     View view;
-    private Spinner spinner;
+    //private Spinner spinner;
     private Adapter adapter;
     private RadioGroup forma;
     private RadioButton uno, dos, tres; // visa, masterc,amex;
-    private TextInputEditText titular,numero, vencimiento, cvv, tipotarjeta;
+    private TextInputEditText titular,numero, vencimiento, cvv, tipotarjeta, banco;
     private Button registra_pago;
     private LinearLayoutCompat vtarjeta;
     private Boolean error =false;
@@ -139,7 +141,8 @@ public class PaymentDataFragment extends Fragment {
 
 
         view = inflater.inflate(R.layout.payment_data_fragment, container, false);
-        spinner = (Spinner) view.findViewById(R.id.spinner1);
+        viewGroup=container;
+        //spinner = (Spinner) view.findViewById(R.id.spinner1);
 
         // Spinner click listener
         //spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
@@ -179,6 +182,7 @@ public class PaymentDataFragment extends Fragment {
         numero = view.findViewById(R.id.tarjeta);
         vencimiento = view.findViewById(R.id.vencimiento);
         tipotarjeta = view.findViewById(R.id.tipotarjeta);
+        banco = view.findViewById(R.id.banco);
 
         cvv = view.findViewById(R.id.cvv);
         //uno = view.findViewById(R.id.uno);
@@ -199,6 +203,7 @@ public class PaymentDataFragment extends Fragment {
             vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento());
             cvv.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv()));
             tipotarjeta.setText(client.getPaymentDataArrayList().get(pos).getTipoTarjeta());
+            banco.setText(client.getPaymentDataArrayList().get(pos).getBanco());
             /*if (client.getPaymentDataArrayList().get(pos).getTipoPago().equals(WSkeys.efectivo)){
                 //forma.check(R.id.uno);
             }else*/
@@ -232,6 +237,19 @@ public class PaymentDataFragment extends Fragment {
         });
 
 
+        numero.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if((Utilities.isFieldValid(numero)) && numero.length()>=6){
+                    LlenaBanco(numero.getText().toString().substring(0,6));
+                }
+                else {
+                    Snackbar.make(view, "Introduce un número de tarjeta.", Snackbar.LENGTH_LONG)
+                            .show();
+                }
+
+            }
+        });
 
         registra_pago.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,6 +282,7 @@ public class PaymentDataFragment extends Fragment {
                     String sVencimiento = vencimiento.getText()+"";
                     String sCvv = cvv.getText()+"";
                     String sTipoTarjeta = tipotarjeta.getText()+"";
+                    String sBanco = banco.getText()+"";
 
                     /*if (sTitular.isEmpty() || sTitular.length()<10){
                         titular.setError(getString(R.string.error_field_required));
@@ -301,13 +320,23 @@ public class PaymentDataFragment extends Fragment {
                     }
 
                     if (sTipoTarjeta.isEmpty() || sTipoTarjeta.equals("")){
-                        tipotarjeta.setError(getString(R.string.error_field_required));
+                        tipotarjeta.setError(getString(R.string.vefifycardnumber));
                         error = true;
                         focusView = tipotarjeta;
                         Utilities.SetLog("Tipo de Tarjeta",sTipoTarjeta,WSkeys.log);
                     }
                     else{
                         paymentData.setTipoTarjeta(sTipoTarjeta);
+                    }
+
+                    if (sBanco.isEmpty() || sBanco.equals("")){
+                        banco.setError(getString(R.string.vefifycardnumber));
+                        error = true;
+                        focusView = banco;
+                        Utilities.SetLog("Banco",sBanco,WSkeys.log);
+                    }
+                    else{
+                        paymentData.setBanco(sBanco);
                     }
                     /*if(tipo.getCheckedRadioButtonId() == R.id.visa){
                         tp = WSkeys.visa;
@@ -341,7 +370,7 @@ public class PaymentDataFragment extends Fragment {
 
                 }
                 else{
-                    Snackbar.make(spinner, getString(R.string.formapago), Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, getString(R.string.formapago), Snackbar.LENGTH_LONG)
                             .show();
                     error= true;
 
@@ -510,15 +539,19 @@ public class PaymentDataFragment extends Fragment {
             String jsonPayment = respuesta.getString("data");
             if(pos!=null){
                 Utilities.UpdatePaymentData(jsonPayment,client,pos);
+                Toast toast = Toast.makeText(getContext(),  R.string.successpaymentupdate, Toast.LENGTH_LONG);
+                toast.show();
             }else {
                 Utilities.AddPaymentData(jsonPayment, client);
+                Toast toast = Toast.makeText(getContext(),  R.string.successpaymentvalidation, Toast.LENGTH_LONG);
+                toast.show();
             }
 
 
-            Snackbar.make(view, R.string.successpaymentvalidation, Snackbar.LENGTH_LONG)
-                    .show();
+            /*Snackbar.make(viewGroup.getChildAt(0), R.string.successpaymentvalidation, Snackbar.LENGTH_LONG)
+                    .show();*/
             Intent intent = new Intent(getContext(),MenuActivity.class);
-            intent.putExtra("active", "PA");
+            intent.putExtra("active", client.getStatus());
             getActivity().finish();
             startActivity(intent);
 
@@ -551,6 +584,79 @@ public class PaymentDataFragment extends Fragment {
         @Override
         final public void onTextChanged(CharSequence s, int start, int before, int count) { /* Don't care */ }
     }
+
+    public void  LlenaBanco(String numero){
+        String url = WSkeys.URL_BASE + WSkeys.URL_BANKSEARCH+numero;
+        Utilities.SetLog("paymentfr llena banco", url, WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //Utilities.SetLog("PAYMENT COUNTRIES RESPONSE",response,WSkeys.log);
+                    ParserBank(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserBank(String response) throws JSONException {
+
+        //Log.e("CodeResponse", response);
+        JSONObject jo_respuesta = new JSONObject(response);
+        Utilities.SetLog("RESPONSEbank",jo_respuesta.toString(),WSkeys.log);
+
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (jo_respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            banco.setText(jo_respuesta.getJSONObject("data").getString("banco"));
+            tipotarjeta.setText(jo_respuesta.getJSONObject("data").getString("tipoTarjeta"));
+        }
+        else{
+            Snackbar.make(viewGroup.getChildAt(0), jo_respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
 
     /*public void LlenaPaises(final String text) {
 

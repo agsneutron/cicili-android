@@ -92,7 +92,7 @@
                     android:gravity="center"
                     android:text="@string/empty"
                     android:layout_marginBottom="8dp"/>
-                <TextView
+                <!--<TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -121,16 +121,16 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/empty"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"/>-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/Colonia"
+                    android:text="@string/usocfdi"
                     android:textAppearance="@style/CustomTextTitle"
                     android:layout_marginBottom="8dp"/>
                 <TextView
-                    android:id="@+id/town"
+                    android:id="@+id/usocfdi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
