@@ -1,5 +1,4 @@
 package com.cicili.mx.cicili;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;

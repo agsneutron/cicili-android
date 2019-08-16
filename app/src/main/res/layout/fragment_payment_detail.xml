@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="8dp"
     tools:context=".PaymentDetailFragment">
 
 
@@ -11,157 +12,249 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarAlwaysDrawVerticalTrack="true">
-        <LinearLayout
 
+        <LinearLayout
+            android:id="@+id/ldata"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/nav_header_height"
-                android:background="@drawable/side_nav_bar"
-                android:gravity="bottom"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:theme="@style/AppTheme"
-                android:layout_weight="0.1"
-                >
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:padding="20dp"
+                android:background="#ffffff"
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/nav_header_desc"
-                    android:paddingTop="@dimen/nav_header_vertical_spacing"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    app:srcCompat="@drawable/logo_cicili_full" />
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp">
 
-                <!-- <TextView
-                     android:id="@+id/tv_name"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:paddingTop="@dimen/nav_header_vertical_spacing"
-                     android:text="@string/nav_header_title"
-                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                <LinearLayout
+                    android:id="@+id/visa"
+                    android:layout_width="match_parent"
 
-                 <TextView
-                     android:id="@+id/tv_email"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/nav_header_subtitle" />-->
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/ldata"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical|center"
-                android:gravity="center_vertical|center"
-                android:layout_weight="0.9">
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/ic_visa" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/tipocta"
-                    android:textAppearance="@style/CustomTextTitle"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:id="@+id/tipocta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/empty"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/numt"
-                    android:textAppearance="@style/CustomTextTitle"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:id="@+id/numt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/empty"
-                    android:layout_marginBottom="8dp"/>
+                            <TextView
+                                android:id="@+id/tipocta"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:paddingLeft="25dp"
+                                android:text="Banco"
+                                android:textSize="10dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/vencimiento"
-                    android:textAppearance="@style/CustomTextTitle"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:id="@+id/vencimiento"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/empty" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/cvv"
-                    android:textAppearance="@style/CustomTextTitle"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:id="@+id/cvv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/empty" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/TipoT"
-                    android:textAppearance="@style/CustomTextTitle"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:id="@+id/tipotrj"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/empty"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/banco"
-                    android:textAppearance="@style/CustomTextTitle"
-                    android:layout_marginBottom="8dp"/>
-                <TextView
-                    android:id="@+id/banco"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/empty" />
-
-            </LinearLayout>
+                        </LinearLayout>
 
 
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/numt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="25dp"
+                        android:text="****  ****  ****  2445"
+                        android:textSize="16dp" />
+
+                    <TextView
+
+                        android:id="@+id/cvv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="25dp"
+                        android:text="Banco"
+                        android:textSize="10dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/banco"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:paddingLeft="25dp"
+                            android:text="Banco"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tipotrj"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="123"
+                            android:textSize="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            android:gravity="right"
+                            android:paddingLeft="25dp"
+                            android:text="VALID \n THRU"
+                            android:textSize="7dp" />
+
+                        <TextView
+                            android:id="@+id/vencimiento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            android:paddingLeft="13dp"
+                            android:text="12/18"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_header_height"
+            android:background="@drawable/side_nav_bar"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:theme="@style/AppTheme"
+            android:layout_weight="0.1"
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/nav_header_desc"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:layout_gravity="center_vertical|center_horizontal"
+                app:srcCompat="@drawable/logo_cicili_full" />
+
+        </LinearLayout>-->
+
+
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:text="@string/tipocta"
+             android:textAppearance="@style/CustomTextTitle"
+             android:layout_marginBottom="8dp"/>
+         <TextView
+             android:id="@+id/tipocta"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:text="@string/empty"
+             android:layout_marginBottom="8dp"/>-->
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:text="@string/numt"
+             android:textAppearance="@style/CustomTextTitle"
+             android:layout_marginBottom="8dp"/>
+         <TextView
+             android:id="@+id/numt"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:text="@string/empty"
+             android:layout_marginBottom="8dp"/>-->
+
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/vencimiento"
+            android:textAppearance="@style/CustomTextTitle"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/vencimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/empty" />-->
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/cvv"
+            android:textAppearance="@style/CustomTextTitle"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/cvv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/empty" />-->
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/TipoT"
+            android:textAppearance="@style/CustomTextTitle"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/tipotrj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/empty"
+            android:layout_marginBottom="8dp"/>-->
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:text="@string/banco"
+             android:textAppearance="@style/CustomTextTitle"
+             android:layout_marginBottom="8dp"/>
+         <TextView
+             android:id="@+id/banco"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:text="@string/empty" />-->
+
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:src="@android:drawable/ic_menu_edit"
             android:tint="@color/colorPrimaryDark"
             app:layout_anchor="@id/ldata"
-            app:layout_anchorGravity="top|end"
-            android:layout_marginBottom="8dp"
+            app:layout_anchorGravity="bottom|end"
 
             />
 
