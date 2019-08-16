@@ -187,11 +187,11 @@ public class MenuActivity extends AppCompatActivity
             startActivity(intent);
         } else {
             fm.beginTransaction().add(R.id.main_container, fragmentMain, "3").hide(fragmentAddress).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(fragmentPayment).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(fragmentRfc).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(fragmentPayment).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(fragmentRfc).commit();
             fm.beginTransaction().hide(active).show(fragmentMain).commit();
 
         }
@@ -253,16 +253,19 @@ public class MenuActivity extends AppCompatActivity
 
 
         } else if (id == R.id.navigation_address) {
-            fm.beginTransaction().hide(active).show(fragmentAddress).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(active).commit();
+            fm.beginTransaction().show(fragmentAddress).commit();
             active = fragmentAddress;
 
         } else if (id == R.id.navigation_payment) {
-            fm.beginTransaction().hide(active).show(fragmentPayment).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(active).commit();
+            fm.beginTransaction().show(fragmentPayment).commit();
             active = fragmentPayment;
 
 
         } else if (id == R.id.navigation_rfc) {
-            fm.beginTransaction().hide(active).show(fragmentRfc).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(active).commit();
+            fm.beginTransaction().show(fragmentRfc).commit();
             active = fragmentRfc;
 
         } else if (id == R.id.nav_share) {

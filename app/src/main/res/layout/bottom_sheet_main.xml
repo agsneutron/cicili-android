@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="64dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:padding="4dp"
+        android:text="@string/detalle_de_tu_pedido" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/concesionario" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/conductor" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/precio" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/litrosinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/litros"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/HintText"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/litros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text=""
+            android:textColor="@color/textDark" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/precioinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/precio"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/HintText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/precio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text=""
+            android:textColor="@color/textDark" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forma_de_pago"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/efectivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/efectivo" />
+
+        <RadioButton
+            android:id="@+id/tarjeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tarjeta" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mensajePagoPedido"
+        android:textSize="9sp"/>
+
+<Button
+    android:id="@+id/btnConfirma"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/btnConfirma"/>
+
+</LinearLayout>

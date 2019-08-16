@@ -172,7 +172,7 @@ public class WSkeys {
 
     //RFC register
     //https://cicili.com.mx:8443/app/mv/cliente/rfc/agregar
-    public  static  final  String URL_RFCDATA ="app/mv/cliente/rfc/agregar";
+    public  static  final  String URL_RFCDATA ="app/mv/cliente/rfc/actualizar";
 
     //RFC update
     //https://cicili.com.mx:8443/app/mv/cliente/rfc/actualizar
