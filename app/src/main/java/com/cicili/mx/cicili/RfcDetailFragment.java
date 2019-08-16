@@ -9,9 +9,12 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -110,6 +113,20 @@ public class RfcDetailFragment extends DialogFragment {
         view = inflater.inflate(R.layout.fragment_rfc_detail, container, false);
 
 
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        /////make map clear
+        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+
+        getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(getDialog().getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        getDialog().getWindow().setAttributes(lp);
         //Find the textviews objects
         //street = (TextView) view.findViewById(R.id.street);
         rfc = (TextView) view.findViewById(R.id.rfc);

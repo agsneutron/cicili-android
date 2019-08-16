@@ -10,9 +10,12 @@ import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -96,6 +99,20 @@ public class PaymentDetailFragment extends DialogFragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_payment_detail, container, false);
 
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        /////make map clear
+        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+
+        getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(getDialog().getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        getDialog().getWindow().setAttributes(lp);
 
         //Find the textviews objects
         //titular = (TextView) view.findViewById(R.id.titular);
