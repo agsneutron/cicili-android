@@ -252,6 +252,7 @@ public class MenuActivity extends AppCompatActivity
             //ShowPerfilDialog();
 
 
+
         } else if (id == R.id.navigation_address) {
             fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(active).commit();
             fm.beginTransaction().show(fragmentAddress).commit();
