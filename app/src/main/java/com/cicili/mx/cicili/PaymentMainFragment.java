@@ -2,9 +2,11 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -134,4 +136,13 @@ public class PaymentMainFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onResume() {
+        getActivity().onBackPressed();
+        super.onResume();
+
+
+    }
+
 }

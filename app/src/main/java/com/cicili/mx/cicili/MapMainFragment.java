@@ -57,6 +57,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -97,6 +98,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private ArrayList<String> autotanquesDisponiblesArray;
     Gson gson = new Gson();
     Integer direccionsel;
+    LinearLayout bottom_sheet;
+    BottomSheetBehavior bsb;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -152,6 +155,42 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         getMyLocationPermision();
 
 
+        //bottomsheet
+
+        bottom_sheet = (LinearLayout)view.findViewById(R.id.bottomSheet);
+        bsb = BottomSheetBehavior.from(bottom_sheet);
+        bsb.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                String nuevoEstado = "";
+
+                switch(newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        nuevoEstado = "STATE_COLLAPSED";
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        nuevoEstado = "STATE_EXPANDED";
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        nuevoEstado = "STATE_HIDDEN";
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        nuevoEstado = "STATE_DRAGGING";
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        nuevoEstado = "STATE_SETTLING";
+                        break;
+                }
+
+                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                Log.i("BottomSheets", "Offset: " + slideOffset);
+            }
+        });
 
         return view;
     }
@@ -240,11 +279,29 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                            Integer selectedItem = (Integer) marker.getTag();
                             Utilities.SetLog("MAP SELECTED PIPA",String.valueOf(marker.getTag()),WSkeys.log);
-                            OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
-                            orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
-                            orderIntentFragment.setCancelable(false);
-                            orderIntentFragment.show(getFragmentManager(),"fragmenOrderIntent");
+
+                            bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            // OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
+                            //orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
+                            //orderIntentFragment.setCancelable(false);
+                            //orderIntentFragment.show(getFragmentManager(),"fragmenOrderIntent");
                             return false;
+                        }
+                    });
+
+                    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            marker.getTag();
+
+                            Integer selectedItem = (Integer) marker.getTag();
+                            Utilities.SetLog("MAP SELECTED PIPA",String.valueOf(marker.getTag()),WSkeys.log);
+
+                            bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            // OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
+                            //orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
+                            //orderIntentFragment.setCancelable(false);
+                            //orderIntentFragment.show(getFragmentManager(),"fragmenOrderIntent");
                         }
                     });
 
@@ -430,7 +487,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
                 Snackbar.make(direcciones, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -579,6 +636,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+
 
 
 }

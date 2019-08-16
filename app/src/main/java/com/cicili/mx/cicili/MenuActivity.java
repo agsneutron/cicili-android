@@ -5,6 +5,8 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -28,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 
@@ -54,6 +57,7 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -153,6 +157,12 @@ public class MenuActivity extends AppCompatActivity
         tvname.setText(client.getName());
         TextView tvarea = (TextView)headerView.findViewById(R.id.tv_email);
         tvarea.setText(client.getEmail());
+        ImageView imageView = (ImageView)headerView.findViewById(R.id.imageView);
+
+        byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        imageView.setImageBitmap(decodedByte);
         //
 
 
@@ -177,11 +187,11 @@ public class MenuActivity extends AppCompatActivity
             startActivity(intent);
         } else {
             fm.beginTransaction().add(R.id.main_container, fragmentMain, "3").hide(fragmentAddress).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(fragmentPayment).commit();
-            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(fragmentRfc).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(fragmentPayment).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(fragmentRfc).commit();
             fm.beginTransaction().hide(active).show(fragmentMain).commit();
 
         }
@@ -243,16 +253,19 @@ public class MenuActivity extends AppCompatActivity
 
 
         } else if (id == R.id.navigation_address) {
-            fm.beginTransaction().hide(active).show(fragmentAddress).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(active).commit();
+            fm.beginTransaction().show(fragmentAddress).commit();
             active = fragmentAddress;
 
         } else if (id == R.id.navigation_payment) {
-            fm.beginTransaction().hide(active).show(fragmentPayment).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(active).commit();
+            fm.beginTransaction().show(fragmentPayment).commit();
             active = fragmentPayment;
 
 
         } else if (id == R.id.navigation_rfc) {
-            fm.beginTransaction().hide(active).show(fragmentRfc).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(active).commit();
+            fm.beginTransaction().show(fragmentRfc).commit();
             active = fragmentRfc;
 
 //        } else if (id == R.id.nav_share) {
