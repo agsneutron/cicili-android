@@ -1,31 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddressDataFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".AddressDataFragment">
+
+    <!--    <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimaryDark"
+            android:padding="16dp">
+            <ImageView
+                app:srcCompat="@android:drawable/ic_menu_info_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:contentDescription="@string/validatecode" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/AddressDataTitle"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>-->
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
         android:padding="16dp">
-        <ImageView
-            app:srcCompat="@android:drawable/ic_menu_info_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
-            android:contentDescription="@string/validatecode" />
-        <androidx.appcompat.widget.AppCompatTextView
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:text="@string/AddressDataTitle"/>
+            android:text="@string/AddressDataTitle"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/AddressNew"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -34,39 +64,38 @@
         android:padding="16dp">
 
 
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/aliass"
-                style="@style/TextInputLayout"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/alias"
                 app:errorEnabled="true"
-                app:helperText="Nombre corto"
-                android:layout_weight="1">
+                app:helperText="Nombre corto">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/alias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords"
-                    />
+                    android:inputType="textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cps"
-                style="@style/TextInputLayout"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/cp"
-                app:errorEnabled="true"
-                android:layout_weight="1">
+                app:errorEnabled="true">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/cp"
                     android:layout_width="match_parent"
@@ -77,16 +106,14 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/calles"
-            style="@style/TextInputLayout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/calle"
             app:errorEnabled="true">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/calle"
                 android:layout_width="match_parent"
@@ -100,15 +127,14 @@
             android:orientation="horizontal">
 
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/exts"
-                style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/ext"
-                app:errorEnabled="true"
-                android:layout_weight="1">
+                app:errorEnabled="true">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/numext"
                     android:layout_width="match_parent"
@@ -120,12 +146,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ints"
-                style="@style/TextInputLayout"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/inte"
-                app:errorEnabled="true"
-                android:layout_weight="1">
+                app:errorEnabled="true">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/numint"
                     android:layout_width="match_parent"
@@ -143,55 +170,71 @@
             android:layout_height="wrap_content">
 
             <FrameLayout
-                android:layout_marginTop="6dp"
-                android:background="@drawable/border"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:layout_marginTop="5dp"
                     android:id="@+id/spinner1"
                     android:layout_width="match_parent"
-                    android:textSize="12sp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
                     android:spinnerMode="dropdown"
-                    android:layout_height="40dp"/>
+                    android:textSize="12sp"
+                    />
             </FrameLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <!--<androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/asentamiento"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="15dp"
-                android:textSize="12sp"
-                android:text="@string/Colonia"
-                android:background="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="#FFFFFF"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:text="@string/Colonia"
+                android:textSize="12sp" />-->
 
 
         </FrameLayout>
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/favorita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/favorito"
-            android:id="@+id/favorita"/>
+            android:text="@string/favorito" />
 
 
+        <!--        <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/register_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="60dp"
+                    android:background="@color/colorAccent"
+                    android:text="@string/action_savee"
 
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
+                    />-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/register_address"
-            android:text="@string/action_savee"
-            android:layout_gravity="end"
-            android:background="@color/colorAccent"
-            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="38.4dp"
+            android:layout_marginRight="36dp"
+            android:orientation="vertical">
 
-            />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/register_address"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/action_savee"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

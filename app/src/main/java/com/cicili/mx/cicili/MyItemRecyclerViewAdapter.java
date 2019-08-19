@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cicili.mx.cicili.AddressMainFragment.OnListFragmentInteractionListener;
@@ -66,7 +67,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public final ImageButton mEdit;
+        public final ImageView mEdit;
         public AddressData mItem;
 
         public ViewHolder(View view) {
@@ -74,7 +75,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
-            mEdit = (ImageButton) view.findViewById(R.id.edit);
+            mEdit = (ImageView) view.findViewById(R.id.edit);
         }
 
         @Override

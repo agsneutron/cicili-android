@@ -4,7 +4,35 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="¡Hola"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/addresslocation"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+<!--    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -22,7 +50,7 @@
             android:textColor="@color/colorAccent"
             android:text="@string/addresslocation"/>
 
-    </LinearLayout>
+    </LinearLayout>-->
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,15 +68,34 @@
         android:layout_height="match_parent"
         android:layout_weight="0.8">
     </com.google.android.gms.maps.MapView>
-        <Button
-            android:id="@+id/save_address"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/Guardar"
-            android:layout_gravity="end"
-            android:layout_weight="0.2"
-            />
+        <!-- <Button
+             android:id="@+id/save_address"
+             style="?android:textAppearanceSmall"
+             android:layout_width="wrap_content"
+             android:layout_height="50dp"
+             android:text="@string/Guardar"
+             android:layout_gravity="end"
+             android:layout_weight="0.2"
+             />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8.4dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_address"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/action_savee"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
