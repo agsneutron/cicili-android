@@ -115,10 +115,10 @@ public class RfcDetailFragment extends DialogFragment {
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         /////make map clear
-        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        //getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
 
-        getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
+        //getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(getDialog().getWindow().getAttributes());

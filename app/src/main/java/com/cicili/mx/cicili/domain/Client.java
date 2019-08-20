@@ -28,6 +28,7 @@ public class Client extends Application {
     private String cellphone;
     private String photo;
     private String sexo;
+    private Integer rfcdatasize;
     private ArrayList<PaymentData> paymentDataArrayList;
     private ArrayList<AddressData> addressDataArrayList;
     private ArrayList<RfcData> rfcDataArrayList;
@@ -49,7 +50,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -67,6 +68,7 @@ public class Client extends Application {
         this.cellphone = cellphone;
         this.photo = photo;
         this.sexo = sexo;
+        this.rfcdatasize = rfcdatasize;
         this.paymentDataArrayList = paymentDataArrayList;
         this.addressDataArrayList = addressDataArrayList;
         this.rfcDataArrayList = rfcDataArrayList;
@@ -248,5 +250,13 @@ public class Client extends Application {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public Integer getRfcdatasize() {
+        return rfcdatasize;
+    }
+
+    public void setRfcdatasize(Integer rfcdatasize) {
+        this.rfcdatasize = rfcdatasize;
     }
 }

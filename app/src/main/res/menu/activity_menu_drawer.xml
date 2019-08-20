@@ -10,28 +10,28 @@
             android:title="@string/personaldata" />
         <item
             android:id="@+id/navigation_payment"
-            android:icon="@android:drawable/ic_dialog_dialer"
+            android:icon="@drawable/ic_credit_card_black_24dp"
             android:title="@string/PaymentData" />
         <item
             android:id="@+id/navigation_address"
-            android:icon="@android:drawable/ic_menu_myplaces"
+            android:icon="@drawable/ic_add_location_black_24dp"
             android:title="@string/direccion" />
         <item
             android:id="@+id/navigation_rfc"
-            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:icon="@drawable/ic_attach_file_black_24dp"
             android:title="Datos Fiscales" />
     </group>
 
     <item android:title="Configuración">
         <menu>
-            <item
+           <!-- <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/menu_share" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:title="@string/menu_send" />-->
             <item
                 android:id="@+id/nav_service"
                 android:icon="@android:drawable/ic_menu_info_details"

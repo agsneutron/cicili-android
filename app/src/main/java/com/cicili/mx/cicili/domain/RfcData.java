@@ -2,8 +2,9 @@ package com.cicili.mx.cicili.domain;
 
 public class RfcData {
 
-    private String id;
+    private Integer id;
     private String rfc;
+    private Integer status;
     private String razonSocial;
     private UsoCfdi usoCfdi;
     /*private String calle;
@@ -15,18 +16,19 @@ public class RfcData {
     public RfcData() {
     }
 
-    public RfcData(String id, String rfc, String razonSocial, UsoCfdi usoCfdi) {
+    public RfcData(Integer id, String rfc, Integer status, String razonSocial, UsoCfdi usoCfdi) {
         this.id = id;
         this.rfc = rfc;
+        this.status = status;
         this.razonSocial = razonSocial;
         this.usoCfdi = usoCfdi;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,5 +54,13 @@ public class RfcData {
 
     public void setUsoCfdi(UsoCfdi usoCfdi) {
         this.usoCfdi = usoCfdi;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

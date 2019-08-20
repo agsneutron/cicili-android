@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cicili.mx.cicili.PaymentMainFragment.OnListFragmentInteractionListener;
 import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
+import com.cicili.mx.cicili.io.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,20 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
         holder.mIdView.setText(stipopago);
         holder.mContentView.setText(String.valueOf(mValues.get(position).getNumero()));
         holder.mDescriptionView.setText(String.valueOf(mValues.get(position).getVencimiento()));
+        switch (mValues.get(position).getTipoTarjeta()) {
+            case WSkeys.dvisa:
+                holder.mImage.setImageResource(R.drawable.ic_visa);
+                Utilities.SetLog("P-RVH-V ",mValues.get(position).getTipoTarjeta(),WSkeys.log );
+                break;
+            case WSkeys.dmc:
+                holder.mImage.setImageResource(R.drawable.ic_mastercard);
+                Utilities.SetLog("P-RVH-MC ",mValues.get(position).getTipoTarjeta(),WSkeys.log );
+                break;
+            case WSkeys.damex:
+                holder.mImage.setImageResource(R.drawable.ic_american_express);
+                Utilities.SetLog("P-RVH-AMX ",mValues.get(position).getTipoTarjeta(),WSkeys.log );
+                break;
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +90,7 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public final ImageView mImage;
         public final TextView mIdView;
         public final TextView mContentView;
         public final TextView mDescriptionView;
@@ -82,6 +99,7 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            mImage = (ImageView) view.findViewById(R.id.inbox);
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
             mDescriptionView = (TextView) view.findViewById(R.id.description);

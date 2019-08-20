@@ -164,7 +164,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
                     focusView = cp;
                 }*/
                 if(usoCFDI.getSelectedItemId()==0){
-                    Snackbar.make(usoCFDI, "Selecciona el uso del CFDI", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Selecciona el uso del CFDI", Snackbar.LENGTH_LONG)
                             .show();
                     error=true;
                     focusView = usoCFDI;
@@ -337,7 +337,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(rfc, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
         }) {
@@ -514,7 +514,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             }else {
                 Utilities.AddRfcData(jo_rfc, client);
             }
-            Snackbar.make(calle, R.string.successrfcvalidation, Snackbar.LENGTH_LONG)
+            Snackbar.make(view, R.string.successrfcvalidation, Snackbar.LENGTH_LONG)
                     .show();
             Intent intent = new Intent(getContext(),MenuActivity.class);
             startActivity(intent);
@@ -523,7 +523,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(calle, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
 

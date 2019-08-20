@@ -44,4 +44,8 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="MyDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/gray</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

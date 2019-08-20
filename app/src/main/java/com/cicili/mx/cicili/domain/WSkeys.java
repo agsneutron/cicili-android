@@ -142,6 +142,10 @@ public class WSkeys {
     public static final Integer mc = 2;
     public static final Integer amex = 3;
 
+    public static final String dvisa = "VISA";
+    public static final String dmc = "MASTERCARD";
+    public static final String damex = "AMERICAN EXPRESS";
+
     public static final String hombre = "Hombre";
     public static final String mujer = "Mujer";
     public static final String noindicar = "No Indicar";
@@ -172,7 +176,7 @@ public class WSkeys {
 
     //RFC register
     //https://cicili.com.mx:8443/app/mv/cliente/rfc/agregar
-    public  static  final  String URL_RFCDATA ="app/mv/cliente/rfc/actualizar";
+    public  static  final  String URL_RFCDATA ="app/mv/cliente/rfc/registrar";
 
     //RFC update
     //https://cicili.com.mx:8443/app/mv/cliente/rfc/actualizar

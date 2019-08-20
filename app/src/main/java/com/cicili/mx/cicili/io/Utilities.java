@@ -239,7 +239,12 @@ public class Utilities {
         ArrayList<RfcData> rfcAux = new ArrayList<RfcData>();
         RfcData rfcData= gson.fromJson(jo_rfc.toString() , RfcData.class);
         rfcAux.add(rfcData);
-        client.getRfcDataArrayList().add(client.getRfcDataArrayList().size(),rfcData);
+        if(client.getRfcDataArrayList() != null){
+        client.getRfcDataArrayList().add(client.getRfcDataArrayList().size(), rfcData);
+        }
+        else{
+            client.setRfcDataArrayList(rfcAux);
+        }
     }
 
     public static void UpdateRfcData(JSONObject jo_rfc, Client client,int pos){
@@ -250,14 +255,15 @@ public class Utilities {
         client.getRfcDataArrayList().set(pos,rfcData);
     }
 
-    public static  void SetRfcData(JSONArray ja_rfc,Client client) throws JSONException {
+    public static  void SetRfcData(JSONObject jorfc,Client client) throws JSONException {
         ArrayList<RfcData> rfcAux = new ArrayList<RfcData>();
         Gson gson = new Gson();
+        JSONArray ja_rfc = jorfc.getJSONArray(WSkeys.data);
         if (ja_rfc.length() > 0) {
             Utilities.SetLog("LOGIN ja_rfc", ja_rfc.toString(), WSkeys.log);
             for(int i=0; i<ja_rfc.length(); i++) {
                 JSONObject jo_rfc = (JSONObject) ja_rfc.get(i);
-                Utilities.SetLog("jo_ddress",jo_rfc.toString(),WSkeys.log);
+                Utilities.SetLog("jo_rfc",jo_rfc.toString(),WSkeys.log);
                 RfcData rfcData= gson.fromJson(jo_rfc.toString() , RfcData.class);
                 rfcAux.add(rfcData);
             }

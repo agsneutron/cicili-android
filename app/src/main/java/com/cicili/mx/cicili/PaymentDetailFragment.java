@@ -1,5 +1,4 @@
 package com.cicili.mx.cicili;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -91,6 +90,7 @@ public class PaymentDetailFragment extends DialogFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
     }
 
     @Override
@@ -101,10 +101,10 @@ public class PaymentDetailFragment extends DialogFragment {
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         /////make map clear
-        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        //getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
 
-        getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
+        //getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(getDialog().getWindow().getAttributes());
