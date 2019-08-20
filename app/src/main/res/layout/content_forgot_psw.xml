@@ -29,12 +29,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/name"
+                android:text="@string/action_forgotpsw"
+                android:textColor="@color/white"
+                android:textSize="23dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:text="@string/title_activity_forgot_psw"
+                android:textColor="@color/white"
+                android:textSize="14.3sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_text_input"
-            style="@style/TextInputLayout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/contrasenia"
@@ -49,7 +74,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/cpassword_text_input"
-            style="@style/TextInputLayout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/confirma_contrasenia"
@@ -63,15 +88,34 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
+<!--        <Button
             android:id="@+id/register_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/changepsw"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="38.4dp"
+            android:layout_marginRight="36dp"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/register_button"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/changepsw"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

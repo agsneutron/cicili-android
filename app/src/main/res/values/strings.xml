@@ -91,6 +91,7 @@
     <string name="formapago">Selecciona una forma de pago.</string>
     <string name="action_savee">Guardar</string>
     <string name="AddressDataTitle">Direcciones</string>
+    <string name="AddressNew">Agrega una nueva dirección</string>
     <string name="alias">Alias</string>
     <string name="favorito">Dirección Predeterminada</string>
     <string name="calle">Calle</string>
