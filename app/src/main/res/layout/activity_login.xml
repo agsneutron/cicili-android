@@ -103,7 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="performante.sanchez@gmail.com"
+                        android:text="ari@gmail.mx"
                         android:textColor="@color/textDark" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <!-- <EditText
@@ -139,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="Guillermo1234"
+                        android:text="pstpst"
                         android:textColor="@color/textDark"
                         android:textColorHint="@color/white" />
                 </com.google.android.material.textfield.TextInputLayout>

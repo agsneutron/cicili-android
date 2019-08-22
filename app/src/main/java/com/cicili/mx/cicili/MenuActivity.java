@@ -172,21 +172,20 @@ public class MenuActivity extends AppCompatActivity
 
 
 
-
         if (client.getStatus().equals(WSkeys.datos_personales)){
             Intent intent = new Intent(MenuActivity.this, PerfilData.class);
-            intent.putExtra("active","PE");
+            intent.putExtra("active",WSkeys.datos_personales);
             startActivity(intent);
         }else if (client.getStatus().equals(WSkeys.datos_pago)){
                     Intent intent = new Intent(MenuActivity.this, PerfilData.class);
-                    intent.putExtra("active","PA");
+                    intent.putExtra("active",WSkeys.datos_pago);
                     startActivity(intent);
         }else if (client.getStatus().equals(WSkeys.datos_direccion)){
             Intent intent = new Intent(MenuActivity.this, PerfilData.class);
-            intent.putExtra("active","PD");
+            intent.putExtra("active",WSkeys.datos_direccion);
             startActivity(intent);
         } else {
-            fm.beginTransaction().add(R.id.main_container, fragmentMain, "3").hide(fragmentAddress).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentMain, "3").commit();
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
             //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
             //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
@@ -254,18 +253,23 @@ public class MenuActivity extends AppCompatActivity
 
 
         } else if (id == R.id.navigation_address) {
-            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(active).commit();
-            fm.beginTransaction().show(fragmentAddress).commit();
+            //transaction.replace(R.id.main_container, fragmentAddress);
+            //transaction.addToBackStack(null);
+
+            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
+            fm.beginTransaction().replace(R.id.main_container,fragmentAddress).commit();
+            fm.beginTransaction().addToBackStack(null);
+            //fm.beginTransaction().show(fragmentAddress).commit();
             active = fragmentAddress;
 
         } else if (id == R.id.navigation_payment) {
-            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(active).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(active).commit();
             fm.beginTransaction().show(fragmentPayment).commit();
             active = fragmentPayment;
 
 
         } else if (id == R.id.navigation_rfc) {
-            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(active).commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(active).commit();
             fm.beginTransaction().show(fragmentRfc).commit();
             active = fragmentRfc;
 
@@ -332,4 +336,6 @@ public class MenuActivity extends AppCompatActivity
         rfcDetailFragment.setCancelable(false);
         rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");
     }
+
+
 }

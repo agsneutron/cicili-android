@@ -86,21 +86,7 @@ public class RfcMainFragment extends Fragment {
 
         Utilities.SetLog("MAINRFC", "ON RFC LIST", WSkeys.log);
         LlenaRFC();
-        if (client.getRfcDataArrayList() != null) {
-            RFC_ITEMS = client.getRfcDataArrayList();
 
-            Utilities.SetLog("MAINRFC", RFC_ITEMS.toString(), WSkeys.log);
-        }
-        // Set the adapter
-        //if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        //    if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //    } else {
-        //        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-        //    }
-            recyclerView.setAdapter(new MyItemRfcRecyclerViewAdapter(RFC_ITEMS, mListener));
         //}
             FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -213,10 +199,24 @@ public class RfcMainFragment extends Fragment {
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            Utilities.SetRfcData(respuesta,client);
+            Utilities.SetLog("RFCARRAY",respuesta.toString(),WSkeys.log);
+            if (client.getRfcDataArrayList() != null) {
+                RFC_ITEMS = client.getRfcDataArrayList();
 
-            JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
-            Utilities.SetRfcData(ja_usocfdi,client);
-            Utilities.SetLog("RFCARRAY",ja_usocfdi.toString(),WSkeys.log);
+                Utilities.SetLog("MAINRFC", RFC_ITEMS.get(0).getRfc(), WSkeys.log);
+            }
+            // Set the adapter
+            //if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+            //    if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            //    } else {
+            //        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            //    }
+            recyclerView.setAdapter(new MyItemRfcRecyclerViewAdapter(RFC_ITEMS, mListener));
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error

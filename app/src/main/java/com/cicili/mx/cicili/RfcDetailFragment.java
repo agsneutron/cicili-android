@@ -115,10 +115,10 @@ public class RfcDetailFragment extends DialogFragment {
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         /////make map clear
-        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        //getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
 
-        getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
+        //getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(getDialog().getWindow().getAttributes());
@@ -152,7 +152,7 @@ public class RfcDetailFragment extends DialogFragment {
         //street.setText(client.getRfcDataArrayList().get(pos).getCalle() + "," + String.valueOf(client.getRfcDataArrayList().get(pos).getExterior()) + " " + String.valueOf(client.getRfcDataArrayList().get(pos).getInterior()));
         rfc.setText(client.getRfcDataArrayList().get(pos).getRfc());
         razonsocial.setText(client.getRfcDataArrayList().get(pos).getRazonSocial());
-        usocfdi.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getUsoCfdi().getId()));
+        usocfdi.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getUsoCfdi().getText()));
         //cp.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()));
         //town.setText(client.getRfcDataArrayList().get(pos).getAsentamiento().getNombre());
 

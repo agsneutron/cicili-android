@@ -366,8 +366,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             client.setEmail(jousuario.getString(WSkeys.email));
             client.setCellphone(jousuario.getString(WSkeys.cel));
             client.setUsername(userName);
-            //client.setSexo(jousuario.getString(WSkeys.sexo));
-            client.setSexo("");
+            client.setSexo(jousuario.getString(WSkeys.sexo));
+            //client.setSexo("");
             Utilities.SetClientData(jousuario,client);
 
 
@@ -378,7 +378,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
 
-            if (client.getStatus().equals(WSkeys.datos_personales)){
+            /*if (client.getStatus().equals(WSkeys.datos_personales)){
 
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_personales);
@@ -394,7 +394,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_direccion);
                 startActivity(intent);
-            }
+            }*/
 
 
 
@@ -403,6 +403,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                 startActivity(intent);
+                finish();
             }
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error

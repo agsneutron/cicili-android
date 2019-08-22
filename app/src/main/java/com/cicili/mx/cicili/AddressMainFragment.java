@@ -130,4 +130,6 @@ public class AddressMainFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(AddressData item);
     }
+
+
 }

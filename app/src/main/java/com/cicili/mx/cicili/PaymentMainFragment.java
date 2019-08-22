@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,9 +140,21 @@ public class PaymentMainFragment extends Fragment {
 
     @Override
     public void onResume() {
-        getActivity().onBackPressed();
         super.onResume();
 
+        getView().setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK)
+                {
+                    final Fragment fragmentMain = new MapMainFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").show(fragmentMain).commit();
+
+                    return true;
+                }
+                return false;
+        }
+        });
 
     }
 
