@@ -253,9 +253,13 @@ public class MenuActivity extends AppCompatActivity
 
 
         } else if (id == R.id.navigation_address) {
+            //transaction.replace(R.id.main_container, fragmentAddress);
+            //transaction.addToBackStack(null);
 
-            fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
-            fm.beginTransaction().show(fragmentAddress).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
+            fm.beginTransaction().replace(R.id.main_container,fragmentAddress).commit();
+            fm.beginTransaction().addToBackStack(null);
+            //fm.beginTransaction().show(fragmentAddress).commit();
             active = fragmentAddress;
 
         } else if (id == R.id.navigation_payment) {

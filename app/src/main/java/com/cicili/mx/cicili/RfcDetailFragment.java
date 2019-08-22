@@ -152,7 +152,7 @@ public class RfcDetailFragment extends DialogFragment {
         //street.setText(client.getRfcDataArrayList().get(pos).getCalle() + "," + String.valueOf(client.getRfcDataArrayList().get(pos).getExterior()) + " " + String.valueOf(client.getRfcDataArrayList().get(pos).getInterior()));
         rfc.setText(client.getRfcDataArrayList().get(pos).getRfc());
         razonsocial.setText(client.getRfcDataArrayList().get(pos).getRazonSocial());
-        usocfdi.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getUsoCfdi().getId()));
+        usocfdi.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getUsoCfdi().getText()));
         //cp.setText(String.valueOf(client.getRfcDataArrayList().get(pos).getAsentamiento().getCp()));
         //town.setText(client.getRfcDataArrayList().get(pos).getAsentamiento().getNombre());
 
