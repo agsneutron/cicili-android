@@ -597,10 +597,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     public void AddMarker(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
         Marker mMarker = mMap.addMarker(new MarkerOptions()
-                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_local_gas_station_black_24dp))
+                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_icon))
                 .position(new LatLng(lat,lon))
                 .title("Concesionario: "+concesionario)
                 .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
+
         mMarker.showInfoWindow();
         mMarker.setTag(id);
     }
