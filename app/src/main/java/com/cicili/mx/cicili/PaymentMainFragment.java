@@ -140,21 +140,25 @@ public class PaymentMainFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onResume();
 
-        getView().setOnKeyListener(new View.OnKeyListener()
+
+        /*getView().setOnKeyListener(new View.OnKeyListener()
         {
             @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK)
                 {
-                    final Fragment fragmentMain = new MapMainFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").show(fragmentMain).commit();
+                    Utilities.SetLog("ONRESUMEPAYMENTMAINFR", "RESUME",WSkeys.log );
+
+                    Fragment current = getActivity().getSupportFragmentManager().findFragmentByTag("fragmentPayment");
+                    Fragment old = getActivity().getSupportFragmentManager().findFragmentByTag("fragmentMain");
+                    getActivity().getSupportFragmentManager().beginTransaction().hide(current).show(old).commit();
 
                     return true;
                 }
                 return false;
         }
-        });
+        });*/
+        super.onResume();
 
     }
 

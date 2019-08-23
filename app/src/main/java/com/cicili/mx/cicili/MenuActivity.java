@@ -91,6 +91,8 @@ public class MenuActivity extends AppCompatActivity
     final Fragment fragmentRfc = new RfcMainFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragmentMain;
+    Fragment current = fragmentMain;
+    Fragment old = fragmentMain;
     BottomNavigationView nv;
 
 
@@ -185,13 +187,23 @@ public class MenuActivity extends AppCompatActivity
             intent.putExtra("active",WSkeys.datos_direccion);
             startActivity(intent);
         } else {
-            fm.beginTransaction().add(R.id.main_container, fragmentMain, "3").commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "2").hide(fragmentAddress).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "1").hide(fragmentOrder).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "4").hide(fragmenUserProfile).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "5").hide(fragmentPayment).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "6").hide(fragmentRfc).commit();
-            fm.beginTransaction().hide(active).show(fragmentMain).commit();
+
+            if (findViewById(R.id.main_container) != null) {
+
+                if (savedInstanceState != null) {
+                return;
+                }
+
+                fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
+                active = fragmentMain;
+            }
+
+            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(fragmentAddress).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "fragmentOrder").hide(fragmentOrder).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "fragmenUserProfile").hide(fragmenUserProfile).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(fragmentPayment).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(fragmentRfc).commit();
+            //fm.beginTransaction().hide(active).show(fragmentMain).commit();
 
         }
     }
@@ -202,8 +214,22 @@ public class MenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            if (active==fragmentMain){
+                super.onBackPressed();
+            }
+            else{
+
+                Utilities.SetLog("ONBACKPRESED",active.getTag(),WSkeys.log);
+                fm.beginTransaction().hide(active).show(fragmentMain).commit();
+                active=fragmentMain;
+            }
+
         }
+
+
+
+        Utilities.SetLog("ONBACKPRESED","MENUACTIVITY",WSkeys.log);
     }
 
     @Override
@@ -237,40 +263,51 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.navigation_perfil) {
 
-            //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            //ft.replace(R.id.mainFrame, fragmenUserProfile);
-            //ft.commit();
-            //fm.beginTransaction().hide(active).show(fragmenUserProfile).commit();
-            //active = fragmenUserProfile;
-
-            //fm.beginTransaction().hide(active).show(fragmenUserProfile).commit();
-            //active = fragmenUserProfile;
-
             UserProfileFragment userProfileFragment = new UserProfileFragment();
             userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
-            //ShowPerfilDialog();
-
-
 
         } else if (id == R.id.navigation_address) {
-            //transaction.replace(R.id.main_container, fragmentAddress);
-            //transaction.addToBackStack(null);
+            Utilities.SetLog("FRAGMENT_ADDRESS", active.getTag(),WSkeys.log);
+            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
 
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
-            fm.beginTransaction().replace(R.id.main_container,fragmentAddress).commit();
-            fm.beginTransaction().addToBackStack(null);
+            //fm.beginTransaction().addToBackStack("fragmentMain");
             //fm.beginTransaction().show(fragmentAddress).commit();
+            //active = fragmentAddress;
+            if (!fragmentAddress.isAdded()) {
+                Utilities.SetLog("FRAGMENT_ADDRESS",  active.getTag(),WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container,fragmentAddress,"fragmentAddress").commit();
+            }
+            fm.beginTransaction().addToBackStack("fragmentMain");
+            fm.beginTransaction().hide(active).show(fragmentAddress).commit();
             active = fragmentAddress;
 
+
         } else if (id == R.id.navigation_payment) {
-            fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(active).commit();
-            fm.beginTransaction().show(fragmentPayment).commit();
+
+            if (!fragmentPayment.isAdded()) {
+                Utilities.SetLog("FRAGMENT_PAYMENT",  active.getTag(),WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container,fragmentPayment,"fragmentPayment").commit();
+            }
+            fm.beginTransaction().addToBackStack("fragmentMain").commit();
+            fm.beginTransaction().hide(active).show(fragmentPayment).commit();
             active = fragmentPayment;
+
+            //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(active).commit();
+            //fm.beginTransaction().show(fragmentPayment).commit();
+            //active = fragmentPayment;
 
 
         } else if (id == R.id.navigation_rfc) {
-            fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(active).commit();
-            fm.beginTransaction().show(fragmentRfc).commit();
+            //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(active).commit();
+            //fm.beginTransaction().show(fragmentRfc).commit();
+            //active = fragmentRfc;
+            if (!fragmentRfc.isAdded()) {
+                Utilities.SetLog("FRAGMENT_RFC", active.getTag(),WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container,fragmentRfc,"fragmentRfc").commit();
+            }
+            fm.beginTransaction().addToBackStack("fragmentMain").commit();
+            fm.beginTransaction().hide(active).show(fragmentRfc).commit();
             active = fragmentRfc;
 
 //        } else if (id == R.id.nav_share) {
