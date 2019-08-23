@@ -28,10 +28,12 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="546483" />
-                            <entry key="outputName" value="ic_assignment_rfc_black_24dp" />
+                            <entry key="outputName" value="ic_pipa_1" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/pipa_icon.svg" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../SVG/Recurso 1.svg" />
+                            <entry key="width" value="45" />
                           </map>
                         </option>
                       </PersistentState>
