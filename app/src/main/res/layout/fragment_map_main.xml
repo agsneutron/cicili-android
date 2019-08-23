@@ -1,75 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MapMainFragment"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context=".MapMainFragment">
 
 
     <FrameLayout
         android:id="@+id/mapframe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="63dp"
+        android:layout_marginBottom="55dp"
         android:orientation="vertical">
 
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-        <FrameLayout
-            android:layout_marginTop="6dp"
-            android:background="@drawable/border"
+            android:layout_height="match_parent" />
+
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top">
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="480dp"
+            android:background="@color/white">
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:layout_marginTop="5dp"
-                android:id="@+id/spinner1"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:textSize="12sp"
-                android:spinnerMode="dropdown"
-                android:layout_height="40dp"/>
-        </FrameLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/main_address"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="15dp"
-            android:textSize="12sp"
-            android:text="@string/direccion"
-            android:background="#FFFFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¡Hola"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="23dp" />
+
+                    <TextView
+                        android:id="@+id/name_usuario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="7dp"
+                        android:text="Guillermo!"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="23dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/titulo_selecciona_direccion"
+                    android:textColor="@color/black"
+                    android:textSize="14.3sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner1"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="12sp" />
 
 
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_stat_name"
-            />
+        <!--        <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/main_address"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="12sp"
+                    android:text="@string/direccion"
+                    android:background="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />-->
+
+
+        <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+             android:id="@+id/fab"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="bottom|end"
+             android:layout_margin="@dimen/fab_margin"
+             app:srcCompat="@drawable/ic_stat_name"
+             />-->
     </FrameLayout>
-    <include
-        layout="@layout/bottom_sheet_main"/>
 
-
-
-
-
+    <include layout="@layout/bottom_sheet_main" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -103,6 +103,7 @@
     <string name="title_activity_maps">Actualizar Ubicación</string>
     <string name="title_address">Direcciones</string>
     <string name="title_orders">Pedidos</string>
+    <string name="titulo_selecciona_direccion"> ¿A que dirección enviamos tu pedido?</string>
 
     <string name="normal_map">Normal Map</string>
     <string name="hybrid_map">Hybrid Map</string>
