@@ -18,6 +18,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -59,6 +64,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -88,6 +94,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Integer pipaSeleccionada;
 
     private OnFragmentInteractionListener mListener;
     Application application = (Application) Client.getContext();
@@ -184,16 +191,115 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 }
 
                 Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+
+                TextView concesionario = (TextView) view.findViewById(R.id.concesionario);
+                concesionario.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConcesionario());
+                TextView conductor = (TextView) view.findViewById(R.id.conductor);
+                conductor.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConductor());
+                TextView costoxlitro = (TextView) view.findViewById(R.id.costo);
+                costoxlitro.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio()));
+                TextView tiempo = (TextView) view.findViewById(R.id.tiempo);
+                tiempo.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getTiempoLlegada()));
+                final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago);
+                String formapagoseleccionada="";
+                if(rgFormaPago.getCheckedRadioButtonId() == R.id.hombre){
+                    formapagoseleccionada = WSkeys.dtarjeta;
+                }
+
+                if (rgFormaPago.getCheckedRadioButtonId() == R.id.mujer){
+                    formapagoseleccionada = WSkeys.defectivo;
+                }
+
+                final TextInputEditText litros = (TextInputEditText) view.findViewById(R.id.litros);
+                final TextInputEditText precio = (TextInputEditText) view.findViewById(R.id.precio);
+
+                litros.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        Double nuevoprecio;
+                        if (!TextUtils.isEmpty(litros.getText())) {
+                            if (Double.valueOf(litros.getText().toString()) > 0) {
+                                nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(litros.getText().toString());
+                                precio.setText(String.valueOf(nuevoprecio));
+                            }
+                        }
+                        else{
+                            litros.setText("0");
+                        }
+                    }
+                });
+
+                precio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        Double calculaLitros;
+                        if (!TextUtils.isEmpty(precio.getText())){
+                            if (Double.valueOf(precio.getText().toString())>0){
+                                calculaLitros = (Double.valueOf(precio.getText().toString()) / client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio());
+                                litros.setText(String.valueOf(calculaLitros));
+                            }
+                        }
+                        else{
+                            precio.setText("0");
+                        }
+                    }
+                });
+
+                Button btnConformaPedido = (Button) view.findViewById(R.id.btnConfirma);
+                final String finalFormapagoseleccionada = formapagoseleccionada;
+                btnConformaPedido.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        boolean cancel = false;
+                        View focusView = null;
+
+                        // Check for a valid l/p, if the user entered one.
+                        if (!TextUtils.isEmpty(litros.getText()) || (Double.valueOf(String.valueOf(litros.getText())) <= 0)) {
+                            litros.setError(getString(R.string.error_invalid_value));
+                            focusView = litros;
+                            cancel = true;
+                        }
+
+                        // Check for a valid password, if the user entered one.
+                        if (!TextUtils.isEmpty(precio.getText()) || (Double.valueOf(String.valueOf(precio.getText())) <= 0)) {
+                            precio.setError(getString(R.string.error_invalid_password));
+                            focusView = precio;
+                            cancel = true;
+                        }
+
+                        if (!finalFormapagoseleccionada.equals("")){
+                            focusView = rgFormaPago;
+                            cancel = true;
+                        }
+
+                        if (cancel) {
+                            // There was an error
+                            focusView.requestFocus();
+                            Snackbar.make(view, R.string.error_pedido, Snackbar.LENGTH_SHORT).show();
+                        }
+                        else{
+
+                            //hacer pedido
+                        }
+
+                    }
+                });
+
             }
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 Log.i("BottomSheets", "Offset: " + slideOffset);
             }
+
+
         });
 
         return view;
     }
+
+
 
     //MAP
     @Override
@@ -279,8 +385,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                            Integer selectedItem = (Integer) marker.getTag();
                             Utilities.SetLog("MAP SELECTED PIPA",String.valueOf(marker.getTag()),WSkeys.log);
+                            pipaSeleccionada = ((Integer) marker.getTag()).intValue();
 
                             bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                             // OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
                             //orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
                             //orderIntentFragment.setCancelable(false);
@@ -296,8 +404,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                             Integer selectedItem = (Integer) marker.getTag();
                             Utilities.SetLog("MAP SELECTED PIPA",String.valueOf(marker.getTag()),WSkeys.log);
+                            pipaSeleccionada = ((Integer) marker.getTag()).intValue();
 
                             bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                             // OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
                             //orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
                             //orderIntentFragment.setCancelable(false);

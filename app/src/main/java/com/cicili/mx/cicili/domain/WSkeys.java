@@ -134,6 +134,8 @@ public class WSkeys {
     public static final Integer TDD = 2;
     public static final Integer TDC = 3;
 
+
+    public static final String dtarjeta = "TARJETA";
     public static final String defectivo = "EFECTIVO";
     public static final String dTDD = "TDD";
     public static final String dTDC = "TDC";

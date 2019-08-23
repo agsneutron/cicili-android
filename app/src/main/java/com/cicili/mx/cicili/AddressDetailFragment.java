@@ -130,9 +130,11 @@ public class AddressDetailFragment extends DialogFragment implements OnMapReadyC
         //getDialog().setContentView(R.layout.validate_geolocation_layout);////your custom content
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+
+
         lp.copyFrom(getDialog().getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
         getDialog().getWindow().setAttributes(lp);

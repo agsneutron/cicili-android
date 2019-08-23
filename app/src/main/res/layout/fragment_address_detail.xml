@@ -29,6 +29,7 @@
 
                 android:paddingTop="@dimen/activity_vertical_margin"
 
+                android:layout_weight="0.7"
                 android:theme="@style/AppTheme">
 
                 <TextView
@@ -81,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_weight="0.9"
+                android:layout_weight="0.3"
 
                 android:orientation="vertical">
 
