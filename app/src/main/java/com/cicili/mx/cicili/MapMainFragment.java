@@ -171,6 +171,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
                 String nuevoEstado = "";
+                TextView concesionario = (TextView) view.findViewById(R.id.concesionario);
+                TextView conductor = (TextView) view.findViewById(R.id.conductor);
+                TextView costoxlitro = (TextView) view.findViewById(R.id.costo);
+                TextView tiempo = (TextView) view.findViewById(R.id.tiempo);
+                final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago);
+                String formapagoseleccionada="";
+                final TextInputEditText litros = (TextInputEditText) view.findViewById(R.id.litros);
+                final TextInputEditText precio = (TextInputEditText) view.findViewById(R.id.precio);
 
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
@@ -192,16 +200,13 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                 Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
-                TextView concesionario = (TextView) view.findViewById(R.id.concesionario);
+
+
                 concesionario.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConcesionario());
-                TextView conductor = (TextView) view.findViewById(R.id.conductor);
                 conductor.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConductor());
-                TextView costoxlitro = (TextView) view.findViewById(R.id.costo);
                 costoxlitro.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio()));
-                TextView tiempo = (TextView) view.findViewById(R.id.tiempo);
                 tiempo.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getTiempoLlegada()));
-                final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago);
-                String formapagoseleccionada="";
+
                 if(rgFormaPago.getCheckedRadioButtonId() == R.id.hombre){
                     formapagoseleccionada = WSkeys.dtarjeta;
                 }
@@ -210,8 +215,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     formapagoseleccionada = WSkeys.defectivo;
                 }
 
-                final TextInputEditText litros = (TextInputEditText) view.findViewById(R.id.litros);
-                final TextInputEditText precio = (TextInputEditText) view.findViewById(R.id.precio);
+
 
                 litros.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
@@ -253,30 +257,35 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                         boolean cancel = false;
                         View focusView = null;
+                        String error="";
 
                         // Check for a valid l/p, if the user entered one.
-                        if (!TextUtils.isEmpty(litros.getText()) || (Double.valueOf(String.valueOf(litros.getText())) <= 0)) {
-                            litros.setError(getString(R.string.error_invalid_value));
-                            focusView = litros;
+                        if (!TextUtils.isEmpty(litros.getText()) || String.valueOf(litros.getText()).equals("0")) {
+                           // litros.setError(getString(R.string.error_invalid_value));
+                           // focusView = litros;
+                            error=getString(R.string.error_invalid_value);
                             cancel = true;
                         }
 
                         // Check for a valid password, if the user entered one.
-                        if (!TextUtils.isEmpty(precio.getText()) || (Double.valueOf(String.valueOf(precio.getText())) <= 0)) {
-                            precio.setError(getString(R.string.error_invalid_password));
-                            focusView = precio;
+                        if (!TextUtils.isEmpty(precio.getText()) || String.valueOf(precio.getText()).equals("0")) {
+                            Utilities.SetLog("ERROR PRECIO", String.valueOf(precio.getText()), WSkeys.log);
+                            //precio.setError(getString(R.string.error_invalid_value));
+                            //focusView = precio;
+                            error=getString(R.string.error_invalid_value);
                             cancel = true;
                         }
 
                         if (!finalFormapagoseleccionada.equals("")){
-                            focusView = rgFormaPago;
+                            //focusView = rgFormaPago;
+                            error="Indica la forma de pago";
                             cancel = true;
                         }
 
                         if (cancel) {
                             // There was an error
-                            focusView.requestFocus();
-                            Snackbar.make(view, R.string.error_pedido, Snackbar.LENGTH_SHORT).show();
+                            //focusView.requestFocus();
+                            Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                         }
                         else{
 
@@ -687,7 +696,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             //client.getAddressDataArrayList().get(i).getLatitud();
             //client.getAddressDataArrayList().get(i).getLongitud();
             try {
-                mMap.clear();
+                //mMap.clear();
                 ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i).getLatitud(), client.getAddressDataArrayList().get(i).getLongitud()));
                 MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i).getLatitud(), client.getAddressDataArrayList().get(i).getLongitud(),client.getAddressDataArrayList().get(i).getAlias());
             } catch (JSONException e) {
