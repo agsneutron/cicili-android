@@ -164,10 +164,10 @@
     <string name="btnConfirma">Confirmar Pedido</string>
     <string name="mensajePagoPedido">El pago del gas es directamente al conductor de la pipa. Cicili NO cobra Gas, solo la comisión por el servicio marcada en los términos de uso por medio de la tarjeta registrada</string>
     <string name="concesionario">Concesionario</string>
-    <string name="detalle_de_tu_pedido">Detalle de tu Pedido</string>
+    <string name="detallePedido">Detalle de tu Pedido</string>
 
     <string name="conductor">Conductor</string>
-    <string name="costo">Precio por litro:</string>
+    <string name="costo">Precio por litro</string>
     <string name="error_pedido">Por favor revisa los datos de tu pedido</string>
     <string name="error_invalid_value">Favor indica los litros o precio a pagar.</string>
     <string name="tiempo">Tiempo aproximado de llegada</string>

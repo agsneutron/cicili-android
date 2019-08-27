@@ -4,99 +4,385 @@
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="450dp"
-    android:orientation="vertical"
     android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     app:behavior_hideable="true"
     app:behavior_peekHeight="64dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:padding="4dp"
-        android:text="@string/detalle_de_tu_pedido" />
+        android:text="@string/detalle_de_tu_pedido" />-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/detallePedido"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/concesionarioinput"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/concesionario" />
-        <TextView
-            android:id="@+id/concesionario"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <!--        <TextView
+                        android:id="@+id/concesionarioinput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/concesionario" />
+                    <TextView
+                        android:id="@+id/concesionario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/empty" />-->
+
+            <TextView
+                android:id="@+id/concesionarioinput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/concesionario"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/concesionario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Jose Guillermo Sanchez Nava"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/empty" />
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <!-- <TextView
+                 android:id="@+id/conductorinput"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/conductor" />
+             <TextView
+                 android:id="@+id/conductor"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/empty" />-->
+            <TextView
+                android:id="@+id/conductorinput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/conductor"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/conductor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Jose Guillermo Sanchez Nava"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14dp" />
+        </LinearLayout>
+
 
     </LinearLayout>
+
+
+    <!--    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/costoinput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/costo" />
+            <TextView
+                android:id="@+id/costo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty" />
+
+        </LinearLayout>-->
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tiempoinput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tiempo" />
+            <TextView
+                android:id="@+id/tiempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty" />
+
+        </LinearLayout>-->
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dddddd" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/conductorinput"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/conductor" />
-        <TextView
-            android:id="@+id/conductor"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle1">
+                <!-- <ImageView
+                     android:layout_width="30dp"
+                     android:layout_height="30dp"
+                     android:layout_marginLeft="17dp"
+                     android:src="@drawable/ic_edit"
+                     android:layout_gravity="center"
+                     android:fontFamily="@font/roboto_medium"/>-->
+
+                <TextView
+                    android:id="@+id/costo"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:text="$99.99"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/costoinput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="@string/costo"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty" />
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle1">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="17dp"
+                    android:src="@drawable/ic_date_range_black_24dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tiempoinput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp"
+                    android:text="Legada: "
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/tiempo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:text="30 minutos"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12dp" />
+            </LinearLayout>
+        </LinearLayout>
+
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dddddd" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/costoinput"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/costo" />
-        <TextView
-            android:id="@+id/costo"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/litrosinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/litros"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/litros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sms_code_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="******"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="36sp" />
+            </com.google.android.material.textfield.TextInputLayout>-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ddd" />
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/empty" />
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/precioinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/precio"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="numberDecimal"
+
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sms_code_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="******"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="36sp" />
+            </com.google.android.material.textfield.TextInputLayout>-->
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tiempoinput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tiempo" />
-        <TextView
-            android:id="@+id/tiempo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty" />
 
-    </LinearLayout>
-
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
+    <!--<com.google.android.material.textfield.TextInputLayout
         android:id="@+id/litrosinput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/litros"
         android:textColorHint="@color/colorPrimaryDark"
         app:errorEnabled="true"
-        app:hintTextAppearance="@style/HintText"
-        >
+        app:hintTextAppearance="@style/HintText">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/litros"
@@ -105,67 +391,103 @@
             android:inputType="number"
             android:text=""
             android:textColor="@color/textDark" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>-->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/precioinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/precio"
-        android:textColorHint="@color/colorPrimaryDark"
-        app:errorEnabled="true"
-        app:hintTextAppearance="@style/HintText">
+    <!-- <com.google.android.material.textfield.TextInputLayout
+         android:id="@+id/precioinput"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:hint="@string/precio"
+         android:textColorHint="@color/colorPrimaryDark"
+         app:errorEnabled="true"
+         app:hintTextAppearance="@style/HintText">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/precio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text=""
-            android:textColor="@color/textDark" />
-    </com.google.android.material.textfield.TextInputLayout>
+         <com.google.android.material.textfield.TextInputEditText
+             android:id="@+id/precio"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:inputType="numberDecimal"
+             android:text=""
+             android:textColor="@color/textDark" />
+     </com.google.android.material.textfield.TextInputLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/forma_de_pago"/>
-        <RadioGroup
-            android:id="@+id/rgFormaPago"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/efectivo"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forma_de_pago" />
+
+            <RadioGroup
+                android:id="@+id/rgFormaPago"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/efectivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/efectivo" />
+
+                <RadioButton
+                    android:id="@+id/tarjeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tarjeta" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+
+            <!--<Button
+                android:id="@+id/btnConfirma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:text="@string/btnConfirma" />-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirma"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/efectivo" />
-
-            <RadioButton
-                android:id="@+id/tarjeta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tarjeta" />
-        </RadioGroup>
+                android:padding="15dp"
+                android:text="@string/btnConfirma"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dddddd"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mensajePagoPedido"
-        android:textSize="9sp"/>
-
-<Button
-    android:id="@+id/btnConfirma"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/btnConfirma"
-    android:layout_marginBottom="60dp"/>
+        android:textSize="9sp" />
 
 </LinearLayout>
