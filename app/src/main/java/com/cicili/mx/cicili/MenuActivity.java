@@ -118,8 +118,11 @@ public class MenuActivity extends AppCompatActivity
                     active = fragmentAddress;
                     return true;
                 case R.id.navigation_orders:
-                    fm.beginTransaction().hide(active).show(fragmentOrder).commit();
-                    active = fragmentOrder;
+                    //fm.beginTransaction().hide(active).show(fragmentOrder).commit();
+                    //active = fragmentOrder;
+                    Intent intent = new Intent(MenuActivity.this, Aclaracion.class);
+                    //intent.putExtra("token", token);
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_payment:
                     fm.beginTransaction().hide(active).show(fragmentPayment).commit();
@@ -345,7 +348,7 @@ public class MenuActivity extends AppCompatActivity
     public void onListFragmentInteraction(AddressData item) {
         //al dar clic en el elemento de la lista de direccioes
 
-        Utilities.SetLog("MENUACTIVITYADRS", item.getId(), WSkeys.log);
+        Utilities.SetLog("MENUACTIVITYADRS", String.valueOf(item.getId()), WSkeys.log);
         String index = String.valueOf(client.getAddressDataArrayList().indexOf(item));
         AddressDetailFragment addressDetailFragment = new AddressDetailFragment();
         addressDetailFragment = AddressDetailFragment.newInstance(index,"");
