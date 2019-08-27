@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
-    android:layout_height="450dp"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     app:behavior_hideable="true"
     app:behavior_peekHeight="64dp"
+    android:layout_marginBottom="65dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <!--<TextView
@@ -223,7 +224,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="17dp"
-                    android:src="@drawable/ic_date_range_black_24dp" />
+                    android:src="@drawable/ic_access_time_black_24dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -294,7 +295,7 @@
                     android:inputType="number"
                     android:maxLength="6"
                     android:textAlignment="center"
-                    android:textSize="32sp" />
+                    android:textSize="28sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--<com.google.android.material.textfield.TextInputLayout
@@ -349,7 +350,7 @@
 
                     android:maxLength="6"
                     android:textAlignment="center"
-                    android:textSize="32sp" />
+                    android:textSize="28sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sms_code_input"
