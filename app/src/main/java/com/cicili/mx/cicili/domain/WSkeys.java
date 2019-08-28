@@ -95,6 +95,7 @@ public class WSkeys {
     public  static final String datos_pago = "PA";
     public  static final String datos_direccion = "PD";
     public static final String datos_rfc ="PR";
+    public static final String datos_programar = "SO";
     public  static final String completo = "C";
 
     //Datos personales
@@ -231,5 +232,6 @@ public class WSkeys {
     public static final String conductor = "conductor";
     public static final String perfilconductor = "perfilConductor";
     public static final String autotanque = "autotanque";
+
     public static final String id = "id";
 }

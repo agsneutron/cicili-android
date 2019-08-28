@@ -77,7 +77,7 @@ public class MenuActivity extends AppCompatActivity
         AddressDetailFragment.OnFragmentInteractionListener,
         PaymentDetailFragment.OnFragmentInteractionListener,
         RfcMainFragment.OnListFragmentInteractionListener,
-        RfcDetailFragment.OnFragmentInteractionListener{
+        RfcDetailFragment.OnFragmentInteractionListener, ScheduleMainFragment.OnListFragmentInteractionListener{
 
 
     Application application = (Application) Client.getContext();
@@ -89,6 +89,7 @@ public class MenuActivity extends AppCompatActivity
     final Fragment fragmenUserProfile = new UserProfileFragment();
     final Fragment fragmentPayment= new PaymentMainFragment();
     final Fragment fragmentRfc = new RfcMainFragment();
+    final Fragment fragmentSchedule = new ScheduleMainFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragmentMain;
     Fragment current = fragmentMain;
@@ -313,11 +314,19 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().hide(active).show(fragmentRfc).commit();
             active = fragmentRfc;
 
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
+        } else if (id == R.id.navigation_schedule) {
+            if (!fragmentSchedule.isAdded()) {
+                Utilities.SetLog("FRAGMENT_Schedule", active.getTag(), WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container, fragmentSchedule, "fragmentSchedule").commit();
+            }
+            fm.beginTransaction().addToBackStack("fragmentMain").commit();
+            fm.beginTransaction().hide(active).show(fragmentSchedule).commit();
+            active = fragmentSchedule;
         }
+//       }else if (id == R.id.nav_share) {
+//       }else if (id == R.id.nav_send) {}
+//
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

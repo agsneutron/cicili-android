@@ -20,6 +20,10 @@
             android:id="@+id/navigation_rfc"
             android:icon="@drawable/ic_attach_file_black_24dp"
             android:title="Datos Fiscales" />
+        <item
+            android:id="@+id/navigation_schedule"
+            android:icon="@drawable/ic_attach_file_black_24dp"
+            android:title="@string/programar_pedido" />
     </group>
 
     <item android:title="Configuración">

@@ -307,11 +307,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             //ejecuta pedido
                             Pedido pedido = new Pedido();
                             NumberFormat nf = NumberFormat.getInstance();
-                            Long cantidad = Long.valueOf(0);
-                            Long monto = Long.valueOf(0);
+                            Double cantidad = Double.valueOf(0);
+                            Double monto = Double.valueOf(0);
                             try {
-                                 cantidad  = nf.parse(litros.getText().toString()).longValue();
-                                 monto = nf.parse(precio.getText().toString()).longValue();
+                                 cantidad  = nf.parse(litros.getText().toString()).doubleValue();
+                                 monto = nf.parse(precio.getText().toString()).doubleValue();
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -320,10 +320,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             AddressData addressData = new AddressData();
                             addressData.setId(direccionSeleccionada);
                             pedido.setCantidad(cantidad);
-                            pedido.setDomicilio(addressData);
                             pedido.setMonto(monto);
+                            pedido.setDomicilio(addressData);
                             pedido.setLatitud(latitudPedido);
                             pedido.setLongitud(longitudPedido);
+                            pedido.setFormaPago(finalFormapagoseleccionada);
+                            pedido.setIdAutotanque(pipaSeleccionada);
                             Intent intent = new Intent(getActivity(), NewOrderActivity.class);
                             Gson gson = new Gson();
                             String json_pedido = gson.toJson(pedido);

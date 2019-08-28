@@ -437,7 +437,7 @@ public class NewOrderActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
         }) {

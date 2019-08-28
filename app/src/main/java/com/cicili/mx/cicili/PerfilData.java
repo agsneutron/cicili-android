@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 public class PerfilData extends AppCompatActivity implements PersonalDataFragment.OnFragmentInteractionListener,
         PaymentDataFragment.OnFragmentInteractionListener, AddressDataFragment.OnFragmentInteractionListener,
-        RfcDataFragment.OnFragmentInteractionListener{
+        RfcDataFragment.OnFragmentInteractionListener, ScheduleDataFragment.OnFragmentInteractionListener{
     private TextView mTextMessage;
 
     Application application = (Application) Client.getContext();
@@ -31,6 +31,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
     final Fragment fragmentPayment = new PaymentDataFragment();
     final Fragment fragmentAddress = new AddressDataFragment();
     final Fragment fragmentRfc = new RfcDataFragment();
+    final Fragment fragmentDataSchedule = new ScheduleDataFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragmentPersonal;
     BottomNavigationView nv;
@@ -138,6 +139,19 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             fm.beginTransaction().hide(active);
             fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
             active = fragmentRfc;
+        }
+        else if (dataactive.equals(WSkeys.datos_programar)) {
+            //navView.setSelectedItemId(R.id.navigation_address);
+            if (id != null) {
+                bundle = new Bundle();
+                bundle.putString("ARG_PARAM1", id);
+                bundle.putString("ARG_PARAM2", " ");
+                Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
+                fragmentDataSchedule.setArguments(bundle);
+            }
+            fm.beginTransaction().hide(active);
+            fm.beginTransaction().add(R.id.container, fragmentDataSchedule, "5").show(fragmentDataSchedule).commit();
+            active = fragmentDataSchedule;
         }
 
     }
