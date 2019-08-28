@@ -196,7 +196,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     razonsocial.setError(getString(R.string.error_field_required));
                     error=true;
                     focusView = razonsocial;
-                } 
+                }
                 *//*if (!Utilities.isFieldValid(numext)){
                     numext.setError(getString(R.string.error_field_required));
                     error=true;
