@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressData {
-    private String id;
+    private Integer id;
     private String calle;
     private String exterior;
     private String interior;
@@ -23,7 +23,7 @@ public class AddressData {
     public AddressData() {
     }
 
-    public AddressData(String id, String calle, String exterior, String interior, String town, String district, String state, Double latitud, Double longitud, String cp, String alias, Integer favorito, Asentamiento asentamiento) {
+    public AddressData(Integer id, String calle, String exterior, String interior, String town, String district, String state, Double latitud, Double longitud, String cp, String alias, Integer favorito, Asentamiento asentamiento) {
         this.id = id;
         this.calle = calle;
         this.exterior = exterior;
@@ -135,11 +135,11 @@ public class AddressData {
         this.asentamiento = asentamiento;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

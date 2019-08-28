@@ -199,6 +199,26 @@ public class WSkeys {
     //https://api.cicili.com.mx:8443/app/mv/cliente/banco/
     public static final String URL_CFDI = "app/catalogos/usocfdi";
 
+    //solicitar pedido
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/solicitar
+    public static final String URL_PEDIDO = "app/mv/cliente/pedido/solicitar";
+
+    //cancela pedido
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/cancelar
+    public static final String URL_CANCELA = "app/mv/cliente/pedido/cancelar";
+    public static final String pedido = "pedido";
+    public static final String motivo = "motivo";
+
+
+    //motivo cancela
+    //https://cicili.com.mx:8443/app/catalogos/motivoscancelacion
+    public static final String URL_MOTIVO_CANCELA = "app/catalogos/motivoscancelacion";
+
+
+    //tipo aclaracion
+    //https://cicili.com.mx:8443/app/catalogos/tiposaclaracion
+    public static final String URL_MOTIVO_ACLARACION = "app/catalogos/tiposaclaracion";
+
 
 
     public static final Boolean log = true;
