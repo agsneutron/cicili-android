@@ -325,7 +325,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             pedido.setLatitud(latitudPedido);
                             pedido.setLongitud(longitudPedido);
                             pedido.setFormaPago(finalFormapagoseleccionada);
-                            pedido.setIdAutotanque(pipaSeleccionada);
+                            pedido.setIdAutotanque(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getIdAutotanque());
                             Intent intent = new Intent(getActivity(), NewOrderActivity.class);
                             Gson gson = new Gson();
                             String json_pedido = gson.toJson(pedido);
