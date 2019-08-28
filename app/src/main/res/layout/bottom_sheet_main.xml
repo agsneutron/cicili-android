@@ -239,7 +239,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="3dp"
-                    android:text="Legada: "
+                    android:text="Llegada: "
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="12dp" />
 
@@ -295,7 +295,7 @@
                     android:inputType="number"
                     android:maxLength="6"
                     android:textAlignment="center"
-                    android:textSize="28sp" />
+                    android:textSize="22sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--<com.google.android.material.textfield.TextInputLayout
@@ -350,7 +350,7 @@
 
                     android:maxLength="6"
                     android:textAlignment="center"
-                    android:textSize="28sp" />
+                    android:textSize="22sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sms_code_input"
