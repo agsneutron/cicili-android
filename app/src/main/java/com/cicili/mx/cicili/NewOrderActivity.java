@@ -19,6 +19,7 @@ import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -67,12 +68,16 @@ public class NewOrderActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     LinearLayout bottom_sheet;
     BottomSheetBehavior bsb;
-    Integer motivo_seleccionado;
+    String motivo_seleccionado="";
     Button cancela_bsb;
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String LOG = "ORDEN";
-    Integer order =1;
+    String order ="";
+
+    Gson gson = new Gson();
+    ArrayList<Pedido> pedidoAux = new ArrayList<Pedido>();
+    Pedido pedidoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +119,8 @@ public class NewOrderActivity extends AppCompatActivity {
             Utilities.SetLog("JSON_ORDER",json_order,WSkeys.log);
             try {
                 progressDialog = ProgressDialog.show(this, "Espera un momento por favor", "Estamos procesando tu pedido.", true);
+                pedidoData = gson.fromJson(json_order , Pedido.class);
+                pedidoAux.add(pedidoData);
                 OrderDataTask(json_order);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -129,9 +136,10 @@ public class NewOrderActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                     Log.e("onItemSelected",String.valueOf(i));
-                    if (i!=0) {
-                        motivo_seleccionado = motivoAux.get(i).getId();
-                    }
+
+                        motivo_seleccionado = motivoAux.get(i).getText();
+
+
                 }
 
                 @Override
@@ -183,7 +191,7 @@ public class NewOrderActivity extends AppCompatActivity {
                             String error="";
 
                             // Check for a valid l/p, if the user entered one.
-                            if (motivo_seleccionado == 0) {
+                            if (motivo_seleccionado.equals("")) {
                                 // litros.setError(getString(R.string.error_invalid_value));
                                 // focusView = litros;
                                 error=getString(R.string.error_invalid_motivo);
@@ -204,7 +212,13 @@ public class NewOrderActivity extends AppCompatActivity {
                                 //ejecuta  cancela pedido
                                 try {
                                     //CancelOrderTask(String.valueOf(motivo_seleccionado),String.valueOf(order));
-                                    CancelOrderTask("Falla mecánica","1");
+                                    if(!order.equals("")) {
+                                        CancelOrderTask(motivo_seleccionado, order);
+                                    }
+                                    else{
+                                        Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -226,9 +240,9 @@ public class NewOrderActivity extends AppCompatActivity {
 
 
 
-                public void CancelOrderTask(String motivo, String order) throws JSONException {
+                public void CancelOrderTask(final String motivo, final String order) throws JSONException {
 
-                    String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+"?"+WSkeys.pedido+"=\""+order+"\"&"+WSkeys.motivo+"=\""+motivo+"\"";
+                    String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA;  //+WSkeys.pedido+"=\""+order+"\"&"+WSkeys.motivo+"=\""+motivo+"\"";
                     Utilities.SetLog("CANCELA",url,WSkeys.log);
                     RequestQueue queue = Volley.newRequestQueue(getContext());
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
@@ -257,6 +271,8 @@ public class NewOrderActivity extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<String, String>();
+                            params.put(WSkeys.pedido, order);
+                            params.put(WSkeys.motivo, motivo);
                             return params;
                         }
 
@@ -402,12 +418,12 @@ public class NewOrderActivity extends AppCompatActivity {
     public void ParserOrder(JSONObject respuesta) throws JSONException {
 
         Utilities.SetLog("ParserOrderResponse",respuesta.toString(),WSkeys.log);
-
+        Integer pedido_id;
 
         // si el response regresa ok, entonces si inicia la sesión
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
-
-
+            pedido_id = respuesta.getJSONObject("data").getInt("id");
+            order = String.valueOf(pedido_id);
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
@@ -474,7 +490,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
     public void ParserMotivos(String response, Spinner motivos) throws JSONException {
 
-        Utilities.SetLog("RESPONSE_CFDI",response,WSkeys.log);
+        Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
         //Log.e("CodeResponse", response);
 
 
@@ -486,7 +502,7 @@ public class NewOrderActivity extends AppCompatActivity {
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
             JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
-            Utilities.SetLog("CFDIARRAY",ja_usocfdi.toString(),WSkeys.log);
+            Utilities.SetLog("MOTIVOSARRAY",ja_usocfdi.toString(),WSkeys.log);
             for(int i=0; i<ja_usocfdi.length(); i++){
                 MotivoCancela motivoCancela = new MotivoCancela();
                 try {

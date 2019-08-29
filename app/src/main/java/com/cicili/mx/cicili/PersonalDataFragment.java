@@ -55,7 +55,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -477,11 +479,26 @@ public class PersonalDataFragment extends Fragment {
                     Uri selectedImage = data.getData();
                     if(selectedImage !=null){
                         InputStream imageStream = null;
+
                         try {
                             imageStream = getContext().getContentResolver().openInputStream(selectedImage);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
+                        /*ByteArrayOutputStream output = new ByteArrayOutputStream();
+                        byte[] bytes;
+                        byte[] buffer = new byte[8192];
+                        int bytesRead;
+                        try {
+                            while ((bytesRead = imageStream.read(buffer)) != -1) {
+                                output.write(buffer, 0, bytesRead);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        bytes = output.toByteArray();
+                        String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+*/
                         Bitmap selectedImagebt = BitmapFactory.decodeStream(imageStream);
                         String encodedImage = encodeImage(selectedImagebt);
                         client.setPhoto(encodedImage);
@@ -493,10 +510,12 @@ public class PersonalDataFragment extends Fragment {
     private String encodeImage(Bitmap bm)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG,50/100,baos);
+        bm.compress(Bitmap.CompressFormat.JPEG,10,baos);
         byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);  //NO_WRAP
 
         return encImage;
+
+
     }
 }

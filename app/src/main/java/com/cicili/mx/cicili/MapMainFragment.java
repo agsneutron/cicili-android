@@ -110,11 +110,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private ArrayList<AddressData> direccionAux;
     private ArrayList<String> autotanquesDisponiblesArray;
     Gson gson = new Gson();
-    Integer direccionSeleccionada;
+    Integer direccionSeleccionada=0;
     Double latitudPedido, longitudPedido;
     LinearLayout bottom_sheet;
     BottomSheetBehavior bsb;
     TextView name_usuario;
+    LinearLayout featuredlayout;
+    LinearLayout bottom_sheetmascercano;
+    BottomSheetBehavior bsb_mascercano;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -172,7 +175,157 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         getMyLocationPermision();
 
 
-        //bottomsheet
+        //pedido mascercano
+
+        bottom_sheetmascercano = (LinearLayout)view.findViewById(R.id.bottomSheetCercano);
+        bsb_mascercano = BottomSheetBehavior.from(bottom_sheetmascercano);
+        bsb_mascercano.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                String nuevoEstado = "";
+                final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago_mc);
+                rgFormaPago.check(R.id.tarjeta_mc);
+                String formapagoseleccionada="";
+                final TextInputEditText litros = (TextInputEditText) view.findViewById(R.id.litros_mc);
+                final TextInputEditText precio = (TextInputEditText) view.findViewById(R.id.precio_mc);
+
+                switch(newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        nuevoEstado = "STATE_COLLAPSED";
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        nuevoEstado = "STATE_EXPANDED";
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        nuevoEstado = "STATE_HIDDEN";
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        nuevoEstado = "STATE_DRAGGING";
+                        break;
+
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        nuevoEstado = "STATE_SETTLING";
+                        break;
+                }
+
+                Log.i("BottomSheetsMASCERCANA", "Nuevo estado: " + nuevoEstado);
+
+
+                if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta_mc){
+                    formapagoseleccionada = WSkeys.dtarjeta;
+                }
+
+                if (rgFormaPago.getCheckedRadioButtonId() == R.id.efectivo_mc){
+                    formapagoseleccionada = WSkeys.defectivo;
+                }
+
+
+                final String finalFormapagoseleccionada = formapagoseleccionada;
+                Button btnConformaPedido = (Button) view.findViewById(R.id.btnConfirmaMasCercano);
+                btnConformaPedido.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        boolean cancel = false;
+                        View focusView = null;
+                        String error="";
+
+                        // Check for a valid l/p, if the user entered one.
+                        if (TextUtils.isEmpty(litros.getText()) && TextUtils.isEmpty(precio.getText())) {
+                            Utilities.SetLog("EMPTY PRECIO_o_LITROS", String.valueOf(precio.getText()), WSkeys.log);
+                            // litros.setError(getString(R.string.error_invalid_value));
+                            // focusView = litros;
+                            error=getString(R.string.error_invalid_value);
+                            cancel = true;
+                        }
+
+                        // Check for a valid password, if the user entered one.
+                        if (String.valueOf(litros.getText()).equals("0") || String.valueOf(precio.getText()).equals("0")) {
+                            Utilities.SetLog("CEROS PRECIO_o_LITROS", String.valueOf(precio.getText()), WSkeys.log);
+                            error=getString(R.string.error_invalid_value);
+                            cancel = true;
+                        }
+
+                        if (finalFormapagoseleccionada.equals("")){
+                            //focusView = rgFormaPago;
+                            error="Indica la forma de pago";
+                            cancel = true;
+                        }
+
+                        if (cancel) {
+                            // There was an error
+                            //focusView.requestFocus();
+                            Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                            toast.show();
+                            //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
+                            Utilities.SetLog("in cancel pedido", error, WSkeys.log);
+                        }
+                        else{
+
+                            //ejecuta pedido
+                            Pedido pedido = new Pedido();
+                            NumberFormat nf = NumberFormat.getInstance();
+                            Double cantidad = Double.valueOf(0);
+                            Double monto = Double.valueOf(0);
+                            try {
+                                cantidad  = nf.parse(litros.getText().toString()).doubleValue();
+                                monto = nf.parse(precio.getText().toString()).doubleValue();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            Utilities.SetLog("MAS CERCANO PEDIR", finalFormapagoseleccionada, WSkeys.log);
+                            AddressData addressData = new AddressData();
+                            addressData.setId(direccionSeleccionada);
+                            pedido.setCantidad(cantidad);
+                            pedido.setMonto(monto);
+                            pedido.setDomicilio(addressData);
+                            pedido.setLatitud(latitudPedido);
+                            pedido.setLongitud(longitudPedido);
+                            pedido.setFormaPago(finalFormapagoseleccionada);
+                            pedido.setIdAutotanque(0);
+                            Intent intent = new Intent(getActivity(), NewOrderActivity.class);
+                            Gson gson = new Gson();
+                            String json_pedido = gson.toJson(pedido);
+                            intent.putExtra("json_order",json_pedido);
+                            startActivity(intent);
+                            Utilities.SetLog("ejecuta pedido", json_pedido, WSkeys.log);
+
+                        }
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                Log.i("BottomSheets", "Offset: " + slideOffset);
+            }
+
+
+        });
+
+        featuredlayout = (LinearLayout) view.findViewById(R.id.featuredlayout);
+        featuredlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
+                if(direccionSeleccionada>0){
+                    bsb_mascercano.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+                else{
+                    Utilities.SetLog("no_DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
+
+                    Snackbar.make(direcciones, R.string.error_noaddressselected, Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+            }
+        });
+        //endmascercano
+
+        //bottomsheet pedido
 
         bottom_sheet = (LinearLayout)view.findViewById(R.id.bottomSheet);
         bsb = BottomSheetBehavior.from(bottom_sheet);
@@ -623,6 +776,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         if (client.getAddressDataArrayList() != null) {
 
+            direccionArray.add("Selecciona una dirección");
             for (int i = 0; i < client.getAddressDataArrayList().size(); i++) {
                 direccionArray.add(client.getAddressDataArrayList().get(i).getAlias());
             }
@@ -733,17 +887,20 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        Log.e("onItemSelected",String.valueOf(i));
+
         if (i!=0) {
             //client.getAddressDataArrayList().get(i).getLatitud();
             //client.getAddressDataArrayList().get(i).getLongitud();
+            Log.e("onItemSelected",String.valueOf(i));
+            Log.e("Selected--idaddress",String.valueOf(client.getAddressDataArrayList().get(i-1).getId()));
+            Log.e("Selected--alias",client.getAddressDataArrayList().get(i-1).getAlias());
             try {
                 //mMap.clear();
-                ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i).getLatitud(), client.getAddressDataArrayList().get(i).getLongitud()));
-                MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i).getLatitud(), client.getAddressDataArrayList().get(i).getLongitud(),client.getAddressDataArrayList().get(i).getAlias());
-                direccionSeleccionada = client.getAddressDataArrayList().get(i).getId();
-                latitudPedido = client.getAddressDataArrayList().get(i).getLatitud();
-                longitudPedido= client.getAddressDataArrayList().get(i).getLongitud();
+                ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i-1).getLatitud(), client.getAddressDataArrayList().get(i-1).getLongitud()));
+                MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i-1).getLatitud(), client.getAddressDataArrayList().get(i-1).getLongitud(),client.getAddressDataArrayList().get(i-1).getAlias());
+                direccionSeleccionada = client.getAddressDataArrayList().get(i-1).getId();
+                latitudPedido = client.getAddressDataArrayList().get(i-1).getLatitud();
+                longitudPedido= client.getAddressDataArrayList().get(i-1).getLongitud();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -43,7 +43,7 @@
                     android:textSize="16dp" />
 
                 <fragment
-                    android:id="@+id/map"
+                    android:id="@+id/map_FAD"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

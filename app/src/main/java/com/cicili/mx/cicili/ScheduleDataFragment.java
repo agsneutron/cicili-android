@@ -474,7 +474,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     AM_PM = "p.m.";
                 }
                 //Muestro la hora con el formato deseado
-                time_picked.setText(horaFormateada + DOS_PUNTOS + minutoFormateado + " " + AM_PM);
+                time_picked.setText(String.format("%s%s%s %s", horaFormateada, DOS_PUNTOS, minutoFormateado, AM_PM));
             }
             //Estos valores deben ir en ese orden
             //Al colocar en false se muestra en formato 12 horas y true en formato 24 horas

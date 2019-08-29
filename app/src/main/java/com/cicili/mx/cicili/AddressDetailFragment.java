@@ -149,7 +149,7 @@ public class AddressDetailFragment extends DialogFragment implements OnMapReadyC
         pos = Integer.parseInt(mParam1);
         Utilities.SetLog(LOG+ "pos",String.valueOf(pos),WSkeys.log);
 
-
+        Utilities.SetLog(LOG,String.valueOf(client.getAddressDataArrayList().get(pos).getId()),WSkeys.log);
         Utilities.SetLog(LOG,client.getAddressDataArrayList().get(pos).getCalle(),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getAddressDataArrayList().get(pos).getExterior()),WSkeys.log);
         Utilities.SetLog(LOG,String.valueOf(client.getAddressDataArrayList().get(pos).getInterior()),WSkeys.log);
@@ -157,14 +157,14 @@ public class AddressDetailFragment extends DialogFragment implements OnMapReadyC
         Utilities.SetLog(LOG,String.valueOf(client.getAddressDataArrayList().get(pos).getAsentamiento().getCp()),WSkeys.log);
         Utilities.SetLog(LOG,client.getAddressDataArrayList().get(pos).getAsentamiento().getNombre(),WSkeys.log);
 
-        street.setText(client.getAddressDataArrayList().get(pos).getCalle() + "," + String.valueOf(client.getAddressDataArrayList().get(pos).getExterior()) + " " + String.valueOf(client.getAddressDataArrayList().get(pos).getInterior()));
+        street.setText(String.format("%s,%s %s", client.getAddressDataArrayList().get(pos).getCalle(), String.valueOf(client.getAddressDataArrayList().get(pos).getExterior()), String.valueOf(client.getAddressDataArrayList().get(pos).getInterior())));
         alias.setText(client.getAddressDataArrayList().get(pos).getAlias());
         cp.setText(String.valueOf(client.getAddressDataArrayList().get(pos).getAsentamiento().getCp()));
         town.setText(client.getAddressDataArrayList().get(pos).getAsentamiento().getNombre());
 
         latCurrentAddress = client.getAddressDataArrayList().get(pos).getLatitud();
         lonCurrentAdress = client.getAddressDataArrayList().get(pos).getLongitud();
-        mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map_FAD);
 
         //map
         getMyLocationPermision();
@@ -391,7 +391,7 @@ public class AddressDetailFragment extends DialogFragment implements OnMapReadyC
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        SupportMapFragment f = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment f = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map_FAD);
         if (f != null)
             getFragmentManager().beginTransaction().remove(f).commit();
     }

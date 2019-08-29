@@ -168,6 +168,8 @@ public class MenuActivity extends AppCompatActivity
         byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
+        Utilities.SetLog("IMAGEN CLIENTE",client.getPhoto().substring(client.getPhoto().indexOf(",") + 1),WSkeys.log);
+
         imageView.setImageBitmap(decodedByte);
         //
 
