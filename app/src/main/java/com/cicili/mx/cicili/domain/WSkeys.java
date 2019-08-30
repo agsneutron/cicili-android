@@ -210,6 +210,9 @@ public class WSkeys {
     public static final String pedido = "pedido";
     public static final String motivo = "motivo";
 
+    //cinsultar pedidos
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/obtener
+    public static final String URL_CONSULTA_PEDIDO = "app/mv/cliente/pedido/obtener";
 
     //motivo cancela
     //https://cicili.com.mx:8443/app/catalogos/motivoscancelacion

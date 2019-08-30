@@ -1,42 +1,27 @@
 package com.cicili.mx.cicili;
 
-import android.Manifest;
 import android.app.Application;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
+import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent;
 import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Base64;
-import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -48,36 +33,26 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MapMainFragment.OnFragmentInteractionListener,
         AddressMainFragment.OnListFragmentInteractionListener,
-        OrderMainFragment.OnListFragmentInteractionListener,
         MenuListDialogFragment.Listener,
         UserProfileFragment.OnFragmentInteractionListener,
         PaymentMainFragment.OnListFragmentInteractionListener,
         AddressDetailFragment.OnFragmentInteractionListener,
         PaymentDetailFragment.OnFragmentInteractionListener,
         RfcMainFragment.OnListFragmentInteractionListener,
-        RfcDetailFragment.OnFragmentInteractionListener, ScheduleMainFragment.OnListFragmentInteractionListener{
+        RfcDetailFragment.OnFragmentInteractionListener,
+        ScheduleMainFragment.OnListFragmentInteractionListener,
+        OrderMainFragment.OnListFragmentInteractionListener{
 
 
     Application application = (Application) Client.getContext();
@@ -119,11 +94,18 @@ public class MenuActivity extends AppCompatActivity
                     active = fragmentAddress;
                     return true;
                 case R.id.navigation_orders:
-                    //fm.beginTransaction().hide(active).show(fragmentOrder).commit();
-                    //active = fragmentOrder;
-                    Intent intent = new Intent(MenuActivity.this, Aclaracion.class);
-                    //intent.putExtra("token", token);
-                    startActivity(intent);
+
+                    if (!fragmentOrder.isAdded()) {
+                        Utilities.SetLog("FRAGMENT_ORDER",  active.getTag(),WSkeys.log);
+                        fm.beginTransaction().add(R.id.main_container,fragmentOrder,"fragmentOrder").commit();
+                    }
+                    fm.beginTransaction().addToBackStack("fragmentMain");
+                    fm.beginTransaction().hide(active).show(fragmentOrder).commit();
+                    active = fragmentOrder;
+
+                    //este es el intent para alguna aclaración
+                    //Intent intent = new Intent(MenuActivity.this, Aclaracion.class);
+                    //startActivity(intent);
                     return true;
                 case R.id.navigation_payment:
                     fm.beginTransaction().hide(active).show(fragmentPayment).commit();
@@ -341,11 +323,6 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
-
-    @Override
     public void onItemClicked(int position) {
 
     }
@@ -388,5 +365,19 @@ public class MenuActivity extends AppCompatActivity
         rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");
     }
 
+    @Override
+    public void onListFragmentInteraction(PedidoData item) {
 
+        Utilities.SetLog("MENUACTIVITYPEDIDO", String.valueOf(item.getIdAutotanque()), WSkeys.log);
+        /*String index = String.valueOf(client.getPedidoDataArrayList().indexOf(item));
+        RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();
+        rfcDetailFragment = RfcDetailFragment.newInstance(index,"");
+        rfcDetailFragment.setCancelable(false);
+        rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");*/
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
 }

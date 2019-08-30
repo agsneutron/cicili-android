@@ -290,7 +290,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             String json_pedido = gson.toJson(pedido);
                             intent.putExtra("json_order",json_pedido);
                             startActivity(intent);
-                            Utilities.SetLog("ejecuta pedido", json_pedido, WSkeys.log);
+                            Utilities.SetLog("MO_MC-JSONORDER", json_pedido, WSkeys.log);
 
                         }
 
@@ -371,6 +371,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 conductor.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConductor());
                 costoxlitro.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio()));
                 tiempo.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getTiempoLlegada()));
+                Utilities.SetLog("MO_PS-BS_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
+                Utilities.SetLog("MO_PS-BS_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
+
 
                 if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta){
                     formapagoseleccionada = WSkeys.dtarjeta;
@@ -470,6 +473,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             }
 
 
+
+
                             AddressData addressData = new AddressData();
                             addressData.setId(direccionSeleccionada);
                             pedido.setCantidad(cantidad);
@@ -478,13 +483,15 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             pedido.setLatitud(latitudPedido);
                             pedido.setLongitud(longitudPedido);
                             pedido.setFormaPago(finalFormapagoseleccionada);
-                            pedido.setIdAutotanque(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getIdAutotanque());
+                            pedido.setIdAutotanque(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId());
                             Intent intent = new Intent(getActivity(), NewOrderActivity.class);
                             Gson gson = new Gson();
                             String json_pedido = gson.toJson(pedido);
                             intent.putExtra("json_order",json_pedido);
                             startActivity(intent);
-                            Utilities.SetLog("ejecuta pedodo", json_pedido, WSkeys.log);
+                            Utilities.SetLog("MO_PS-JSONORDER", json_pedido, WSkeys.log);
+                            Utilities.SetLog("MO_PS-JSONORDER_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
+                            Utilities.SetLog("MO_PS-JSONORDER_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
 
                         }
 

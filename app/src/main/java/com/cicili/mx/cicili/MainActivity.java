@@ -5,16 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.WSkeys;
-import com.cicili.mx.cicili.dummy.DummyContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +19,6 @@ import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity implements MapMainFragment.OnFragmentInteractionListener,
         AddressMainFragment.OnListFragmentInteractionListener,
-        OrderMainFragment.OnListFragmentInteractionListener,
         MenuListDialogFragment.Listener{
 
 
@@ -119,11 +114,6 @@ public class MainActivity extends AppCompatActivity implements MapMainFragment.O
 
     @Override
     public void onListFragmentInteraction(AddressData item) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
 

@@ -34,6 +34,7 @@ public class Client extends Application {
     private ArrayList<RfcData> rfcDataArrayList;
     private ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList;
     private ArrayList<Pedido> pedidoDataArrayList;
+    private ArrayList<PedidoData> pedidosDataArrayList;
 
 
     private static Context mContext;
@@ -51,7 +52,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -75,6 +76,7 @@ public class Client extends Application {
         this.rfcDataArrayList = rfcDataArrayList;
         this.autotanquesCercanosArrayList = autotanquesCercanosArrayList;
         this.pedidoDataArrayList = pedidoDataArrayList;
+        this.pedidosDataArrayList = pedidosDataArrayList;
     }
 
     public String getUsername() {
@@ -268,5 +270,13 @@ public class Client extends Application {
 
     public void setPedidoDataArrayList(ArrayList<Pedido> pedidoDataArrayList) {
         this.pedidoDataArrayList = pedidoDataArrayList;
+    }
+
+    public ArrayList<PedidoData> getPedidosDataArrayList() {
+        return pedidosDataArrayList;
+    }
+
+    public void setPedidosDataArrayList(ArrayList<PedidoData> pedidosDataArrayList) {
+        this.pedidosDataArrayList = pedidosDataArrayList;
     }
 }

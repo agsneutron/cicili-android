@@ -1,21 +1,39 @@
 package com.cicili.mx.cicili;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cicili.mx.cicili.dummy.DummyContent;
-import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.PedidoData;
+import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A fragment representing a list of Items.
@@ -30,7 +48,10 @@ public class OrderMainFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 3;
     private OnListFragmentInteractionListener mListener;
-
+    Application application = (Application) Client.getContext();
+    Client client = (Client) application;
+    public ArrayList<PedidoData> PEDIDO_ITEMS = new ArrayList<PedidoData>();
+    View view;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -60,19 +81,9 @@ public class OrderMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_list, container, false);
+        view = inflater.inflate(R.layout.fragment_order_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyOrderRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+        LlenaPedido();
         return view;
     }
 
@@ -106,6 +117,101 @@ public class OrderMainFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(PedidoData item);
+    }
+
+    public void LlenaPedido(){
+
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_CONSULTA_PEDIDO;
+        Utilities.SetLog("LLENAPEDIDOs",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserPedido(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserPedido(String response) throws JSONException {
+
+        Utilities.SetLog("RESPONSE_PEDIDOLIST",response,WSkeys.log);
+        //Log.e("CodeResponse", response);
+
+        JSONObject respuesta = new JSONObject(response);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            //ontener nivel de data
+            //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            Utilities.SetPedidoData(respuesta,client);
+            Utilities.SetLog("PEDIDO_ARRAY",respuesta.toString(),WSkeys.log);
+            if (client.getPedidosDataArrayList() != null) {
+                PEDIDO_ITEMS = client.getPedidosDataArrayList();
+
+                Utilities.SetLog("MAINPEDIDO", PEDIDO_ITEMS.get(0).getFormaPago(), WSkeys.log);
+            }
+            // Set the adapter
+            //if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+            //    if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            //    } else {
+            //        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            //    }
+            recyclerView.setAdapter(new MyOrderRecyclerViewAdapter(PEDIDO_ITEMS, mListener));
+
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+
+            Utilities.SetLog("ERRORPARSER",response,WSkeys.log);
+        }
     }
 }

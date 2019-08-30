@@ -23,6 +23,8 @@ import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.AutotanquesDisponibles;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
+import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -268,6 +270,22 @@ public class Utilities {
                 rfcAux.add(rfcData);
             }
             client.setRfcDataArrayList(rfcAux);
+        }
+    }
+
+    public static  void SetPedidoData(JSONObject jopedido,Client client) throws JSONException {
+        ArrayList<PedidoData> pedidoAux = new ArrayList<PedidoData>();
+        Gson gson = new Gson();
+        JSONArray ja_pedido = jopedido.getJSONArray(WSkeys.data);
+        if (ja_pedido.length() > 0) {
+            Utilities.SetLog("SET ja_pedido", ja_pedido.toString(), WSkeys.log);
+            for(int i=0; i<ja_pedido.length(); i++) {
+                JSONObject jo_pedido = (JSONObject) ja_pedido.get(i);
+                Utilities.SetLog("jo_pedido",jo_pedido.toString(),WSkeys.log);
+                PedidoData pedidoData= gson.fromJson(jo_pedido.toString() , PedidoData.class);
+                pedidoAux.add(pedidoData);
+            }
+            client.setPedidosDataArrayList(pedidoAux);
         }
     }
 
