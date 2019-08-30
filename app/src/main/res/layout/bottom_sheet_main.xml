@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:paddingLeft="10dp"
@@ -167,7 +167,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -186,14 +186,14 @@
                 <TextView
                     android:id="@+id/costo"
                     android:layout_width="50dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
+
                     android:layout_marginTop="0dp"
                     android:gravity="center"
                     android:text="$99.99"
                     android:textColor="@color/white"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
             </LinearLayout>
 
             <TextView
@@ -220,10 +220,10 @@
                 android:background="@drawable/circle1">
 
                 <ImageView
-                    android:layout_width="30dp"
+                    android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="17dp"
+
                     android:src="@drawable/ic_access_time_black_24dp" />
             </LinearLayout>
 
@@ -416,10 +416,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
@@ -453,21 +453,14 @@
             </RadioGroup>
 
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
-            <!--<Button
-                android:id="@+id/btnConfirma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="60dp"
-                android:text="@string/btnConfirma" />-->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirma"
                 style="@style/Widget.MaterialComponents.Button"
@@ -478,7 +471,10 @@
                 app:backgroundTint="@color/colorPrimaryDark"
                 app:cornerRadius="20dp" />
         </LinearLayout>
+
+
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -491,4 +487,7 @@
         android:text="@string/mensajePagoPedido"
         android:textSize="9sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"/>
 </LinearLayout>

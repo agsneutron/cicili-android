@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RfcDataFragment"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/name"
+            android:text="@string/programar_pedido"
+            android:textColor="#3b3b3b"
+            android:textSize="23dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:text="@string/schedule"
+            android:textColor="#a9a9b0"
+            android:textSize="14.3sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:id="@+id/fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/ic_today_black_24dp"
+                    android:focusable="false"
+                    android:hint="@string/fechaschedule"
+                    android:inputType="textCapWords" />
+                <!-- <ImageButton
+                        android:id="@+id/ib_obtener_fecha"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimaryDark"
+                        app:srcCompat="@drawable/ic_date_range_black_24dp"
+                        android:contentDescription="@string/calendario" />-->
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/hora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_today_black_24dp"
+                android:focusable="false"
+                android:hint="@string/horaschedule" />
+            <!-- <ImageButton
+                    android:id="@+id/ib_obtener_fecha"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_date_range_black_24dp"
+                    android:contentDescription="@string/calendario" />-->
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cps"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cp"
+                app:errorEnabled="true"
+                android:layout_weight="1">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+        <FrameLayout
+
+            android:id="@+id/fragment_qc_flSelectWorkDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_marginTop="6dp"
+                android:background="@drawable/border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/spinnerSchedule"
+                    android:layout_width="match_parent"
+                    android:textSize="12sp"
+                    android:spinnerMode="dropdown"
+                    android:layout_height="40dp"/>
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvschedule"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="12sp"
+                android:text="@string/direccionschedule"
+                android:background="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </FrameLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/precioinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/precio"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/HintText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/precio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text=""
+                android:textColor="@color/textDark" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/litrosinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/litros"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/HintText"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/litros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text=""
+                android:textColor="@color/textDark" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+       <!-- <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorito"
+            android:id="@+id/favorita"/>-->
+
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/schedulebutton"
+            android:text="@string/scheduebutton"
+            android:layout_gravity="end"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="24dp"
+
+            />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
