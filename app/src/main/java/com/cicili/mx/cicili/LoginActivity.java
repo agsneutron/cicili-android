@@ -367,6 +367,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             client.setCellphone(jousuario.getString(WSkeys.cel));
             client.setUsername(userName);
             client.setSexo(jousuario.getString(WSkeys.sexo));
+            client.setPhoto(jousuario.getString(WSkeys.img));
+            Utilities.SetLog("LOGIN IMAGEN",jousuario.getString(WSkeys.img),WSkeys.log);
             //client.setSexo("");
             Utilities.SetClientData(jousuario,client);
 

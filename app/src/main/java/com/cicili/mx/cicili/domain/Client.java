@@ -33,6 +33,7 @@ public class Client extends Application {
     private ArrayList<AddressData> addressDataArrayList;
     private ArrayList<RfcData> rfcDataArrayList;
     private ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList;
+    private ArrayList<Pedido> pedidoDataArrayList;
 
 
     private static Context mContext;
@@ -50,7 +51,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -73,6 +74,7 @@ public class Client extends Application {
         this.addressDataArrayList = addressDataArrayList;
         this.rfcDataArrayList = rfcDataArrayList;
         this.autotanquesCercanosArrayList = autotanquesCercanosArrayList;
+        this.pedidoDataArrayList = pedidoDataArrayList;
     }
 
     public String getUsername() {
@@ -258,5 +260,13 @@ public class Client extends Application {
 
     public void setRfcdatasize(Integer rfcdatasize) {
         this.rfcdatasize = rfcdatasize;
+    }
+
+    public ArrayList<Pedido> getPedidoDataArrayList() {
+        return pedidoDataArrayList;
+    }
+
+    public void setPedidoDataArrayList(ArrayList<Pedido> pedidoDataArrayList) {
+        this.pedidoDataArrayList = pedidoDataArrayList;
     }
 }

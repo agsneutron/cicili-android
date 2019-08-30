@@ -180,5 +180,7 @@
     <string name="horaschedule">Hora Programada</string>
     <string name="direccionschedule">Dirección de Entrega</string>
     <string name="scheduebutton">Programar Pedido</string>
+    <string name="litrosomonto">Indica la cantidad de litros o monto a surtir</string>
+    <string name="error_noaddressselected">Selecciona una dirección</string>
 
 </resources>

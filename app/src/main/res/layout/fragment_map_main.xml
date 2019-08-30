@@ -102,7 +102,7 @@
                             android:id="@+id/imageView2"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/ic_phone_iphone_black_24dp" />
+                            app:srcCompat="@drawable/ic_phone_iphone_black_24dp" />
 
                         <TextView
                             android:id="@+id/textView3"
@@ -127,13 +127,14 @@
                         android:background="@drawable/roundtext"
                         android:gravity="bottom"
                         android:orientation="horizontal"
-                        android:padding="7dp">
+                        android:padding="7dp"
+                        android:clickable="true">
 
                         <ImageView
                             android:id="@+id/imageView4"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/ic_phone_iphone_black_24dp" />
+                            app:srcCompat="@drawable/ic_phone_iphone_black_24dp" />
 
                         <TextView
                             android:id="@+id/textView5"
@@ -177,6 +178,7 @@
     </FrameLayout>
 
     <include layout="@layout/bottom_sheet_main" />
+    <include layout="@layout/bottom_sheet_mascercano" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
