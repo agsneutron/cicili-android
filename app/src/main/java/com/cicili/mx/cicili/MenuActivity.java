@@ -306,9 +306,15 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentSchedule).commit();
             active = fragmentSchedule;
+        }else if (id == R.id.nav_legal) {
+            Intent intent = new Intent(MenuActivity.this, LegalActivity.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_help) {
+            Intent intent = new Intent(MenuActivity.this, AyudaActivity.class);
+            startActivity(intent);
+
         }
-//       }else if (id == R.id.nav_share) {
-//       }else if (id == R.id.nav_send) {}
 //
 
 
