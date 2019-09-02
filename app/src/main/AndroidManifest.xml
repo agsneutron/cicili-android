@@ -22,6 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PaymentDetailActivity"
+            android:label="@string/title_activity_payment_detail"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
             android:name=".RfcDetailActivity"
             android:label="@string/title_activity_rfc_detail_acticity"
             android:parentActivityName=".MenuActivity"

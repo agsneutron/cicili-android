@@ -370,10 +370,13 @@ public class MenuActivity extends AppCompatActivity
     public void onListFragmentInteraction(PaymentData item) {
         Utilities.SetLog("MENUACTIVITYPAYMNT", String.valueOf(item.getId()), WSkeys.log);
         String index = String.valueOf(client.getPaymentDataArrayList().indexOf(item));
-        PaymentDetailFragment paymentDetailFragment = new PaymentDetailFragment();
+        Intent intent = new Intent(MenuActivity.this, PaymentDetailActivity.class);
+        intent.putExtra("ARG_PARAM1", index);
+        startActivity(intent);
+       /* PaymentDetailFragment paymentDetailFragment = new PaymentDetailFragment();
         paymentDetailFragment = PaymentDetailFragment.newInstance(index,"");
         paymentDetailFragment.setCancelable(false);
-        paymentDetailFragment.show(getSupportFragmentManager(),"fragmentPaymentDetail");
+        paymentDetailFragment.show(getSupportFragmentManager(),"fragmentPaymentDetail");*/
     }
 
     @Override
