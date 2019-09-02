@@ -12,7 +12,7 @@ public class PedidoData {
     private Integer idAutotanque;
     private String fechaPedido;
     private String fechaSolicitada;
-    private Integer horaSolicitada;
+    private String horaSolicitada;
     private Integer status;
     private Integer idCliente;
     private String nombreCliente;
@@ -23,7 +23,7 @@ public class PedidoData {
     public PedidoData() {
     }
 
-    public PedidoData(Integer id, Double cantidad, Double monto, AddressData domicilio, Double latitud, Double longitud, String formaPago, Integer idAutotanque, String fechaPedido, String fechaSolicitada, Integer horaSolicitada, Integer status, Integer idCliente, String nombreCliente, String placa, String direccion, String nombreStatus) {
+    public PedidoData(Integer id, Double cantidad, Double monto, AddressData domicilio, Double latitud, Double longitud, String formaPago, Integer idAutotanque, String fechaPedido, String fechaSolicitada, String horaSolicitada, Integer status, Integer idCliente, String nombreCliente, String placa, String direccion, String nombreStatus) {
         this.id = id;
         this.cantidad = cantidad;
         this.monto = monto;
@@ -123,11 +123,11 @@ public class PedidoData {
         this.fechaSolicitada = fechaSolicitada;
     }
 
-    public Integer getHoraSolicitada() {
+    public String getHoraSolicitada() {
         return horaSolicitada;
     }
 
-    public void setHoraSolicitada(Integer horaSolicitada) {
+    public void setHoraSolicitada(String horaSolicitada) {
         this.horaSolicitada = horaSolicitada;
     }
 

@@ -72,7 +72,7 @@ public class MenuActivity extends AppCompatActivity
     BottomNavigationView nv;
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -82,13 +82,13 @@ public class MenuActivity extends AppCompatActivity
                     fm.beginTransaction().hide(active).show(fragmentMain).commit();
                     active = fragmentMain;
                     return true;
-                /*case R.id.navigation_perfil:
+                *//*case R.id.navigation_perfil:
                     //MenuListDialogFragment.newInstance(30).show(getSupportFragmentManager(), "dialog");
                     Intent intent = new Intent(MenuActivity.this, PerfilData.class);
                     //intent.putExtra("token", token);
                     startActivity(intent);
                     //active = fragmenPerfil;
-                    return true;*/
+                    return true;*//*
                 case R.id.navigation_address:
                     fm.beginTransaction().hide(active).show(fragmentAddress).commit();
                     active = fragmentAddress;
@@ -114,7 +114,7 @@ public class MenuActivity extends AppCompatActivity
             }
             return false;
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,8 +157,8 @@ public class MenuActivity extends AppCompatActivity
 
 
         //BOTTOMNAVIGATION OPTIONS
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+       // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
 
@@ -251,8 +251,12 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.navigation_perfil) {
 
-            UserProfileFragment userProfileFragment = new UserProfileFragment();
-            userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
+            Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
+            startActivity(intent);
+
+
+            //UserProfileFragment userProfileFragment = new UserProfileFragment();
+            //userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
 
         } else if (id == R.id.navigation_address) {
             Utilities.SetLog("FRAGMENT_ADDRESS", active.getTag(),WSkeys.log);
@@ -306,6 +310,14 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentSchedule).commit();
             active = fragmentSchedule;
+        }else if(id == R.id.navigation_history){
+            if (!fragmentOrder.isAdded()) {
+                Utilities.SetLog("FRAGMENT_ORDER",  active.getTag(),WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container,fragmentOrder,"fragmentOrder").commit();
+            }
+            fm.beginTransaction().addToBackStack("fragmentMain");
+            fm.beginTransaction().hide(active).show(fragmentOrder).commit();
+            active = fragmentOrder;
         }else if (id == R.id.nav_legal) {
             Intent intent = new Intent(MenuActivity.this, LegalActivity.class);
             startActivity(intent);
@@ -344,10 +356,14 @@ public class MenuActivity extends AppCompatActivity
 
         Utilities.SetLog("MENUACTIVITYADRS", String.valueOf(item.getId()), WSkeys.log);
         String index = String.valueOf(client.getAddressDataArrayList().indexOf(item));
-        AddressDetailFragment addressDetailFragment = new AddressDetailFragment();
+        Intent intent = new Intent(MenuActivity.this, AddressDetailActivity.class);
+        intent.putExtra("ARG_PARAM1", index);
+        startActivity(intent);
+
+        /*AddressDetailFragment addressDetailFragment = new AddressDetailFragment();
         addressDetailFragment = AddressDetailFragment.newInstance(index,"");
         addressDetailFragment.setCancelable(false);
-        addressDetailFragment.show(getSupportFragmentManager(),"fragmenAddressDetail");
+        addressDetailFragment.show(getSupportFragmentManager(),"fragmenAddressDetail");*/
     }
 
     @Override
@@ -365,10 +381,14 @@ public class MenuActivity extends AppCompatActivity
 
         Utilities.SetLog("MENUACTIVITYRFC", String.valueOf(item.getId()), WSkeys.log);
         String index = String.valueOf(client.getRfcDataArrayList().indexOf(item));
-        RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();
+        Intent intent = new Intent(MenuActivity.this, RfcDetailActivity.class);
+        intent.putExtra("ARG_PARAM1", index);
+        startActivity(intent);
+
+        /*RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();
         rfcDetailFragment = RfcDetailFragment.newInstance(index,"");
         rfcDetailFragment.setCancelable(false);
-        rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");
+        rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");*/
     }
 
     @Override

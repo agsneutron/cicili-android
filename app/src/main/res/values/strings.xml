@@ -63,7 +63,7 @@
 
     <string name="fecnac">Fecha de Nacimiento</string>
     <string name="title_activity_perfil_data">PerfilData</string>
-    <string name="personaldata">Datos Personales</string>
+    <string name="personaldata">Perfil</string>
     <string name="perfil">Perfil</string>
     <string name="pago">Forma de Pago</string>
     <string name="direccion">Direcciones</string>
@@ -124,7 +124,7 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="PaymentData">Forma de Pago</string>
+    <string name="PaymentData">Cuentas Bancarias</string>
     <string name="help">Ayuda</string>
     <string name="serviceconditions">Legal</string>
     <string name="gettingDeviceLocation">Obteniendo ubicación de tu dispositivo</string>
@@ -273,5 +273,11 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_ayuda">Ayuda</string>
+    <string name="data">Datos</string>
+    <string name="title_activity_perfil_detail">Perfil</string>
+    <string name="cuenta">Cuenta</string>
+    <string name="historial_pedido">Historial de Pedidos</string>
+    <string name="title_activity_address_detail">Dirección</string>
+    <string name="title_activity_rfc_detail_acticity">Datos Fiscales</string>
 
 </resources>
