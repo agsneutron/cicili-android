@@ -117,7 +117,7 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
 
                 Intent intent = new Intent(getContext(), PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_direccion);
-                intent.putExtra("id",pos);
+                intent.putExtra("id",String.valueOf(pos));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 //AddressDetailActivity.this.finish();
