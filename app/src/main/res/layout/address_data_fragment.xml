@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
             android:text="@string/AddressDataTitle"
@@ -56,188 +56,196 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/aliass"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/alias"
-                app:errorEnabled="true"
-                app:helperText="Nombre corto">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/alias"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapWords" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cps"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/cp"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/calles"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/calle"
-            app:errorEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/calle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
-        </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="9dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/exts"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/ext"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/aliass"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/alias"
+                    app:errorEnabled="true"
+                    app:helperText="Nombre corto">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/alias"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cps"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/cp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/calles"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/calle"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/numext"
+                    android:id="@+id/calle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords" />
-
-
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ints"
-
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/inte"
-                app:errorEnabled="true">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/numint"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/exts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords" />
+                    android:layout_weight="1"
+                    android:hint="@string/ext"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <FrameLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ints"
 
-            android:id="@+id/fragment_qc_flSelectWorkDone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/inte"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <FrameLayout
+
+                android:id="@+id/fragment_qc_flSelectWorkDone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinner1"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:spinnerMode="dropdown"
-                    android:textSize="12sp"
-                    />
-            </FrameLayout>
+                    android:layout_height="wrap_content">
 
-            <!--<androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/asentamiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="15dp"
-                android:background="#FFFFFF"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:text="@string/Colonia"
-                android:textSize="12sp" />-->
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spinner1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+                </FrameLayout>
 
-
-        </FrameLayout>
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/favorita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/favorito" />
-
-
-        <!--        <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/register_address"
+                <!--<androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/asentamiento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginBottom="60dp"
-                    android:background="@color/colorAccent"
-                    android:text="@string/action_savee"
-
-                    />-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="36dp"
-            android:layout_marginTop="38.4dp"
-            android:layout_marginRight="36dp"
-            android:orientation="vertical">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/Colonia"
+                    android:textSize="12sp" />-->
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/register_address"
-                style="@style/Widget.MaterialComponents.Button"
+            </FrameLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/favorita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorito" />
+
+
+            <!--        <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/register_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginBottom="60dp"
+                        android:background="@color/colorAccent"
+                        android:text="@string/action_savee"
+
+                        />-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="@string/action_savee"
-                app:backgroundTint="@color/colorPrimaryDark"
-                app:cornerRadius="20dp" />
-        </LinearLayout>
+
+                android:layout_marginTop="15.4dp"
+
+                android:orientation="vertical">
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/register_address"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="@string/action_savee"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:cornerRadius="20dp" />
+            </LinearLayout>
 
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

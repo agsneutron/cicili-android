@@ -174,9 +174,6 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         //map
         getMyLocationPermision();
 
-<<<<<<< HEAD
-        //bottomsheet
-=======
 
         //pedido mascercano
 
@@ -329,7 +326,6 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         //endmascercano
 
         //bottomsheet pedido
->>>>>>> remotes/origin/ari_branch
 
         bottom_sheet = (LinearLayout)view.findViewById(R.id.bottomSheet);
         bsb = BottomSheetBehavior.from(bottom_sheet);

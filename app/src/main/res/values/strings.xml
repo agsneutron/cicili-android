@@ -176,8 +176,8 @@
     <string name="title_activity_aclaracion">Aclaración</string>
     <string name="programar_pedido">Programar Pedido</string>
     <string name="schedule">Programa tu pedido para una fecha próxima.</string>
-    <string name="fechaschedule">Fecha programada</string>
-    <string name="horaschedule">Hora Programada</string>
+    <string name="fechaschedule">Fecha</string>
+    <string name="horaschedule">Hora</string>
     <string name="direccionschedule">Dirección de Entrega</string>
     <string name="scheduebutton">Programar Pedido</string>
     <string name="litrosomonto">Indica la cantidad de litros o monto a surtir</string>

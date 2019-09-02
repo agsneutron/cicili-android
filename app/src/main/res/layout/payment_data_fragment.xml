@@ -6,6 +6,25 @@
     android:orientation="vertical"
     tools:context=".PaymentDataFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/forma_de_pago"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/payment_title"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark" />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,25 +65,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:gravity="center"
-            android:text="@string/forma_de_pago"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:gravity="center"
-            android:text="@string/payment_title"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark" />
        <!-- <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,7 +180,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/vencimientos"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
