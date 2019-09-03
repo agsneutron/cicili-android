@@ -421,8 +421,8 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(PedidoData item) {
 
-        Utilities.SetLog("MENUACTIVITYPEDIDO", String.valueOf(item.getIdAutotanque()), WSkeys.log);
-        String index = String.valueOf(client.getPedidoDataArrayList().indexOf(item));
+        Utilities.SetLog("MENUACTIVITYPEDIDO_", String.valueOf(item.getId()), WSkeys.log);
+        String index = String.valueOf(client.getPedidosDataArrayList().indexOf(item));
         Intent intent = new Intent(MenuActivity.this, OrderDetailActivity.class);
         intent.putExtra("ARG_PARAM1", index);
         startActivity(intent);
