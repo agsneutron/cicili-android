@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PaymentDetailActivity"
     tools:showIn="@layout/activity_payment_detail">
@@ -14,109 +15,121 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/visa"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="9dp">
 
             <LinearLayout
+                android:id="@+id/visa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="left"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/ic_visa" />
-
-                    <TextView
-                        android:id="@+id/tipocta"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingLeft="25dp"
-                        android:text="Banco"
-                        android:textSize="10dp" />
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/ic_visa" />
+
+                        <TextView
+                            android:id="@+id/tipocta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:paddingLeft="25dp"
+                            android:text="Banco"
+                            android:textSize="10dp" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/numt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="25dp"
-                android:text="****  ****  ****  2445"
-                android:textSize="16dp" />
-
-            <TextView
-
-                android:id="@+id/cvv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="25dp"
-                android:text="Banco"
-                android:textSize="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                android:orientation="horizontal">
-
                 <TextView
-                    android:id="@+id/banco"
+                    android:id="@+id/numt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"
+                    android:paddingLeft="25dp"
+                    android:text="****  ****  ****  2445"
+                    android:textSize="16dp" />
+
+                <TextView
+
+                    android:id="@+id/cvv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:paddingLeft="25dp"
                     android:text="Banco"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/tipotrj"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingLeft="5dp"
-                    android:text="123"
                     android:textSize="10dp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:gravity="right"
-                    android:paddingLeft="25dp"
-                    android:text="VALID \n THRU"
-                    android:textSize="7dp" />
+                    android:layout_marginTop="13dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/vencimiento"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:paddingLeft="13dp"
-                    android:text="12/18"
-                    android:textSize="16dp" />
+                    <TextView
+                        android:id="@+id/banco"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:paddingLeft="25dp"
+                        android:text="Banco"
+                        android:textSize="16dp" />
 
+                    <TextView
+                        android:id="@+id/tipotrj"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingLeft="5dp"
+                        android:text="123"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:gravity="right"
+                        android:paddingLeft="25dp"
+                        android:text="VALID \n THRU"
+                        android:textSize="7dp" />
+
+                    <TextView
+                        android:id="@+id/vencimiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:paddingLeft="13dp"
+                        android:text="12/18"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
