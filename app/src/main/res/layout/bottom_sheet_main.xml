@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="64dp"
+    app:behavior_peekHeight="0dp"
     android:layout_marginBottom="65dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -167,7 +167,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="30dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -186,14 +186,14 @@
                 <TextView
                     android:id="@+id/costo"
                     android:layout_width="50dp"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-
+                    android:layout_marginLeft="7dp"
                     android:layout_marginTop="0dp"
                     android:gravity="center"
                     android:text="$99.99"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <TextView
@@ -220,11 +220,11 @@
                 android:background="@drawable/circle1">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-
-                    android:src="@drawable/ic_access_time_black_24dp" />
+                    android:layout_marginLeft="17dp"
+                    app:srcCompat="@drawable/ic_access_time_black_24dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -239,7 +239,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="3dp"
-                    android:text="Llegada: "
+                    android:text="Legada: "
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="12dp" />
 
@@ -295,7 +295,7 @@
                     android:inputType="number"
                     android:maxLength="6"
                     android:textAlignment="center"
-                    android:textSize="22sp" />
+                    android:textSize="28sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--<com.google.android.material.textfield.TextInputLayout
@@ -350,7 +350,7 @@
 
                     android:maxLength="6"
                     android:textAlignment="center"
-                    android:textSize="22sp" />
+                    android:textSize="28sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sms_code_input"
@@ -416,10 +416,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
@@ -453,14 +453,21 @@
             </RadioGroup>
 
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
 
+            <!--<Button
+                android:id="@+id/btnConfirma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:text="@string/btnConfirma" />-->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirma"
                 style="@style/Widget.MaterialComponents.Button"
@@ -471,10 +478,7 @@
                 app:backgroundTint="@color/colorPrimaryDark"
                 app:cornerRadius="20dp" />
         </LinearLayout>
-
-
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -487,7 +491,4 @@
         android:text="@string/mensajePagoPedido"
         android:textSize="9sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1000dp"/>
 </LinearLayout>

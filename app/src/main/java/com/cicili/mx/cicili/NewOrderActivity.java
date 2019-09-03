@@ -74,6 +74,7 @@ public class NewOrderActivity extends AppCompatActivity {
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String LOG = "ORDEN";
     String order ="";
+    TextView estatuspedido;
 
     Gson gson = new Gson();
     ArrayList<Pedido> pedidoAux = new ArrayList<Pedido>();
@@ -106,6 +107,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
+        estatuspedido = findViewById(R.id.estatuspedido);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -116,7 +118,7 @@ public class NewOrderActivity extends AppCompatActivity {
         if (bundle != null) {
             //recuperar datos de pedido
             json_order = bundle.getString("json_order");
-            Utilities.SetLog("JSON_ORDER",json_order,WSkeys.log);
+            Utilities.SetLog("NEWORDER-JSON_ORDER",json_order,WSkeys.log);
             try {
                 progressDialog = ProgressDialog.show(this, "Espera un momento por favor", "Estamos procesando tu pedido.", true);
                 pedidoData = gson.fromJson(json_order , Pedido.class);
@@ -137,7 +139,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
                     Log.e("onItemSelected",String.valueOf(i));
 
-                        motivo_seleccionado = motivoAux.get(i).getText();
+                        motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
 
 
                 }
@@ -212,6 +214,8 @@ public class NewOrderActivity extends AppCompatActivity {
                                 //ejecuta  cancela pedido
                                 try {
                                     //CancelOrderTask(String.valueOf(motivo_seleccionado),String.valueOf(order));
+                                    Utilities.SetLog("in cancel motivo", motivo_seleccionado, WSkeys.log);
+                                    Utilities.SetLog("in cancel pedido", order, WSkeys.log);
                                     if(!order.equals("")) {
                                         CancelOrderTask(motivo_seleccionado, order);
                                     }
@@ -245,7 +249,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA;  //+WSkeys.pedido+"=\""+order+"\"&"+WSkeys.motivo+"=\""+motivo+"\"";
                     Utilities.SetLog("CANCELA",url,WSkeys.log);
                     RequestQueue queue = Volley.newRequestQueue(getContext());
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
@@ -273,6 +277,7 @@ public class NewOrderActivity extends AppCompatActivity {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put(WSkeys.pedido, order);
                             params.put(WSkeys.motivo, motivo);
+                            Log.e("PARAMETROSCANCEL", params.toString());
                             return params;
                         }
 
@@ -424,6 +429,7 @@ public class NewOrderActivity extends AppCompatActivity {
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
             pedido_id = respuesta.getJSONObject("data").getInt("id");
             order = String.valueOf(pedido_id);
+            estatuspedido.setText("Número de Orden: "+String.valueOf(order)+" Estatus de Pedido: " + respuesta.getJSONObject("data").getString("nombreStatus"));
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{

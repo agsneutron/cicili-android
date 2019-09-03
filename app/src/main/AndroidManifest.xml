@@ -22,11 +22,64 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PaymentDetailActivity"
+            android:label="@string/title_activity_payment_detail"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".RfcDetailActivity"
+            android:label="@string/title_activity_rfc_detail_acticity"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".AddressDetailActivity"
+            android:label="@string/title_activity_address_detail"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".PerfilDetailActivity"
+            android:label="@string/title_activity_perfil_detail"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".AyudaActivity"
+            android:label="@string/title_activity_ayuda"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".LegalActivity"
+            android:label="@string/title_activity_legal"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
             android:name=".Aclaracion"
             android:label="@string/title_activity_aclaracion"
             android:parentActivityName=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cicili.mx.cicili.MenuActivity" />
@@ -35,8 +88,8 @@
             android:name=".NewOrderActivity"
             android:label="@string/title_activity_new_order"
             android:parentActivityName=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cicili.mx.cicili.MenuActivity" />
