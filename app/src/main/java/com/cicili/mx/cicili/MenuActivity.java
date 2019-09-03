@@ -146,6 +146,14 @@ public class MenuActivity extends AppCompatActivity
                 drawer.openDrawer(GravityCompat.START);
             }
         });
+
+        fab_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, AyudaActivity.class);
+                startActivity(intent);
+            }
+        });
         //PErfil update data
         View headerView = navigationView.getHeaderView(0);
         TextView tvname = (TextView)headerView.findViewById(R.id.tv_name);
@@ -257,6 +265,15 @@ public class MenuActivity extends AppCompatActivity
         Fragment fragment;
 
         if (id == R.id.navigation_perfil) {
+
+           // Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
+           // startActivity(intent);
+
+
+            //UserProfileFragment userProfileFragment = new UserProfileFragment();
+            //userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
+
+        } else if (id == R.id.navigation_datos) {
 
             Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
             startActivity(intent);
@@ -405,7 +422,11 @@ public class MenuActivity extends AppCompatActivity
     public void onListFragmentInteraction(PedidoData item) {
 
         Utilities.SetLog("MENUACTIVITYPEDIDO", String.valueOf(item.getIdAutotanque()), WSkeys.log);
-        /*String index = String.valueOf(client.getPedidoDataArrayList().indexOf(item));
+        String index = String.valueOf(client.getPedidoDataArrayList().indexOf(item));
+        Intent intent = new Intent(MenuActivity.this, OrderDetailActivity.class);
+        intent.putExtra("ARG_PARAM1", index);
+        startActivity(intent);
+        /*
         RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();
         rfcDetailFragment = RfcDetailFragment.newInstance(index,"");
         rfcDetailFragment.setCancelable(false);

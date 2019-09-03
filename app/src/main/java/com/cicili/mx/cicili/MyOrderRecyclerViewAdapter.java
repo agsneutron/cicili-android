@@ -123,7 +123,7 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
         public final TextView mTime;
         public final TextView mCantidad;
         public final TextView mFormaPago;
-        public final MapView mMapView;
+        //public final MapView mMapView;
         private GoogleMap mMap;
         public PedidoData mItem;
 
@@ -137,7 +137,7 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
             mTime = (TextView) view.findViewById(R.id.time);
             mCantidad = (TextView) view.findViewById(R.id.cantidad);
             mFormaPago = (TextView) view.findViewById(R.id.formaPago);
-            mMapView = (MapView) view.findViewById(R.id.map_pedidos);
+            //mMapView = (MapView) view.findViewById(R.id.map_pedidos);
 
         }
 

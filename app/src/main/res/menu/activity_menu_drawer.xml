@@ -3,24 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+   <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_perfil"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/personaldata" />
-        <item
-            android:id="@+id/navigation_datos"
-            android:icon="@mipmap/ic_none"
-            android:title="@string/data" />
-        <item
-            android:id="@+id/navigation_rfc"
-            android:icon="@mipmap/ic_none"
-            android:title="Datos Fiscales" />
 
-        <item
-            android:id="@+id/navigation_cuenta"
-            android:icon="@mipmap/ic_none"
-            android:title="@string/cuenta" />
+                    <item
+                        android:id="@+id/navigation_datos"
+                        android:icon="@mipmap/ic_none"
+                        android:title="@string/data" />
+                    <item
+                        android:id="@+id/navigation_rfc"
+                        android:icon="@mipmap/ic_none"
+                        android:title="Datos Fiscales" />
+
+                    <item
+                        android:id="@+id/navigation_cuenta"
+                        android:icon="@mipmap/ic_none"
+                        android:title="@string/cuenta" />
+
 
         <item
             android:id="@+id/navigation_address"
@@ -41,27 +43,34 @@
             android:id="@+id/navigation_history"
             android:icon="@drawable/ic_attach_file_black_24dp"
             android:title="@string/historial_pedido" />
+
+        <item
+            android:id="@+id/nav_legal"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/serviceconditions" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/help" />
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/exit" />
     </group>
 
-    <item android:title="Configuración">
-        <menu>
-           <!-- <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />-->
-            <item
-                android:id="@+id/nav_legal"
-                android:icon="@android:drawable/ic_menu_info_details"
-                android:title="@string/serviceconditions" />
-            <item
-                android:id="@+id/nav_help"
-                android:icon="@android:drawable/ic_menu_help"
-                android:title="@string/help" />
+    <!--<item android:title="Configuración">
+       <menu>
+          <item
+               android:id="@+id/nav_share"
+               android:icon="@drawable/ic_menu_share"
+               android:title="@string/menu_share" />
+           <item
+               android:id="@+id/nav_send"
+               android:icon="@drawable/ic_menu_send"
+               android:title="@string/menu_send" />
+
         </menu>
-    </item>
+    </item>-->
 
 </menu>

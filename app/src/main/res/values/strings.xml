@@ -280,5 +280,7 @@
     <string name="title_activity_address_detail">Dirección</string>
     <string name="title_activity_rfc_detail_acticity">Datos Fiscales</string>
     <string name="title_activity_payment_detail">Cuenta Bancaria</string>
+    <string name="exit">Salir</string>
+    <string name="title_activity_order_detail">Detalle de tu Orden</string>
 
 </resources>
