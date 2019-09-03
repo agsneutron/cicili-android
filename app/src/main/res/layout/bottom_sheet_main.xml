@@ -9,7 +9,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="64dp"
+    app:behavior_peekHeight="0dp"
     android:layout_marginBottom="65dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -224,7 +224,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="17dp"
-                    android:src="@drawable/ic_access_time_black_24dp" />
+                    app:srcCompat="@drawable/ic_access_time_black_24dp" />
             </LinearLayout>
 
             <LinearLayout
