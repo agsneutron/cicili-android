@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private String token="";
+    private String token_firebase="";
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     Boolean validated = false;
@@ -153,8 +154,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }
 
                         // Get new Instance ID token
-                        String token = task.getResult().getToken();
-                        Utilities.SetLog("TOKEN FIREBASE desde Login: ",token,true);
+                        token_firebase = task.getResult().getToken();
+                        Utilities.SetLog("TOKEN FIREBASE desde Login: ",token_firebase,true);
 
                         // Log and toast
                         //String msg = getString(R.string., token);
@@ -348,6 +349,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.PUSERNAME, mEmail);
                 params.put(WSkeys.PPASSWORD, mPassword);
+                //params.put(WSkeys.TOKENFIREBASE, token_firebase);
                 Log.e("PARAMETROS", params.toString());
                 return params;
             }
