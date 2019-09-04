@@ -285,5 +285,8 @@
     <string name="btnaclaracion">Aclaración</string>
     <string name="btn_facturar">Facturar</string>
     <string name="detalle_del_pedido">Detalle del Pedido</string>
+    <string name="montolitro">Pedir</string>
+    <string name="monto">Monto</string>
+    <string name="litro">Litro</string>
 
 </resources>

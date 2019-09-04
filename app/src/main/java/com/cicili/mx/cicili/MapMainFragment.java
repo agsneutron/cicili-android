@@ -70,6 +70,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -112,13 +113,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private ArrayList<String> autotanquesDisponiblesArray;
     Gson gson = new Gson();
     Integer direccionSeleccionada=0;
-    Double latitudPedido, longitudPedido;
+    Double latitudPedido, longitudPedido, monto_c, litro_c;
     LinearLayout bottom_sheet;
     BottomSheetBehavior bsb;
     TextView name_usuario;
     LinearLayout featuredlayout;
     LinearLayout bottom_sheetmascercano;
     BottomSheetBehavior bsb_mascercano;
+
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -341,9 +343,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 TextView tiempo = (TextView) view.findViewById(R.id.tiempo);
                 final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago);
                 rgFormaPago.check(R.id.tarjeta);
+                final RadioGroup rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro);
+                rgMontoLitro.check(R.id.litro);
                 String formapagoseleccionada="";
-                final TextInputEditText litros = (TextInputEditText) view.findViewById(R.id.litros);
-                final TextInputEditText precio = (TextInputEditText) view.findViewById(R.id.precio);
+                final TextInputEditText input_monto_litros = (TextInputEditText) view.findViewById(R.id.input);
+                final TextInputEditText calculo_monto_litro = (TextInputEditText) view.findViewById(R.id.calculo_input);
+                final TextInputLayout calculoinput = (TextInputLayout)view.findViewById(R.id.calculoinput);
+                final TextInputLayout labelinput = (TextInputLayout)view.findViewById(R.id.labelinput);
+
 
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
@@ -384,25 +391,77 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     formapagoseleccionada = WSkeys.defectivo;
                 }
 
-
-
-                litros.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
-                    public void onFocusChange(View view, boolean b) {
-                        Double nuevoprecio;
-                        if (!TextUtils.isEmpty(litros.getText())) {
-                            if (Double.valueOf(litros.getText().toString()) > 0) {
-                                nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(litros.getText().toString());
-                                precio.setText(String.valueOf(nuevoprecio));
-                            }
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        if(radioGroup.getCheckedRadioButtonId() == R.id.litro){
+                            labelinput.setHint("Litros");
+                            calculoinput.setHint("Monto");
+                            input_monto_litros.setText(input_monto_litros.getText().toString());
                         }
-                        else{
-                            litros.setText("0");
+
+                        if (radioGroup.getCheckedRadioButtonId() == R.id.monto){
+                            labelinput.setHint("Monto");
+                            calculoinput.setHint("Litros");
+                            input_monto_litros.setText(input_monto_litros.getText().toString());
                         }
                     }
                 });
 
-                precio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+
+                input_monto_litros.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        Double nuevoprecio;
+                        Double calculaLitros;
+                        if(!input_monto_litros.getText().toString().isEmpty()) {
+                            if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
+
+                                if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
+                                    nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
+                                    calculo_monto_litro.setText(String.valueOf(nuevoprecio));
+                                    monto_c = nuevoprecio;
+                                    litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                }
+                                else{
+                                    calculo_monto_litro.setText(String.valueOf(0));
+                                }
+                            } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
+                                if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
+                                    calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) / client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio());
+                                    calculo_monto_litro.setText(String.valueOf(calculaLitros));
+                                    monto_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                    litro_c = calculaLitros;
+                                }
+                                else{
+                                    calculo_monto_litro.setText(String.valueOf(0));
+                                }
+                            }
+                        }
+                        else {
+                            input_monto_litros.setText("0");
+                        }
+                    }
+                });
+                input_monto_litros.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+
+                    }
+                });
+
+                /*precio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View view, boolean b) {
                         Double calculaLitros;
@@ -416,7 +475,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             precio.setText("0");
                         }
                     }
-                });
+                });*/
 
                 Button btnConformaPedido = (Button) view.findViewById(R.id.btnConfirma);
                 final String finalFormapagoseleccionada = formapagoseleccionada;
@@ -429,7 +488,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         String error="";
 
                         // Check for a valid l/p, if the user entered one.
-                        if (TextUtils.isEmpty(litros.getText()) || String.valueOf(litros.getText()).equals("0")) {
+                        if (TextUtils.isEmpty(input_monto_litros.getText()) || String.valueOf(input_monto_litros.getText()).equals("0")) {
                            // litros.setError(getString(R.string.error_invalid_value));
                            // focusView = litros;
                             error=getString(R.string.error_invalid_value);
@@ -437,8 +496,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         }
 
                         // Check for a valid password, if the user entered one.
-                        if (TextUtils.isEmpty(precio.getText()) || String.valueOf(precio.getText()).equals("0")) {
-                            Utilities.SetLog("ERROR PRECIO", String.valueOf(precio.getText()), WSkeys.log);
+                        if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
+                            Utilities.SetLog("ERROR PRECIO", String.valueOf(calculo_monto_litro.getText()), WSkeys.log);
                             //precio.setError(getString(R.string.error_invalid_value));
                             //focusView = precio;
                             error=getString(R.string.error_invalid_value);
@@ -466,14 +525,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             NumberFormat nf = NumberFormat.getInstance();
                             Double cantidad = Double.valueOf(0);
                             Double monto = Double.valueOf(0);
-                            try {
-                                 cantidad  = nf.parse(litros.getText().toString()).doubleValue();
-                                 monto = nf.parse(precio.getText().toString()).doubleValue();
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-
-
+                            // cantidad  = nf.parse(litros.getText().toString()).doubleValue();
+                            // monto = nf.parse(precio.getText().toString()).doubleValue();
+                            cantidad = litro_c;
+                            monto = monto_c;
 
 
                             AddressData addressData = new AddressData();

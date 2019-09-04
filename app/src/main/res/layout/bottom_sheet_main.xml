@@ -278,7 +278,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/litrosinput"
+                android:id="@+id/labelinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/litros"
@@ -287,7 +287,7 @@
                 app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/litros"
+                    android:id="@+id/input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
@@ -316,42 +316,42 @@
                     android:textAlignment="center"
                     android:textSize="36sp" />
             </com.google.android.material.textfield.TextInputLayout>-->
-        </LinearLayout>
+                </LinearLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:background="#ddd" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#ddd" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/precioinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/precio"
-                android:textColorHint="@color/colorPrimaryDark"
-                app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/precio"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center|center_horizontal"
-                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    android:maxLength="6"
-                    android:textAlignment="center"
-                    android:textSize="28sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/calculoinput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/precio"
+                        android:textColorHint="@color/colorPrimaryDark"
+                        app:errorEnabled="true"
+                        app:hintTextAppearance="@style/HintText">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/calculo_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_light"
+                            android:gravity="center|center_horizontal"
+                            android:inputType="numberDecimal"
+                            android:enabled="false"
+                            android:maxLength="6"
+                            android:textAlignment="center"
+                            android:textSize="28sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sms_code_input"
                 android:layout_width="wrap_content"
@@ -370,7 +370,7 @@
                     android:textAlignment="center"
                     android:textSize="36sp" />
             </com.google.android.material.textfield.TextInputLayout>-->
-        </LinearLayout>
+       </LinearLayout>
 
     </LinearLayout>
 
@@ -413,6 +413,44 @@
      </com.google.android.material.textfield.TextInputLayout>-->
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/montolitro" />
+
+        <RadioGroup
+            android:id="@+id/rgMontoLitro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/litro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/litro"
+                android:layout_marginLeft="5dp"/>
+
+            <RadioButton
+                android:id="@+id/monto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/monto"
+                android:layout_marginRight="5dp"/>
+
+
+        </RadioGroup>
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
