@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "625634084597",
+    "firebase_url": "https://absolute-feat-236220.firebaseio.com",
+    "project_id": "absolute-feat-236220",
+    "storage_bucket": "absolute-feat-236220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625634084597:android:ed419489ea2d90d0",
+        "android_client_info": {
+          "package_name": "com.cicili.mx.cicili"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625634084597-qkqjlhn4ie3t0i510vm9kjmsefeqcbtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ro4rGpDjWeu1_DTiYo67nFKIaRrFVxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625634084597-qkqjlhn4ie3t0i510vm9kjmsefeqcbtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625634084597:android:a1a763d24ab2efc1",
+        "android_client_info": {
+          "package_name": "com.cicili.mx.conductor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625634084597-qkqjlhn4ie3t0i510vm9kjmsefeqcbtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ro4rGpDjWeu1_DTiYo67nFKIaRrFVxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625634084597-qkqjlhn4ie3t0i510vm9kjmsefeqcbtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

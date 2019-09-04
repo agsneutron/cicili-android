@@ -57,8 +57,12 @@ import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -137,6 +141,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(intent);
             }
         });
+
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Utilities.SetLog("getInstanceId failed: ",task.getException().toString(),true);
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        Utilities.SetLog("TOKEN FIREBASE desde Login: ",token,true);
+
+                        // Log and toast
+                        //String msg = getString(R.string., token);
+                        //Toast.makeText(MenuActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
