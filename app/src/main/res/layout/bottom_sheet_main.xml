@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -188,12 +188,11 @@
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginTop="0dp"
+
                     android:gravity="center"
                     android:text="$99.99"
                     android:textColor="@color/white"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
             </LinearLayout>
 
             <TextView
@@ -217,13 +216,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/circle1">
+                android:background="@drawable/circle1"
+                android:layout_gravity="center">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="17dp"
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:layout_margin="10dp"
                     app:srcCompat="@drawable/ic_access_time_black_24dp" />
             </LinearLayout>
 
@@ -412,19 +412,14 @@
              android:textColor="@color/textDark" />
      </com.google.android.material.textfield.TextInputLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_marginRight="10dp">
+            android:paddingTop="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -442,25 +437,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/efectivo" />
+                    android:text="@string/efectivo"
+                    android:layout_marginRight="5dp"/>
 
                 <RadioButton
                     android:id="@+id/tarjeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/tarjeta" />
+                    android:text="@string/tarjeta"
+                    android:layout_marginLeft="5dp"/>
             </RadioGroup>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:paddingTop="20dp"
+            >
 
             <!--<Button
                 android:id="@+id/btnConfirma"
@@ -478,7 +475,7 @@
                 app:backgroundTint="@color/colorPrimaryDark"
                 app:cornerRadius="20dp" />
         </LinearLayout>
-    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -489,6 +486,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mensajePagoPedido"
-        android:textSize="9sp" />
+        android:textSize="9sp"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>
