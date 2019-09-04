@@ -88,15 +88,7 @@ public class NewOrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                finish();
-            }
-        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         linearLayout = findViewById(R.id.view_error);
@@ -429,7 +421,7 @@ public class NewOrderActivity extends AppCompatActivity {
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
             pedido_id = respuesta.getJSONObject("data").getInt("id");
             order = String.valueOf(pedido_id);
-            estatuspedido.setText("Número de Orden: "+String.valueOf(order)+" Estatus de Pedido: " + respuesta.getJSONObject("data").getString("nombreStatus"));
+            estatuspedido.setText(" Estatus de Pedido: " + respuesta.getJSONObject("data").getString("nombreStatus")+ "\n"+ "Número de Orden: "+String.valueOf(order));
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
