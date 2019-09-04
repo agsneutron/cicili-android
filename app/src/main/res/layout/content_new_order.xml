@@ -6,27 +6,68 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".NewOrderActivity"
-    tools:showIn="@layout/activity_new_order">
+    tools:showIn="@layout/activity_new_order"
+    android:layout_margin="20dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/view_error"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/view_cancel">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <pl.droidsonroids.gif.GifImageView
+
+            android:layout_width="200.1dp"
+            android:layout_height="200.1dp"
+            android:src="@drawable/success_anim" />
+        <!-- <TextView
+            android:id="@+id/estatuspedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/error_pedido" />-->
 
 
+    </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/estatuspedido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/error_pedido"/>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="126dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/view_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_error">
+
+
+        <TextView
+            android:id="@+id/estatuspedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="21.2dp"
+            android:text="@string/error_pedido"
+            android:textColor="#000000"
+            android:textSize="20.8sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="11.5sp"
+            android:text="Your order is successfully."
+            android:textColor="#111111"
+            android:textSize="14.5sp" />
 
     </LinearLayout>
 
@@ -35,10 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_error"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <!--<Button
             android:id="@+id/cancela_pedido_bss"
@@ -46,15 +86,15 @@
             android:layout_height="wrap_content"
             android:text="@string/cancel"/>-->
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancela_pedido_bss"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="@string/cancel"
-                app:backgroundTint="@color/colorPrimaryDark"
-                app:cornerRadius="20dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancela_pedido_bss"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/cancel"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:cornerRadius="20dp" />
 
     </LinearLayout>
 
