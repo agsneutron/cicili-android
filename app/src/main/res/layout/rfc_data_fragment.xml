@@ -41,6 +41,7 @@
         android:layout_marginBottom="20dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="9dp">
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
