@@ -2,6 +2,7 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,10 +20,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.util.Base64;
-import android.view.Gravity;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -40,6 +39,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -53,7 +53,8 @@ public class MenuActivity extends AppCompatActivity
         RfcMainFragment.OnListFragmentInteractionListener,
         RfcDetailFragment.OnFragmentInteractionListener,
         ScheduleMainFragment.OnListFragmentInteractionListener,
-        OrderMainFragment.OnListFragmentInteractionListener{
+        OrderMainFragment.OnListFragmentInteractionListener,
+        NotificationReceiver.OnNotificationReceiverListener{
 
 
     Application application = (Application) Client.getContext();
@@ -72,6 +73,11 @@ public class MenuActivity extends AppCompatActivity
     Fragment old = fragmentMain;
     BottomNavigationView nv;
     DrawerLayout drawer;
+
+    protected static final String BUTTON_ACTION = "buttonaction";
+    protected static final int REQUEST_BUTTON = 300;
+
+    private  NotificationReceiver broadcast;
 
 
     /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -208,6 +214,11 @@ public class MenuActivity extends AppCompatActivity
             //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(fragmentRfc).commit();
             //fm.beginTransaction().hide(active).show(fragmentMain).commit();
 
+
+            broadcast = new NotificationReceiver(this);
+            IntentFilter intentFilter = new IntentFilter(BUTTON_ACTION);
+            registerReceiver(broadcast,intentFilter);
+
         }
     }
 
@@ -343,11 +354,11 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().hide(active).show(fragmentOrder).commit();
             active = fragmentOrder;
         }else if (id == R.id.nav_legal) {
-            Intent intent = new Intent(MenuActivity.this, LegalActivity.class);
+            Intent intent = new Intent(MenuActivity.this, LegalListActivity.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_help) {
-            Intent intent = new Intent(MenuActivity.this, AyudaActivity.class);
+            Intent intent = new Intent(MenuActivity.this, HelpListActivity.class);
             startActivity(intent);
 
         }
@@ -436,5 +447,17 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
+    }
+
+    @Override
+    public void onButtonClicked() {
+        Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (broadcast!=null)unregisterReceiver(broadcast);
     }
 }

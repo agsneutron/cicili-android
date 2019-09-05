@@ -288,5 +288,6 @@
     <string name="montolitro">Pedir en</string>
     <string name="monto">Monto</string>
     <string name="litro">Litro</string>
+    <string name="title_activity_legal_list">Legal</string>
 
 </resources>
