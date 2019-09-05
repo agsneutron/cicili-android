@@ -1,47 +1,44 @@
 package com.cicili.mx.cicili.domain;
 
-public class PedidoData {
+public class PedidoDetail {
 
     private Integer id;
     private Double cantidad;
-    private Double monto;
-    private AddressData domicilio;
-    private Double latitud;
-    private Double longitud;
-    private String formaPago;
-    private String alias;
-    private Integer idAutotanque;
     private String fechaPedido;
     private String fechaSolicitada;
     private String horaSolicitada;
+    private Double monto;
     private Integer status;
-    private Integer idCliente;
+    private Integer idcliente;
+    private String nombreConductor;
+    private String nombreConcesionario;
     private String nombreCliente;
+    private String formaPago;
     private String placa;
     private String direccion;
+    private String alias;
     private String nombreStatus;
 
-    public PedidoData() {
+    public PedidoDetail() {
+
     }
 
-    public PedidoData(Integer id, Double cantidad, Double monto, AddressData domicilio, Double latitud, Double longitud, String formaPago, String alias, Integer idAutotanque, String fechaPedido, String fechaSolicitada, String horaSolicitada, Integer status, Integer idCliente, String nombreCliente, String placa, String direccion, String nombreStatus) {
+    public PedidoDetail(Integer id, Double cantidad, String fechaPedido, String fechaSolicitada, String horaSolicitada, Double monto, Integer status, Integer idcliente, String nombreConductor, String nombreConcesionario, String nombreCliente, String formaPago, String placa, String direccion, String alias, String nombreStatus) {
         this.id = id;
         this.cantidad = cantidad;
-        this.monto = monto;
-        this.domicilio = domicilio;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.formaPago = formaPago;
-        this.alias = alias;
-        this.idAutotanque = idAutotanque;
         this.fechaPedido = fechaPedido;
         this.fechaSolicitada = fechaSolicitada;
         this.horaSolicitada = horaSolicitada;
+        this.monto = monto;
         this.status = status;
-        this.idCliente = idCliente;
+        this.idcliente = idcliente;
+        this.nombreConductor = nombreConductor;
+        this.nombreConcesionario = nombreConcesionario;
         this.nombreCliente = nombreCliente;
+        this.formaPago = formaPago;
         this.placa = placa;
         this.direccion = direccion;
+        this.alias = alias;
         this.nombreStatus = nombreStatus;
     }
 
@@ -59,54 +56,6 @@ public class PedidoData {
 
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public Double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(Double monto) {
-        this.monto = monto;
-    }
-
-    public AddressData getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(AddressData domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public Double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(Double latitud) {
-        this.latitud = latitud;
-    }
-
-    public Double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
-    }
-
-    public String getFormaPago() {
-        return formaPago;
-    }
-
-    public void setFormaPago(String formaPago) {
-        this.formaPago = formaPago;
-    }
-
-    public Integer getIdAutotanque() {
-        return idAutotanque;
-    }
-
-    public void setIdAutotanque(Integer idAutotanque) {
-        this.idAutotanque = idAutotanque;
     }
 
     public String getFechaPedido() {
@@ -133,6 +82,14 @@ public class PedidoData {
         this.horaSolicitada = horaSolicitada;
     }
 
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -141,12 +98,28 @@ public class PedidoData {
         this.status = status;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public Integer getIdcliente() {
+        return idcliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setIdcliente(Integer idcliente) {
+        this.idcliente = idcliente;
+    }
+
+    public String getNombreConductor() {
+        return nombreConductor;
+    }
+
+    public void setNombreConductor(String nombreConductor) {
+        this.nombreConductor = nombreConductor;
+    }
+
+    public String getNombreConcesionario() {
+        return nombreConcesionario;
+    }
+
+    public void setNombreConcesionario(String nombreConcesionario) {
+        this.nombreConcesionario = nombreConcesionario;
     }
 
     public String getNombreCliente() {
@@ -155,6 +128,14 @@ public class PedidoData {
 
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
+    }
+
+    public String getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(String formaPago) {
+        this.formaPago = formaPago;
     }
 
     public String getPlaca() {
@@ -173,19 +154,19 @@ public class PedidoData {
         this.direccion = direccion;
     }
 
-    public String getNombreStatus() {
-        return nombreStatus;
-    }
-
-    public void setNombreStatus(String nombreStatus) {
-        this.nombreStatus = nombreStatus;
-    }
-
     public String getAlias() {
         return alias;
     }
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getNombreStatus() {
+        return nombreStatus;
+    }
+
+    public void setNombreStatus(String nombreStatus) {
+        this.nombreStatus = nombreStatus;
     }
 }

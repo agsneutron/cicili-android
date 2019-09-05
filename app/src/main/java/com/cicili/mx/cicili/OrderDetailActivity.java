@@ -2,12 +2,23 @@ package com.cicili.mx.cicili;
 
 import android.Manifest;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.PedidoData;
+import com.cicili.mx.cicili.domain.PedidoDetail;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -22,15 +33,25 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
@@ -101,21 +122,10 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             finish();
         }
 
-        //setvalues to textviews
-        mIdView.setText(client.getPedidosDataArrayList().get(pos).getNombreStatus());
-        mDate.setText(client.getPedidosDataArrayList().get(pos).getFechaSolicitada());
-        mTime.setText(client.getPedidosDataArrayList().get(pos).getHoraSolicitada());
-        mCantidad.setText(String.valueOf(client.getPedidosDataArrayList().get(pos).getCantidad()));
-        mFormaPago.setText(client.getPedidosDataArrayList().get(pos).getFormaPago());
-        mlbl1.setText(client.getPedidosDataArrayList().get(pos).getDireccion());
-        mlbl2.setText(client.getPedidosDataArrayList().get(pos).getPlaca());
-        mlbl3.setText(String.valueOf(client.getPedidosDataArrayList().get(pos).getId()));
-        mlbl4.setText(client.getPedidosDataArrayList().get(pos).getFechaPedido());
-        latOrderAddress = client.getPedidosDataArrayList().get(pos).getLatitud();
-        lonOrderAddress = client.getPedidosDataArrayList().get(pos).getLongitud();
+        LlenaPedido();
+        latOrderAddress = 0.0; // client.getPedidosDataArrayList().get(pos).getLatitud();
+        lonOrderAddress = 0.0; //client.getPedidosDataArrayList().get(pos).getLongitud();
 
-        //map
-        getMyLocationPermision();
     }
 
     //MAP
@@ -245,6 +255,98 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             }
         }
         //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public void LlenaPedido(){
+
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_CONSULTA_PEDIDO_ID+pos;
+        Utilities.SetLog("LLENAPEDIDOs",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserPedido(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserPedido(String response) throws JSONException {
+
+        Utilities.SetLog("RESPONSE_PEDIDOLIST",response,WSkeys.log);
+        //Log.e("CodeResponse", response);
+        Gson gson = new Gson();
+        JSONObject respuesta = new JSONObject(response);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            //ontener nivel de data
+            //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            PedidoDetail pedidoData= gson.fromJson( respuesta.getJSONArray(WSkeys.data).toString() , PedidoDetail.class);
+            //setvalues to textviews
+
+            mDate.setText(pedidoData.getFechaSolicitada());
+            mTime.setText(pedidoData.getHoraSolicitada());
+            mCantidad.setText(String.valueOf(pedidoData.getCantidad()));
+            mIdView.setText(String.valueOf(pedidoData.getMonto()));
+            mFormaPago.setText(pedidoData.getFormaPago());
+            mlbl1.setText(String.format("%s %s", pedidoData.getAlias(), pedidoData.getDireccion()));
+            mlbl2.setText(pedidoData.getNombreConcesionario());
+            mlbl3.setText(pedidoData.getNombreConductor());
+            mlbl4.setText(pedidoData.getPlaca());
+            //map
+            getMyLocationPermision();
+
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(mIdView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+
+            Utilities.SetLog("ERRORPARSER",response,WSkeys.log);
+        }
     }
 
 }

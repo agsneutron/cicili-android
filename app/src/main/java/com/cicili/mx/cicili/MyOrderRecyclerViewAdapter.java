@@ -36,11 +36,11 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(String.valueOf(mValues.get(position).getNombreStatus()));
+        holder.mIdView.setText(String.valueOf(mValues.get(position).getCantidad()));
         holder.mDate.setText(String.valueOf(mValues.get(position).getFechaSolicitada()));
         holder.mTime.setText(String.valueOf(mValues.get(position).getHoraSolicitada()));
-        holder.mCantidad.setText(String.valueOf(mValues.get(position).getCantidad()));
-        holder.mFormaPago.setText(String.valueOf(mValues.get(position).getFormaPago()));
+        holder.mCantidad.setText(String.valueOf(mValues.get(position).getMonto()));
+        holder.mFormaPago.setText(String.valueOf(mValues.get(position).getAlias()));
         holder.mContentView.setText(String.valueOf(mValues.get(position).getDireccion()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
