@@ -22,6 +22,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AdviceActivity"
+            android:label="@string/title_activity_advice"
+            android:parentActivityName=".LegalListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.LegalListActivity" />
+        </activity>
+        <activity
+            android:name=".TermsActivity"
+            android:label="@string/title_activity_terms"
+            android:parentActivityName=".LegalListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.LegalListActivity" />
+        </activity>
+        <activity
             android:name=".LegalListActivity"
             android:label="@string/title_activity_legal_list"
             android:parentActivityName=".MenuActivity"
@@ -44,9 +62,6 @@
             android:label="@string/title_activity_order_detail"
             android:parentActivityName=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
             android:name=".PaymentDetailActivity"
@@ -95,11 +110,11 @@
         <activity
             android:name=".LegalActivity"
             android:label="@string/title_activity_legal"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName=".LegalListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cicili.mx.cicili.MenuActivity" />
+                android:value="com.cicili.mx.cicili.LegalListActivity" />
         </activity>
         <activity
             android:name=".Aclaracion"

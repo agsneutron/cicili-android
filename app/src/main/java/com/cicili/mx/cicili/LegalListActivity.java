@@ -1,5 +1,6 @@
 package com.cicili.mx.cicili;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -38,6 +40,30 @@ public class LegalListActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.legal_list);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent;
+                switch(i) {
+                    case 0:
+                        intent = new Intent(LegalListActivity.this, LegalActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        intent = new Intent(LegalListActivity.this, TermsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        intent = new Intent(LegalListActivity.this, AdviceActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+        });
     }
 
 }

@@ -324,7 +324,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
             //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
-            PedidoDetail pedidoData= gson.fromJson( respuesta.getJSONArray(WSkeys.data).toString() , PedidoDetail.class);
+            PedidoDetail pedidoData= gson.fromJson( respuesta.getJSONObject(WSkeys.data).toString() , PedidoDetail.class);
             //setvalues to textviews
 
             mDate.setText(pedidoData.getFechaSolicitada());
