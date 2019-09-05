@@ -32,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.Programa;
 import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
@@ -233,18 +234,18 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     focusView = timeSchedule;
                 }
 
-                /*if (!error){
-                    UsoCfdi usoCfdi = new UsoCfdi();
-                    usoCfdi.setId(cfdisel);
-                    rfcData.setRfc(rfc.getText().toString());
-                    rfcData.setRazonSocial(razonsocial.getText().toString());
-                    rfcData.setUsoCfdi(usoCfdi);
+                if (!error){
+                    Programa schedule = new Programa();
+                   /* schedule.setId(cfdisel);
+                    schedule.setRfc(rfc.getText().toString());
+                    schedule.setRazonSocial(razonsocial.getText().toString());
+                    schedule.setUsoCfdi(usoCfdi);*/
                     try {
-                        RfcDataTask(rfcData);
+                        ScheduleDataTask(schedule);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }*/
+                }
             }
         });
 
@@ -370,7 +371,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     }
 
 
-    public void RfcDataTask(RfcData rfcData) throws JSONException {
+    public void ScheduleDataTask(Programa scheduleData) throws JSONException {
 
         Gson gson = new Gson();
         String json;
@@ -379,18 +380,18 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
 
         if(pos != null) {
             //toupdate
-            rfcData.setId(client.getRfcDataArrayList().get(pos).getId());
-            json = gson.toJson(rfcData);
+            //scheduleData.setId(client.getRfcDataArrayList().get(pos).getId());
+            json = gson.toJson(scheduleData);
             params = new JSONObject(json);
             Log.e("RFCValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_RFCUPDATE;
         }else{
 
             //toadd
-            json = gson.toJson(rfcData);
+            json = gson.toJson(scheduleData);
             params = new JSONObject(json);
             Log.e("RFCValuePairs--", json);
-            url = WSkeys.URL_BASE + WSkeys.URL_RFCDATA;
+            url = WSkeys.URL_BASE + WSkeys.URL_PROGRAMA;
 
         }
 

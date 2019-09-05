@@ -223,6 +223,10 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/catalogos/motivoscancelacion
     public static final String URL_MOTIVO_CANCELA = "app/catalogos/motivoscancelacion/1";
 
+    //motivo programa
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/programar
+    public static final String URL_PROGRAMA = "app/mv/cliente/pedido/programar";
+
 
     //tipo aclaracion
     //https://cicili.com.mx:8443/app/catalogos/tiposaclaracion

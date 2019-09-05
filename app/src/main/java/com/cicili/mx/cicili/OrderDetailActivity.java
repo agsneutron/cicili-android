@@ -156,7 +156,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                             AddMarker(latOrderAddress, lonOrderAddress,client.getPedidosDataArrayList().get(pos).getNombreStatus(),client.getPedidosDataArrayList().get(pos).getDireccion());
 
                         } else {
-                            Utilities.SetLog("MAP-LOcATION", task.toString(), WSkeys.log);
+                            Utilities.SetLog("MAP-LOCATION", task.toString(), WSkeys.log);
 
                         }
                     }
@@ -336,6 +336,15 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             mlbl2.setText(pedidoData.getNombreConcesionario());
             mlbl3.setText(pedidoData.getNombreConductor());
             mlbl4.setText(pedidoData.getPlaca());
+            latOrderAddress = pedidoData.getLatitud();
+            lonOrderAddress = pedidoData.getLongitud();
+
+            if (latOrderAddress==null){
+                latOrderAddress=0.0;
+            }
+            if (lonOrderAddress==null){
+                lonOrderAddress=0.0;
+            }
             //map
             getMyLocationPermision();
 
