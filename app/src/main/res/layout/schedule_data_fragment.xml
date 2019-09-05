@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RfcDataFragment">
+    tools:context=".ScheduleDataFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:text="@string/programar_pedido"
             android:textColor="@color/colorPrimary"
-            android:textSize="23dp" />
+            android:textSize="23sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawableRight="@drawable/ic_today_black_24dp"
+                    android:drawableEnd="@drawable/ic_today_black_24dp"
                     android:focusable="false"
                     android:hint="@string/fechaschedule"
                     android:inputType="textCapWords" />
@@ -72,44 +72,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawableRight="@drawable/ic_today_black_24dp"
+                    android:drawableEnd="@drawable/ic_today_black_24dp"
                     android:focusable="false"
                     android:hint="@string/horaschedule" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <!-- <ImageButton
-                        android:id="@+id/ib_obtener_fecha"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimaryDark"
-                        app:srcCompat="@drawable/ic_date_range_black_24dp"
-                        android:contentDescription="@string/calendario" />-->
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cps"
-                style="@style/TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cp"
-                app:errorEnabled="true"
-                android:layout_weight="1">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>-->
 
             <FrameLayout
                 android:id="@+id/fragment_qc_flSelectWorkDone"
@@ -131,130 +98,115 @@
                         style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
                 </FrameLayout>
 
-               <!-- <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvschedule"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#FFFFFF"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:text="@string/direccionschedule"
-                    android:textSize="12sp" />-->
-
-
             </FrameLayout>
 
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/montolitro"
+                            android:layout_gravity="center_vertical"/>
+
+                        <RadioGroup
+                            android:id="@+id/rgMontoLitro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/litro"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/litro"
+                                android:layout_marginLeft="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/monto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/monto"
+                                android:layout_marginRight="5dp"/>
+
+
+                        </RadioGroup>
+
+            </LinearLayout>
+
+
+
+           <!-- <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="#ddd" />-->
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/labelinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/litro"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/HintText">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="center|center_horizontal"
+                        android:inputType="numberDecimal"
+                        android:maxLength="6"
+                        android:textAlignment="center"
+                        android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/forma_de_pago"
+                    android:layout_gravity="center_vertical"/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/litrosinput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/litros"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        app:errorEnabled="true"
-                        app:hintTextAppearance="@style/HintText">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/litros"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_light"
-                            android:gravity="center|center_horizontal"
-                            android:inputType="number"
-                            android:maxLength="6"
-                            android:textAlignment="center"
-                            android:textSize="22sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!--<com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sms_code_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="******"
-                        app:errorEnabled="true">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/code"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_light"
-                            android:gravity="center|center_horizontal"
-                            android:inputType="number"
-                            android:maxLength="6"
-                            android:textAlignment="center"
-                            android:textSize="36sp" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="#ddd" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <RadioGroup
+                    android:id="@+id/rgFormaPago"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/precioinput"
+                    <RadioButton
+                        android:id="@+id/efectivo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/precio"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        app:errorEnabled="true"
-                        app:hintTextAppearance="@style/HintText">
+                        android:layout_weight="1"
+                        android:text="@string/efectivo"
+                        android:layout_marginRight="5dp"/>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/precio"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_light"
-                            android:gravity="center|center_horizontal"
-                            android:inputType="numberDecimal"
-
-                            android:maxLength="6"
-                            android:textAlignment="center"
-                            android:textSize="22sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <!--<com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sms_code_input"
-                        android:layout_width="wrap_content"
+                    <RadioButton
+                        android:id="@+id/tarjeta"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="******"
-                        app:errorEnabled="true">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/code"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_light"
-                            android:gravity="center|center_horizontal"
-                            android:inputType="number"
-                            android:maxLength="6"
-                            android:textAlignment="center"
-                            android:textSize="36sp" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:text="@string/tarjeta"
+                        android:layout_marginLeft="5dp"/>
+                </RadioGroup>
 
             </LinearLayout>
 

@@ -215,6 +215,10 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/mv/cliente/pedido/obtener
     public static final String URL_CONSULTA_PEDIDO = "app/mv/cliente/pedido/obtener";
 
+    //consulta id de pedido
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/obtener/{idPedido}
+    public static final String URL_CONSULTA_PEDIDO_ID ="app/mv/cliente/pedido/obtener/";
+
     //motivo cancela
     //https://cicili.com.mx:8443/app/catalogos/motivoscancelacion
     public static final String URL_MOTIVO_CANCELA = "app/catalogos/motivoscancelacion/1";

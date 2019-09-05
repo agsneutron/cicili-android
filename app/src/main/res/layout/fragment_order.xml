@@ -125,7 +125,7 @@
                         android:layout_marginRight="6dp"
                         android:layout_weight="1"
                         android:text="$ 312.00"
-                        android:textColor="#d22532"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="15sp" />
 
                 </LinearLayout>

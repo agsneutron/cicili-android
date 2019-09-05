@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -36,6 +37,8 @@ import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -75,8 +78,13 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     Spinner spinnerSchedule;
     EditText dateSchedule;
     EditText timeSchedule;
+    TextInputEditText litros, monto;
     SwitchCompat favorito;
     AppCompatButton buttonSchedule;
+    TextInputLayout labelinput;
+    RadioGroup rgMontoLitro;
+    RadioGroup rgFormaPago;
+    String formapagoseleccionada="";
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     private ArrayList<String> direccionArray;
@@ -163,56 +171,69 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             }
         });
 
+        rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago);
+        rgFormaPago.check(R.id.tarjeta);
+
+
+        monto = (TextInputEditText) view.findViewById(R.id.input);
+        labelinput = (TextInputLayout)view.findViewById(R.id.labelinput);
+
+        rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro);
+        rgMontoLitro.check(R.id.litro);
+        rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(radioGroup.getCheckedRadioButtonId() == R.id.litro){
+                    labelinput.setHint("Litros");
+                }
+
+                if (radioGroup.getCheckedRadioButtonId() == R.id.monto){
+                    labelinput.setHint("Monto");
+                }
+            }
+        });
+
+
         buttonSchedule = view.findViewById(R.id.schedulebutton);
         buttonSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*View focusView = null;
+                View focusView = null;
                 Boolean error =  false;
-                Integer valFavorito = 0;
-                RfcData rfcData = new RfcData();
-                if (!Utilities.isFieldValid(rfc)){
-                    rfc.setError(getString(R.string.error_field_required));
-                    error=true;
-                    focusView = rfc;
+
+                if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta_mc){
+                    formapagoseleccionada = WSkeys.dtarjeta;
                 }
-                *//*if (!Utilities.isFieldValid(cp)){
-                    cp.setError(getString(R.string.error_field_required));
+
+                if (rgFormaPago.getCheckedRadioButtonId() == R.id.efectivo_mc){
+                    formapagoseleccionada = WSkeys.defectivo;
+                }
+
+                if (monto.getText().equals("") ){
+                    Snackbar.make(view, "Indica los litros o monto de tu pedido", Snackbar.LENGTH_LONG)
+                            .show();
+                    focusView = monto;
                     error=true;
-                    focusView = cp;
-                }*//*
-                if(usoCFDI.getSelectedItemId()==0){
-                    Snackbar.make(view, "Selecciona el uso del CFDI", Snackbar.LENGTH_LONG)
+                }
+
+
+                if(spinnerSchedule.getSelectedItemId()==0){
+                    Snackbar.make(view, "Selecciona una dirección para enviar tu pedido ", Snackbar.LENGTH_LONG)
                             .show();
                     error=true;
-                    focusView = usoCFDI;
                 }
-                *//*if (!Utilities.isFieldValid(calle)){
-                    calle.setError(getString(R.string.error_field_required));
+                if (dateSchedule.getText().equals("")){
+                    dateSchedule.setError(getString(R.string.error_field_required));
                     error=true;
-                    focusView = calle;
-                }*//*
-                if (!Utilities.isFieldValid(razonsocial)){
-                    razonsocial.setError(getString(R.string.error_field_required));
-                    error=true;
-                    focusView = razonsocial;
+                    focusView = dateSchedule;
                 }
-                *//*if (!Utilities.isFieldValid(numext)){
-                    numext.setError(getString(R.string.error_field_required));
+                if (timeSchedule.getText().equals("")){
+                    timeSchedule.setError(getString(R.string.error_field_required));
                     error=true;
-                    focusView = numext;
-                }*//*
+                    focusView = timeSchedule;
+                }
 
-
-                *//*if(favorito.isChecked()){
-                    valFavorito =1;
-                } else {
-                    valFavorito =0;
-                }*//*
-
-
-
-                if (!error){
+                /*if (!error){
                     UsoCfdi usoCfdi = new UsoCfdi();
                     usoCfdi.setId(cfdisel);
                     rfcData.setRfc(rfc.getText().toString());
@@ -226,7 +247,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                 }*/
             }
         });
-        LlenaDirecciones(spinnerSchedule);
+
+
 
         /*cp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -248,7 +270,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
 
-        categories.add("Uso de CFDI");
+        categories.add("Selecciona una dirección");
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
         // Drop down layout style - list view with radio button
@@ -257,7 +279,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         // attaching data adapter to spinner
         spinnerSchedule.setAdapter(dataAdapter);
 
-
+        LlenaDirecciones(spinnerSchedule);
 
         //If is called the fragment to edit data
         /*if (pos != null) {

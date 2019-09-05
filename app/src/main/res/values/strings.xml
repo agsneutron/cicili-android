@@ -182,7 +182,7 @@
     <string name="scheduebutton">Programar Pedido</string>
     <string name="litrosomonto">Indica la cantidad de litros o monto a surtir</string>
     <string name="error_noaddressselected">Selecciona una dirección</string>
-    <string name="title_activity_legal">Condiciones del Servicio</string>
+    <string name="title_activity_legal">Contrato de Servicios</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -287,7 +287,9 @@
     <string name="detalle_del_pedido">Detalle del Pedido</string>
     <string name="montolitro">Pedir en</string>
     <string name="monto">Monto</string>
-    <string name="litro">Litro</string>
+    <string name="litro">Litros</string>
     <string name="title_activity_legal_list">Legal</string>
+    <string name="title_activity_terms">Términos y Condiciones</string>
+    <string name="title_activity_advice">Aviso de Privacidad</string>
 
 </resources>
