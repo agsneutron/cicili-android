@@ -8,6 +8,7 @@
     tools:context=".RfcDetailActivity"
     tools:showIn="@layout/activity_rfc_detail_activity">
 
+
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -16,26 +17,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/nav_header_height"
-            android:background="@drawable/side_nav_bar"
-            android:gravity="bottom"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:theme="@style/AppTheme"
-            android:layout_weight="0.1"
-            >
-
-            <ImageView
-                android:id="@+id/imageView"
+            android:padding="16dp">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/nav_header_desc"
-                android:paddingTop="@dimen/nav_header_vertical_spacing"
-                android:layout_gravity="center_vertical|center_horizontal"
-                app:srcCompat="@drawable/logo_cicili_full" />
+                android:layout_gravity="center"
+
+                android:text="Datos Fiscales"
+                android:textColor="@color/colorPrimary"
+                android:textSize="23dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:text="@string/RfcDataTitle"
+                android:textColor="#a9a9b0"
+                android:textSize="14.3sp" />
+
+        </LinearLayout>
+
             <!-- <TextView
                  android:id="@+id/tv_name"
                  android:layout_width="match_parent"
@@ -51,7 +55,15 @@
                  android:text="@string/nav_header_subtitle" />-->
 
 
-        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="9dp">
 
         <LinearLayout
             android:id="@+id/ldata"
@@ -61,6 +73,127 @@
             android:layout_gravity="center_vertical|center"
             android:gravity="center_vertical|center"
             android:layout_weight="0.9">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_person_prim_24dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        android:id="@+id/rfc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="rfc datos"
+                        android:textColor="#3b3b3b"
+                        android:textSize="14sp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rfc"
+                        android:textColor="#a9a9b0"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_assignment_rfc_black_24dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        android:id="@+id/razonsocial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="razon"
+                        android:textColor="#3b3b3b"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:text="@string/razonsocial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#a9a9b0"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_help_prim_24dp"
+                    android:tint="@color/colorPrimaryDark"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        android:id="@+id/usocfdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="razon"
+                        android:textColor="#3b3b3b"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:text="@string/usocfdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#a9a9b0"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+           <!--
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,21 +207,21 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/empty"
-                android:layout_marginBottom="8dp"/>
-            <TextView
+                android:layout_marginBottom="8dp"/>-->
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/razonsocial"
                 android:textAppearance="@style/CustomTextTitle"
-                android:layout_marginBottom="8dp"/>
-            <TextView
+                android:layout_marginBottom="8dp"/>-->
+           <!-- <TextView
                 android:id="@+id/razonsocial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/empty"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp"/>-->
             <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +252,7 @@
                 android:gravity="center"
                 android:text="@string/empty"
                 android:layout_marginBottom="8dp"/>-->
-            <TextView
+           <!-- <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -131,10 +264,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/empty" />
+                android:text="@string/empty" />-->
 
         </LinearLayout>
-
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

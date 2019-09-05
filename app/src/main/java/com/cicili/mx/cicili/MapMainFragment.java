@@ -614,7 +614,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             Utilities.SetLog("MO_PS-JSONORDER", json_pedido, WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
-
+                            bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         }
 
                     }
