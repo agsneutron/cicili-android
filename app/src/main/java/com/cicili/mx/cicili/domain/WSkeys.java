@@ -31,6 +31,7 @@ public class WSkeys {
     public static final String URL_LOGIN = "app/mv/cliente/login";
     public static final String PUSERNAME = "user";
     public static final String PPASSWORD = "password";
+    public static final String TOKENFIREBASE = "token_dispositivo";
 
 
     //REGISTRO

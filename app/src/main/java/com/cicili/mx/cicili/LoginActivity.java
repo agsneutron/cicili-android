@@ -57,8 +57,12 @@ import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private String token="";
+    private String token_firebase="";
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     Boolean validated = false;
@@ -137,6 +142,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(intent);
             }
         });
+
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Utilities.SetLog("getInstanceId failed: ",task.getException().toString(),true);
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        token_firebase = task.getResult().getToken();
+                        Utilities.SetLog("TOKEN FIREBASE desde Login: ",token_firebase,true);
+
+                        // Log and toast
+                        //String msg = getString(R.string., token);
+                        //Toast.makeText(MenuActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
@@ -324,6 +349,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.PUSERNAME, mEmail);
                 params.put(WSkeys.PPASSWORD, mPassword);
+                params.put(WSkeys.TOKENFIREBASE, token_firebase);
                 Log.e("PARAMETROS", params.toString());
                 return params;
             }
