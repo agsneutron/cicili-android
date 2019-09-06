@@ -69,6 +69,7 @@ public class NewOrderActivity extends AppCompatActivity {
     LinearLayout bottom_sheet;
     BottomSheetBehavior bsb;
     String motivo_seleccionado="";
+    String motivo_texto="";
     Button cancela_bsb;
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
@@ -131,7 +132,8 @@ public class NewOrderActivity extends AppCompatActivity {
 
                     Log.e("onItemSelected",String.valueOf(i));
 
-                        motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
+                    motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
+                    motivo_texto = String.valueOf(motivoAux.get(i).getText());
 
 
                 }
@@ -238,12 +240,21 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 public void CancelOrderTask(final String motivo, final String order) throws JSONException {
 
-                    String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA;  //+WSkeys.pedido+"=\""+order+"\"&"+WSkeys.motivo+"=\""+motivo+"\"";
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put(WSkeys.pedido, order);
+                    params.put(WSkeys.motivo, motivo);
+                    Log.e("PARAMETROSCANCEL_B", params.toString());
+
+
+                    String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
                     Utilities.SetLog("CANCELA",url,WSkeys.log);
+
                     RequestQueue queue = Volley.newRequestQueue(getContext());
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
+                    //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
+                    StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
                         @Override
-                        public void onResponse(JSONObject response) {
+                        public void onResponse(String response) {
                             try {
                                 ParserCancela(response);
                             } catch (JSONException e) {
@@ -265,6 +276,14 @@ public class NewOrderActivity extends AppCompatActivity {
                         }
 
                         @Override
+                        public byte[] getBody() {
+                            HashMap<String, String> params = new HashMap<String, String>();
+                            params.put(WSkeys.pedido, order);
+                            params.put(WSkeys.motivo, motivo);
+                            return new JSONObject(params).toString().getBytes();
+                        }
+
+                        @Override
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put(WSkeys.pedido, order);
@@ -278,8 +297,8 @@ public class NewOrderActivity extends AppCompatActivity {
                             Map<String, String> params = new HashMap<String, String>();
                             //params.put("Content-Type", "application/x-www-form-urlencoded");
                             //params.put("Content-Type", "application/json; charset=utf-8");
-
                             params.put("Authorization", client.getToken());
+
                             return params;
                         }
                     };
@@ -292,47 +311,26 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 }
 
-                public void ParserCancela(JSONObject response) throws JSONException {
+                public void ParserCancela(String response) throws JSONException {
 
                     Utilities.SetLog("PARSER-CANCELA",response.toString(),WSkeys.log);
+                    JSONObject response_object = new JSONObject(response);
 
                     // si el response regresa ok, entonces si inicia la sesión
-                    if (response.getInt("codeError") == (WSkeys.okresponse)) {
-                       /* JSONArray ja_data = response.getJSONArray(WSkeys.data);
-                        //Utilities.SetLog("ASENTAMIENTOSARRAY",ja_direcciones.toString(),WSkeys.log);
-                        for(int i=0; i<ja_data.length(); i++){
-                            AddressData direccion = new AddressData();
-                            try {
-                                JSONObject jo_data = (JSONObject) ja_data.get(i);
-                                Utilities.SetLog("DATA ARRAY",jo_data.toString(),WSkeys.log);
-                                //Utilities.SetLog("JO_CONCESIONARIO",jo_data.getJSONObject(WSkeys.concesionario).toString(),WSkeys.log);
-                                //Utilities.SetLog("JO_PERFILCONDUCTOR",jo_data.getJSONObject(WSkeys.perfilconductor).toString(),WSkeys.log);
-                                //Utilities.SetLog("JO_PERFILCONDUCTOR_CND",jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).toString(),WSkeys.log);
-                                //Utilities.SetLog("JO_AUTOTANQUE",jo_data.getJSONObject(WSkeys.autotanque).toString(),WSkeys.log);
-                                Gson gson = new Gson();
-                                AutotanquesCercanos autotanquesData= gson.fromJson(jo_data.toString() , AutotanquesCercanos.class);
-                                autotanquesCercanosAux.add(autotanquesData);
+                   if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
 
-                                //autotanquesDisponiblesAux = new ArrayList<AutotanquesDisponibles>();
-                                //AutotanquesDisponibles autotanquesDisponibles= gson.fromJson(jo_data.toString() , AutotanquesDisponibles.class);
-                                //autotanquesDisponiblesAux.add(autotanquesDisponibles);
-                                //AddMarker(autotanquesDisponiblesAux.get(i).getAutotanque().getLatitud(),autotanquesDisponiblesAux.get(i).getAutotanque().getLongitud(),autotanquesDisponiblesAux.get(i).getPerfilConductor().getConductor().getNombre(),autotanquesDisponiblesAux.get(i).getConcecionario().getNombre());
-                                //AddMarker(jo_data.getJSONObject(WSkeys.autotanque).getDouble("latitud"),jo_data.getJSONObject(WSkeys.autotanque).getDouble("longitud"),jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).getString("nombre"),jo_data.getJSONObject(WSkeys.concesionario).getString("nombre"), jo_data.getDouble("precio"), i);
-                                AddMarker(jo_data.getDouble("latitud"),jo_data.getDouble("longitud"),jo_data.getString("conductor"),jo_data.getString("concesionario"), jo_data.getDouble("precio"),jo_data.getString("tiempoLlegada"), i);
-                                //jo_data.getJSONObject(WSkeys.concesionario);
-                                //jo_data.getJSONObject(WSkeys.conductor);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        client.setAutotanquesCercanosArrayList(autotanquesCercanosAux);
+                       Intent intent = new Intent(NewOrderActivity.this, CancelaActivity.class);
+                       intent.putExtra("cancel_result",response_object.getString("data"));
+                       intent.putExtra("cause",motivo_texto);
+                       intent.putExtra("order",json_order);
 
-                        //direcciones.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,direccionArray));
-*/
+                       startActivity(intent);
+
+                       finish();
                     }
                     // si ocurre un error al registrar la solicitud se muestra mensaje de error
                     else{
-                        Snackbar.make(linearLayout, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                        Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                                 .show();
                     }
                 }

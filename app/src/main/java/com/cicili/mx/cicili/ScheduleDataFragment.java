@@ -31,7 +31,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.Programa;
 import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
@@ -78,8 +80,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     Spinner spinnerSchedule;
     EditText dateSchedule;
     EditText timeSchedule;
-    TextInputEditText litros, monto;
-    SwitchCompat favorito;
+    TextInputEditText input;
+    Double cantidad, monto;
     AppCompatButton buttonSchedule;
     TextInputLayout labelinput;
     RadioGroup rgMontoLitro;
@@ -99,10 +101,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     private static final String CERO = "0";
     private static final String BARRA = "-";
     private static final String DOS_PUNTOS = ":";
-    
-    private ArrayList<String> addressArray;
-    private ArrayList<UsoCfdi> addressAux;
-    private Integer addresssel;
+
     private Integer selectedAddress=0;
 
     public ScheduleDataFragment() {
@@ -175,7 +174,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         rgFormaPago.check(R.id.tarjeta);
 
 
-        monto = (TextInputEditText) view.findViewById(R.id.input);
+        input = (TextInputEditText) view.findViewById(R.id.input);
         labelinput = (TextInputLayout)view.findViewById(R.id.labelinput);
 
         rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro);
@@ -201,18 +200,18 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                 View focusView = null;
                 Boolean error =  false;
 
-                if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta_mc){
+                if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta){
                     formapagoseleccionada = WSkeys.dtarjeta;
                 }
 
-                if (rgFormaPago.getCheckedRadioButtonId() == R.id.efectivo_mc){
+                if (rgFormaPago.getCheckedRadioButtonId() == R.id.efectivo){
                     formapagoseleccionada = WSkeys.defectivo;
                 }
 
-                if (monto.getText().equals("") ){
+                if (input.getText().equals("") ){
                     Snackbar.make(view, "Indica los litros o monto de tu pedido", Snackbar.LENGTH_LONG)
                             .show();
-                    focusView = monto;
+                    focusView = input;
                     error=true;
                 }
 
@@ -233,18 +232,39 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     focusView = timeSchedule;
                 }
 
-                /*if (!error){
-                    UsoCfdi usoCfdi = new UsoCfdi();
-                    usoCfdi.setId(cfdisel);
-                    rfcData.setRfc(rfc.getText().toString());
-                    rfcData.setRazonSocial(razonsocial.getText().toString());
-                    rfcData.setUsoCfdi(usoCfdi);
+                if (!error){
+                    Programa schedule = new Programa();
+                    if(rgMontoLitro.getCheckedRadioButtonId() == R.id.litro){
+                        //litros in input
+                        cantidad =  Double.parseDouble(input.getText().toString());
+                        monto=0.0;
+                    }
+
+                    if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto){
+                       //monto in input
+                        monto = Double.parseDouble(input.getText().toString());
+                        cantidad= 0.0;
+                    }
+
+                    AddressData addressData = new AddressData();
+                    addressData.setId(selectedAddress);
+                    schedule.setCantidad(cantidad);
+                    schedule.setMonto(monto);
+                    schedule.setDomicilio(addressData);
+                    schedule.setFechaSolicitada(dateSchedule.getText().toString());
+                    schedule.setHoraSolicitada(timeSchedule.getText().toString());
+                    schedule.setFormaPago(formapagoseleccionada);
+
+                    schedule.setLatitud(0.0);
+                    schedule.setLongitud(0.0);
+
+
                     try {
-                        RfcDataTask(rfcData);
+                        ScheduleDataTask(schedule);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }*/
+                }
             }
         });
 
@@ -327,11 +347,9 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         Log.e("onItemSelected",String.valueOf(i));
-        /*if (i!=0) {
-            cfdisel = cfdiAux.get(i).getId();
-            cfdiname = cfdiAux.get(i).getText();
-
-        }*/
+        if (i!=0) {
+            selectedAddress = client.getAddressDataArrayList().get(i-1).getId();
+        }
 
     }
 
@@ -360,6 +378,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
 
         direccionArray = new ArrayList<String>();
 
+        direccionArray.add("Selecciona una dirección");
         if (client.getAddressDataArrayList() != null) {
 
             for (int i = 0; i < client.getAddressDataArrayList().size(); i++) {
@@ -370,36 +389,26 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     }
 
 
-    public void RfcDataTask(RfcData rfcData) throws JSONException {
+    public void ScheduleDataTask(Programa scheduleData) throws JSONException {
 
         Gson gson = new Gson();
         String json;
         String url;
         JSONObject params;
 
-        if(pos != null) {
-            //toupdate
-            rfcData.setId(client.getRfcDataArrayList().get(pos).getId());
-            json = gson.toJson(rfcData);
-            params = new JSONObject(json);
-            Log.e("RFCValuesUpdate--", json);
-            url = WSkeys.URL_BASE + WSkeys.URL_RFCUPDATE;
-        }else{
 
-            //toadd
-            json = gson.toJson(rfcData);
-            params = new JSONObject(json);
-            Log.e("RFCValuePairs--", json);
-            url = WSkeys.URL_BASE + WSkeys.URL_RFCDATA;
-
-        }
+        //to_shedule
+        json = gson.toJson(scheduleData);
+        params = new JSONObject(json);
+        Log.e("ScheduleValuePairs--", json);
+        url = WSkeys.URL_BASE + WSkeys.URL_PROGRAMA;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    ParserRFC(response);
+                    ParserScheduleAnswer(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -422,12 +431,6 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                /*params.put(WSkeys.user, client.getUsername());
-                params.put(WSkeys.name, vname);
-                params.put(WSkeys.apepat, vpat);
-                params.put(WSkeys.apemat, vmat);
-                params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 
@@ -449,27 +452,22 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
 
     }
 
-    public void ParserRFC(JSONObject respuesta) throws JSONException {
+    public void ParserScheduleAnswer(JSONObject respuesta) throws JSONException {
 
-        Utilities.SetLog("ParserRFC",respuesta.toString(),WSkeys.log);
+        Utilities.SetLog("ParserSchedule",respuesta.toString(),WSkeys.log);
 
 
-        // si el response regresa ok, entonces si inicia la sesión
+        // si el response regresa ok, entonces si se programó el pedido
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
 
             String data = respuesta.getString(WSkeys.data);
             JSONObject jo_rfc = respuesta.getJSONObject(WSkeys.data);
-            if(pos!=null){
-                Utilities.UpdateRfcData(jo_rfc,client,pos);
-            }else {
-                Utilities.AddRfcData(jo_rfc, client);
-            }
-            Snackbar.make(view, R.string.successrfcvalidation, Snackbar.LENGTH_LONG)
+
+            Snackbar.make(view, R.string.successschedulevalidation, Snackbar.LENGTH_LONG)
                     .show();
             Intent intent = new Intent(getContext(),MenuActivity.class);
             startActivity(intent);
             getActivity().finish();
-
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
@@ -495,8 +493,11 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                 } else {
                     AM_PM = "p.m.";
                 }
-                //Muestro la hora con el formato deseado
-                time_picked.setText(String.format("%s%s%s %s", horaFormateada, DOS_PUNTOS, minutoFormateado, AM_PM));
+                AM_PM ="";  //por el formato requerido eliminamos AM PM
+                // hora con el formato deseado
+                //time_picked.setText(String.format("%s%s%s %s", horaFormateada, DOS_PUNTOS, minutoFormateado, AM_PM)
+                time_picked.setText(String.format("%s%s%s%s", horaFormateada, DOS_PUNTOS, minutoFormateado, AM_PM));
+
             }
             //Estos valores deben ir en ese orden
             //Al colocar en false se muestra en formato 12 horas y true en formato 24 horas

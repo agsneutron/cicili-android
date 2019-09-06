@@ -1,5 +1,6 @@
 package com.cicili.mx.cicili;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -362,6 +363,17 @@ public class MenuActivity extends AppCompatActivity
             startActivity(intent);
 
         }
+        else if (id == R.id.nav_exit) {
+
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+            android.os.Process.killProcess(android.os.Process.myPid());
+            finish();
+        }
+
 //
 
 
