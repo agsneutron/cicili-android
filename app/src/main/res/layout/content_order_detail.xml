@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
     tools:context=".OrderDetailActivity"
     tools:showIn="@layout/activity_order_detail">
 
@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="20dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="9dp"
@@ -324,7 +324,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_weight="0.1"
+
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
