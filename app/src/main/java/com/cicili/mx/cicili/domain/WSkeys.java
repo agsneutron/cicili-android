@@ -227,7 +227,9 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/mv/cliente/pedido/programar
     public static final String URL_PROGRAMA = "app/mv/cliente/pedido/programar";
 
-
+    //facturar
+    //https://cicili.com.mx:8443/app/mv/cliente/factura/solicitar/{idPedido}
+    public static final String URL_FACTURA = "app/mv/cliente/factura/solicitar/";
     //tipo aclaracion
     //https://cicili.com.mx:8443/app/catalogos/tiposaclaracion
     public static final String URL_MOTIVO_ACLARACION = "app/catalogos/tiposaclaracion";

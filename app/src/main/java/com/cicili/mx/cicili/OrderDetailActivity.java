@@ -45,6 +45,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -65,6 +66,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     TextView mFormaPago;
     TextView mlbl1,mlbl2,mlbl3,mlbl4;
     MapFragment mapFragment;
+    Button aclarar, facturar;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -103,6 +105,8 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         mlbl2 = (TextView) findViewById(R.id.lbl2);
         mlbl3 = (TextView) findViewById(R.id.lbl3);
         mlbl4 = (TextView) findViewById(R.id.lbl4);
+        aclarar = (Button)  findViewById(R.id.aclaracion);
+        facturar = (Button)  findViewById(R.id.facturar);
 
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_order_detail);
 
@@ -126,6 +130,12 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         latOrderAddress = 0.0; // client.getPedidosDataArrayList().get(pos).getLatitud();
         lonOrderAddress = 0.0; //client.getPedidosDataArrayList().get(pos).getLongitud();
 
+        facturar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FacturaPedido(pos);
+            }
+        });
     }
 
     //MAP
@@ -357,5 +367,86 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             Utilities.SetLog("ERRORPARSER",response,WSkeys.log);
         }
     }
+
+    public void FacturaPedido(Integer pos){
+
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA+pos;
+        Utilities.SetLog("PIDE FACTURA",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserFactura(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserFactura(String response) throws JSONException {
+
+        Utilities.SetLog("RESPONSE_Factura",response,WSkeys.log);
+        //Log.e("CodeResponse", response);
+        Gson gson = new Gson();
+        JSONObject respuesta = new JSONObject(response);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            //ontener nivel de data
+            //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            Snackbar.make(mIdView, respuesta.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
+                    .show();
+
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(mIdView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+
+            Utilities.SetLog("ERRORPARSER",response,WSkeys.log);
+        }
+    }
+
 
 }
