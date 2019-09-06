@@ -113,26 +113,29 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:gravity="center"
+                            android:gravity="right"
                             android:orientation="horizontal"
                             android:layout_weight="1">
-
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginTop="3dp"
+                                android:tint="@color/colorPrimary"
+                                android:src="@drawable/ic_icon_gauge_01" />
                             <TextView
                                 android:id="@+id/item_number"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:text="1000"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp" />
 
                             <TextView
-                                android:layout_width="14dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginLeft="4dp"
                                 android:text="litros"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="13sp" />
@@ -144,7 +147,13 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="horizontal">
-
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right
+"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -161,18 +170,31 @@
                             android:text="Hora"
                             android:textColor="#4a4a4a"
                             android:textSize="12sp" />
-
+                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginTop="3dp"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_attach_money_prim_24dp" />
                         <TextView
                             android:id="@+id/cantidad"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="6dp"
-                            android:layout_weight="1"
-                            android:text="$ 312.00"
+
+                            android:text="312.00"
                             android:textAlignment="viewEnd"
                             android:textColor="@color/colorPrimary"
                             android:textSize="15sp" />
-
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -329,7 +351,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-
+                    android:id="@+id/aclaracion"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -342,7 +364,7 @@
                     app:cornerRadius="20dp" />
 
                 <com.google.android.material.button.MaterialButton
-
+                    android:id="@+id/facturar"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
