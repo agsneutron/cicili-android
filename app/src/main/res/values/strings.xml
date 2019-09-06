@@ -293,5 +293,6 @@
     <string name="title_activity_advice">Aviso de Privacidad</string>
     <string name="title_activity_cancela">Pedido Cancelado</string>
     <string name="nuevo_pedido">Nuevo Pedido</string>
+    <string name="successschedulevalidation">Tu pedido se programó correctamente.</string>
 
 </resources>
