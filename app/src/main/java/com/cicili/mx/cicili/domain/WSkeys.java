@@ -235,6 +235,11 @@ public class WSkeys {
     public static final String URL_MOTIVO_ACLARACION = "app/catalogos/tiposaclaracion";
 
 
+    //Eliminar cuenta
+    //https://cicili.com.mx:8443/app/mv/cliente/eliminarcuenta
+    public static final String URL_ELIMINA_CUENTA = "app/mv/cliente/eliminarcuenta";
+
+
 
     public static final Boolean log = true;
     public static int cplenght = 4;

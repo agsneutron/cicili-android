@@ -22,6 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DeleteAccountActivity"
+            android:label="@string/title_activity_delete_account"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
             android:name=".CancelaActivity"
             android:label="@string/title_activity_cancela"
             android:parentActivityName=".MenuActivity"
@@ -70,7 +79,7 @@
             android:name=".OrderDetailActivity"
             android:label="@string/title_activity_order_detail"
             android:parentActivityName=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PaymentDetailActivity"
             android:label="@string/title_activity_payment_detail"
