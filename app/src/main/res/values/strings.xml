@@ -294,5 +294,10 @@
     <string name="title_activity_cancela">Pedido Cancelado</string>
     <string name="nuevo_pedido">Nuevo Pedido</string>
     <string name="successschedulevalidation">Tu pedido se programó correctamente.</string>
+    <string name="title_activity_delete_account">Eliminar mi Cuenta</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="dialog_message">Se eliminó correctamente tu cuenta en Cicili, selecciona aceptar para terminar la aplicación,</string>
+    <string name="dialog_title">Cuenta eliminada correctamente.</string>
+    <string name="aceptar">Aceptar</string>
 
 </resources>

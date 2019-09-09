@@ -234,16 +234,12 @@ public class MenuActivity extends AppCompatActivity
                 super.onBackPressed();
             }
             else{
-
                 Utilities.SetLog("ONBACKPRESED",active.getTag(),WSkeys.log);
                 fm.beginTransaction().hide(active).show(fragmentMain).commit();
                 active=fragmentMain;
             }
 
         }
-
-
-
         Utilities.SetLog("ONBACKPRESED","MENUACTIVITY",WSkeys.log);
     }
 
@@ -288,6 +284,15 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.navigation_datos) {
 
             Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
+            startActivity(intent);
+
+
+            //UserProfileFragment userProfileFragment = new UserProfileFragment();
+            //userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
+
+        } else if (id == R.id.navigation_cuenta) {
+
+            Intent intent = new Intent(MenuActivity.this, DeleteAccountActivity.class);
             startActivity(intent);
 
 
@@ -346,6 +351,7 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentSchedule).commit();
             active = fragmentSchedule;
+
         }else if(id == R.id.navigation_history){
             if (!fragmentOrder.isAdded()) {
                 Utilities.SetLog("FRAGMENT_ORDER",  active.getTag(),WSkeys.log);
@@ -354,9 +360,11 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain");
             fm.beginTransaction().hide(active).show(fragmentOrder).commit();
             active = fragmentOrder;
+
         }else if (id == R.id.nav_legal) {
             Intent intent = new Intent(MenuActivity.this, LegalListActivity.class);
             startActivity(intent);
+
 
         }else if (id == R.id.nav_help) {
             Intent intent = new Intent(MenuActivity.this, HelpListActivity.class);
