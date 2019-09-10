@@ -380,6 +380,7 @@ public class MenuActivity extends AppCompatActivity
 
             android.os.Process.killProcess(android.os.Process.myPid());
             finish();
+            System.exit(0);
         }
 
 //
