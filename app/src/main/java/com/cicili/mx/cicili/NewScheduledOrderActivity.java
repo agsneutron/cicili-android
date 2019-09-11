@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,10 +116,12 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
             json_order = bundle.getString("json_order");
             Utilities.SetLog("NEWORDER-JSON_ORDER",json_order, WSkeys.log);
             try {
-                progressDialog = ProgressDialog.show(this, "Espera un momento por favor", "Estamos programando tu pedido.", true);
-                pedidoData = gson.fromJson(json_order , Pedido.class);
-                pedidoAux.add(pedidoData);
-                OrderDataTask(json_order);
+                //progressDialog = ProgressDialog.show(getContext(), "Espera un momento por favor", "Estamos programando tu pedido.", true);
+
+                //pedidoData = gson.fromJson(json_order , Pedido.class);
+                //pedidoAux.add(pedidoData);
+                //OrderDataTask(json_order);
+                ParserOrder(json_order);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -359,12 +362,12 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
+               /* try {
                     progressDialog.dismiss();
-                    ParserOrder(response);
+                   // ParserOrder(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -373,7 +376,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                 Log.e("El error", error.toString());
                 Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
-                progressDialog.dismiss();
+               // progressDialog.dismiss();
             }
         }) {
             @Override
@@ -412,22 +415,26 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
 
     }
 
-    public void ParserOrder(JSONObject respuesta) throws JSONException {
+    public void ParserOrder(String s_respuesta) throws JSONException {
 
-        Utilities.SetLog("ParserOrderResponse",respuesta.toString(),WSkeys.log);
+        Utilities.SetLog("ParserOrderResponse",s_respuesta,WSkeys.log);
         Integer pedido_id;
 
-        // si el response regresa ok, entonces si inicia la sesión
-        if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
-            pedido_id = respuesta.getJSONObject("data").getInt("id");
-            order = String.valueOf(pedido_id);
-            estatuspedido.setText(" Estatus de Pedido: " + respuesta.getJSONObject("data").getString("nombreStatus")+ "\n"+ "Número de Orden: "+String.valueOf(order));
+        JSONObject respuesta = new JSONObject(s_respuesta);
+        JSONObject jo_sheduled = respuesta.getJSONObject(WSkeys.nameValuePairs);
 
-        } // si ocurre un error al registrar la solicitud se muestra mensaje de error
-        else{
-            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
-                    .show();
-        }
+
+        // si el response regresa ok, entonces si inicia la sesión
+        //if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
+            pedido_id = respuesta.getJSONObject(WSkeys.nameValuePairs).getInt("id");
+            order = String.valueOf(pedido_id);
+            estatuspedido.setText(String.format(" Estatus de Pedido: %s\nNúmero de Orden: %s", respuesta.getJSONObject(WSkeys.nameValuePairs).getString("nombreStatus"), String.valueOf(order)));
+
+        //} // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        //else{
+        //    Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+        //            .show();
+        //}
 
     }
 
