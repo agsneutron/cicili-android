@@ -297,7 +297,8 @@
     <string name="title_activity_delete_account">Eliminar mi Cuenta</string>
     <string name="Aceptar">Aceptar</string>
     <string name="dialog_message">Se eliminó correctamente tu cuenta en Cicili, selecciona aceptar para terminar la aplicación,</string>
-    <string name="dialog_title">Cuenta eliminada correctamente.</string>
+    <string name="dialog_title">Cuenta eliminada.</string>
     <string name="aceptar">Aceptar</string>
+    <string name="title_activity_new_scheduled_order">Pedido Programado</string>
 
 </resources>

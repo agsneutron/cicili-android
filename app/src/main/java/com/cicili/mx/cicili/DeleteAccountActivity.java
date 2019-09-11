@@ -1,8 +1,12 @@
 package com.cicili.mx.cicili;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.android.volley.AuthFailureError;
@@ -41,6 +45,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
     Button btnDelete;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
+    String TAG = "ONDELETE ACCOUNT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +69,51 @@ public class DeleteAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DeleteAccountTask();
+
+
             }
         });
+    }
+
+    public void Reestart(Context c){
+        try {
+            //check if the context is given
+            if (c != null) {
+                //fetch the packagemanager so we can get the default launch activity
+                // (you can replace this intent with any other activity if you want
+                PackageManager pm = c.getPackageManager();
+                //check if we got the PackageManager
+                if (pm != null) {
+                    //create the intent with the default start activity for your application
+                    Intent mStartActivity = pm.getLaunchIntentForPackage(
+                            c.getPackageName()
+                    );
+                    if (mStartActivity != null) {
+                        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //create a pending intent so the application is restarted after System.exit(0) was called.
+                        // We use an AlarmManager to call this intent in 100ms
+                        int mPendingIntentId = 223344;
+                        PendingIntent mPendingIntent = PendingIntent
+                                .getActivity(c, mPendingIntentId, mStartActivity,
+                                        PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager mgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+                        client=null;
+                        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 50, mPendingIntent);
+                        //kill the application
+                        System.exit(0);
+                    } else {
+                        Log.e(TAG, "Was not able to restart application, mStartActivity null");
+                    }
+                } else {
+                    Log.e(TAG, "Was not able to restart application, PM null");
+                }
+            } else {
+                Log.e(TAG, "Was not able to restart application, Context null");
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "Was not able to restart application");
+        }
+
     }
 
     public void DeleteAccountTask(){
@@ -74,7 +122,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
         String url = WSkeys.URL_BASE + WSkeys.URL_ELIMINA_CUENTA;
         Utilities.SetLog("ELIMINACUENTA",url,WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -136,23 +184,25 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(DeleteAccountActivity.this);
 
-            builder.setMessage(R.string.dialog_message)
+            builder.setMessage(respuesta.getString("data"))
                     .setTitle(R.string.dialog_title);
 
             builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    /*Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
+                    client=null;
                     android.os.Process.killProcess(android.os.Process.myPid());
-                    finish();
+                    finish();*/
+                    Reestart(getContext());
                 }
             });
 
-            client=null;
+
 
 
             AlertDialog dialog = builder.create();

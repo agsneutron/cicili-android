@@ -22,6 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".NewScheduledOrderActivity"
+            android:label="@string/title_activity_new_scheduled_order"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.MenuActivity" />
+        </activity>
+        <activity
             android:name=".DeleteAccountActivity"
             android:label="@string/title_activity_delete_account"
             android:parentActivityName=".MenuActivity"
