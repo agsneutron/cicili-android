@@ -47,6 +47,7 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/verifica/{codigo}
     public static final String URL_VALIDATECODE = "app/verifica/";
     public static final String PCODE = "code";
+    public static final String nameValuePairs ="nameValuePairs";
 
 
     //CLIENTE DATA

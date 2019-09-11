@@ -2,6 +2,7 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -73,6 +74,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     private String mParam1;
     private String mParam2;
     private Integer pos;
+
+    ProgressDialog progressDialog;
 
     private OnFragmentInteractionListener mListener;
 
@@ -261,6 +264,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
 
 
                     try {
+                        progressDialog = ProgressDialog.show(getContext(), "Espera un momento por favor", "Estamos programando tu pedido.", true);
+
                         ScheduleDataTask(schedule);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -421,6 +426,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                 Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
+                progressDialog.dismiss();
             }
         }) {
             @Override
@@ -456,7 +462,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     public void ParserScheduleAnswer(JSONObject respuesta) throws JSONException {
 
         Utilities.SetLog("ParserSchedule",respuesta.toString(),WSkeys.log);
-
+        progressDialog.dismiss();
 
         // si el response regresa ok, entonces si se programó el pedido
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
