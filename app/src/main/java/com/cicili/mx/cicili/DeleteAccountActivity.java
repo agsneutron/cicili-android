@@ -68,8 +68,8 @@ public class DeleteAccountActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //DeleteAccountTask();
-                Reestart(getContext());
+                DeleteAccountTask();
+
 
             }
         });
@@ -190,14 +190,15 @@ public class DeleteAccountActivity extends AppCompatActivity {
             builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    /*Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
                     client=null;
                     android.os.Process.killProcess(android.os.Process.myPid());
-                    finish();
+                    finish();*/
+                    Reestart(getContext());
                 }
             });
 

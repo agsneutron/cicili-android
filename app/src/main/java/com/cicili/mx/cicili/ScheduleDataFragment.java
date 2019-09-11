@@ -49,6 +49,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -461,13 +462,19 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
 
             String data = respuesta.getString(WSkeys.data);
-            JSONObject jo_rfc = respuesta.getJSONObject(WSkeys.data);
+            JSONObject jo_sheduled = respuesta.getJSONObject(WSkeys.data);
 
-            Snackbar.make(view, R.string.successschedulevalidation, Snackbar.LENGTH_LONG)
+            Intent intent = new Intent(getActivity(), NewScheduledOrderActivity.class);
+            Gson gson = new Gson();
+            String json_pedido = gson.toJson(jo_sheduled);
+            intent.putExtra("json_order",json_pedido);
+            startActivity(intent);
+
+            /*Snackbar.make(view, R.string.successschedulevalidation, Snackbar.LENGTH_LONG)
                     .show();
             Intent intent = new Intent(getContext(),MenuActivity.class);
             startActivity(intent);
-            getActivity().finish();
+            getActivity().finish();*/
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
@@ -510,6 +517,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
 
     private void getDate(final EditText date_picked){
         DatePickerDialog recogerFecha = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+
+
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
@@ -529,6 +538,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
              */
         },anio, mes, dia);
         //show widget
+        Date newDate = c.getTime();
+        recogerFecha.getDatePicker().setMinDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
         recogerFecha.show();
 
     }

@@ -5,10 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".NewOrderActivity"
-    tools:showIn="@layout/activity_new_order"
-    android:layout_margin="20dp"
-    android:background="@color/white">
+    tools:context=".NewScheduledOrderActivity"
+    tools:showIn="@layout/activity_new_scheduled_order">
 
     <LinearLayout
         android:id="@+id/view_error"
@@ -63,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="11.5sp"
-            android:text="Espere para mostrar los datos de la pipa."
+            android:text="Tu pedido se ha programado"
             android:textColor="#111111"
             android:textSize="14.5sp" />
 
@@ -95,6 +93,7 @@
             app:cornerRadius="20dp" />
 
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

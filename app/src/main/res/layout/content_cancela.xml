@@ -6,37 +6,37 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".CancelaActivity"
+    android:layout_margin="20dp"
     tools:showIn="@layout/activity_cancela">
 
     <LinearLayout
         android:id="@+id/view_error"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="200.1dp"
-            android:layout_height="200.1dp"
-            android:src="@drawable/success_anim" />
+            android:layout_width="150.1dp"
+            android:layout_height="150.1dp"
+            android:src="@drawable/error_anim" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="32dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="126dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="26dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/resumen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_error">
 
-        <TextView
+        <!--     <TextView
             android:id="@+id/estatuscancelado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,17 @@
             android:text="@string/empty"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="15.8sp" />
+            android:textSize="15.8sp" />-->
+        <TextView
+            android:id="@+id/estatuscancelado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="21.2dp"
+            android:text="cancelo"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20.8sp" />
 
         <TextView
             android:id="@+id/message"
@@ -67,6 +77,7 @@
         android:paddingRight="16dp"
         android:orientation="vertical"
         android:paddingTop="16dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -106,7 +117,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -119,7 +130,7 @@
                         android:text="alias"
                         android:textColor="#9b9b9b"
                         android:textSize="11.5sp" />
-                </LinearLayout>
+                </LinearLayout>-->
 
             </LinearLayout>
         </LinearLayout>
@@ -154,17 +165,46 @@
                 android:layout_marginLeft="2dp"
                 app:srcCompat="@drawable/ic_access_time_black_24dp"
                 android:tint="@color/colorPrimaryDark" /> -->
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="1dp"
+                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_payment" />
 
+            <TextView
+                android:id="@+id/item_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:text="@string/monto"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="1dp"
+
+                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_attach_money_prim_24dp" />
             <TextView
                 android:id="@+id/ammount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6.7dp"
+                android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:text="@string/monto"
-                android:textColor="#4a4a4a"
+                android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="2dp"
 
+                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_icon_gauge_01" />
             <TextView
                 android:id="@+id/liter"
                 android:layout_width="0dp"
@@ -172,7 +212,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:text="@string/litros"
-                android:textColor="#d22532"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
 
         </LinearLayout>
