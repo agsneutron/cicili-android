@@ -148,7 +148,7 @@ public class ScheduleMainFragment extends Fragment {
     public void LlenaPedido(){
 
 
-        String url = WSkeys.URL_BASE + WSkeys.URL_CONSULTA_PEDIDO;
+        String url = WSkeys.URL_BASE + WSkeys.URL_CONSULTA_PROGRAMADOS;
         Utilities.SetLog("LLENAPEDIDOs",url,WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
