@@ -9,24 +9,34 @@
     android:orientation="vertical"
     tools:context="com.cicili.mx.cicili.LoginActivity">
 
-    <ProgressBar
+<!--    <ProgressBar
         android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:indeterminateDrawable="@drawable/progressbar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent" />-->
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/login_progress"
+        android:visibility="gone"
+        android:layout_width="150.1dp"
+        android:layout_height="150.1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/cicili" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
 
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="49dp">
+
+
 
         <ImageView
             android:id="@+id/imageView2"
