@@ -274,14 +274,12 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.navigation_perfil) {
 
-           // Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
-           // startActivity(intent);
+           Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
+           startActivity(intent);
 
 
-            //UserProfileFragment userProfileFragment = new UserProfileFragment();
-            //userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
 
-        } else if (id == R.id.navigation_datos) {
+        } /*else if (id == R.id.navigation_datos) {
 
             Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
             startActivity(intent);
@@ -299,7 +297,7 @@ public class MenuActivity extends AppCompatActivity
             //UserProfileFragment userProfileFragment = new UserProfileFragment();
             //userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
 
-        } else if (id == R.id.navigation_address) {
+        }*/ else if (id == R.id.navigation_address) {
             Utilities.SetLog("FRAGMENT_ADDRESS", active.getTag(),WSkeys.log);
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
 
@@ -331,7 +329,7 @@ public class MenuActivity extends AppCompatActivity
             //active = fragmentPayment;
 
 
-        } else if (id == R.id.navigation_rfc) {
+        } /*else if (id == R.id.navigation_rfc) {
             //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(active).commit();
             //fm.beginTransaction().show(fragmentRfc).commit();
             //active = fragmentRfc;
@@ -343,7 +341,7 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().hide(active).show(fragmentRfc).commit();
             active = fragmentRfc;
 
-        } else if (id == R.id.navigation_schedule) {
+        }*/ else if (id == R.id.navigation_schedule) {
             if (!fragmentSchedule.isAdded()) {
                 Utilities.SetLog("FRAGMENT_Schedule", active.getTag(), WSkeys.log);
                 fm.beginTransaction().add(R.id.main_container, fragmentSchedule, "fragmentSchedule").commit();

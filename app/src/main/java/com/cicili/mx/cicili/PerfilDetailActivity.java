@@ -15,13 +15,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PerfilDetailActivity extends AppCompatActivity {
     //widgets
     private TextView name,email,phone,date,sexo;
-
+    private Button mButton;
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -72,6 +73,19 @@ public class PerfilDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        mButton = findViewById(R.id.datosF);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                // Do something
+                Intent intent = new Intent(PerfilDetailActivity.this, DeleteAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 }
