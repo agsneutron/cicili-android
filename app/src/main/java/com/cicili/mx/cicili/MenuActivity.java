@@ -463,10 +463,6 @@ public class MenuActivity extends AppCompatActivity
         rfcDetailFragment.show(getSupportFragmentManager(),"fragmentRfcDetail");*/
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
 
     @Override
     public void onButtonClicked() {

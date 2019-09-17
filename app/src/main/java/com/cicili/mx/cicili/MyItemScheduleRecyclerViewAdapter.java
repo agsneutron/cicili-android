@@ -5,11 +5,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cicili.mx.cicili.ScheduleMainFragment.OnListFragmentInteractionListener;
+import com.cicili.mx.cicili.domain.PaymentData;
+import com.cicili.mx.cicili.domain.PedidoData;
+import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
+import com.cicili.mx.cicili.io.Utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +25,10 @@ import java.util.List;
  */
 public class MyItemScheduleRecyclerViewAdapter extends RecyclerView.Adapter<MyItemScheduleRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final ArrayList<PedidoData> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemScheduleRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyItemScheduleRecyclerViewAdapter(ArrayList<PedidoData> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +43,12 @@ public class MyItemScheduleRecyclerViewAdapter extends RecyclerView.Adapter<MyIt
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(String.valueOf(mValues.get(position).getCantidad()));
+        holder.mDate.setText(String.valueOf(mValues.get(position).getFechaSolicitada()));
+        holder.mTime.setText(String.valueOf(mValues.get(position).getHoraSolicitada()));
+        holder.mCantidad.setText(String.valueOf(mValues.get(position).getMonto()));
+        holder.mFormaPago.setText(String.valueOf(mValues.get(position).getAlias()));
+        holder.mContentView.setText(String.valueOf(mValues.get(position).getDireccion()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +71,22 @@ public class MyItemScheduleRecyclerViewAdapter extends RecyclerView.Adapter<MyIt
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mDate;
+        public final TextView mTime;
+        public final TextView mCantidad;
+        public final TextView mFormaPago;
+        public PedidoData mItem;
+
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mDate = (TextView) view.findViewById(R.id.date);
+            mTime = (TextView) view.findViewById(R.id.time);
+            mCantidad = (TextView) view.findViewById(R.id.cantidad);
+            mFormaPago = (TextView) view.findViewById(R.id.formaPago);
         }
 
         @Override
