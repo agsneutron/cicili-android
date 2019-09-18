@@ -244,6 +244,14 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/mv/cliente/eliminarcuenta
     public static final String URL_ELIMINA_CUENTA = "app/mv/cliente/eliminarcuenta";
 
+    //Consultar Temas de Preguntas
+    //https://cicili.com.mx:8443/app/catalogos/tiposaclaracion/1
+    public static final String URL_CATEGORIAS_PREGUNTAS = "app/catalogos/tiposaclaracion/1";
+
+
+    //Consultar Preguntas por Tema
+    //https://cicili.com.mx:8443/app/mv/catalogos/preguntas/{idTema}
+    public static final String URL_PREGUNTAS_POR_CATEGORIA = "app/catalogos/preguntas/";
 
 
     public static final Boolean log = true;
