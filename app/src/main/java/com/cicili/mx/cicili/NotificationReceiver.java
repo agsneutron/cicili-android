@@ -25,7 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         //String message = intent.getStringExtra("toastMessage");
         //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Utilities.SetLog("click boton : ","Pedido",true);
         if (intent.getAction().contentEquals(MenuActivity.BUTTON_ACTION)){
             Utilities.SetLog("entra boton : ","Pedido",true);
