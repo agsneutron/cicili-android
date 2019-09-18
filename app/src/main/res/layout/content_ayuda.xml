@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="¿En que te podemos ayudar?"
+            android:text="@string/en_que_te_podemos_ayudar"
             android:textColor="@color/colorPrimary"
             android:textSize="23dp" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
-            android:text="Selecciona un tipo de Mensaje:"
+            android:text="@string/subtitle_help"
             android:textColor="#a9a9b0"
             android:textSize="14.3sp" />
         <!-- <TextView
@@ -64,30 +64,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             >
 
 
             <Spinner
-                android:id="@+id/motivos"
+                android:id="@+id/categoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:tooltipText="Selecciona una categoría"
+                android:focusable="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                />
 
-            <!-- <TextView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="Mensaje:"/>-->
-            <EditText
-                android:id="@+id/mensaje"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mensaje_lbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="Escribe tu aclaración"
-                android:ems="10"
-                android:gravity="start"
-                android:inputType="textMultiLine" />
+                android:hint="@string/mensajelbl"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText"
+                app:passwordToggleTint="@color/colorPrimaryDark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mensaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/textDark" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/schedulebutton"
@@ -95,42 +105,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Enviar"
+                android:text="@string/enviar"
                 app:backgroundTint="@color/colorPrimaryDark"
                 app:cornerRadius="20dp" />
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ayuda 1" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ayuda 2" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ayuda 3" />
-
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

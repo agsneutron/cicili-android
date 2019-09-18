@@ -22,12 +22,16 @@
 
     <include layout="@layout/content_help_list" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ask_to_cicili"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:text="@string/ask_to_cicili"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:cornerRadius="20dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

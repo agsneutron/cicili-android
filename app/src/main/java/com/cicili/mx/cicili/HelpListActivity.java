@@ -3,6 +3,7 @@ package com.cicili.mx.cicili;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.volley.AuthFailureError;
@@ -19,6 +20,7 @@ import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.Preguntas;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -29,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -55,6 +58,7 @@ public class HelpListActivity extends AppCompatActivity {
     ArrayList<Preguntas> preguntasArrayList = new ArrayList<Preguntas>();
     HashMap<String, List<Preguntas>> expandableListDetail = new HashMap<String, List<Preguntas>>();
     ProgressDialog progressDialog;
+    MaterialButton ask_to_cicili;
 
 
     @Override
@@ -64,15 +68,24 @@ public class HelpListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ask_to_cicili = findViewById(R.id.ask_to_cicili);
+        ask_to_cicili.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HelpListActivity.this, AyudaActivity.class);
+                startActivity(intent);
+            }
+        });
 
         progressDialog = ProgressDialog.show(this, "Espera un momento por favor", "Estamos obteniendo la información de ayuda.", true);
 
