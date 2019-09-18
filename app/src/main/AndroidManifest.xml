@@ -20,8 +20,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_cicili_launcher"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".PedidoAceptadoActivity"></activity>
         <activity
             android:name=".NewScheduledOrderActivity"
             android:label="@string/title_activity_new_scheduled_order"

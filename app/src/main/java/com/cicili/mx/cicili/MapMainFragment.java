@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -120,6 +121,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     LinearLayout featuredlayout;
     LinearLayout bottom_sheetmascercano;
     BottomSheetBehavior bsb_mascercano;
+
+
+    /***** Ejecutar tarea cada 5 segundos < **/
+    Handler handler = new Handler();
+    private final int TIEMPO = 2000;
+    Double iLat = 0.00, iLon=0.00;
+    private Marker mMarkerConductor=null;
+    /***** > Ejecutar tarea cada 5 segundos **/
 
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
@@ -634,6 +643,56 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     }
 
 
+    //*********  Ejecutar tarea cada 5 mins **************
+    public void ejecutarTarea() {
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+
+                // función a ejecutar
+                //actualizarChofer(); // función para refrescar la ubicación del conductor, creada en otra línea de código
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                try {
+
+                    Task location = mFusedLocationProviderClient.getLastLocation();
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                iLat=iLat+0.0001399;
+                                iLon=iLon+0.0001223;
+                                Location getCurrentLocation = (Location) task.getResult();
+                                Utilities.SetLog("Ubicacion: ", Double.toString(getCurrentLocation.getLatitude()) + " , " + Double.toString(getCurrentLocation.getLongitude()), WSkeys.log);
+
+                                    ActualizarUbicacionTask(getCurrentLocation.getLatitude()+iLat,getCurrentLocation.getLongitude()-iLon);
+
+                            } else {
+                                Utilities.SetLog("MAP-LOcATION", task.toString(), WSkeys.log);
+                                Snackbar.make(view, R.string.failedgetlocation, Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }
+                    });
+
+
+                } catch (SecurityException e) {
+                    Utilities.SetLog("MAP", e.getMessage(), WSkeys.log);
+                }
+
+
+
+                handler.postDelayed(this, TIEMPO);
+            }
+
+        }, TIEMPO);
+
+    }
+
+    private void ActualizarUbicacionTask(final Double latitud, final Double longitud){
+
+        AddMarkerConductor(latitud,longitud,"AGS","Pipas el pipo", 100.00,"2", 1);
+    }
+
     //MAP
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -642,6 +701,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (mLocationPermissionGranted) {
             getDeviceCurrentLocation();
         }
+        ejecutarTarea();
     }
 
     private void getDeviceCurrentLocation() {
@@ -691,7 +751,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onMapReady(GoogleMap gmMap) {
                 mMap = gmMap;
-
+                ejecutarTarea();
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
                     if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -1054,6 +1114,20 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMarker.showInfoWindow();
         mMarker.setTag(id);
+    }
+
+    public void AddMarkerConductor(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
+        if (mMarkerConductor != null) {
+            mMarkerConductor.remove();
+        }
+        mMarkerConductor = mMap.addMarker(new MarkerOptions()
+                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_1))
+                .position(new LatLng(lat,lon))
+                .title("Concesionario: "+concesionario)
+                .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
+
+        mMarkerConductor.showInfoWindow();
+        mMarkerConductor.setTag(id);
     }
 
     public void MoveCameraSelectedDirection(Double lat, Double lon, String alias){
