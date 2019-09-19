@@ -306,5 +306,6 @@
     <string name="en_que_te_podemos_ayudar">¿En qué te podemos ayudar?</string>
     <string name="subtitle_help">Envíanos una pregunta, con gusto responderémos.</string>
     <string name="mensajelbl">Escribe tu pregunta</string>
+    <string name="title_activity_message">MessageActivity</string>
 
 </resources>

@@ -1050,7 +1050,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_1))
                 .position(new LatLng(lat,lon))
                 .title("Concesionario: "+concesionario)
-                .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
+                .snippet("Precio por litro: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
 
         mMarker.showInfoWindow();
         mMarker.setTag(id);

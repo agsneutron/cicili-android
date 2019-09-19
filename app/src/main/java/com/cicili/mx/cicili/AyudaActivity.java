@@ -54,13 +54,12 @@ public class AyudaActivity extends AppCompatActivity {
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
-    Integer motivo_seleccionado;
+    Integer motivo_seleccionado=0;
     Spinner categoria;
     ArrayList<String> categoriaArray = new ArrayList<String>();
     ArrayList<Categorias> categoriaAux = new ArrayList<Categorias>();
     TextInputEditText mensaje;
     MaterialButton guarda_pregunta;
-    Integer id_categoria=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,36 +82,31 @@ public class AyudaActivity extends AppCompatActivity {
         guarda_pregunta =(MaterialButton) findViewById(R.id.guardapregunta);
 
 
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-
-
-        if (bundle != null) {
-           id_categoria = bundle.getInt("id_categoria");
-        }
-
         guarda_pregunta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mensaje.getText().toString().isEmpty()){
-                    try {
-                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        GuardaPregunta();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                if (motivo_seleccionado.equals(0)) {
+                    Snackbar.make(view, "Selecciona una categoría", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    if (!mensaje.getText().toString().isEmpty()) {
+                        try {
+                            GuardaPregunta();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        mensaje.setError("Escribe una pregunta.");
                     }
-                }
-                else{
-                    mensaje.setError("Escribe una pregunta.");
                 }
             }
         });
 
-        //LlenaMotivos(categoria);
-        /*categoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        LlenaMotivos(categoria);
+        categoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -126,10 +120,10 @@ public class AyudaActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });*/
+        });
     }
 
-    /*public void LlenaMotivos(final Spinner motivos){
+    public void LlenaMotivos(final Spinner motivos){
 
 
         String url = WSkeys.URL_BASE + WSkeys.URL_CATEGORIAS_PREGUNTAS;
@@ -220,7 +214,7 @@ public class AyudaActivity extends AppCompatActivity {
             Snackbar.make(mensaje, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
-    }*/
+    }
 
     public void GuardaPregunta() throws JSONException {
 
@@ -229,7 +223,7 @@ public class AyudaActivity extends AppCompatActivity {
         JSONObject params;
         AclaracionData aclaracionData = new AclaracionData();
         Categorias categoria = new Categorias();
-        categoria.setId(id_categoria);
+        categoria.setId(motivo_seleccionado);
         aclaracionData.setAclaracion(mensaje.getText().toString());
         aclaracionData.setIdPedido(0);
         aclaracionData.setTipoAclaracion(categoria);
@@ -301,7 +295,7 @@ public class AyudaActivity extends AppCompatActivity {
             Utilities.SetLog("RESPONSEASENTAMIENTOS",response.getString(WSkeys.data),WSkeys.log);
             AlertDialog.Builder builder = new AlertDialog.Builder(AyudaActivity.this);
 
-            builder.setMessage("En breve responderemos a tu pregunta, la puedes ver en el apartado \"Mis preguntas\"")
+            builder.setMessage("En breve responderemos a tu pregunta.")
                     .setTitle("Pregunta enviada");
 
             builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {

@@ -46,6 +46,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.8'
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-database:17.0.0' //Base de Datos
+    implementation 'com.google.firebase:firebase-storage:19.0.1'  //Base de Archivos
+
 }
 
 apply plugin: 'com.google.gms.google-services'
