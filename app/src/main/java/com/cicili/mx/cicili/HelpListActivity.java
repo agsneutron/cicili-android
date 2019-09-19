@@ -59,6 +59,7 @@ public class HelpListActivity extends AppCompatActivity {
     HashMap<String, List<Preguntas>> expandableListDetail = new HashMap<String, List<Preguntas>>();
     ProgressDialog progressDialog;
     MaterialButton ask_to_cicili;
+    Integer mis_preguntas_categoria=11;
 
 
     @Override
@@ -83,7 +84,9 @@ public class HelpListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HelpListActivity.this, AyudaActivity.class);
+                intent.putExtra("id_categoria",mis_preguntas_categoria);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -234,6 +237,11 @@ public class HelpListActivity extends AppCompatActivity {
                 Categorias categorias_aux = gson.fromJson(jo_categorias.toString(), Categorias.class);
                 categoriasArrayList.add(categorias_aux);
                 Utilities.SetLog("jo_categorias",categoriasArrayList.get(i).getText() + categoriasArrayList.get(i).getId(),WSkeys.log);
+
+                if (categoriasArrayList.get(i).getText().equals("Mis preguntas")){
+                    mis_preguntas_categoria = categoriasArrayList.get(i).getId();
+
+                }
             }
             Preguntas_por_Categorias(categoriasArrayList);
         }
