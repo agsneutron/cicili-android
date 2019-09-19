@@ -701,7 +701,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (mLocationPermissionGranted) {
             getDeviceCurrentLocation();
         }
-        ejecutarTarea();
+        //ejecutarTarea();
     }
 
     private void getDeviceCurrentLocation() {
@@ -751,7 +751,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onMapReady(GoogleMap gmMap) {
                 mMap = gmMap;
-                ejecutarTarea();
+                //ejecutarTarea();
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
                     if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
