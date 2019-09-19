@@ -48,7 +48,7 @@
                 android:theme="@style/AppTheme">
 
                 <fragment
-                    android:id="@+id/map_order_detail"
+                    android:id="@+id/map_ubicacion_detail"
                     android:name="com.google.android.gms.maps.MapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

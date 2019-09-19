@@ -88,7 +88,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 //.addAction(R.mipmap.ic_launcher, "Toast", actionIntent);
 
 
-        notificationBuilder.addAction(R.mipmap.ic_launcher,"Aceptar Pedido",actionIntent);
+        notificationBuilder.addAction(R.mipmap.ic_launcher,"Ver pedido",actionIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0,notificationBuilder.build());
