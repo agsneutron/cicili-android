@@ -253,6 +253,10 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/mv/catalogos/preguntas/{idTema}
     public static final String URL_PREGUNTAS_POR_CATEGORIA = "app/catalogos/preguntas/";
 
+    //ACLARACIONES
+    //https://cicili.com.mx:8443/app/aclaracion/agregar
+    public static final String URL_AGREGA_ACLARACION = "app/aclaracion/agregar";
+
 
     public static final Boolean log = true;
     public static int cplenght = 4;
