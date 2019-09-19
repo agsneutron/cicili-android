@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.cicili.mx.cicili.domain.Preguntas;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,10 +17,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> expandableListTitle;
-    private HashMap<String, List<String>> expandableListDetail;
+    private HashMap<String, List<Preguntas>> expandableListDetail;
 
     public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       HashMap<String, List<String>> expandableListDetail) {
+                                       HashMap<String, List<Preguntas>> expandableListDetail) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -27,7 +29,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
         return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
+                .get(expandedListPosition).getPregunta();
     }
 
     @Override

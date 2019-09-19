@@ -11,12 +11,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.domain.Categorias;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,10 +46,10 @@ public class AyudaActivity extends AppCompatActivity {
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     Integer motivo_seleccionado;
-    Spinner motivos;
-    ArrayList<String> motivoArray = new ArrayList<String>();
-    ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
-    EditText mensaje;
+    Spinner categoria;
+    ArrayList<String> categoriaArray = new ArrayList<String>();
+    ArrayList<Categorias> categoriaAux = new ArrayList<Categorias>();
+    TextInputEditText mensaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +67,17 @@ public class AyudaActivity extends AppCompatActivity {
             }
         });*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mensaje = findViewById(R.id.mensaje);
-        motivos = (Spinner) findViewById(R.id.motivos);
-        LlenaMotivos(motivos);
+        mensaje = (TextInputEditText) findViewById(R.id.mensaje);
+        categoria = (Spinner) findViewById(R.id.categoria);
+        LlenaMotivos(categoria);
 
-        motivos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        categoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Log.e("onItemSelected",String.valueOf(i));
                 if (i!=0) {
-                    motivo_seleccionado = motivoAux.get(i).getId();
+                    motivo_seleccionado = categoriaAux.get(i-1).getId();
                 }
             }
 
@@ -88,7 +91,7 @@ public class AyudaActivity extends AppCompatActivity {
     public void LlenaMotivos(final Spinner motivos){
 
 
-        String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_ACLARACION;
+        String url = WSkeys.URL_BASE + WSkeys.URL_CATEGORIAS_PREGUNTAS;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -140,7 +143,7 @@ public class AyudaActivity extends AppCompatActivity {
 
     }
 
-    public void ParserMotivos(String response, Spinner motivos) throws JSONException {
+    public void ParserMotivos(String response, Spinner categoria_sp) throws JSONException {
 
         Utilities.SetLog("RESPONSE_AYUDA",response,WSkeys.log);
         //Log.e("CodeResponse", response);
@@ -155,21 +158,21 @@ public class AyudaActivity extends AppCompatActivity {
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
             JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
             Utilities.SetLog("motivoARRAY",ja_usocfdi.toString(),WSkeys.log);
+            categoriaArray.add("Selecciona una categoría");
             for(int i=0; i<ja_usocfdi.length(); i++){
-                MotivoCancela motivoCancela = new MotivoCancela();
+                Categorias categorias = new Categorias();
                 try {
-
                     JSONObject jsonObject = (JSONObject) ja_usocfdi.get(i);
-                    motivoCancela.setId(jsonObject.getInt("id"));
-                    motivoCancela.setText(jsonObject.getString("text"));
-                    motivoAux.add(motivoCancela);
-                    motivoArray.add(jsonObject.getString("text"));
+                    categorias.setId(jsonObject.getInt("id"));
+                    categorias.setText(jsonObject.getString("text"));
+                    categoriaAux.add(categorias);
+                    categoriaArray.add(jsonObject.getString("text"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
-            motivos.setSelection(posselected);
+            categoria_sp.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.simple_spinner_gsn,categoriaArray));
+            categoria_sp.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{

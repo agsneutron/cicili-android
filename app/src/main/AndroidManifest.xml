@@ -78,7 +78,7 @@
         </activity>
         <activity
             android:name=".HelpListActivity"
-            android:label="@string/title_activity_legal_list"
+            android:label="@string/title_activity_ayuda"
             android:parentActivityName=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

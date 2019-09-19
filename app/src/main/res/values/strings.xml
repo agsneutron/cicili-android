@@ -6,7 +6,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Iniciar Sesión</string>
     <string name="action_register">Registrarse</string>
-    <string name="action_no_account">¿No tiénes una cuenta?</string>
+    <string name="action_no_account">¿No tienes una cuenta?</string>
     <string name="action_forgotpsw">¿Olvidaste tu contraseña?</string>
     <string name="action_sign_in_short">Iniciar Sesion</string>
     <string name="error_invalid_email">Correo Electrónico incorrecto</string>
@@ -300,5 +300,11 @@
     <string name="dialog_title">Cuenta eliminada.</string>
     <string name="aceptar">Aceptar</string>
     <string name="title_activity_new_scheduled_order">Pedido Programado</string>
+    <string name="ask_to_cicili">¿ Tienes una pregunta ?</string>
+    <string name="enviar">Enviar</string>
+    <string name="escribe_tu_pregunta">Escribe tu pregunta</string>
+    <string name="en_que_te_podemos_ayudar">¿En qué te podemos ayudar?</string>
+    <string name="subtitle_help">Envíanos una pregunta, con gusto responderémos.</string>
+    <string name="mensajelbl">Escribe tu pregunta</string>
 
 </resources>
