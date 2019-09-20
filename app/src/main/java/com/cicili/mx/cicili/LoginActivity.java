@@ -373,7 +373,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     public void ParserData(String response, String userName, String userPassword) throws JSONException {
-        showProgress(false);
+
         //Log.e("LoginResponse", response);
         JSONObject respuesta = new JSONObject(response);
         Utilities.SetLog("LOGIN response",response,true);
@@ -431,14 +431,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
+
             Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
+        showProgress(false);
     }
 
     /**
