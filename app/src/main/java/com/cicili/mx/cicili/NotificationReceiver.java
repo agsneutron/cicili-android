@@ -12,7 +12,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 
     public interface OnNotificationReceiverListener{
-        void onButtonClicked();
+        void onButtonClicked(Context context, Intent intent);
     }
 
     private final OnNotificationReceiverListener onNotificationReceiverListener;
@@ -23,14 +23,11 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //String message = intent.getStringExtra("toastMessage");
-        //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-
-        Utilities.SetLog("click boton : ","Pedido",true);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (intent.getAction().contentEquals(MenuActivity.BUTTON_ACTION)){
-            Utilities.SetLog("entra boton : ","Pedido",true);
-            onNotificationReceiverListener.onButtonClicked();
+            onNotificationReceiverListener.onButtonClicked(context, intent);
         }
+
 
     }
 }

@@ -31,6 +31,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".PedidoAceptadoActivity"></activity>
         <activity
             android:name=".NewScheduledOrderActivity"
             android:label="@string/title_activity_new_scheduled_order"

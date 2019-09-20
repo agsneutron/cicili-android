@@ -2,6 +2,7 @@ package com.cicili.mx.cicili;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -464,15 +465,25 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
-    @Override
-    public void onButtonClicked() {
-        Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (broadcast!=null)unregisterReceiver(broadcast);
     }
+
+    @Override
+    public void onButtonClicked(Context context, Intent intentNotification) {
+        String idPedido = intentNotification.getStringExtra("idPedido");
+        Toast.makeText(this, "Aceptaste el pedido", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MenuActivity.this, PedidoAceptadoActivity.class);
+
+        Utilities.SetLog("intent idpedido: ", idPedido, WSkeys.log);
+
+        intent.putExtra("idPedido",idPedido);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+    }
+
 }

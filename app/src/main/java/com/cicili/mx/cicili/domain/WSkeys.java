@@ -270,4 +270,8 @@ public class WSkeys {
     public static final String autotanque = "autotanque";
 
     public static final String id = "id";
+
+    //motivo programa
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/programar
+    public static final String URL_UBICACION_CONDUCTOR = "app/mv/cliente/pedido/ubicacion/";
 }

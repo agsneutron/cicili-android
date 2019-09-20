@@ -29,6 +29,7 @@ public class Client extends Application {
     private String photo;
     private String sexo;
     private Integer rfcdatasize;
+    private String order_id;
     private ArrayList<PaymentData> paymentDataArrayList;
     private ArrayList<AddressData> addressDataArrayList;
     private ArrayList<RfcData> rfcDataArrayList;
@@ -52,7 +53,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -71,6 +72,7 @@ public class Client extends Application {
         this.photo = photo;
         this.sexo = sexo;
         this.rfcdatasize = rfcdatasize;
+        this.order_id = order_id;
         this.paymentDataArrayList = paymentDataArrayList;
         this.addressDataArrayList = addressDataArrayList;
         this.rfcDataArrayList = rfcDataArrayList;
@@ -278,5 +280,13 @@ public class Client extends Application {
 
     public void setPedidosDataArrayList(ArrayList<PedidoData> pedidosDataArrayList) {
         this.pedidosDataArrayList = pedidosDataArrayList;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 }
