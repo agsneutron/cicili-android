@@ -11,6 +11,7 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -26,6 +27,18 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
         if (remoteMessage.getNotification() != null){
             mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+            Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("idPedido").toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("conductor").toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("clave").toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("placa").toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("color").toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("tiempo").toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("monto").toString(), WSkeys.log);
+
+
+
 
         }
         // Check if message contains a data payload.

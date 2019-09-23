@@ -163,6 +163,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 });
 
+        if(client.getToken()!=null){
+            SessionToken();
+        }
     }
 
     /**
@@ -428,10 +431,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if(client.getStatus().equals(WSkeys.completo)) {
                 Utilities.SetClientData(jousuario, client);
-
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                startActivity(intent);
-                //finish();
+               SessionToken();
             }
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
@@ -589,7 +589,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     //END SECTION TO VALIDATE SMS
 
 
+    public void SessionToken(){
 
+        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+        startActivity(intent);
+        //finish();
+    }
 
 
 }
