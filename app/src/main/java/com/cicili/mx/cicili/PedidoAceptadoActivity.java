@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -229,6 +232,16 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             //iLon=iLon+0.0001223;
             //ActualizarUbicacionTask(dataUbicacion.getDouble("latitud")+iLat,dataUbicacion.getDouble("longitud")-iLon);
             ActualizarUbicacionTask(dataUbicacion.getDouble("latitud"),dataUbicacion.getDouble("longitud"));
+
+            if (iLat == 0) {
+                iLat = dataUbicacion.getDouble("latitud");
+                iLon = dataUbicacion.getDouble("longitud");
+                Polyline line = mMap.addPolyline(new PolylineOptions()
+                        .add(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress))
+                        .width(5)
+                        .color(Color.RED));
+            }
+
             Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
 
@@ -241,6 +254,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }
 
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
