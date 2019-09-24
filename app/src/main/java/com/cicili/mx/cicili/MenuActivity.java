@@ -489,8 +489,6 @@ public class MenuActivity extends AppCompatActivity
 
         Utilities.SetLog("intent idpedido: ", idPedido, WSkeys.log);
         Utilities.SetLog("intent DATA",data, WSkeys.log);
-
-
         intent.putExtra("idPedido",idPedido);
         intent.putExtra("pedido_data",data);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

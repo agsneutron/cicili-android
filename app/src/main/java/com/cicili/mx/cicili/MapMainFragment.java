@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -120,6 +121,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     TextView name_usuario;
     LinearLayout featuredlayout;
     LinearLayout bottom_sheetmascercano;
+    LinearLayoutCompat layoutDirecciones;
     BottomSheetBehavior bsb_mascercano;
 
 
@@ -187,6 +189,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         getMyLocationPermision();
 
 
+        layoutDirecciones = (LinearLayoutCompat) view.findViewById(R.id.LayoutDireccion);
+        if (client.getSeguimientoPedido().getIdPedido() !=null){
+            Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
+            Gson gson = new Gson();
+            String data = gson.toJson(client.getSeguimientoPedido());
+            Utilities.SetLog("intent idpedido: ", client.getOrder_id(), WSkeys.log);
+            Utilities.SetLog("intent DATA",data, WSkeys.log);
+            intent.putExtra("idPedido",client.getOrder_id());
+            intent.putExtra("pedido_data",data);
+        }
         //pedido mascercano
 
         bottom_sheetmascercano = (LinearLayout)view.findViewById(R.id.bottomSheetCercano);

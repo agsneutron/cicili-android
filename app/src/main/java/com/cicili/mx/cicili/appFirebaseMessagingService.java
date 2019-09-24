@@ -1,5 +1,6 @@
 package com.cicili.mx.cicili;
 
+import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +13,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.cicili.mx.cicili.domain.AddressData;
+import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -29,17 +31,21 @@ import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 public class appFirebaseMessagingService extends FirebaseMessagingService{
 
 
+    Application application = (Application) Client.getContext();
+    Client client = (Client) application;
+    SeguimientoPedido seguimientoPedido;
+    Gson gson = new Gson();
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
         if (remoteMessage.getNotification() != null){
             GsonBuilder gsonMapBuilder = new GsonBuilder();
-
             Gson gsonObject = gsonMapBuilder.create();
-
             String JSONObject = gsonObject.toJson(remoteMessage.getData());
             Utilities.SetLog("NOTIFICATION JSONObject",remoteMessage.toString(), WSkeys.log);
+            seguimientoPedido= gson.fromJson(JSONObject , SeguimientoPedido.class);
+            client.setSeguimientoPedido(seguimientoPedido);
 
             mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),JSONObject);
 
