@@ -118,7 +118,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             Utilities.SetLog("PEDIDO ACEPTADO DATA",pedido_data, WSkeys.log);
 
             seguimientoPedido= gson.fromJson(pedido_data , SeguimientoPedido.class);
-            
+
             monto.setText(seguimientoPedido.getMonto());
             latOrderAddress = Double.parseDouble(seguimientoPedido.getLatitud());
             lonOrderAddress = Double.parseDouble(seguimientoPedido.getLongitud());
