@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.directionhelpers.FetchURL;
+import com.cicili.mx.cicili.directionhelpers.TaskLoadedCallback;
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.Pedido;
@@ -47,6 +50,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -62,7 +67,7 @@ import java.util.Map;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
-public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback {
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -76,6 +81,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     Double iLat = 0.00, iLon=0.00;
     private Marker mMarkerConductor=null;
     /***** > Ejecutar tarea cada 5 segundos **/
+
+    private Polyline currentPolyline;
 
     MapFragment mapFragment;
     TextView vista;
@@ -106,6 +113,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         lbl3 = (TextView) findViewById(R.id.lbl3);
         lbl4 = (TextView) findViewById(R.id.lbl4);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_ubicacion_detail);
+
+        mapFragment.getMapAsync(this);
+
         latOrderAddress = 0.0;
         lonOrderAddress = 0.0;
 
@@ -271,6 +281,20 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             //iLon=iLon+0.0001223;
             //ActualizarUbicacionTask(dataUbicacion.getDouble("latitud")+iLat,dataUbicacion.getDouble("longitud")-iLon);
             ActualizarUbicacionTask(dataUbicacion.getDouble("latitud"),dataUbicacion.getDouble("longitud"));
+
+            /*if (iLat == 0) {
+                iLat = dataUbicacion.getDouble("latitud");
+                iLon = dataUbicacion.getDouble("longitud");
+                Polyline line = mMap.addPolyline(new PolylineOptions()
+                        .add(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress))
+                        .width(5)
+                        .color(Color.RED));
+            }*/
+            iLat = dataUbicacion.getDouble("latitud");
+            iLon = dataUbicacion.getDouble("longitud");
+
+            new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving");
+
             Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
 
@@ -283,6 +307,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }
 
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -408,5 +434,28 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        // Mode
+        String mode = "mode=" + directionMode;
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        // Output format
+        String output = "json";
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+        return url;
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if (currentPolyline != null)
+            currentPolyline.remove();
+        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
 }
