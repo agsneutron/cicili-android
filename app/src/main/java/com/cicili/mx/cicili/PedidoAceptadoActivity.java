@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -28,9 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,6 +50,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,17 +82,51 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     Application application = (Application) getContext();
     Client client = (Client) application;
 
+    /** PEDIDO DATA **/
+    String pedido_data="";
+    TextView monto;
+    TextView lbl1,lbl2,lbl3,lbl4;
+    TextView time;
+    Gson gson = new Gson();
+    SeguimientoPedido seguimientoPedido;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_aceptado);
 
         vista = (TextView) findViewById(R.id.name);
-
+        monto = (TextView) findViewById(R.id.cantidad);
+        time = (TextView) findViewById(R.id.time);
+        lbl1 = (TextView) findViewById(R.id.lbl1);
+        lbl2 = (TextView) findViewById(R.id.lbl2);
+        lbl3 = (TextView) findViewById(R.id.lbl3);
+        lbl4 = (TextView) findViewById(R.id.lbl4);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_ubicacion_detail);
-
         latOrderAddress = 0.0;
         lonOrderAddress = 0.0;
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+            //recuperar datos de pedido
+            pedido_data = bundle.getString("pedido_data");
+            Utilities.SetLog("PEDIDO ACEPTADO DATA",pedido_data, WSkeys.log);
+
+            seguimientoPedido= gson.fromJson(pedido_data , SeguimientoPedido.class);
+            
+            monto.setText(seguimientoPedido.getMonto());
+            latOrderAddress = Double.parseDouble(seguimientoPedido.getLatitud());
+            lonOrderAddress = Double.parseDouble(seguimientoPedido.getLongitud());
+            time.setText(seguimientoPedido.getTiempo());
+            lbl1.setText(seguimientoPedido.getConductor());
+            lbl2.setText(seguimientoPedido.getColor());
+            lbl3.setText(seguimientoPedido.getPlaca());
+        }
         //map
         getMyLocationPermision();
     }

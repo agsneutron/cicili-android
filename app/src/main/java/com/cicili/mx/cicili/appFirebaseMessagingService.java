@@ -11,10 +11,18 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import com.cicili.mx.cicili.domain.AddressData;
+import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 
@@ -26,8 +34,16 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
         super.onMessageReceived(remoteMessage);
 
         if (remoteMessage.getNotification() != null){
-            mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
-            Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
+            GsonBuilder gsonMapBuilder = new GsonBuilder();
+
+            Gson gsonObject = gsonMapBuilder.create();
+
+            String JSONObject = gsonObject.toJson(remoteMessage.getData());
+            Utilities.SetLog("NOTIFICATION JSONObject",remoteMessage.toString(), WSkeys.log);
+
+            mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),JSONObject);
+
+            /*Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("idPedido").toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("conductor").toString(), WSkeys.log);
@@ -36,8 +52,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("color").toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("tiempo").toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("monto").toString(), WSkeys.log);
-
-
+        */
 
 
         }
@@ -59,7 +74,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
             Utilities.SetLog("Message Notification Body: ",remoteMessage.getNotification().getBody(),true);
         }
     }
-    private void mostrarNotificacion(String title, String body){
+    private void mostrarNotificacion(String title, String body,String data){
 
         //++++++++++++++++++++++++++++++++
         Intent intent = new Intent(this, MenuActivity.class);
@@ -67,7 +82,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
 
         Intent intentButton = new Intent(MenuActivity.BUTTON_ACTION);
-        //intentButton.putExtra("idPedido",idPedido);
+        intentButton.putExtra("data",data);
         PendingIntent actionIntent = PendingIntent.getBroadcast(this,MenuActivity.REQUEST_BUTTON, intentButton , PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
