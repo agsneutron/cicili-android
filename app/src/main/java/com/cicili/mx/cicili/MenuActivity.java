@@ -15,6 +15,7 @@ import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.RfcData;
+import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent;
 import com.cicili.mx.cicili.io.Utilities;
@@ -30,6 +31,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -475,12 +477,22 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void onButtonClicked(Context context, Intent intentNotification) {
         String idPedido = intentNotification.getStringExtra("idPedido");
-        Toast.makeText(this, "Aceptaste el pedido", Toast.LENGTH_SHORT).show();
+        String data = intentNotification.getStringExtra("data");
+
+        Toast.makeText(this, "Aceptaron tu pedido", Toast.LENGTH_SHORT).show();
+
+        //Gson gson = new Gson();
+        //SeguimientoPedido seguimientoPedido= gson.fromJson(intentNotification.getData().toString() , SeguimientoPedido.class);
+
+
         Intent intent = new Intent(MenuActivity.this, PedidoAceptadoActivity.class);
 
         Utilities.SetLog("intent idpedido: ", idPedido, WSkeys.log);
+        Utilities.SetLog("intent DATA",data, WSkeys.log);
+
 
         intent.putExtra("idPedido",idPedido);
+        intent.putExtra("pedido_data",data);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
