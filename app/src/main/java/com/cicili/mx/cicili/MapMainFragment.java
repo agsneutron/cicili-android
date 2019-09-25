@@ -190,7 +190,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
 
         layoutDirecciones = (LinearLayoutCompat) view.findViewById(R.id.LayoutDireccion);
-        if (client.getSeguimientoPedido().getIdPedido() !=null){
+        if (client.getOrder_id() !=null && client.getOrder_id() != ""){
             Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
             Gson gson = new Gson();
             String data = gson.toJson(client.getSeguimientoPedido());
@@ -868,14 +868,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
-                initMyMap();
+
             } else {
                 ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_LOCATION_PERMISSION);
             }
+            initMyMap();
         }
         else{
             ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_LOCATION_PERMISSION);
+
         }
+
     }
 
     @Override
@@ -899,7 +902,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 }
             }
         }
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        initMyMap();
     }
 
 

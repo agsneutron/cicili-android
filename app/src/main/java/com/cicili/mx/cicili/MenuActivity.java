@@ -457,7 +457,8 @@ public class MenuActivity extends AppCompatActivity
         Utilities.SetLog("MENUACTIVITYPEDIDO_", String.valueOf(item.getId()), WSkeys.log);
         String index = String.valueOf(client.getPedidosDataArrayList().indexOf(item));
         Intent intent = new Intent(MenuActivity.this, OrderDetailActivity.class);
-        intent.putExtra("ARG_PARAM1", index);
+        String order = String.valueOf(item.getId());
+        intent.putExtra("ARG_PARAM1",order);
         startActivity(intent);
         /*
         RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();

@@ -18,6 +18,11 @@ public class InputMessage extends Message {
         this.hora = hora;
     }
 
+    public InputMessage(Integer id, Integer aclaracion, String usuario, Integer idUsuario, String texto, String fecha){
+        super(id, aclaracion, usuario, idUsuario, texto, fecha);
+
+    }
+
     public Long getHora() {
         return hora;
     }

@@ -8,7 +8,24 @@ public class Message {
     private String fotoPerfil;
     private String type_mensaje;
 
+    private Integer id;
+    private Integer aclaracion;
+    private String usuario;
+    private Integer idUsuario;
+    private String texto;
+    private String fecha;
+
+
     public Message() {
+    }
+
+    public Message(Integer id, Integer aclaracion, String usuario, Integer idUsuario, String texto, String fecha) {
+        this.id = id;
+        this.aclaracion = aclaracion;
+        this.usuario = usuario;
+        this.idUsuario = idUsuario;
+        this.texto = texto;
+        this.fecha = fecha;
     }
 
     public Message(String mensaje, String nombre, String fotoPerfil, String type_mensaje) {
@@ -64,5 +81,53 @@ public class Message {
 
     public void setUrlFoto(String urlFoto) {
         this.urlFoto = urlFoto;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAclaracion() {
+        return aclaracion;
+    }
+
+    public void setAclaracion(Integer aclaracion) {
+        this.aclaracion = aclaracion;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

@@ -257,6 +257,24 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/aclaracion/agregar
     public static final String URL_AGREGA_ACLARACION = "app/aclaracion/agregar";
 
+    //OBTENER ACLARACIÓN
+    //https://cicili.com.mx:8443/app/aclaracion/obtener
+    public static final String URL_OBTENER_ACLARACION = "app/aclaracion/obtener/";
+
+    //OBTENER SEGUIMIENTO
+    //app/aclaracion/seguimiento/obtener/{idAclaracion}
+    public static final String URL_OBTENER_SEGUIMIENTO_ACLARACION = "app/aclaracion/seguimiento/obtener/";
+
+    //MENSAJE SEGUIMIENTO ACLARACION
+    //https://cicili.com.mx:8443/app/aclaracion/seguimiento/agregar
+    public static final String URL_DAR_SEGUIMIENTO_ACLARACION = "app/aclaracion/seguimiento/agregar";
+
+    //OBTENER PREGUNTAS
+    //app/aclaracion/preguntas
+    public static final String URL_OBTENER_SEGUIMIENTO_PREGUNTAS = "app/aclaracion/preguntas";
+
+
+
 
     public static final Boolean log = true;
     public static int cplenght = 4;

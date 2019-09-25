@@ -36,25 +36,27 @@ public class AdapterMessage extends RecyclerView.Adapter<HolderMessage> {
 
     @Override
     public void onBindViewHolder(HolderMessage holder, int position) {
-        holder.getNombre().setText(listMensaje.get(position).getNombre());
-        holder.getMensaje().setText(listMensaje.get(position).getMensaje());
-        if(listMensaje.get(position).getType_mensaje().equals("2")){
+        holder.getNombre().setText(listMensaje.get(position).getUsuario());
+        holder.getMensaje().setText(listMensaje.get(position).getTexto());
+        /*if(listMensaje.get(position).getType_mensaje().equals("2")){
             holder.getFotoMensaje().setVisibility(View.VISIBLE);
             holder.getMensaje().setVisibility(View.VISIBLE);
            // Glide.with(c).load(listMensaje.get(position).getUrlFoto()).into(holder.getFotoMensaje());
-        }else if(listMensaje.get(position).getType_mensaje().equals("1")){
+        }else if(listMensaje.get(position).getType_mensaje().equals("1")){*/
             holder.getFotoMensaje().setVisibility(View.GONE);
             holder.getMensaje().setVisibility(View.VISIBLE);
-        }
-        if(listMensaje.get(position).getFotoPerfil().isEmpty()){
+        //}
+        /*if(listMensaje.get(position).getFotoPerfil().isEmpty()){
             holder.getFotoMensajePerfil().setImageResource(R.mipmap.ic_launcher);
         }else{
            // Glide.with(c).load(listMensaje.get(position).getFotoPerfil()).into(holder.getFotoMensajePerfil());
-        }
-        Long codigoHora = listMensaje.get(position).getHora();
-        Date d = new Date(codigoHora);
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");//a pm o am
-        holder.getHora().setText(sdf.format(d));
+        }*/
+        //Long codigoHora = listMensaje.get(position).getHora();
+        String codigoHora = listMensaje.get(position).getFecha();
+        //Date d = new Date(codigoHora);
+        //SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");//a pm o am
+        //holder.getHora().setText(sdf.format(d));
+        holder.getHora().setText(codigoHora);
     }
 
     @Override
