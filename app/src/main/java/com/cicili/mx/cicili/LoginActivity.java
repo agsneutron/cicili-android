@@ -409,7 +409,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
 
-            /*if (client.getStatus().equals(WSkeys.datos_personales)){
+            if (client.getStatus().equals(WSkeys.datos_personales)){
 
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_personales);
@@ -425,7 +425,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_direccion);
                 startActivity(intent);
-            }*/
+            }
 
 
 
@@ -572,6 +572,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 //startActivity(intent);
                 //DialogPersonal(user);
                 client.setStatus(WSkeys.datos_personales);
+
             }
             else{
                 dialog.dismiss();

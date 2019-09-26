@@ -35,19 +35,25 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
     Client client = (Client) application;
     SeguimientoPedido seguimientoPedido;
     Gson gson = new Gson();
+    String sJSONObject;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
         if (remoteMessage.getNotification() != null){
-            GsonBuilder gsonMapBuilder = new GsonBuilder();
-            Gson gsonObject = gsonMapBuilder.create();
-            String JSONObject = gsonObject.toJson(remoteMessage.getData());
-            Utilities.SetLog("NOTIFICATION JSONObject",remoteMessage.toString(), WSkeys.log);
-            seguimientoPedido= gson.fromJson(JSONObject , SeguimientoPedido.class);
-            client.setSeguimientoPedido(seguimientoPedido);
 
-            mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),JSONObject);
+            if (remoteMessage.getData().get("tipo").toString().equals("3")){
+
+
+                GsonBuilder gsonMapBuilder = new GsonBuilder();
+                Gson gsonObject = gsonMapBuilder.create();
+                sJSONObject = gsonObject.toJson(remoteMessage.getData());
+                Utilities.SetLog("NOTIFICATION JSONObject", sJSONObject, WSkeys.log);
+                seguimientoPedido = gson.fromJson(sJSONObject, SeguimientoPedido.class);
+                client.setSeguimientoPedido(seguimientoPedido);
+            }
+
+            mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),sJSONObject);
 
             /*Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);

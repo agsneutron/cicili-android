@@ -229,9 +229,10 @@ public class PaymentDataFragment extends Fragment {
         vencimiento.addTextChangedListener(new TextValidator(vencimiento) {
             @Override public void validate(TextInputEditText textView, String text) {
                 if ((Utilities.isFieldValid(vencimiento)) && vencimiento.length()==2) {
-                    text = text.concat("/");
-                    vencimiento.setText(text);
-                    vencimiento.setSelection(text.length(), text.length());
+                    //text = text.concat("/");
+                    //vencimiento.setText(text);
+                    //vencimiento.setSelection(text.length(), text.length());
+                    vencimiento.setError("Agrega /");
                 }
             }
         });
@@ -314,7 +315,7 @@ public class PaymentDataFragment extends Fragment {
                         cvv.setError(getString(R.string.error_field_required));
                         error =  true;
                         focusView = cvv;
-                        Utilities.SetLog("cvv",sCvv,WSkeys.log);
+                        Utilities.SetLog("cvv----<",sCvv,WSkeys.log);
                     }else{
                     paymentData.setCvv(Integer.parseInt(sCvv));
                     }

@@ -63,6 +63,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
@@ -74,6 +75,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     private Double latOrderAddress, lonOrderAddress;
+
 
     /***** Ejecutar tarea cada 5 segundos < **/
     Handler handler = new Handler();
@@ -126,6 +128,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             //recuperar datos de pedido
             pedido_data = bundle.getString("pedido_data");
             Utilities.SetLog("PEDIDO ACEPTADO DATA",pedido_data, WSkeys.log);
+
 
             seguimientoPedido= gson.fromJson(pedido_data , SeguimientoPedido.class);
 
@@ -190,7 +193,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     private void ActualizarUbicacionTask(final Double latitud, final Double longitud){
         moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latitud, longitud));
-        AddMarkerConductor(latitud,longitud,"AGS","Pipas el pipo", 100.00,"2", 1);
+        AddMarkerConductor(latitud,longitud,seguimientoPedido.getConductor(),seguimientoPedido.getConcesionario(), Double.parseDouble(seguimientoPedido.getMonto()),seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getIdPedido()));
     }
 
 
@@ -216,7 +219,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     public void ubicacionConductor() throws JSONException{
 
 
-        String url = WSkeys.URL_BASE + WSkeys.URL_UBICACION_CONDUCTOR + "127";//+ client.getOrder_id();
+        String url = WSkeys.URL_BASE + WSkeys.URL_UBICACION_CONDUCTOR + client.getOrder_id();
 
         RequestQueue queue = Volley.newRequestQueue(client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
@@ -293,7 +296,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             iLat = dataUbicacion.getDouble("latitud");
             iLon = dataUbicacion.getDouble("longitud");
 
-            new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving");
+            String respuestaDirecctions = new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving").toString();
+
+            Utilities.SetLog("DATA Directions: ",respuestaDirecctions,WSkeys.log);
 
             Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
@@ -454,8 +459,21 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public void onTaskDone(Object... values) {
+
         if (currentPolyline != null)
             currentPolyline.remove();
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
+
+    @Override
+    public void onTaskDone(PolylineOptions lineOptions, List<List<HashMap<String, String>>> result) {
+        //Utilities.SetLog("result onTaskDone: ", result.toString(), WSkeys.log);
+    }
+
+    @Override
+    public List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+        Utilities.SetLog("jsonData doInBackground: ", jsonData.toString(), WSkeys.log);
+        return null;
+    }
+
 }

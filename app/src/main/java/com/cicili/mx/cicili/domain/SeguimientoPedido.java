@@ -12,12 +12,15 @@ public class SeguimientoPedido {
     String longitud;
     String concesionario;
     String logo;
+    String tipo;
+    String status;
+    String nombreStatus;
 
 
     public SeguimientoPedido() {
     }
 
-    public SeguimientoPedido(String idPedido, String conductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String concesionario, String logo) {
+    public SeguimientoPedido(String idPedido, String conductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String concesionario, String logo, String tipo, String status, String nombreStatus) {
         this.idPedido = idPedido;
         this.conductor = conductor;
         this.clave = clave;
@@ -29,6 +32,16 @@ public class SeguimientoPedido {
         this.longitud = longitud;
         this.concesionario = concesionario;
         this.logo = logo;
+        this.tipo = tipo;
+        this.status = status;
+        this.nombreStatus = nombreStatus;
+    }
+
+    public SeguimientoPedido(String idPedido, String tipo, String status, String nombreStatus) {
+        this.idPedido = idPedido;
+        this.tipo = tipo;
+        this.status = status;
+        this.nombreStatus = nombreStatus;
     }
 
     public String getIdPedido() {
@@ -117,5 +130,13 @@ public class SeguimientoPedido {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
