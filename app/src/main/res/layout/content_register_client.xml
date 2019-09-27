@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_1"
     android:orientation="vertical"
+
     tools:context="com.cicili.mx.cicili.RequestPassword">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +58,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Regístrate"
+                android:text="Regístrate como cliente"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -91,7 +92,8 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -120,7 +122,8 @@
                 android:hint="@string/contrasenia"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText">
+                app:hintTextAppearance="@style/HintText"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
