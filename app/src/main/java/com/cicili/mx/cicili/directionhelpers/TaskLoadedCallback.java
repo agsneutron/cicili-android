@@ -12,7 +12,7 @@ import java.util.List;
 public interface TaskLoadedCallback {
     void onTaskDone(Object... values);
 
-    void onTaskDone(PolylineOptions lineOptions, List<List<HashMap<String, String>>> result);
+    void onTaskDoneData(String... result);
 
-    List<List<HashMap<String, String>>>  doInBackground(String... jsonData);
+
 }

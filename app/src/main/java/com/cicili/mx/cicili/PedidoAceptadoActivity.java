@@ -466,14 +466,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
     @Override
-    public void onTaskDone(PolylineOptions lineOptions, List<List<HashMap<String, String>>> result) {
-        //Utilities.SetLog("result onTaskDone: ", result.toString(), WSkeys.log);
+    public void onTaskDoneData(String... result) {
+        Utilities.SetLog("result onTaskDone: ", result.toString(), WSkeys.log);
     }
 
-    @Override
-    public List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-        Utilities.SetLog("jsonData doInBackground: ", jsonData.toString(), WSkeys.log);
-        return null;
-    }
+
 
 }
