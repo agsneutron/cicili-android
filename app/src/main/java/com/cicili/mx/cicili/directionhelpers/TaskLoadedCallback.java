@@ -12,7 +12,7 @@ import java.util.List;
 public interface TaskLoadedCallback {
     void onTaskDone(Object... values);
 
-    void onTaskDoneData(String... result);
+    void onTaskDoneData(String result);
 
 
 }

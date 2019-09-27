@@ -466,8 +466,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
     @Override
-    public void onTaskDoneData(String... result) {
-        Utilities.SetLog("result onTaskDone: ", result.toString(), WSkeys.log);
+    public void onTaskDoneData(String data) {
+        Utilities.SetLog("result onTaskDoneData: ", data.toString(), WSkeys.log);
     }
 
 
