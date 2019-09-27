@@ -159,7 +159,7 @@
     <string name="usocfdi">Uso de CFDI</string>
     <string name="foto_de_perfil">Foto de Perfil</string>
     <string name="litros">Litros</string>
-    <string name="precio">Precio</string>
+    <string name="precio">Monto</string>
     <string name="tarjeta">Tarjeta</string>
     <string name="btnConfirma">Confirmar Pedido</string>
     <string name="mensajePagoPedido">El pago del gas es directamente al conductor de la pipa. Cicili NO cobra Gas, solo la comisión por el servicio marcada en los términos de uso por medio de la tarjeta registrada</string>
@@ -306,5 +306,9 @@
     <string name="en_que_te_podemos_ayudar">¿En qué te podemos ayudar?</string>
     <string name="subtitle_help">Envíanos una pregunta, con gusto responderémos.</string>
     <string name="mensajelbl">Escribe tu pregunta</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="subtitle_aclr">Envíanos el asunto que deseas aclarar.</string>
+    <string name="en_que_te_podemos_servir">¿En qué te podemos servir?</string>
+    <string name="mensajeacl">Escribe tu asunto a aclarar</string>
 
 </resources>

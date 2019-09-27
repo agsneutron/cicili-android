@@ -163,6 +163,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 });
 
+        if(client.getToken()!=null){
+            SessionToken();
+        }
     }
 
     /**
@@ -373,7 +376,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     public void ParserData(String response, String userName, String userPassword) throws JSONException {
-        showProgress(false);
+
         //Log.e("LoginResponse", response);
         JSONObject respuesta = new JSONObject(response);
         Utilities.SetLog("LOGIN response",response,true);
@@ -406,7 +409,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
 
-            /*if (client.getStatus().equals(WSkeys.datos_personales)){
+            if (client.getStatus().equals(WSkeys.datos_personales)){
 
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_personales);
@@ -422,23 +425,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_direccion);
                 startActivity(intent);
-            }*/
+            }
 
 
 
             if(client.getStatus().equals(WSkeys.completo)) {
                 Utilities.SetClientData(jousuario, client);
-
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                startActivity(intent);
-                finish();
+               SessionToken();
             }
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
+
             Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
+        showProgress(false);
     }
 
     /**
@@ -570,6 +572,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 //startActivity(intent);
                 //DialogPersonal(user);
                 client.setStatus(WSkeys.datos_personales);
+
             }
             else{
                 dialog.dismiss();
@@ -587,7 +590,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     //END SECTION TO VALIDATE SMS
 
 
+    public void SessionToken(){
 
+        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+        startActivity(intent);
+        //finish();
+    }
 
 
 }

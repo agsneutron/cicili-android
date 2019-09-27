@@ -16,10 +16,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -119,7 +121,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     TextView name_usuario;
     LinearLayout featuredlayout;
     LinearLayout bottom_sheetmascercano;
+    LinearLayoutCompat layoutDirecciones;
     BottomSheetBehavior bsb_mascercano;
+
+
+    /***** Ejecutar tarea cada 5 segundos < **/
+    Handler handler = new Handler();
+    private final int TIEMPO = 2000;
+    Double iLat = 0.00, iLon=0.00;
+    private Marker mMarkerConductor=null;
+    /***** > Ejecutar tarea cada 5 segundos **/
 
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
@@ -178,6 +189,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         getMyLocationPermision();
 
 
+        layoutDirecciones = (LinearLayoutCompat) view.findViewById(R.id.LayoutDireccion);
+        if (client.getOrder_id() !=null && client.getOrder_id() != ""){
+            Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
+            Gson gson = new Gson();
+            String data = gson.toJson(client.getSeguimientoPedido());
+            Utilities.SetLog("intent idpedido: ", client.getOrder_id(), WSkeys.log);
+            Utilities.SetLog("intent DATA",data, WSkeys.log);
+            intent.putExtra("idPedido",client.getOrder_id());
+            intent.putExtra("pedido_data",data);
+        }
         //pedido mascercano
 
         bottom_sheetmascercano = (LinearLayout)view.findViewById(R.id.bottomSheetCercano);
@@ -191,10 +212,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 rgFormaPago.check(R.id.tarjeta_mc);
                 String formapagoseleccionada="";
                 final RadioGroup rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro_mc);
-                rgMontoLitro.check(R.id.litro);
+                rgMontoLitro.check(R.id.litro_mc);
                 final TextInputEditText input_monto_litros = (TextInputEditText) view.findViewById(R.id.input_mc);
-                final TextInputEditText calculo_monto_litro = (TextInputEditText) view.findViewById(R.id.calculo_input_mc);
-                final TextInputLayout calculoinput = (TextInputLayout)view.findViewById(R.id.calculoinput_mc);
+                //final TextInputEditText calculo_monto_litro = (TextInputEditText) view.findViewById(R.id.calculo_input_mc);
+                //final TextInputLayout calculoinput = (TextInputLayout)view.findViewById(R.id.calculoinput_mc);
                 final TextInputLayout labelinput = (TextInputLayout)view.findViewById(R.id.labelinput_mc);
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
@@ -229,15 +250,15 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        if(radioGroup.getCheckedRadioButtonId() == R.id.litro){
+                        if(radioGroup.getCheckedRadioButtonId() == R.id.litro_mc){
                             labelinput.setHint("Litros");
-                            calculoinput.setHint("Monto");
+                            //calculoinput.setHint("Monto");
                             input_monto_litros.setText(input_monto_litros.getText().toString());
                         }
 
-                        if (radioGroup.getCheckedRadioButtonId() == R.id.monto){
+                        if (radioGroup.getCheckedRadioButtonId() == R.id.monto_mc){
                             labelinput.setHint("Monto");
-                            calculoinput.setHint("Litros");
+                            //calculoinput.setHint("Litros");
                             input_monto_litros.setText(input_monto_litros.getText().toString());
                         }
                     }
@@ -261,7 +282,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         Double nuevoprecio;
                         Double calculaLitros;
                         if(!input_monto_litros.getText().toString().isEmpty()) {
-                            if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
+                            /*if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
 
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
                                     nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
@@ -282,7 +303,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                 else{
                                     calculo_monto_litro.setText(String.valueOf(0));
                                 }
-                            }
+                            }*/
                         }
                         else {
                             input_monto_litros.setText("0");
@@ -310,13 +331,13 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         }
 
                         // Check for a valid password, if the user entered one.
-                        if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
+                        /*if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
                             Utilities.SetLog("ERROR PRECIO", String.valueOf(calculo_monto_litro.getText()), WSkeys.log);
                             //precio.setError(getString(R.string.error_invalid_value));
                             //focusView = precio;
                             error=getString(R.string.error_invalid_value);
                             cancel = true;
-                        }
+                        }*/
 
                         if (finalFormapagoseleccionada.equals("")){
                             //focusView = rgFormaPago;
@@ -634,6 +655,56 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     }
 
 
+    //*********  Ejecutar tarea cada 5 mins **************
+    public void ejecutarTarea() {
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+
+                // función a ejecutar
+                //actualizarChofer(); // función para refrescar la ubicación del conductor, creada en otra línea de código
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                try {
+
+                    Task location = mFusedLocationProviderClient.getLastLocation();
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                iLat=iLat+0.0001399;
+                                iLon=iLon+0.0001223;
+                                Location getCurrentLocation = (Location) task.getResult();
+                                Utilities.SetLog("Ubicacion: ", Double.toString(getCurrentLocation.getLatitude()) + " , " + Double.toString(getCurrentLocation.getLongitude()), WSkeys.log);
+
+                                    ActualizarUbicacionTask(getCurrentLocation.getLatitude()+iLat,getCurrentLocation.getLongitude()-iLon);
+
+                            } else {
+                                Utilities.SetLog("MAP-LOcATION", task.toString(), WSkeys.log);
+                                Snackbar.make(view, R.string.failedgetlocation, Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }
+                    });
+
+
+                } catch (SecurityException e) {
+                    Utilities.SetLog("MAP", e.getMessage(), WSkeys.log);
+                }
+
+
+
+                handler.postDelayed(this, TIEMPO);
+            }
+
+        }, TIEMPO);
+
+    }
+
+    private void ActualizarUbicacionTask(final Double latitud, final Double longitud){
+
+        AddMarkerConductor(latitud,longitud,"AGS","Pipas el pipo", 100.00,"2", 1);
+    }
+
     //MAP
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -642,6 +713,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (mLocationPermissionGranted) {
             getDeviceCurrentLocation();
         }
+        //ejecutarTarea();
     }
 
     private void getDeviceCurrentLocation() {
@@ -691,7 +763,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onMapReady(GoogleMap gmMap) {
                 mMap = gmMap;
-
+                //ejecutarTarea();
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
                     if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -796,14 +868,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
-                initMyMap();
+
             } else {
                 ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_LOCATION_PERMISSION);
             }
+            initMyMap();
         }
         else{
             ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_LOCATION_PERMISSION);
+
         }
+
     }
 
     @Override
@@ -827,7 +902,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 }
             }
         }
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        initMyMap();
     }
 
 
@@ -1049,11 +1125,25 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         Marker mMarker = mMap.addMarker(new MarkerOptions()
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_1))
                 .position(new LatLng(lat,lon))
-                .title("Concesionario: "+concesionario)
-                .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
+                .title(concesionario)
+                .snippet("$" + String.valueOf(precio) + " por litro \n" + "Llega en: "+ tiempo));
 
         mMarker.showInfoWindow();
         mMarker.setTag(id);
+    }
+
+    public void AddMarkerConductor(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
+        if (mMarkerConductor != null) {
+            mMarkerConductor.remove();
+        }
+        mMarkerConductor = mMap.addMarker(new MarkerOptions()
+                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_1))
+                .position(new LatLng(lat,lon))
+                .title("Concesionario: "+concesionario)
+                .snippet("Conductor: " + conductor + "\n" + "Precio: $"+ String.valueOf(precio) + "\n" + "Tiempo de Llegada: "+ tiempo));
+
+        mMarkerConductor.showInfoWindow();
+        mMarkerConductor.setTag(id);
     }
 
     public void MoveCameraSelectedDirection(Double lat, Double lon, String alias){

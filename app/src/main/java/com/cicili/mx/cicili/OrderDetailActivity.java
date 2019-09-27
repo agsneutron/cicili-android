@@ -136,6 +136,13 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                 FacturaPedido(pos);
             }
         });
+
+        aclarar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AclararPedido(pos);
+            }
+        });
     }
 
     //MAP
@@ -449,4 +456,9 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     }
 
 
+    public void AclararPedido(Integer pos){
+        Intent intent = new Intent(OrderDetailActivity.this, Aclaracion.class);
+        intent.putExtra("order",pos);
+        startActivity(intent);
+    }
 }

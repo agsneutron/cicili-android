@@ -84,6 +84,7 @@ public class HelpListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HelpListActivity.this, AyudaActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

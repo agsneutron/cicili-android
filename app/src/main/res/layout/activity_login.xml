@@ -40,13 +40,13 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="280dp"
-            android:layout_height="120dp"
+            android:layout_width="130dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
 
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/login_form"
+            app:layout_constraintBottom_toTopOf="@+id/layout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -187,7 +187,7 @@
                 android:text="@string/action_forgotpsw"
                 android:textColor="@color/white"
                 app:backgroundTint="@android:color/transparent"
-                app:layout_constraintTop_toBottomOf="@+id/layout2"
+                app:layout_constraintTop_toBottomOf="@+id/layoutlog"
                 app:layout_constraintBottom_toTopOf="@+id/email_sign_in_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

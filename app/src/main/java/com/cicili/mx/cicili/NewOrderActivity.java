@@ -419,6 +419,7 @@ public class NewOrderActivity extends AppCompatActivity {
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
             pedido_id = respuesta.getJSONObject("data").getInt("id");
             order = String.valueOf(pedido_id);
+            client.setOrder_id(order);
             estatuspedido.setText(" Estatus de Pedido: " + respuesta.getJSONObject("data").getString("nombreStatus")+ "\n"+ "Número de Orden: "+String.valueOf(order));
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
