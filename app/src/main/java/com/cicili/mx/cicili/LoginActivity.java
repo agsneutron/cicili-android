@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-
+        Utilities.hideKeyboardwithoutPopulate(LoginActivity.this);
 
         // Reset errors.
         mEmailView.setError(null);
@@ -404,13 +404,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (client.getStatus().equals(WSkeys.verifica_codigo)) {
                 // dialog to validate SMS
-
-                DialogValidate(userName);
+                Intent intent = new Intent(LoginActivity.this,ValidateActivity.class);
+                intent.putExtra("token",client.getToken());
+                startActivity(intent);
+                client = null;
+                //DialogValidate(userName);
             }
 
 
             if (client.getStatus().equals(WSkeys.datos_personales)){
-
                 Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_personales);
                 startActivity(intent);
@@ -426,8 +428,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 intent.putExtra("active",WSkeys.datos_direccion);
                 startActivity(intent);
             }
-
-
 
             if(client.getStatus().equals(WSkeys.completo)) {
                 Utilities.SetClientData(jousuario, client);

@@ -109,8 +109,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private OnFragmentInteractionListener mListener;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
-    Spinner direcciones;
+    Spinner direcciones, pipas;
     private ArrayList<String> direccionArray;
+    private ArrayList<String> pipasArray;
     private ArrayList<AddressData> direccionAux;
     private ArrayList<String> autotanquesDisponiblesArray;
     Gson gson = new Gson();
@@ -182,6 +183,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         name_usuario.setText(client.getName());
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
         LlenaDirecciones(direcciones);
+        pipas = (Spinner) view.findViewById(R.id.spinner2);
+
 
         direcciones.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
@@ -985,9 +988,32 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             for (int i = 0; i < client.getAddressDataArrayList().size(); i++) {
                 direccionArray.add(client.getAddressDataArrayList().get(i).getAlias());
             }
-            direcciones.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, direccionArray));
+
+        }else{
+            direccionArray.add("Agregar una dirección");
+            Utilities.SetLog("size dir",String.valueOf(direccionArray.size()),WSkeys.log);
         }
+        direcciones.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, direccionArray));
     }
+
+    public void LlenaPipas(final Spinner pipas){
+
+        pipasArray = new ArrayList<String>();
+
+        if (autotanquesCercanosAux != null) {
+
+            pipasArray.add("Selecciona una pipa");
+            for (int i = 0; i < autotanquesCercanosAux.size(); i++) {
+                pipasArray.add(autotanquesCercanosAux.get(i).getConcesionario() + " $" + autotanquesCercanosAux.get(i).getPrecio() );
+            }
+
+        }else{
+            pipasArray.add("No hay pipas disponibles");
+            Utilities.SetLog("size dir",String.valueOf(pipasArray.size()),WSkeys.log);
+        }
+        pipas.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, pipasArray));
+    }
+
 
     public void ConsultaPrincipal(final LatLng ltln) throws JSONException {
 
@@ -1073,6 +1099,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     AddMarker(jo_data.getDouble("latitud"),jo_data.getDouble("longitud"),jo_data.getString("conductor"),jo_data.getString("concesionario"), jo_data.getDouble("precio"),jo_data.getString("tiempoLlegada"), i);
                     //jo_data.getJSONObject(WSkeys.concesionario);
                     //jo_data.getJSONObject(WSkeys.conductor);
+                    LlenaPipas(pipas);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1091,7 +1118,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Log.e("onItemSelected if",String.valueOf(i));
 
         if (i!=0) {
             //client.getAddressDataArrayList().get(i).getLatitud();
@@ -1110,6 +1137,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 e.printStackTrace();
             }
 
+
+        }else if (direccionArray.size()==1){
+            Intent intent = new Intent(getContext(), PerfilData.class);
+            intent.putExtra("active",WSkeys.datos_direccion);
+            startActivity(intent);
 
         }
 
