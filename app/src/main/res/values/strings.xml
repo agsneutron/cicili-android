@@ -310,5 +310,6 @@
     <string name="subtitle_aclr">Envíanos el asunto que deseas aclarar.</string>
     <string name="en_que_te_podemos_servir">¿En qué te podemos servir?</string>
     <string name="mensajeacl">Escribe tu asunto a aclarar</string>
+    <string name="qu_pipa_enviamos_a_tu_domicilio">¿Qué pipa enviamos a tu domicilio?</string>
 
 </resources>

@@ -91,7 +91,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -109,7 +109,7 @@
                     android:id="@+id/cellphone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -120,13 +120,15 @@
                 android:hint="@string/contrasenia"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText">
+                app:hintTextAppearance="@style/HintText"
+                app:helperText="La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:drawableEnd="@drawable/ic_close"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -143,7 +145,7 @@
                     android:id="@+id/cpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

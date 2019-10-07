@@ -121,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="ari@gmail.mx"
+                        android:text="ariaocho@gmail.com"
                         android:textColor="@color/textDark" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <!-- <EditText
@@ -157,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="pstpst"
+                        android:text="Qwe123@#$"
                         android:textColor="@color/textDark"
                         android:textColorHint="@color/white" />
                 </com.google.android.material.textfield.TextInputLayout>

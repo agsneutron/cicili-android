@@ -109,8 +109,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private OnFragmentInteractionListener mListener;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
-    Spinner direcciones;
+    Spinner direcciones, pipas;
     private ArrayList<String> direccionArray;
+    private ArrayList<String> pipasArray;
     private ArrayList<AddressData> direccionAux;
     private ArrayList<String> autotanquesDisponiblesArray;
     Gson gson = new Gson();
@@ -182,8 +183,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         name_usuario.setText(client.getName());
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
         LlenaDirecciones(direcciones);
+        pipas = (Spinner) view.findViewById(R.id.spinner2);
+
 
         direcciones.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        pipas.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
         //map
         getMyLocationPermision();
@@ -985,9 +989,34 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             for (int i = 0; i < client.getAddressDataArrayList().size(); i++) {
                 direccionArray.add(client.getAddressDataArrayList().get(i).getAlias());
             }
-            direcciones.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, direccionArray));
+
+        }else{
+            direccionArray.add("");
+            direccionArray.add("Agrega una dirección");
+            Utilities.SetLog("size dir",String.valueOf(direccionArray.size()),WSkeys.log);
         }
+        direcciones.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, direccionArray));
     }
+
+
+    public void LlenaPipas(final Spinner pipas){
+
+        pipasArray = new ArrayList<String>();
+
+        if (autotanquesCercanosAux != null) {
+
+            pipasArray.add("Selecciona una pipa");
+            for (int i = 0; i < autotanquesCercanosAux.size(); i++) {
+                pipasArray.add(autotanquesCercanosAux.get(i).getConcesionario() + " $" + autotanquesCercanosAux.get(i).getPrecio() );
+            }
+
+        }else{
+            pipasArray.add("No hay pipas disponibles");
+            Utilities.SetLog("size dir",String.valueOf(pipasArray.size()),WSkeys.log);
+        }
+        pipas.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, pipasArray));
+    }
+
 
     public void ConsultaPrincipal(final LatLng ltln) throws JSONException {
 
@@ -1073,6 +1102,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     AddMarker(jo_data.getDouble("latitud"),jo_data.getDouble("longitud"),jo_data.getString("conductor"),jo_data.getString("concesionario"), jo_data.getDouble("precio"),jo_data.getString("tiempoLlegada"), i);
                     //jo_data.getJSONObject(WSkeys.concesionario);
                     //jo_data.getJSONObject(WSkeys.conductor);
+                    LlenaPipas(pipas);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1091,33 +1121,52 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.e("onItemSelected if",String.valueOf(i) + view + l + adapterView.toString());
 
+        if (adapterView.getId()==R.id.spinner1) {
 
-        if (i!=0) {
-            //client.getAddressDataArrayList().get(i).getLatitud();
-            //client.getAddressDataArrayList().get(i).getLongitud();
-            Log.e("onItemSelected",String.valueOf(i));
-            Log.e("Selected--idaddress",String.valueOf(client.getAddressDataArrayList().get(i-1).getId()));
-            Log.e("Selected--alias",client.getAddressDataArrayList().get(i-1).getAlias());
-            try {
-                //mMap.clear();
-                ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i-1).getLatitud(), client.getAddressDataArrayList().get(i-1).getLongitud()));
-                MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i-1).getLatitud(), client.getAddressDataArrayList().get(i-1).getLongitud(),client.getAddressDataArrayList().get(i-1).getAlias());
-                direccionSeleccionada = client.getAddressDataArrayList().get(i-1).getId();
-                latitudPedido = client.getAddressDataArrayList().get(i-1).getLatitud();
-                longitudPedido= client.getAddressDataArrayList().get(i-1).getLongitud();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (i != 0) {
+                if (client.getAddressDataArrayList() == null) {
+                    Intent intent = new Intent(getContext(), PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_direccion);
+                    startActivity(intent);
+                    direcciones.setSelection(0);
+                } else {
+                    //client.getAddressDataArrayList().get(i).getLatitud();
+                    //client.getAddressDataArrayList().get(i).getLongitud();
+                    Log.e("onItemSelected", String.valueOf(i));
+                    Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 1).getId()));
+                    Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 1).getAlias());
+                    try {
+                        //mMap.clear();
+                        ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud()));
+                        MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud(), client.getAddressDataArrayList().get(i - 1).getAlias());
+                        direccionSeleccionada = client.getAddressDataArrayList().get(i - 1).getId();
+                        latitudPedido = client.getAddressDataArrayList().get(i - 1).getLatitud();
+                        longitudPedido = client.getAddressDataArrayList().get(i - 1).getLongitud();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            } /*else {
+                Intent intent = new Intent(getContext(), PerfilData.class);
+                intent.putExtra("active", WSkeys.datos_direccion);
+                startActivity(intent);
+                direcciones.setSelection(0);
+            }*/
+        }else if (adapterView.getId()==R.id.spinner2){
+            if (i != 0) {
+                Log.e("onItemSelected PIPA", String.valueOf(i));
+                pipaSeleccionada = i-1;
+                bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
-
-
         }
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
+        Log.e("nothing",adapterView.toString());
     }
 
 

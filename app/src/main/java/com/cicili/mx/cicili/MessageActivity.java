@@ -83,10 +83,9 @@ public class MessageActivity extends AppCompatActivity {
     private static final int PHOTO_SEND = 1;
     private static final int PHOTO_PERFIL = 2;
     private String fotoPerfilCadena;
-    private  String id,order,URL_list,URL_seguimiento;
+    private String id, order, URL_list, URL_seguimiento;
 
     //USO SEGUIMIENTO ACL
-
 
 
     @Override
@@ -111,27 +110,26 @@ public class MessageActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();*/
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String uso="";
-
+        String uso = "";
 
 
         if (bundle != null) {
             uso = bundle.getString("uso");
-            if (uso.equals("1")){
+            if (uso.equals("1")) {
                 nombre.setText(String.format("%s \n Categoría: %s \n Aclaración: %s", client.getName(), bundle.getString("categoria"), bundle.getString("aclaracion")));
                 id = bundle.getString("id");
                 order = bundle.getString("idPedido");
-                URL_list= WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION;
+                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
 
-            } else if (uso.equals("2")){
+            } else if (uso.equals("2")) {
                 nombre.setText(String.format("%s \n Categoría: %s \n Pregunta: %s", client.getName(), bundle.getString("categoria"), bundle.getString("aclaracion")));
                 id = "0";
                 order = "0";
-                URL_list= WSkeys.URL_OBTENER_SEGUIMIENTO_PREGUNTAS;
+                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_PREGUNTAS;
             }
 
-            LlenaLista(id,order);
+            LlenaLista(id, order);
         }
 
         adapter = new AdapterMessage(this);
@@ -144,7 +142,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //databaseReference.push().setValue(new OutputMessage(txtMensaje.getText().toString(),nombre.getText().toString(),fotoPerfilCadena,"1", ServerValue.TIMESTAMP));
                 try {
-                    SendMessage(txtMensaje.getText().toString(),nombre.getText().toString());
+                    SendMessage(txtMensaje.getText().toString(), nombre.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -210,8 +208,8 @@ public class MessageActivity extends AppCompatActivity {
 */
     }
 
-    private void setScrollbar(){
-        rvMensajes.scrollToPosition(adapter.getItemCount()-1);
+    private void setScrollbar() {
+        rvMensajes.scrollToPosition(adapter.getItemCount() - 1);
     }
 
     /*@Override
@@ -259,10 +257,10 @@ public class MessageActivity extends AppCompatActivity {
 
 
         String url = WSkeys.URL_BASE + URL_seguimiento;
-        Utilities.SetLog("GUARDA SEGUIMIENTO",url,WSkeys.log);
-        Utilities.SetLog("DATA SEGUIMIENTO",json,WSkeys.log);
+        Utilities.SetLog("GUARDA SEGUIMIENTO", url, WSkeys.log);
+        Utilities.SetLog("DATA SEGUIMIENTO", json, WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -312,22 +310,22 @@ public class MessageActivity extends AppCompatActivity {
 
     public void ParserPushList(JSONObject response) throws JSONException {
 
-        Utilities.SetLog("RESPONSE_GUARDA",response.toString(),WSkeys.log);
+        Utilities.SetLog("RESPONSE_GUARDA", response.toString(), WSkeys.log);
         //Log.e("CodeResponse", response);
 
 
         // si el response regresa ok, entonces si inicia la sesión
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
-            Utilities.SetLog("RESPONSE_GUARDADA",response.getString(WSkeys.data),WSkeys.log);
+            Utilities.SetLog("RESPONSE_GUARDADA", response.getString(WSkeys.data), WSkeys.log);
             JSONArray ja_data = new JSONArray(response.getString(WSkeys.data));
             Gson gson = new Gson();
             if (ja_data.length() > 0) {
                 Utilities.SetLog("LOGIN ja_data", ja_data.toString(), WSkeys.log);
-                for(int i=0; i<ja_data.length(); i++) {
+                for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
-                    Utilities.SetLog("jo_msg",jo_message.toString(),WSkeys.log);
-                    InputMessage messageData= gson.fromJson(jo_message.toString() , InputMessage.class);
+                    Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
+                    InputMessage messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
                 }
 
@@ -336,16 +334,16 @@ public class MessageActivity extends AppCompatActivity {
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
-        else{
+        else {
             Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
     }
 
-    public void LlenaLista(String id, String order){
-        String url = WSkeys.URL_BASE + URL_list+id;
+    public void LlenaLista(String id, String order) {
+        String url = WSkeys.URL_BASE + URL_list + id;
 
-        Utilities.SetLog("OBTIENE SEGUIMIENTO",url,WSkeys.log);
+        Utilities.SetLog("OBTIENE SEGUIMIENTO", url, WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -398,18 +396,30 @@ public class MessageActivity extends AppCompatActivity {
 
     public void ParserList(String respuesta) throws JSONException {
 
-        Utilities.SetLog("RESPONSE_LIST",respuesta,WSkeys.log);
+        Utilities.SetLog("RESPONSE_LIST", respuesta, WSkeys.log);
         JSONObject response = new JSONObject(respuesta);
         // si el response regresa ok, entonces si inicia la sesión
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             //obtener nivel de data
-            Utilities.SetLog("RESPONSELISTELEMENTS",response.getString(WSkeys.data),WSkeys.log);
+            Utilities.SetLog("RESPONSELISTELEMENTS", response.getString(WSkeys.data), WSkeys.log);
 
-        }
-        // si ocurre un error al registrar la solicitud se muestra mensaje de error
-        else{
-            Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
-                    .show();
+            JSONArray ja_data = new JSONArray(response.getString(WSkeys.data));
+            Gson gson = new Gson();
+            if (ja_data.length() > 0) {
+                Utilities.SetLog("LOGIN ja_data", ja_data.toString(), WSkeys.log);
+                for (int i = 0; i < ja_data.length(); i++) {
+                    JSONObject jo_message = (JSONObject) ja_data.get(i);
+                    Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
+                    InputMessage messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
+                    adapter.addMensaje(messageData);
+                }
+
+            }
+            // si ocurre un error al registrar la solicitud se muestra mensaje de error
+            else {
+                Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                        .show();
+            }
         }
     }
 }

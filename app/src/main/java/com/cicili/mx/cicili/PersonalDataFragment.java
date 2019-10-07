@@ -202,6 +202,8 @@ public class PersonalDataFragment extends Fragment {
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Utilities.hideKeyboardwithoutPopulate(getActivity());
                 // put your code here
                 //TextInputEditText mcode = (TextInputEditText)v.findViewById(R.id.code);
                 mname.setError(null);
@@ -416,9 +418,10 @@ public class PersonalDataFragment extends Fragment {
 
 
                 if (client.getStatus().equals(WSkeys.completo)){
-                Intent intent = new Intent(getContext(),MenuActivity.class);
-                intent.putExtra("active", WSkeys.completo);
-                startActivity(intent);
+                    Intent intent = new Intent(getContext(),MenuActivity.class);
+                    intent.putExtra("active", WSkeys.completo);
+                    startActivity(intent);
+                    getActivity().finish();
                 }else if(client.getStatus().equals(WSkeys.datos_direccion)){
                     Fragment fragmentAddress = new AddressDataFragment();
                     FragmentManager manager = getFragmentManager();
@@ -426,13 +429,19 @@ public class PersonalDataFragment extends Fragment {
                     manager.getBackStackEntryCount();
                     transaction.remove(this);
                     transaction.show(fragmentAddress).commit();
-                    transaction.commit();
+
+                } else if(client.getStatus().equals(WSkeys.datos_pago)){
+                    Fragment fragmentPayment = new PaymentDataFragment();
+                    FragmentManager manager = getFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(this);
+                    transaction.show(fragmentPayment).commit();
                 }
                 else{
                     getActivity().onBackPressed();
                     //getActivity().getFragmentManager().popBackStack();
                     //getActivity().finish();
-
                 }
 
 

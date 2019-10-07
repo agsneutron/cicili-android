@@ -200,7 +200,6 @@ public class MenuActivity extends AppCompatActivity
             intent.putExtra("active",WSkeys.datos_direccion);
             startActivity(intent);
         } else {
-
             if (findViewById(R.id.main_container) != null) {
 
                 if (savedInstanceState != null) {
