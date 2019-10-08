@@ -1,6 +1,7 @@
 package com.cicili.mx.cicili;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -97,7 +99,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     TextView lbl1,lbl2,lbl3,lbl4;
     TextView time;
     Gson gson = new Gson();
-    SeguimientoPedido seguimientoPedido;
+    SeguimientoPedido seguimientoPedido = client.getSeguimientoPedido();
 
 
 
@@ -106,6 +108,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_aceptado);
+        String nombreEstatus="";
+        String status="";
 
         vista = (TextView) findViewById(R.id.name);
         monto = (TextView) findViewById(R.id.cantidad);
@@ -127,10 +131,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         if (bundle != null) {
             //recuperar datos de pedido
             pedido_data = bundle.getString("pedido_data");
+            status = bundle.getString("status");
             Utilities.SetLog("PEDIDO ACEPTADO DATA",pedido_data, WSkeys.log);
 
 
-            seguimientoPedido= gson.fromJson(pedido_data , SeguimientoPedido.class);
+            //seguimientoPedido= gson.fromJson(pedido_data , SeguimientoPedido.class);
+            //seguimientoPedido= client.getSeguimientoPedido();
 
             monto.setText(seguimientoPedido.getMonto());
             latOrderAddress = Double.parseDouble(seguimientoPedido.getLatitud());
@@ -139,6 +145,58 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             lbl1.setText(seguimientoPedido.getConductor());
             lbl2.setText(seguimientoPedido.getColor());
             lbl3.setText(seguimientoPedido.getPlaca());
+
+            if (seguimientoPedido.getTipo().toString().equals("3")) {
+                switch (Integer.parseInt(status)) {
+                    case 1:
+                        nombreEstatus = "Solicitado";
+                        break;
+                    case 2:
+                        nombreEstatus = "Aceptado";
+                        break;
+                    case 3:
+                        nombreEstatus = "En Camino";
+                        break;
+                    case 4:
+                        nombreEstatus = "Preparando Carga";
+                        break;
+                    case 5:
+                        nombreEstatus = "Cargando";
+                        break;
+                    case 6:
+                        nombreEstatus = "Cargado";
+                        break;
+                    case 7:
+                        nombreEstatus = "Pagado";
+                        break;
+                    case 8:
+                        nombreEstatus = "Programado";
+                        break;
+                    case 9:
+                        nombreEstatus = "Cancelado";
+                        break;
+                    default:
+                        nombreEstatus = "Facturado";
+                        break;
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                // Add the buttons
+                builder.setMessage("Pedido : " + nombreEstatus);
+                builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+
+                        Intent intent = new Intent(PedidoAceptadoActivity.this, PedidoAceptadoActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
+            }
         }
         //map
         getMyLocationPermision();
