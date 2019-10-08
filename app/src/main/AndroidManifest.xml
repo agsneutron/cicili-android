@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ValidaStatusActivity"></activity>
         <activity
             android:name=".MessageActivity"
             android:label="@string/title_activity_message"
@@ -31,7 +32,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
-        <activity android:name=".PedidoAceptadoActivity"></activity>
+        <activity android:name=".PedidoAceptadoActivity" />
         <activity
             android:name=".NewScheduledOrderActivity"
             android:label="@string/title_activity_new_scheduled_order"
@@ -88,7 +89,7 @@
         </activity>
         <activity
             android:name=".HelpListActivity"
-            android:label="@string/title_activity_legal_list"
+            android:label="@string/title_activity_ayuda"
             android:parentActivityName=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

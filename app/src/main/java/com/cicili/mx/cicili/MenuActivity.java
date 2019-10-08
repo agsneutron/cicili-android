@@ -453,7 +453,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(PedidoData item) {
 
-        Utilities.SetLog("MENUACTIVITYPEDIDO_", String.valueOf(item.getId()), WSkeys.log);
+        Utilities.SetLog("MENUACTIVITYPEDIDO_ _", String.valueOf(item.getId()), WSkeys.log);
         String index = String.valueOf(client.getPedidosDataArrayList().indexOf(item));
         Intent intent = new Intent(MenuActivity.this, OrderDetailActivity.class);
         String order = String.valueOf(item.getId());

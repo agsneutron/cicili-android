@@ -206,7 +206,7 @@ public class AyudaActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            categoria_sp.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,categoriaArray));
+            categoria_sp.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.simple_spinner_gsn,categoriaArray));
             categoria_sp.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error

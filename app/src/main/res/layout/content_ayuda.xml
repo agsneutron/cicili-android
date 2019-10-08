@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/help"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,17 +67,21 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:padding="10dp"
             >
 
 
             <Spinner
                 android:id="@+id/categoria"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:tooltipText="Selecciona una categoría"
                 android:focusable="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
+                android:textSize="12sp"
+                android:layout_height="40dp"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
 
                 />
 

@@ -426,9 +426,10 @@ public class Aclaracion extends AppCompatActivity {
                     intent.putExtra("categoria",tipo.getString("text"));
                     intent.putExtra("uso","1");
                 }
-
+                //si hay aclaraciones pendientes
+                startActivity(intent);
             }
-            startActivity(intent);
+
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{

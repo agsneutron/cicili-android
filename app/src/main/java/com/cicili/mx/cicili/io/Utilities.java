@@ -226,7 +226,11 @@ public class Utilities {
         ArrayList<AddressData> direccionAux = new ArrayList<AddressData>();
         AddressData addressData= gson.fromJson(jo_address.toString() , AddressData.class);
         direccionAux.add(addressData);
-        client.getAddressDataArrayList().add(client.getAddressDataArrayList().size(),addressData);
+        if(client.getAddressDataArrayList() != null) {
+            client.getAddressDataArrayList().add(client.getAddressDataArrayList().size(), addressData);
+        }else{
+            client.setAddressDataArrayList(direccionAux);
+        }
     }
 
     public static void UpdateAddressData(JSONObject jo_address, Client client,int pos){

@@ -273,6 +273,10 @@ public class WSkeys {
     //app/aclaracion/preguntas
     public static final String URL_OBTENER_SEGUIMIENTO_PREGUNTAS = "app/aclaracion/preguntas";
 
+    //VALIDACLIENTE
+    // https://api.cicili.com.mx:8443/app/mv/cliente/status
+    public static final String URL_VALIDATESTATUS = "/app/mv/cliente/status";
+
 
 
 

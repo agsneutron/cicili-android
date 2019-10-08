@@ -74,6 +74,7 @@ public class MessageActivity extends AppCompatActivity {
     private EditText txtMensaje;
     private Button btnEnviar;
     private AdapterMessage adapter;
+    private InputMessage messageData;
     private ImageButton btnEnviarFoto;
 
     private FirebaseDatabase database;
@@ -325,8 +326,11 @@ public class MessageActivity extends AppCompatActivity {
                 for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
-                    InputMessage messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                    adapter.addMensaje(messageData);
+                    messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
+                   // adapter.clearMensajes();
+                   // adapter.addMensaje(messageData);
+                    LlenaLista(id, order);
+
                 }
 
             }
@@ -407,10 +411,11 @@ public class MessageActivity extends AppCompatActivity {
             Gson gson = new Gson();
             if (ja_data.length() > 0) {
                 Utilities.SetLog("LOGIN ja_data", ja_data.toString(), WSkeys.log);
+                adapter.clearMensajes();
                 for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
-                    InputMessage messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
+                    messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
                 }
 

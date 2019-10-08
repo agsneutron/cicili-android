@@ -72,12 +72,13 @@
 
             <Spinner
                 android:id="@+id/categoria"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:tooltipText="Selecciona una categoría"
-                android:focusable="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:spinnerMode="dropdown"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
 
                 />
 
@@ -92,14 +93,18 @@
                 app:hintTextAppearance="@style/HintText"
                 app:passwordToggleTint="@color/colorPrimaryDark">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mensaje"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text=""
-                    android:textColor="@color/textDark" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/mensaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:maxLength="6"
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!-- <Button
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Enviar" />-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/guardapregunta"

@@ -363,12 +363,6 @@ public class PersonalDataFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                /*params.put(WSkeys.user, client.getUsername());
-                params.put(WSkeys.name, vname);
-                params.put(WSkeys.apepat, vpat);
-                params.put(WSkeys.apemat, vmat);
-                params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 
@@ -392,7 +386,7 @@ public class PersonalDataFragment extends Fragment {
 
     public void ParserPersonal(JSONObject respuesta) throws JSONException {
 
-        Log.e("CodeResponse", respuesta.toString());
+        Log.e("RESP-PERSONALDATA", respuesta.toString());
 
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -424,19 +418,30 @@ public class PersonalDataFragment extends Fragment {
                     getActivity().finish();
                 }else if(client.getStatus().equals(WSkeys.datos_direccion)){
                     Fragment fragmentAddress = new AddressDataFragment();
+                    FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction().hide(this);
+                    fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
+
+                    /*
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
                     transaction.remove(this);
                     transaction.show(fragmentAddress).commit();
+                    active = fragmentAddress;*/
 
                 } else if(client.getStatus().equals(WSkeys.datos_pago)){
                     Fragment fragmentPayment = new PaymentDataFragment();
+                    FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction().hide(this);
+                    fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
+
+                    /*Fragment fragmentPayment = new PaymentDataFragment();
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
                     transaction.remove(this);
-                    transaction.show(fragmentPayment).commit();
+                    transaction.show(fragmentPayment).commit();*/
                 }
                 else{
                     getActivity().onBackPressed();

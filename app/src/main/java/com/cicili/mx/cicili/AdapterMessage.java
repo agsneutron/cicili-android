@@ -28,6 +28,12 @@ public class AdapterMessage extends RecyclerView.Adapter<HolderMessage> {
         notifyItemInserted(listMensaje.size());
     }
 
+    public  void clearMensajes(){
+        listMensaje.clear();
+        notifyDataSetChanged();
+
+    }
+
     @Override
     public HolderMessage onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(c).inflate(R.layout.cardview_message,parent,false);

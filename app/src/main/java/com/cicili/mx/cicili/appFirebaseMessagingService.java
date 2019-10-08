@@ -44,7 +44,6 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
             if (remoteMessage.getData().get("tipo").toString().equals("3")){
 
-
                 GsonBuilder gsonMapBuilder = new GsonBuilder();
                 Gson gsonObject = gsonMapBuilder.create();
                 sJSONObject = gsonObject.toJson(remoteMessage.getData());
