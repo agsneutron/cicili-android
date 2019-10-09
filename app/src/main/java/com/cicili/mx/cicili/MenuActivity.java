@@ -231,6 +231,7 @@ public class MenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+
             //super.onBackPressed();
             if (active==fragmentMain){
                 super.onBackPressed();
@@ -491,6 +492,7 @@ public class MenuActivity extends AppCompatActivity
         Utilities.SetLog("intent DATA",data, WSkeys.log);
         intent.putExtra("idPedido",idPedido);
         intent.putExtra("pedido_data",data);
+        intent.putExtra("status","2");
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 

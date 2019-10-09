@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -53,6 +54,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragmentPersonal;
     BottomNavigationView nv;
+    ScrollView view_scroll;
 
 
     @Override
@@ -244,34 +246,33 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
                     active = fragmentPersonal;
                 }
                 else if (dataactive.equals(WSkeys.datos_pago)){
-
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
                     active = fragmentPayment;
                 }
                 else if (dataactive.equals(WSkeys.datos_direccion)){
-
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
                     active = fragmentAddress;
                 }
                 else if (dataactive.equals(WSkeys.datos_rfc)) {
-
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
                     active = fragmentRfc;
+                }else if(dataactive.equals(WSkeys.completo)){
+                    Intent intent = new Intent(PerfilData.this, MenuActivity.class);
+                    startActivity(intent);
                 }
-
-
+                finish();
             }
             else{
-               // Snackbar.make(mCodeView, R.string.errorvalidation, Snackbar.LENGTH_LONG)
-               //         .show();
+                Snackbar.make(view_scroll, R.string.error_status, Snackbar.LENGTH_LONG)
+                        .show();
             }
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            //Snackbar.make(mCodeView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
-            //        .show();
+            Snackbar.make(view_scroll, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
         }
     }
 }

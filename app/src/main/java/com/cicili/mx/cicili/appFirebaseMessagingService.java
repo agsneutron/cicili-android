@@ -5,11 +5,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
 import com.cicili.mx.cicili.domain.AddressData;
@@ -42,17 +44,27 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
         if (remoteMessage.getNotification() != null){
 
+            Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
             if (remoteMessage.getData().get("tipo").toString().equals("3")){
+                if (remoteMessage.getData().get("status").toString().equals("2")) {
 
-                GsonBuilder gsonMapBuilder = new GsonBuilder();
-                Gson gsonObject = gsonMapBuilder.create();
-                sJSONObject = gsonObject.toJson(remoteMessage.getData());
-                Utilities.SetLog("NOTIFICATION JSONObject", sJSONObject, WSkeys.log);
-                seguimientoPedido = gson.fromJson(sJSONObject, SeguimientoPedido.class);
-                client.setSeguimientoPedido(seguimientoPedido);
+                    GsonBuilder gsonMapBuilder = new GsonBuilder();
+                    Gson gsonObject = gsonMapBuilder.create();
+                    sJSONObject = gsonObject.toJson(remoteMessage.getData());
+                    Utilities.SetLog("NOTIFICATION JSONObject", sJSONObject, WSkeys.log);
+                    seguimientoPedido = gson.fromJson(sJSONObject, SeguimientoPedido.class);
+                    client.setSeguimientoPedido(seguimientoPedido);
+
+                    mostrarNotificacion(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), sJSONObject);
+                }else{
+                    Intent intent = new Intent(client.getContext(), PedidoAceptadoActivity.class);
+                    intent.putExtra("status",remoteMessage.getData().get("status").toString());
+                    startActivity(intent);
+                }
             }
 
-            mostrarNotificacion(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),sJSONObject);
+
+
 
             /*Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);
@@ -109,6 +121,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setVibrate(new long[]{0,1000,500,1000})
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setFullScreenIntent(pendingIntent, true)
                 //.setAutoCancel(true)
                 .setSound(soundUri)
                 //.setExtras(bundle)
@@ -136,7 +149,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
         }
 
-        notificationManager.notify(0,notificationBuilder.build());
+        notificationManager.notify(1,notificationBuilder.build());
 
 
 

@@ -796,7 +796,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             Utilities.SetLog("MAP SELECTED PIPA",String.valueOf(marker.getTag()),WSkeys.log);
                             pipaSeleccionada = ((Integer) marker.getTag()).intValue();
 
-                            bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            //bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             // OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
                             //orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
@@ -815,7 +815,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             Utilities.SetLog("MAP SELECTED PIPA",String.valueOf(marker.getTag()),WSkeys.log);
                             pipaSeleccionada = ((Integer) marker.getTag()).intValue();
 
-                            bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            //bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             // OrderIntentFragment orderIntentFragment = new OrderIntentFragment();
                             //orderIntentFragment = OrderIntentFragment.newInstance(selectedItem,"");
@@ -1140,7 +1140,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     try {
                         //mMap.clear();
                         ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud()));
-                        MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud(), client.getAddressDataArrayList().get(i - 1).getAlias());
+                        MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud(), client.getAddressDataArrayList().get(i - 1).getAlias(), client.getAddressDataArrayList().get(i-1).getId());
                         direccionSeleccionada = client.getAddressDataArrayList().get(i - 1).getId();
                         latitudPedido = client.getAddressDataArrayList().get(i - 1).getLatitud();
                         longitudPedido = client.getAddressDataArrayList().get(i - 1).getLongitud();
@@ -1194,7 +1194,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         mMarkerConductor.setTag(id);
     }
 
-    public void MoveCameraSelectedDirection(Double lat, Double lon, String alias){
+    public void MoveCameraSelectedDirection(Double lat, Double lon, String alias, Integer id){
         CameraPosition googlePlex = CameraPosition.builder()
                 .target(new LatLng(lat,lon))
                 .zoom(10)
@@ -1204,13 +1204,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
 
-        mMap.addMarker(new MarkerOptions()
+        Marker mMarkerd = mMap.addMarker(new MarkerOptions()
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_home_blue_24dp))
                 .position(new LatLng(lat,lon))
                 .title("Dirección")
-                .snippet(alias))
-        .showInfoWindow();
+                .snippet(alias));
 
+        mMarkerd.showInfoWindow();
+        mMarkerd.setTag(id);
 
 
     }
@@ -1227,6 +1228,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     }
 
 
+    public boolean onBackPressed() {
+        return false;
+    }
 
 
 }
