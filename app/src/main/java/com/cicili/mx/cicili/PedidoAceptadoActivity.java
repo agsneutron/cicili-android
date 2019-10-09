@@ -187,8 +187,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
 
-                        Intent intent = new Intent(PedidoAceptadoActivity.this, PedidoAceptadoActivity.class);
-                        startActivity(intent);
+                        dialog.cancel();
                     }
                 });
 
