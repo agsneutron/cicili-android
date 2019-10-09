@@ -69,6 +69,8 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:backgroundTint="@color/colorPrimaryDark"
+
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,6 +86,8 @@
                 android:id="@+id/cpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:backgroundTint="@color/colorPrimaryDark"
+
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 

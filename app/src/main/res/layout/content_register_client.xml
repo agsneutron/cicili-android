@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_1"
     android:orientation="vertical"
+
     tools:context="com.cicili.mx.cicili.RequestPassword">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +58,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Regístrate"
+                android:text="Regístrate como cliente"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -91,7 +92,10 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="text"
+                    app:backgroundTint="@color/colorPrimaryDark"
+
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -109,7 +113,9 @@
                     android:id="@+id/cellphone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone" />
+                    app:backgroundTint="@color/colorPrimaryDark"
+
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -121,14 +127,15 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 app:errorEnabled="true"
                 app:hintTextAppearance="@style/HintText"
-                app:helperText="La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:drawableEnd="@drawable/ic_close"/>
+                    app:backgroundTint="@color/colorPrimaryDark"
+
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -145,7 +152,8 @@
                     android:id="@+id/cpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

@@ -1169,10 +1169,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         Log.e("nothing",adapterView.toString());
     }
 
-
     public void AddMarker(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
         Marker mMarker = mMap.addMarker(new MarkerOptions()
-                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_1))
+                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_pipa_2_01))
                 .position(new LatLng(lat,lon))
                 .title(concesionario)
                 .snippet("$" + String.valueOf(precio) + " por litro \n" + "Llega en: "+ tiempo));

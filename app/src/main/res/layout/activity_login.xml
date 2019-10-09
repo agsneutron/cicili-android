@@ -110,11 +110,11 @@
 
                     app:errorEnabled="true"
                     app:hintTextAppearance="@style/HintText"
-                    app:passwordToggleTint="@color/colorPrimaryDark"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/password_text_input"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:passwordToggleTint="@color/colorPrimaryDark">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
@@ -122,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:text="ariaocho@gmail.com"
+                        app:backgroundTint="@color/colorPrimaryDark"
                         android:textColor="@color/textDark" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <!-- <EditText
@@ -159,6 +160,7 @@
                         android:inputType="textPassword"
                         android:text="Qwe123@#$"
                         android:textColor="@color/textDark"
+                        app:backgroundTint="@color/colorPrimaryDark"
                         android:textColorHint="@color/white" />
                 </com.google.android.material.textfield.TextInputLayout>
 
