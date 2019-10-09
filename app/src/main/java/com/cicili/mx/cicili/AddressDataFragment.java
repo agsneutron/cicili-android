@@ -550,16 +550,19 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                 Utilities.UpdateAddressData(jo_address,client,pos);
                 Toast toast = Toast.makeText(getContext(),  R.string.successaddressupdate, Toast.LENGTH_LONG);
                 toast.show();
+                Intent intent = new Intent(getContext(),MenuActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }else {
                 Utilities.AddAddressData(jo_address, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successaddressvalidation, Toast.LENGTH_LONG);
                 toast.show();
+                Intent intent = new Intent(getContext(),PerfilData.class);
+                startActivity(intent);
             }
             //Snackbar.make(calle, R.string.successaddressvalidation, Snackbar.LENGTH_LONG)
             //        .show();
-            Intent intent = new Intent(getContext(),MenuActivity.class);
-            startActivity(intent);
-            getActivity().finish();
+
 
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error

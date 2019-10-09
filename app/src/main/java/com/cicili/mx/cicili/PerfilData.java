@@ -180,7 +180,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
 
         String url = WSkeys.URL_BASE + WSkeys.URL_VALIDATESTATUS;
         RequestQueue queue = Volley.newRequestQueue(PerfilData.this);
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -232,9 +232,10 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
 
         // si el response regresa ok, entonces si inicia la sesión
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
-            String data = respuesta.getString(WSkeys.data);
-            String dataactive = respuesta.getString(WSkeys.data);
-            if (data.equals("true")){
+            JSONObject jo_data = respuesta.getJSONObject(WSkeys.data);
+            String data = jo_data.getString("idCliente");
+            String dataactive = jo_data.getString("status");
+            if (!data.equals("")){
 
                 if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
                     //navView.setSelectedItemId(R.id.navigation_perfil);

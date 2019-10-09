@@ -403,6 +403,8 @@ public class PersonalDataFragment extends Fragment {
                     Utilities.SetClientData(jousuario, client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalvalidation, Toast.LENGTH_LONG);
                     toast.show();
+                    Intent intent = new Intent(getContext(),PerfilData.class);
+                    startActivity(intent);
                 }
 
 

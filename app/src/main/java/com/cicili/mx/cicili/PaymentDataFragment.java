@@ -543,21 +543,24 @@ public class PaymentDataFragment extends Fragment {
                 Utilities.UpdatePaymentData(jsonPayment,client,pos);
                 Toast toast = Toast.makeText(getContext(),  R.string.successpaymentupdate, Toast.LENGTH_LONG);
                 toast.show();
+                Intent intent = new Intent(getContext(),MenuActivity.class);
+                //intent.putExtra("active", client.getStatus());
+                //client.setStatus("C");
+                intent.putExtra("active", client.getStatus());
+                startActivity(intent);
+                getActivity().finish();
             }else {
                 Utilities.AddPaymentData(jsonPayment, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successpaymentvalidation, Toast.LENGTH_LONG);
                 toast.show();
+                Intent intent = new Intent(getContext(),PerfilData.class);
+                startActivity(intent);
             }
 
 
             /*Snackbar.make(viewGroup.getChildAt(0), R.string.successpaymentvalidation, Snackbar.LENGTH_LONG)
                     .show();*/
-            Intent intent = new Intent(getContext(),MenuActivity.class);
-            //intent.putExtra("active", client.getStatus());
-            client.setStatus("C");
-            intent.putExtra("active", client.getStatus());
-            startActivity(intent);
-            getActivity().finish();
+
             /*if (client.getStatus().equals(WSkeys.completo)){
                 Intent intent = new Intent(getContext(),MenuActivity.class);
                 intent.putExtra("active", WSkeys.completo);
