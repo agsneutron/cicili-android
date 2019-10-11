@@ -3,6 +3,8 @@ package com.cicili.mx.cicili;
 import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -44,6 +46,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -120,15 +123,23 @@ public class MessageActivity extends AppCompatActivity {
                 nombre.setText(String.format("%s \n Categoría: %s \n Aclaración: %s", client.getName(), bundle.getString("categoria"), bundle.getString("aclaracion")));
                 id = bundle.getString("id");
                 order = bundle.getString("idPedido");
-                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION;
+                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
 
             } else if (uso.equals("2")) {
                 nombre.setText(String.format("%s \n Categoría: %s \n Pregunta: %s", client.getName(), bundle.getString("categoria"), bundle.getString("aclaracion")));
                 id = "0";
                 order = "0";
-                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_PREGUNTAS;
+                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
+                URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
             }
+
+            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Utilities.SetLog("IMAGEN CLIENTE",client.getPhoto().substring(client.getPhoto().indexOf(",") + 1),WSkeys.log);
+
+            fotoPerfil.setImageBitmap(decodedByte);
+
 
             LlenaLista(id, order);
         }
@@ -345,7 +356,7 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void LlenaLista(String id, String order) {
-        String url = WSkeys.URL_BASE + URL_list + id;
+        String url = WSkeys.URL_BASE + URL_list;
 
         Utilities.SetLog("OBTIENE SEGUIMIENTO", url, WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -414,7 +425,7 @@ public class MessageActivity extends AppCompatActivity {
                 adapter.clearMensajes();
                 for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
-                    Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
+                    Utilities.SetLog("jo_msgLlenalist", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
                 }

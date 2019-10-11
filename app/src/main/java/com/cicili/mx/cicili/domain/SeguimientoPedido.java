@@ -43,6 +43,9 @@ public class SeguimientoPedido {
         this.status = status;
         this.nombreStatus = nombreStatus;
     }
+    public SeguimientoPedido(String status) {
+        this.status = status;
+    }
 
     public String getIdPedido() {
         return idPedido;
@@ -138,5 +141,13 @@ public class SeguimientoPedido {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

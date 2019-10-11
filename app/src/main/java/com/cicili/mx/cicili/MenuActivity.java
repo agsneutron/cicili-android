@@ -77,6 +77,8 @@ public class MenuActivity extends AppCompatActivity
     Fragment old = fragmentMain;
     BottomNavigationView nv;
     DrawerLayout drawer;
+    FloatingActionButton fab_menu;
+    FloatingActionButton fab_help;
 
     protected static final String BUTTON_ACTION = "buttonaction";
     protected static final int REQUEST_BUTTON = 300;
@@ -147,8 +149,8 @@ public class MenuActivity extends AppCompatActivity
 
 
 
-        FloatingActionButton fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
-        FloatingActionButton fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
+        fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
+        fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +233,7 @@ public class MenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-
+            showMenuBackToHelp();
             //super.onBackPressed();
             if (active==fragmentMain){
                 super.onBackPressed();
@@ -315,7 +317,7 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain");
             fm.beginTransaction().hide(active).show(fragmentAddress).commit();
             active = fragmentAddress;
-
+            hideMenuHelpToBack();
 
         } else if (id == R.id.navigation_payment) {
 
@@ -326,6 +328,8 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentPayment).commit();
             active = fragmentPayment;
+            hideMenuHelpToBack();
+
 
             //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(active).commit();
             //fm.beginTransaction().show(fragmentPayment).commit();
@@ -352,6 +356,7 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentSchedule).commit();
             active = fragmentSchedule;
+            hideMenuHelpToBack();
 
         }else if(id == R.id.navigation_history){
             if (!fragmentOrder.isAdded()) {
@@ -361,6 +366,7 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain");
             fm.beginTransaction().hide(active).show(fragmentOrder).commit();
             active = fragmentOrder;
+            hideMenuHelpToBack();
 
         }else if (id == R.id.nav_legal) {
             Intent intent = new Intent(MenuActivity.this, LegalListActivity.class);
@@ -495,6 +501,38 @@ public class MenuActivity extends AppCompatActivity
         intent.putExtra("status","2");
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onStatusPedido(Context context, Intent intentNotification) {
+
+
+    }
+
+    public void hideMenuHelpToBack(){
+        fab_menu.hide();
+        fab_help.setImageResource(R.drawable.ic_close);
+        fab_help.setImageResource(android.R.drawable.ic_menu_revert);
+        fab_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+    }
+
+    public void showMenuBackToHelp(){
+        fab_menu.show();
+        fab_help.setImageResource(R.drawable.ic_help_outline_white_24dp);
+        fab_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, AyudaActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

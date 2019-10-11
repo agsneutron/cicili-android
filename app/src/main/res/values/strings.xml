@@ -306,11 +306,13 @@
     <string name="en_que_te_podemos_ayudar">¿En qué te podemos ayudar?</string>
     <string name="subtitle_help">Envíanos una pregunta, con gusto responderémos.</string>
     <string name="mensajelbl">Escribe tu pregunta</string>
-    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_message">Mensajes a Cicili</string>
     <string name="subtitle_aclr">Envíanos el asunto que deseas aclarar.</string>
     <string name="en_que_te_podemos_servir">¿En qué te podemos servir?</string>
-    <string name="mensajeacl">Escribe tu asunto a aclarar</string>
+    <string name="mensajeacl">Escribe tu mensaje de aclaración</string>
     <string name="qu_pipa_enviamos_a_tu_domicilio">¿Qué pipa enviamos a tu domicilio?</string>
     <string name="error_status">Ha ocurrido un error, intenta nuevamente.</string>
+    <string name="pedidos_programados_title">Pedidos Programados</string>
+    <string name="title_order_acepted">Detalle de Pedido</string>
 
 </resources>

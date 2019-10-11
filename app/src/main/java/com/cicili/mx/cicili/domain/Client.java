@@ -299,4 +299,12 @@ public class Client extends Application {
     public void setSeguimientoPedido(SeguimientoPedido seguimientoPedido) {
         this.seguimientoPedido = seguimientoPedido;
     }
+
+    public void setEstatusPedido(String status){
+        this.seguimientoPedido.setStatus(status);
+    }
+
+    public  String getEstatusPedido(){
+        return seguimientoPedido.getStatus();
+    }
 }

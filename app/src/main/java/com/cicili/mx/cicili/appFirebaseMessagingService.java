@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -35,15 +36,18 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
-    SeguimientoPedido seguimientoPedido;
+
     Gson gson = new Gson();
     String sJSONObject;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
         if (remoteMessage.getNotification() != null){
+            SeguimientoPedido seguimientoPedido = new SeguimientoPedido(remoteMessage.getData().get("status"));
 
+            client.setSeguimientoPedido(seguimientoPedido);
             Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
             if (remoteMessage.getData().get("tipo").toString().equals("3")){
                 if (remoteMessage.getData().get("status").toString().equals("2")) {
@@ -56,11 +60,12 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                     client.setSeguimientoPedido(seguimientoPedido);
 
                     mostrarNotificacion(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), sJSONObject);
-                }else{
+                }/*else{
                     Intent intent = new Intent(client.getContext(), PedidoAceptadoActivity.class);
                     intent.putExtra("status",remoteMessage.getData().get("status").toString());
                     startActivity(intent);
-                }
+
+                }*/
             }
 
 

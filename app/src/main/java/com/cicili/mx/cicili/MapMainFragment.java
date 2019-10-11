@@ -1075,8 +1075,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     public void ParserMain(JSONObject response) throws JSONException {
 
-        Utilities.SetLog("PARSER-MAIN",response.toString(),WSkeys.log);
-
+        Utilities.SetLog("PARSER-MAIN_PIPASCERC",response.toString(),WSkeys.log);
+        autotanquesCercanosAux.clear();
         // si el response regresa ok, entonces si inicia la sesión
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONArray ja_data = response.getJSONArray(WSkeys.data);

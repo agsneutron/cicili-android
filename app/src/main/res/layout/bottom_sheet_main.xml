@@ -100,7 +100,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/conductor"
-                android:textSize="11dp" />
+                android:textSize="11dp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/conductor"
@@ -109,7 +110,8 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="Jose Guillermo Sanchez Nava"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
