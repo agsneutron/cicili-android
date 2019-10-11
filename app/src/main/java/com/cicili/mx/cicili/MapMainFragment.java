@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -27,6 +29,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -655,6 +658,27 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         });
 
+
+
+        //on backpressed to control bsb
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        if (bsb.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                            bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        }
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -1226,12 +1250,6 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
-
-
-    public boolean onBackPressed() {
-        return false;
-    }
-
 
 }
 
