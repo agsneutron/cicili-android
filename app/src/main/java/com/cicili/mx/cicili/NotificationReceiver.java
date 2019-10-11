@@ -13,9 +13,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public interface OnNotificationReceiverListener{
         void onButtonClicked(Context context, Intent intent);
+        void onNotificationActivity(Context context, Intent intent);
     }
 
-    private final OnNotificationReceiverListener onNotificationReceiverListener;
+    private final NotificationReceiver.OnNotificationReceiverListener onNotificationReceiverListener;
 
     public NotificationReceiver(OnNotificationReceiverListener onNotificationReceiverListener) {
         this.onNotificationReceiverListener = onNotificationReceiverListener;
@@ -26,6 +27,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (intent.getAction().contentEquals(MenuActivity.BUTTON_ACTION)){
             onNotificationReceiverListener.onButtonClicked(context, intent);
+        }else{
+            onNotificationReceiverListener.onNotificationActivity(context, intent);
         }
 
 

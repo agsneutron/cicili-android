@@ -14,13 +14,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -30,17 +28,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.directionhelpers.FetchURL;
 import com.cicili.mx.cicili.directionhelpers.TaskLoadedCallback;
-import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
+import com.cicili.mx.cicili.appFirebaseMessagingService;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -58,19 +53,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
-
-public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback {
+//, NotificationReceiver.OnNotificationReceiverListener
+public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, MessageReceiverCallback {
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -100,7 +92,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     TextView time;
     Gson gson = new Gson();
     SeguimientoPedido seguimientoPedido = client.getSeguimientoPedido();
-
+    appFirebaseMessagingService fire = new appFirebaseMessagingService();
 
 
 
@@ -109,7 +101,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_aceptado);
         String nombreEstatus="";
-        String status="";
+        String status="2";
+        fire.contexto=PedidoAceptadoActivity.this;
+        client.setMessageContext(PedidoAceptadoActivity.this);
+
 
         vista = (TextView) findViewById(R.id.name);
         monto = (TextView) findViewById(R.id.cantidad);
@@ -131,7 +126,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         if (bundle != null) {
             //recuperar datos de pedido
             pedido_data = bundle.getString("pedido_data");
-            status = bundle.getString("status");
+            //status = bundle.getString("status");
             Utilities.SetLog("PEDIDO ACEPTADO DATA",pedido_data, WSkeys.log);
 
 
@@ -186,9 +181,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
-
-                        Intent intent = new Intent(PedidoAceptadoActivity.this, PedidoAceptadoActivity.class);
-                        startActivity(intent);
+                        dialog.dismiss();
+                       /* Intent intent = new Intent(PedidoAceptadoActivity.this, PedidoAceptadoActivity.class);
+                        startActivity(intent);*/
                     }
                 });
 
@@ -529,5 +524,20 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
 
+    @Override
+    public void getReceiverEstatusPedido(String status) {
+        Utilities.SetLog("getReceiverEstatusPedido: ", status, WSkeys.log);
+    }
 
+
+    /*@Override
+    public void onButtonClicked(Context context, Intent intent) {
+
+    }
+
+    @Override
+    public void onNotificationActivity(Context context, Intent intent) {
+        String data = intent.getStringExtra("data");
+        Utilities.SetLog("sendNotificationActivity DATA",data, WSkeys.log);
+    }*/
 }

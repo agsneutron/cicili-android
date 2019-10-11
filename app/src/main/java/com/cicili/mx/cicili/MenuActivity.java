@@ -222,6 +222,7 @@ public class MenuActivity extends AppCompatActivity
             IntentFilter intentFilter = new IntentFilter(BUTTON_ACTION);
             registerReceiver(broadcast,intentFilter);
 
+
         }
     }
 
@@ -494,6 +495,11 @@ public class MenuActivity extends AppCompatActivity
         intent.putExtra("status","2");
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onNotificationActivity(Context context, Intent intent) {
 
     }
 

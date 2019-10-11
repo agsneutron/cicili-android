@@ -38,12 +38,21 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
     SeguimientoPedido seguimientoPedido;
     Gson gson = new Gson();
     String sJSONObject;
+    String dataPedido;
+
+
+    public Context contexto;
+    MessageReceiverCallback interfaceNotification;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
+        interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
         if (remoteMessage.getNotification() != null){
-
+            if (interfaceNotification!=null){
+                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"));
+            }
             Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
             if (remoteMessage.getData().get("tipo").toString().equals("3")){
                 if (remoteMessage.getData().get("status").toString().equals("2")) {
@@ -56,11 +65,12 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                     client.setSeguimientoPedido(seguimientoPedido);
 
                     mostrarNotificacion(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), sJSONObject);
-                }else{
+                }/*else{
                     Intent intent = new Intent(client.getContext(), PedidoAceptadoActivity.class);
                     intent.putExtra("status",remoteMessage.getData().get("status").toString());
                     startActivity(intent);
-                }
+
+                }*/
             }
 
 
@@ -97,6 +107,12 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
             Utilities.SetLog("Message Notification Body: ",remoteMessage.getNotification().getBody(),true);
         }
     }
+
+    public void Estatus(){
+
+    }
+
+
     private void mostrarNotificacion(String title, String body,String data){
 
         //++++++++++++++++++++++++++++++++
@@ -122,7 +138,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 .setVibrate(new long[]{0,1000,500,1000})
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setFullScreenIntent(pendingIntent, true)
-                //.setAutoCancel(true)
+                .setAutoCancel(true)
                 .setSound(soundUri)
                 //.setExtras(bundle)
                 .setContentIntent(pendingIntent);
@@ -162,4 +178,11 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
         Utilities.SetLog("Message Notification token: ",s,true);
     }
 
+
+
+
+
 }
+
+
+
