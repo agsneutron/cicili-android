@@ -150,4 +150,12 @@ public class SeguimientoPedido {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getNombreStatus() {
+        return nombreStatus;
+    }
+
+    public void setNombreStatus(String nombreStatus) {
+        this.nombreStatus = nombreStatus;
+    }
 }

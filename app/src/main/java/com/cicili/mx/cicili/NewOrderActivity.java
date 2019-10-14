@@ -323,6 +323,7 @@ public class NewOrderActivity extends AppCompatActivity {
                        intent.putExtra("cancel_result",response_object.getString("data"));
                        intent.putExtra("cause",motivo_texto);
                        intent.putExtra("order",json_order);
+                       intent.putExtra("from","solicitado");
 
                        startActivity(intent);
 

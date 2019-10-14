@@ -136,6 +136,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/detalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -170,7 +171,7 @@
                 android:layout_height="16dp"
                 android:layout_marginRight="1dp"
                 android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_payment" />
+                app:srcCompat="@drawable/ic_payment" />
 
             <TextView
                 android:id="@+id/item_number"
@@ -188,7 +189,7 @@
                 android:layout_marginRight="1dp"
 
                 android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_attach_money_prim_24dp" />
+                app:srcCompat="@drawable/ic_attach_money_prim_24dp" />
             <TextView
                 android:id="@+id/ammount"
                 android:layout_width="wrap_content"

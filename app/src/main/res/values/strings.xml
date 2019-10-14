@@ -314,5 +314,6 @@
     <string name="error_status">Ha ocurrido un error, intenta nuevamente.</string>
     <string name="pedidos_programados_title">Pedidos Programados</string>
     <string name="title_order_acepted">Detalle de Pedido</string>
+    <string name="btn_cancelar">CANCELAR</string>
 
 </resources>

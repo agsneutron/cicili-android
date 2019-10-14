@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,12 +20,13 @@ import android.widget.TextView;
 
 public class CancelaActivity extends AppCompatActivity {
 
-    LinearLayout linearLayout;
+    LinearLayout linearLayout,detalle;
     Button nuevo_pedido;
     TextView estatus_cancelado, message;
     TextView address,alias,liter, ammount;
     String json_order, cause;
     Pedido pedidoData;
+    SeguimientoPedido seguimientoPedido;
 
     Gson gson = new Gson();
 
@@ -39,6 +41,7 @@ public class CancelaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         linearLayout = findViewById(R.id.view_error);
+        detalle = findViewById(R.id.detalle);
         nuevo_pedido = findViewById(R.id.nuevo_pedido);
         nuevo_pedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,21 +66,26 @@ public class CancelaActivity extends AppCompatActivity {
         if (bundle != null) {
             data = bundle.getString("cancel_result");
             json_order = bundle.getString("order");
-            pedidoData = gson.fromJson(json_order , Pedido.class);
             cause = bundle.getString("cause");
             estatus_cancelado.setText(data);
             message.setText(String.format("Motivo: %s", cause));
-            address.setText(pedidoData.getDomicilio().toString());
-            alias.setText(String.valueOf(pedidoData.getFormaPago()));
-            //date.setText();
-            ammount.setText(String.valueOf(pedidoData.getMonto()));
-            liter.setText(String.valueOf(pedidoData.getCantidad()));
 
-
+            if (bundle.getString("from").equals("solicitado")){
+                pedidoData = gson.fromJson(json_order , Pedido.class);
+                address.setText(pedidoData.getDomicilio().toString());
+                alias.setText(String.valueOf(pedidoData.getFormaPago()));
+                //date.setText();
+                ammount.setText(String.valueOf(pedidoData.getMonto()));
+                liter.setText(String.valueOf(pedidoData.getCantidad()));
+            }
+            else if (bundle.getString("from").equals("aceptado")){
+                seguimientoPedido = gson.fromJson(json_order , SeguimientoPedido.class);
+                address.setText(seguimientoPedido.getConcesionario());
+                alias.setText(String.valueOf(seguimientoPedido.getConductor()));
+                //date.setText();
+                detalle.setVisibility(View.GONE);
+            }
         }
-
-
-
 
     }
 
