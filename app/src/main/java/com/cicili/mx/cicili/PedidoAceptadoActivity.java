@@ -626,6 +626,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             JSONObject dataUbicacion = respuesta.getJSONObject(WSkeys.data);
             //JSONArray jousuario = respuesta.getJSONArray(WSkeys.data);
 
+
             //iLat=iLat+0.0001399;
             //iLon=iLon+0.0001223;
             //ActualizarUbicacionTask(dataUbicacion.getDouble("latitud")+iLat,dataUbicacion.getDouble("longitud")-iLon);
@@ -645,6 +646,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             String respuestaDirecctions = new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving").toString();
 
             Utilities.SetLog("DATA Directions: ", respuestaDirecctions, WSkeys.log);
+            
 
             Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
