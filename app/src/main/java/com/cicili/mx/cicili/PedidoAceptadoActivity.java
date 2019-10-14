@@ -646,7 +646,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             String respuestaDirecctions = new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving").toString();
 
             Utilities.SetLog("DATA Directions: ", respuestaDirecctions, WSkeys.log);
-            
+
 
             Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
