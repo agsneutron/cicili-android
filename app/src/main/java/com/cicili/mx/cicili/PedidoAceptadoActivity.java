@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -142,9 +143,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_aceptado);
         String nombreEstatus = "";
-        String status = "";
+        String status = "2";
         JSONObject objJson = null;
 
+        client.setMessageContext(PedidoAceptadoActivity.this);
         vista = (TextView) findViewById(R.id.name);
         monto = (TextView) findViewById(R.id.cantidad);
         time = (TextView) findViewById(R.id.time);
@@ -771,7 +773,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }
         Utilities.SetLog("pipa : ", lat + " " + lon, WSkeys.log);
         mMarkerConductor = mMap.addMarker(new MarkerOptions()
-                .icon(bitmapDescriptorFromVector(PedidoAceptadoActivity.this, R.drawable.ic_pipa_1))
+                .icon(bitmapDescriptorFromVector(PedidoAceptadoActivity.this, R.drawable.ic_pipa_2_01))
                 .position(new LatLng(lat, lon))
                 .title("Concesionario: " + concesionario)
                 .snippet("Conductor: " + conductor + "\n" + "Precio: $" + String.valueOf(precio) + "\n" + "Tiempo de Llegada: " + tiempo));
@@ -909,7 +911,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
     @Override
-    public void getReceiverEstatusPedido(String status) {
+    public void getReceiverEstatusPedido(final String status) {
         String nombreEstatus="";
 
         Utilities.SetLog("getReceiverEstatusPedido: ", status, WSkeys.log);
@@ -930,14 +932,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     break;
                 case 5:
                     nombreEstatus = "Cargando";
-                    handler.removeCallbacksAndMessages(null);
+                    //handler.removeCallbacksAndMessages(null);
                     break;
                 case 6:
                     nombreEstatus = "Cargado";
                     break;
                 case 7:
                     nombreEstatus = "Pagado";
-                    facturar.setEnabled(true);
+                    //facturar.setEnabled(true);
                     break;
                 case 8:
                     nombreEstatus = "Programado";
@@ -947,11 +949,11 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     break;
                 default:
                     nombreEstatus = "Facturado";
-                    facturar.setEnabled(true);
+                    //facturar.setEnabled(true);
                     break;
             }
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
             builder.setTitle("Estatus de tu pedido:");
             builder.setMessage(nombreEstatus);
@@ -964,9 +966,34 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             });
 
             // Create the AlertDialog
-            AlertDialog dialog = builder.create();
+            //AlertDialog dialog = builder.create();
 
-            dialog.show();
+            this.runOnUiThread(new Runnable() {
+                public void run() {
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    switch (Integer.parseInt(status)) {
+                        case 5:
+                            handler.removeCallbacksAndMessages(null);
+                            break;
+                        case 7:
+                            facturar.setEnabled(true);
+                            break;
+
+                        default:
+
+                            facturar.setEnabled(true);
+                            break;
+                    }
+
+                    Thread.currentThread().interrupt();
+
+                }
+            });
+
+
+            //dialog.show();
         }
     }
 
