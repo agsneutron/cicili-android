@@ -275,6 +275,13 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
         //to cancel
         //bottomsheet
         Spinner motivos = (Spinner) findViewById(R.id.motivos);
@@ -472,7 +479,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 // si el response regresa ok, entonces si inicia la sesión
                 if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
-
+                    handler.removeCallbacksAndMessages(null);
                     Intent intent = new Intent(PedidoAceptadoActivity.this, CancelaActivity.class);
                     intent.putExtra("cancel_result",response_object.getString("data"));
                     intent.putExtra("cause",motivo_texto);
@@ -974,15 +981,20 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     dialog.show();
 
                     switch (Integer.parseInt(status)) {
+                        case 4:
+                            cancelar.setEnabled(false);
+                            break;
                         case 5:
+                            cancelar.setEnabled(false);
                             handler.removeCallbacksAndMessages(null);
                             break;
                         case 7:
+                            cancelar.setEnabled(false);
                             facturar.setEnabled(true);
                             break;
 
                         default:
-
+                            cancelar.setEnabled(false);
                             facturar.setEnabled(true);
                             break;
                     }
