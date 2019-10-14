@@ -36,18 +36,23 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
+    SeguimientoPedido seguimientoPedido;
 
     Gson gson = new Gson();
     String sJSONObject;
+
+    MessageReceiverCallback interfaceNotification;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        if (remoteMessage.getNotification() != null){
-            SeguimientoPedido seguimientoPedido = new SeguimientoPedido(remoteMessage.getData().get("status"));
+        interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
 
-            client.setSeguimientoPedido(seguimientoPedido);
+        if (remoteMessage.getNotification() != null){
+            if (interfaceNotification!=null){
+                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"));
+            }
             Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
             if (remoteMessage.getData().get("tipo").toString().equals("3")){
                 if (remoteMessage.getData().get("status").toString().equals("2")) {

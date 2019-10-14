@@ -83,7 +83,7 @@ import java.util.Map;
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
-public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, NotificationReceiver.OnNotificationReceiverListener {
+public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, MessageReceiverCallback {
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -146,7 +146,6 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        broadcast = new NotificationReceiver(this);
         IntentFilter intentFilter = new IntentFilter(ESTATUS_ACTION);
         registerReceiver(broadcast,intentFilter);
 
@@ -663,18 +662,15 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
 
-    @Override
-    public void onButtonClicked(Context context, Intent intentNotification) {
 
-
-    }
     @Override
-    public void onStatusPedido(Context context, Intent intentNotification) {
-        String data = intentNotification.getStringExtra("data");
+    public void getReceiverEstatusPedido(String status) {
         String nombreEstatus="";
 
+        Utilities.SetLog("getReceiverEstatusPedido: ", status, WSkeys.log);
+
         if (seguimientoPedido.getTipo().toString().equals("3")) {
-            switch (Integer.parseInt(client.getEstatusPedido())) {
+            switch (Integer.parseInt(status)) {
                 case 1:
                     nombreEstatus = "Solicitado";
                     break;
@@ -727,6 +723,5 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             dialog.show();
         }
-
     }
 }

@@ -37,6 +37,7 @@ public class Client extends Application {
     private ArrayList<Pedido> pedidoDataArrayList;
     private ArrayList<PedidoData> pedidosDataArrayList;
     private SeguimientoPedido seguimientoPedido;
+    private Context messageContext;
 
 
     private static Context mContext;
@@ -54,7 +55,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -81,6 +82,15 @@ public class Client extends Application {
         this.pedidoDataArrayList = pedidoDataArrayList;
         this.pedidosDataArrayList = pedidosDataArrayList;
         this.seguimientoPedido = seguimientoPedido;
+        this.messageContext = messageContext;
+    }
+
+    public Context getMessageContext() {
+        return messageContext;
+    }
+
+    public void setMessageContext(Context messageContext) {
+        this.messageContext = messageContext;
     }
 
     public String getUsername() {
