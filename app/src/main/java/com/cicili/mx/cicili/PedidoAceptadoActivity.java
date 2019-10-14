@@ -528,7 +528,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }
         Utilities.SetLog("pipa : ", lat + " " + lon, WSkeys.log);
         mMarkerConductor = mMap.addMarker(new MarkerOptions()
-                .icon(bitmapDescriptorFromVector(PedidoAceptadoActivity.this, R.drawable.ic_pipa_1))
+                .icon(bitmapDescriptorFromVector(PedidoAceptadoActivity.this, R.drawable.ic_pipa_2_01))
                 .position(new LatLng(lat, lon))
                 .title("Concesionario: " + concesionario)
                 .snippet("Conductor: " + conductor + "\n" + "Precio: $" + String.valueOf(precio) + "\n" + "Tiempo de Llegada: " + tiempo));
