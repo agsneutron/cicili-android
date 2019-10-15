@@ -193,17 +193,18 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
         LlenaDirecciones(direcciones);
         pipas = (Spinner) view.findViewById(R.id.spinner2);
-        btn_pedidoActivo = (MaterialButton) view.findViewById(btn_pedido_activo);
 
 
-                direcciones.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        pipas.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
+        direcciones.setOnItemSelectedListener(this);
+        pipas.setOnItemSelectedListener(this);
 
         //map
         getMyLocationPermision();
 
-        layoutPedidoActivo = (LinearLayoutCompat) view.findViewById(R.id.LayoutPedidoActivo);
-        layoutDirecciones = (LinearLayoutCompat) view.findViewById(R.id.LayoutDireccion);
+        layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
+        btn_pedidoActivo = view.findViewById(R.id.btnActivo);
+        layoutDirecciones = view.findViewById(R.id.LayoutDireccion);
         if (client.getOrder_id() !=null && client.getOrder_id() != ""){
             Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
             Gson gson = new Gson();
@@ -222,7 +223,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
                 String nuevoEstado = "";
-                final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago_mc);
+                final RadioGroup rgFormaPago = view.findViewById(R.id.rgFormaPago_mc);
                 rgFormaPago.check(R.id.tarjeta_mc);
                 String formapagoseleccionada="";
                 final RadioGroup rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro_mc);
@@ -425,7 +426,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         });
 
-        featuredlayout = (LinearLayout) view.findViewById(R.id.featuredlayout);
+        featuredlayout = view.findViewById(R.id.featuredlayout);
         featuredlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
