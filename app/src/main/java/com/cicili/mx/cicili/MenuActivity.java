@@ -147,8 +147,6 @@ public class MenuActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
 
@@ -166,7 +164,8 @@ public class MenuActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        //PErfil update data
+
+        //Perfil update data
         View headerView = navigationView.getHeaderView(0);
         TextView tvname = (TextView)headerView.findViewById(R.id.tv_name);
         tvname.setText(client.getName());
@@ -535,5 +534,6 @@ public class MenuActivity extends AppCompatActivity
         });
 
     }
+
 
 }

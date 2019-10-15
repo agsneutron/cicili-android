@@ -277,8 +277,9 @@ public class WSkeys {
     // https://api.cicili.com.mx:8443/app/mv/cliente/status
     public static final String URL_VALIDATESTATUS = "app/mv/cliente/status";
 
-
-
+    //PEDIDO ACTIVO
+    //app/mv/cliente/pedidoactivo
+    public static final String URL_PEDIDO_ACTIVO = "app/mv/cliente/pedidoactivo";
 
     public static final Boolean log = true;
     public static int cplenght = 4;

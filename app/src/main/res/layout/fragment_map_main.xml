@@ -27,13 +27,47 @@
             android:layout_height="match_parent" />
 
 
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_iniciapedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="20dp"
             android:layout_marginBottom="0dp"
             android:background="@color/white">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/LayoutPedidoActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/pedido_en_curso"
+                    android:textColor="@color/black"
+                    android:textSize="14.3sp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_pedido_activo"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.1"
+                    android:padding="10dp"
+                    android:text="@string/btn_pedido"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:cornerRadius="20dp"
+                    android:textSize="10sp"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/LayoutDireccion"

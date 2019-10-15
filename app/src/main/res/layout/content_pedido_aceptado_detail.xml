@@ -356,32 +356,18 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/aclaracion"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="0.1"
-                    android:padding="15dp"
-                    android:text="@string/btnaclaracion"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:cornerRadius="20dp"
-                    android:textSize="12sp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/cancelar"
+                    android:id="@+id/cambiar"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="0.1"
-                    android:padding="15dp"
-                    android:text="@string/btn_cancelar"
+                    android:padding="10dp"
+                    android:text="@string/btn_cambiar"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:cornerRadius="20dp"
-                    android:textSize="12sp"/>
+                    android:textSize="10sp"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/facturar"
@@ -389,13 +375,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="0.1"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     android:text="@string/btn_facturar"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:cornerRadius="20dp"
-                    android:textSize="12sp"/>
+                    android:textSize="10sp"/>
                 <!-- <Button
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -409,6 +395,44 @@
                      android:text="@string/btn_facturar" />-->
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/aclaracion"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.1"
+                    android:padding="10dp"
+                    android:text="@string/btnaclaracion"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:cornerRadius="20dp"
+                    android:textSize="10sp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancelar"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.1"
+                    android:padding="10dp"
+                    android:text="@string/btn_cancelar"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:cornerRadius="20dp"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
