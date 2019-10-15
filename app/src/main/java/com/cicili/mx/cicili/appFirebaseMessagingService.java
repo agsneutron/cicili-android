@@ -132,7 +132,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 .setVibrate(new long[]{0,1000,500,1000})
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setFullScreenIntent(pendingIntent, true)
-                //.setAutoCancel(true)
+                .setAutoCancel(true)
                 .setSound(soundUri)
                 //.setExtras(bundle)
                 .setContentIntent(pendingIntent);
