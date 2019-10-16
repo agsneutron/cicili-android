@@ -21,6 +21,8 @@ public class PedidoActivo {
     String alias;
     String nombreStatus;
 
+
+
     public PedidoActivo() {
     }
 
@@ -188,4 +190,6 @@ public class PedidoActivo {
     public void setNombreStatus(String nombreStatus) {
         this.nombreStatus = nombreStatus;
     }
+
+
 }

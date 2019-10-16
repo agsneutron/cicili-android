@@ -716,8 +716,6 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         btn_pedidoActivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layoutDirecciones.setVisibility(View.GONE);
-                layoutPedidoActivo.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
                 String json_pedido = gson.toJson(pedidoActivo);
                 intent.putExtra("pedido_data",json_pedido);
@@ -726,10 +724,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 intent.putExtra("status",pedidoActivo.getStatus());
                 startActivity(intent);
                 SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
+                seguimientoPedido.setIdPedido(String.valueOf(pedidoActivo.getId()));
                 seguimientoPedido.setStatus(String.valueOf(pedidoActivo.getStatus()));
                 seguimientoPedido.setColor("");
-                seguimientoPedido.setConcesionario(pedidoActivo.getNombreConcesionario());
-                seguimientoPedido.setConductor(pedidoActivo.getNombreConductor());
+                seguimientoPedido.setNombreConcesionario(pedidoActivo.getNombreConcesionario());
+                seguimientoPedido.setNombreConductor(pedidoActivo.getNombreConductor());
                 seguimientoPedido.setLatitud(String.valueOf(pedidoActivo.getLatitud()));
                 seguimientoPedido.setLongitud(String.valueOf(pedidoActivo.getLongitud()));
                 seguimientoPedido.setNombreStatus(pedidoActivo.getNombreStatus());
@@ -1373,9 +1372,15 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONObject jo_data = response.getJSONObject(WSkeys.data);
             pedidoActivo = gson.fromJson(jo_data.toString(), PedidoActivo.class);
+
+            layoutDirecciones.setVisibility(View.GONE);
+            layoutPedidoActivo.setVisibility(View.VISIBLE);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
-        else{
+        else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
+
+            Utilities.SetLog("PARSER-MAIN_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
+        }else{
             Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }

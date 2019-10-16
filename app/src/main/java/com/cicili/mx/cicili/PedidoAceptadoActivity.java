@@ -189,7 +189,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             latOrderAddress = Double.parseDouble(seguimientoPedido.getLatitud());
             lonOrderAddress = Double.parseDouble(seguimientoPedido.getLongitud());
             time.setText(seguimientoPedido.getTiempo());
-            lbl1.setText("Conductor:  " + seguimientoPedido.getConductor());
+            lbl1.setText("Conductor:  " + seguimientoPedido.getNombreConductor());
             lbl2.setText("Color: " + seguimientoPedido.getColor());
             lbl3.setText("");
             lbl4.setText("Placa:  " + seguimientoPedido.getPlaca());
@@ -549,7 +549,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     private void ActualizarUbicacionTask(final Double latitud, final Double longitud) {
         moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latitud, longitud));
-        AddMarkerConductor(latitud, longitud, seguimientoPedido.getConductor(), seguimientoPedido.getConcesionario(), Double.parseDouble(seguimientoPedido.getMonto()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getIdPedido()));
+        AddMarkerConductor(latitud, longitud, seguimientoPedido.getNombreConductor(), seguimientoPedido.getNombreConcesionario(), Double.parseDouble(seguimientoPedido.getMonto()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getIdPedido()));
     }
 
 
@@ -1104,6 +1104,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utilities.SetLog("Evento: "," onBackPressed",WSkeys.log);
+        handler.removeCallbacksAndMessages(null); // se deja de enviar la ubicación
+        client.setMessageContext(null);
+        super.onBackPressed();
     }
 
 }

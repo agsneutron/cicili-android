@@ -297,4 +297,5 @@ public class WSkeys {
     //motivo programa
     //https://cicili.com.mx:8443/app/mv/cliente/pedido/programar
     public static final String URL_UBICACION_CONDUCTOR = "app/mv/cliente/pedido/ubicacion/";
+    public static int no_error_ok = 1;
 }

@@ -1,8 +1,9 @@
 package com.cicili.mx.cicili.domain;
 
 public class SeguimientoPedido {
+    String id;
     String idPedido;
-    String conductor;
+    String nombreConductor;
     String clave;
     String placa;
     String color;
@@ -10,19 +11,29 @@ public class SeguimientoPedido {
     String monto;
     String latitud;
     String longitud;
-    String concesionario;
+    String nombreConcesionario;
+    String nombreCliente;
     String logo;
     String tipo;
     String status;
     String nombreStatus;
+    String horaSolicitada;
+    String direccion;
+    String fechaSolicitada;
+    String fechaPedido;
+    String razonSocial;
+    String cantidad;
+    String idCliente;
+    String formaPago;
 
 
     public SeguimientoPedido() {
     }
 
-    public SeguimientoPedido(String idPedido, String conductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String concesionario, String logo, String tipo, String status, String nombreStatus) {
+    public SeguimientoPedido(String id, String idPedido, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago) {
+        this.id = id;
         this.idPedido = idPedido;
-        this.conductor = conductor;
+        this.nombreConductor = nombreConductor;
         this.clave = clave;
         this.placa = placa;
         this.color = color;
@@ -30,11 +41,20 @@ public class SeguimientoPedido {
         this.monto = monto;
         this.latitud = latitud;
         this.longitud = longitud;
-        this.concesionario = concesionario;
+        this.nombreConcesionario = nombreConcesionario;
+        this.nombreCliente = nombreCliente;
         this.logo = logo;
         this.tipo = tipo;
         this.status = status;
         this.nombreStatus = nombreStatus;
+        this.horaSolicitada = horaSolicitada;
+        this.direccion = direccion;
+        this.fechaSolicitada = fechaSolicitada;
+        this.fechaPedido = fechaPedido;
+        this.razonSocial = razonSocial;
+        this.cantidad = cantidad;
+        this.idCliente = idCliente;
+        this.formaPago = formaPago;
     }
 
     public SeguimientoPedido(String idPedido, String tipo, String status, String nombreStatus) {
@@ -47,6 +67,14 @@ public class SeguimientoPedido {
         this.status = status;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getIdPedido() {
         return idPedido;
     }
@@ -55,12 +83,12 @@ public class SeguimientoPedido {
         this.idPedido = idPedido;
     }
 
-    public String getConductor() {
-        return conductor;
+    public String getNombreConductor() {
+        return nombreConductor;
     }
 
-    public void setConductor(String conductor) {
-        this.conductor = conductor;
+    public void setNombreConductor(String nombreConductor) {
+        this.nombreConductor = nombreConductor;
     }
 
     public String getClave() {
@@ -119,12 +147,20 @@ public class SeguimientoPedido {
         this.longitud = longitud;
     }
 
-    public String getConcesionario() {
-        return concesionario;
+    public String getNombreConcesionario() {
+        return nombreConcesionario;
     }
 
-    public void setConcesionario(String concesionario) {
-        this.concesionario = concesionario;
+    public void setNombreConcesionario(String nombreConcesionario) {
+        this.nombreConcesionario = nombreConcesionario;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public String getLogo() {
@@ -157,5 +193,69 @@ public class SeguimientoPedido {
 
     public void setNombreStatus(String nombreStatus) {
         this.nombreStatus = nombreStatus;
+    }
+
+    public String getHoraSolicitada() {
+        return horaSolicitada;
+    }
+
+    public void setHoraSolicitada(String horaSolicitada) {
+        this.horaSolicitada = horaSolicitada;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getFechaSolicitada() {
+        return fechaSolicitada;
+    }
+
+    public void setFechaSolicitada(String fechaSolicitada) {
+        this.fechaSolicitada = fechaSolicitada;
+    }
+
+    public String getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(String fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(String formaPago) {
+        this.formaPago = formaPago;
     }
 }
