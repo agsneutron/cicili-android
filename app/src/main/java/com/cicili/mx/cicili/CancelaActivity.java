@@ -46,6 +46,10 @@ public class CancelaActivity extends AppCompatActivity {
         nuevo_pedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(CancelaActivity.this, MenuActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+
                 finish();
             }
         });

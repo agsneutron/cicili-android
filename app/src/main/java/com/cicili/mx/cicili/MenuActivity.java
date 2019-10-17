@@ -535,5 +535,11 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
+    /*@Override
+    protected void onRestart() {
+        fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
+        active = fragmentMain;
+        super.onRestart();
 
+    }*/
 }

@@ -528,7 +528,7 @@ public class PersonalDataFragment extends Fragment {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG,10,baos);
         byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);  //NO_WRAP
+        String encImage = Base64.encodeToString(b, Base64.NO_WRAP);  //NO_WRAP
 
         return encImage;
 

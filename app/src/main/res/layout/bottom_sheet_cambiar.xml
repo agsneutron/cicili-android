@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetCambiar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fefefe"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/cambiar_mi_pedido"
+        android:textColor="@color/colorPrimary"
+        android:textSize="23sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+<!--    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar mi Pedido"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/montolitro" />
+
+        <RadioGroup
+            android:id="@+id/rgMontoLitro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/litro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/litro"
+                android:layout_marginLeft="5dp"/>
+
+            <RadioButton
+                android:id="@+id/monto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/monto"
+                android:layout_marginRight="5dp"/>
+
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/labelinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/litros"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="28sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sms_code_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="******"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="36sp" />
+            </com.google.android.material.textfield.TextInputLayout>-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ddd" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/calculoinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/precio"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/calculo_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="numberDecimal"
+                    android:enabled="false"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="28sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sms_code_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="******"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="36sp" />
+            </com.google.android.material.textfield.TextInputLayout>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cambia_pedido"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="@string/change_order"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:cornerRadius="20dp"
+        android:layout_marginTop="15dp"/>
+
+<!--    <Button
+        android:id="@+id/cancela_pedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"/>-->
+
+</LinearLayout>

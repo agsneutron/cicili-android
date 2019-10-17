@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -126,13 +127,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     Double latitudPedido, longitudPedido, monto_c, litro_c;
     LinearLayout bottom_sheet;
     BottomSheetBehavior bsb;
-    TextView name_usuario;
-    LinearLayout featuredlayout;
+    TextView name_usuario, label_pedido;
+    LinearLayout featuredlayout, populatlayout;
     LinearLayout bottom_sheetmascercano;
     LinearLayoutCompat layoutDirecciones, layoutPedidoActivo;
     BottomSheetBehavior bsb_mascercano;
     MaterialButton btn_pedidoActivo;
     PedidoActivo pedidoActivo = new PedidoActivo();
+    SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
 
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -194,15 +196,18 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         LlenaDirecciones(direcciones);
         pipas = (Spinner) view.findViewById(R.id.spinner2);
 
-
+        label_pedido = view.findViewById(R.id.labelpedido);
 
         direcciones.setOnItemSelectedListener(this);
         pipas.setOnItemSelectedListener(this);
 
-        //map
-        getMyLocationPermision();
 
         layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
+        try {
+            ValidaPedidoActivo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         btn_pedidoActivo = view.findViewById(R.id.btnActivo);
         layoutDirecciones = view.findViewById(R.id.LayoutDireccion);
         if (client.getOrder_id() !=null && client.getOrder_id() != ""){
@@ -214,6 +219,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             intent.putExtra("idPedido",client.getOrder_id());
             intent.putExtra("pedido_data",data);
         }
+
+
+        //map
+        getMyLocationPermision();
         //pedido mascercano
 
         bottom_sheetmascercano = (LinearLayout)view.findViewById(R.id.bottomSheetCercano);
@@ -443,6 +452,20 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             }
         });
         //endmascercano
+
+        populatlayout = view.findViewById(R.id.populatlayout);
+        populatlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (direcciones.getSelectedItem().equals("") || direcciones.getSelectedItem().equals("0") || pipas.getSelectedItem().equals("") || pipas.getSelectedItem().equals("0") ){
+                    Snackbar.make(view, R.string.error_invalid_selection, Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+
+            }
+        });
 
         //bottomsheet pedido
 
@@ -699,6 +722,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         if (bsb.getState()==BottomSheetBehavior.STATE_EXPANDED){
                             bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         }
+                        else if(bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
+                            return false;
+                        }
 
                         return true;
                     }
@@ -707,24 +733,37 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             }
         });
 
-        try {
-            ValidaPedidoActivo();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
         btn_pedidoActivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
-                String json_pedido = gson.toJson(pedidoActivo);
-                intent.putExtra("pedido_data",json_pedido);
-                intent.putExtra("idPedido",pedidoActivo.getId());
-                intent.putExtra("pedido_data",json_pedido);
-                intent.putExtra("status",pedidoActivo.getStatus());
-                startActivity(intent);
-                SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
-                seguimientoPedido.setIdPedido(String.valueOf(pedidoActivo.getId()));
+
+                if (pedidoActivo.getStatus().equals("1")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Estatus de tu pedido: " + pedidoActivo.getNombreStatus() );
+                    builder.setMessage("En breve recibiras información de tu pedido");
+                    builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else{
+                    Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
+                    String json_pedido = gson.toJson(pedidoActivo);
+                    intent.putExtra("pedido_data",json_pedido);
+                    intent.putExtra("idPedido",pedidoActivo.getId());
+                    intent.putExtra("pedido_data",json_pedido);
+                    intent.putExtra("status",pedidoActivo.getStatus());
+                    startActivity(intent);
+                }
+
+
+
+                /*seguimientoPedido.setIdPedido(String.valueOf(pedidoActivo.getId()));
                 seguimientoPedido.setStatus(String.valueOf(pedidoActivo.getStatus()));
                 seguimientoPedido.setColor("");
                 seguimientoPedido.setNombreConcesionario(pedidoActivo.getNombreConcesionario());
@@ -733,8 +772,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 seguimientoPedido.setLongitud(String.valueOf(pedidoActivo.getLongitud()));
                 seguimientoPedido.setNombreStatus(pedidoActivo.getNombreStatus());
                 seguimientoPedido.setTiempo("");
-                seguimientoPedido.setTipo("3");
-                client.setSeguimientoPedido(seguimientoPedido);
+                seguimientoPedido.setTipo("3");*/
+
             }
         });
 
@@ -1372,7 +1411,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONObject jo_data = response.getJSONObject(WSkeys.data);
             pedidoActivo = gson.fromJson(jo_data.toString(), PedidoActivo.class);
+            seguimientoPedido = gson.fromJson(jo_data.toString(), SeguimientoPedido.class);
+            seguimientoPedido.setTipo("3");
+            client.setSeguimientoPedido(seguimientoPedido);
+            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.getStatus(),WSkeys.log);
 
+            if (seguimientoPedido.getStatus().equals("1")){
+                label_pedido.setText("Tienes un pedido Solicitado");
+            }
+            else {
+                label_pedido.setText(R.string.pedido_en_curso);
+            }
             layoutDirecciones.setVisibility(View.GONE);
             layoutPedidoActivo.setVisibility(View.VISIBLE);
         }

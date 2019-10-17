@@ -319,5 +319,10 @@
     <string name="pedido_en_curso">Tienes un pedido en curso</string>
     <string name="btn_pedido">Ver Pedido</string>
     <string name="btn_cambiar">CAMBIAR PEDIDO</string>
+    <string name="enviar_mas_cercano">Enviar mas cercano</string>
+    <string name="pedido">Pedido</string>
+    <string name="error_invalid_selection">Debes seleccionar una Dirección y una Pipa para procesar tu pedido.</string>
+    <string name="cambiar_mi_pedido">Cambiar mi Pedido</string>
+    <string name="change_order">Cambiar Pedido</string>
 
 </resources>

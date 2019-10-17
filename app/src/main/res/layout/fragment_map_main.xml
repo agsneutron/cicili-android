@@ -46,6 +46,7 @@
                 android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/labelpedido"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -174,10 +175,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Pedido"
+                            android:text="@string/pedido"
                             android:textColor="#bcbec2"
-                            android:textSize="13dp" />
-
+                            android:textSize="13sp" />
                     </LinearLayout>
 
 
@@ -205,9 +205,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Enviar mas cercano"
+                            android:text="@string/enviar_mas_cercano"
                             android:textColor="#bcbec2"
-                            android:textSize="13dp" />
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
