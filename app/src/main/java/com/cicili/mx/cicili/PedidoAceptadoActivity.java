@@ -1311,16 +1311,25 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                     switch (Integer.parseInt(status)) {
                         case 4:
+                            name.setText("PREPARANDO CARGA ...");
                             cancelar.setEnabled(false);
                             break;
                         case 5:
+                            name.setText("CARGANDO PEDIDO ...");
                             cancelar.setEnabled(false);
                             handler.removeCallbacksAndMessages(null);
                             break;
                         case 6:
+                            name.setText("CARGA FINALIZADA");
                             cancelar.setEnabled(false);
                             break;
                         case 7:
+                            name.setText("PEDIDO COBRADO");
+                            cancelar.setEnabled(false);
+                            facturar.setEnabled(true);
+                            break;
+                        case 8:
+                            name.setText("PEDIDO FINALIZADO, GRACIAS.");
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
                             break;
