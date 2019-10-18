@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="11.5sp"
-            android:text="Espere para mostrar los datos de la pipa."
+            android:text=""
             android:textColor="#111111"
             android:textSize="14.5sp" />
 

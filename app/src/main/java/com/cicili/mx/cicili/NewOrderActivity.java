@@ -369,8 +369,8 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
-                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Log.e("El error -- ORDER", error.toString());
+                Snackbar.make(linearLayout, error.toString(), Snackbar.LENGTH_SHORT)
                         .show();
                 progressDialog.dismiss();
             }
@@ -425,6 +425,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
+            estatuspedido.setText(respuesta.getString(WSkeys.messageError));
             Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }

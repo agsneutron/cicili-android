@@ -1319,7 +1319,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public void MoveCameraSelectedDirection(Double lat, Double lon, String alias, Integer id){
         CameraPosition googlePlex = CameraPosition.builder()
                 .target(new LatLng(lat,lon))
-                .zoom(10)
+                .zoom(15)
                 .bearing(0)
                 .tilt(45)
                 .build();
