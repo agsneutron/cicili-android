@@ -268,10 +268,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         nuevoEstado = "STATE_DRAGGING";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
 
                     case BottomSheetBehavior.STATE_SETTLING:
                         nuevoEstado = "STATE_SETTLING";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
                 }
 
@@ -630,7 +632,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                         // Check for a valid ammount.
                         if (monto_c < 200.00) {
-                            Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                            error = getString(R.string.error_invalid_ammount);
                             cancel = true;
                         }
 
@@ -1650,7 +1652,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         CameraPosition googlePlex = CameraPosition.builder()
                 .target(new LatLng(lat,lon))
                 .zoom(15)
-                .bearing(0)
+                .bearing(90)
                 .tilt(45)
                 .build();
 

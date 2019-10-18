@@ -114,6 +114,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String order ="";
 
 
+
     protected static final String ESTATUS_ACTION = "statusaction";
 
     private  NotificationReceiver broadcast;
@@ -138,7 +139,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String pedido_data = "";
     TextView monto;
     TextView lbl1, lbl2, lbl3, lbl4;
-    TextView time, status_order, date, cantidad;
+    TextView time, status_order, date, cantidad, name;
     Gson gson = new Gson();
     SeguimientoPedido seguimientoPedido = client.getSeguimientoPedido();
 
@@ -152,14 +153,15 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         JSONObject objJson = null;
 
         client.setMessageContext(PedidoAceptadoActivity.this);
-        vista = (TextView) findViewById(R.id.name);
-        monto = (TextView) findViewById(R.id.cantidad);
-        time = (TextView) findViewById(R.id.time);
-        lbl1 = (TextView) findViewById(R.id.lbl1);
-        lbl2 = (TextView) findViewById(R.id.lbl2);
-        lbl3 = (TextView) findViewById(R.id.lbl3);
-        lbl4 = (TextView) findViewById(R.id.lbl4);
-        status_order = (TextView) findViewById(R.id.formaPago);
+        vista = findViewById(R.id.name);
+        monto = findViewById(R.id.cantidad);
+        time = findViewById(R.id.time);
+        lbl1 = findViewById(R.id.lbl1);
+        lbl2 = findViewById(R.id.lbl2);
+        lbl3 = findViewById(R.id.lbl3);
+        lbl4 = findViewById(R.id.lbl4);
+        name = findViewById(R.id.name);
+        status_order = findViewById(R.id.formaPago);
         date =  findViewById(R.id.date);
         cantidad =  findViewById(R.id.item_number);
         linearLayout = findViewById(R.id.linearL_pa);
@@ -204,7 +206,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             lbl4.setText(String.format("Placa:  %s", seguimientoPedido.getPlaca()));
 
 
-            status_order.setText(seguimientoPedido.getNombreStatus());
+            status_order.setText(seguimientoPedido.getFormaPago());
             aclarar = findViewById(R.id.aclaracion);
             cancelar = findViewById(R.id.cancelar);
             facturar = findViewById(R.id.facturar);
@@ -216,6 +218,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 switch (Integer.parseInt(client.getEstatusPedido())) {
                     case 1:
                         nombreEstatus = "Solicitado";
+
                         break;
                     case 2:
                         nombreEstatus = "Aceptado";
@@ -257,6 +260,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         facturar.setEnabled(true);
                         break;
                 }
+                name.setText("Pedido : " + nombreEstatus);
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 // Add the buttons
@@ -272,7 +276,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 // Create the AlertDialog
                 AlertDialog dialog = builder.create();
 
-                dialog.show();
+                //dialog.show();
             }
         }
         //map
@@ -331,7 +335,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
 
-        bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheet);
+        bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheetCancela);
         bsb = BottomSheetBehavior.from(bottom_sheet);
         bsb.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -643,7 +647,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                         // Check for a valid ammount.
                         if (monto_c < 200.00) {
-                            Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                            //Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                            error= getString(R.string.error_invalid_ammount);
                             cancel = true;
                         }
 
@@ -869,7 +874,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     public void ubicacionConductor() throws JSONException {
 
 
-        String url = WSkeys.URL_BASE + WSkeys.URL_UBICACION_CONDUCTOR + client.getOrder_id();
+        String url = WSkeys.URL_BASE + WSkeys.URL_UBICACION_CONDUCTOR + seguimientoPedido.getId();
 
         RequestQueue queue = Volley.newRequestQueue(client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
@@ -951,8 +956,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             Utilities.SetLog("DATA Directions: ", respuestaDirecctions.toString(), WSkeys.log);
 
+            Utilities.SetLog("ubicación recibida: ", "ubicacion", WSkeys.log);
 
-            Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
@@ -1129,7 +1135,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA + pos;
         Utilities.SetLog("PIDE FACTURA", url, WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -1255,8 +1261,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     break;
             }
 
+           
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
+            //name.setText("Pedido : " + nombreEstatus);
             builder.setTitle("Estatus de tu pedido:");
             builder.setMessage(mensaje);
             builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
@@ -1279,6 +1287,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             facturar.setEnabled(true);
                             break;
                         case 9:
+                            Intent intent = new Intent(PedidoAceptadoActivity.this, MenuActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                             finish();
                             break;
 
@@ -1296,7 +1307,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             this.runOnUiThread(new Runnable() {
                 public void run() {
                     AlertDialog dialog = builder.create();
-                    dialog.show();
+                    //dialog.show();
 
                     switch (Integer.parseInt(status)) {
                         case 4:
@@ -1319,6 +1330,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             facturar.setEnabled(true);
                             break;
                     }
+
 
                     Thread.currentThread().interrupt();
 
