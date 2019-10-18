@@ -173,12 +173,15 @@ public class MenuActivity extends AppCompatActivity
         tvarea.setText(client.getEmail());
         ImageView imageView = (ImageView)headerView.findViewById(R.id.imageView);
 
-        byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (!client.getPhoto().isEmpty() || client.getPhoto()!=null) {
 
-        Utilities.SetLog("IMAGEN CLIENTE",client.getPhoto().substring(client.getPhoto().indexOf(",") + 1),WSkeys.log);
+            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-        imageView.setImageBitmap(decodedByte);
+            Utilities.SetLog("IMAGEN CLIENTE", client.getPhoto().substring(client.getPhoto().indexOf(",") + 1), WSkeys.log);
+
+            imageView.setImageBitmap(decodedByte);
+        }
         //
 
 

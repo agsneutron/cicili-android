@@ -2,6 +2,7 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,23 +15,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cicili.mx.cicili.domain.AddressData;
-import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.Pedido;
-import com.cicili.mx.cicili.domain.RfcData;
-import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -92,6 +87,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         linearLayout = findViewById(R.id.view_error);
         cancela_bsb = findViewById(R.id.cancela_pedido_bss);
         cancela_bsb.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +142,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
 
 
-            bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheet);
+            bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheetCancela);
             bsb = BottomSheetBehavior.from(bottom_sheet);
             bsb.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
@@ -368,11 +364,9 @@ public class NewOrderActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Log.e("El error -- ORDER", error.toString());
-                Snackbar.make(linearLayout, error.toString(), Snackbar.LENGTH_SHORT)
-                        .show();
                 progressDialog.dismiss();
+                Error_Order();
             }
         }) {
             @Override
@@ -425,11 +419,26 @@ public class NewOrderActivity extends AppCompatActivity {
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
+            Error_Order();
             estatuspedido.setText(respuesta.getString(WSkeys.messageError));
             Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
 
+    }
+
+    public void Error_Order(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Solicitud de Pedido");
+        builder.setMessage("Por el momento no podemos procesar tu pedido, intenta nuevamente.");
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void LlenaMotivos(final Spinner motivos){

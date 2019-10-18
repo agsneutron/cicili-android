@@ -142,116 +142,7 @@
         android:background="#dddddd" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/labelinput_mc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/litros"
-                android:textColorHint="@color/colorPrimaryDark"
-                app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_mc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center|center_horizontal"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:textAlignment="center"
-                    android:textSize="28sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sms_code_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="******"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center|center_horizontal"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:textAlignment="center"
-                    android:textSize="36sp" />
-            </com.google.android.material.textfield.TextInputLayout>-->
-        </LinearLayout>
-
-        <!--<View
-            android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:background="#ddd" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/calculoinput_mc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/precio"
-                android:textColorHint="@color/colorPrimaryDark"
-                app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/calculo_input_mc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center|center_horizontal"
-                    android:inputType="numberDecimal"
-                    android:enabled="false"
-                    android:maxLength="6"
-                    android:textAlignment="center"
-                    android:textSize="28sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sms_code_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="******"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center|center_horizontal"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:textAlignment="center"
-                    android:textSize="36sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>-->
-
-    </LinearLayout>
 
 
     <!--<com.google.android.material.textfield.TextInputLayout
@@ -404,7 +295,116 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/labelinput_mc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/litros"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_mc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="28sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sms_code_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="******"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="36sp" />
+            </com.google.android.material.textfield.TextInputLayout>-->
+        </LinearLayout>
+
+        <!--<View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ddd" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/calculoinput_mc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/precio"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/calculo_input_mc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="numberDecimal"
+                    android:enabled="false"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="28sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sms_code_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="******"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center|center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textSize="36sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>-->
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -94,8 +94,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, MessageReceiverCallback {

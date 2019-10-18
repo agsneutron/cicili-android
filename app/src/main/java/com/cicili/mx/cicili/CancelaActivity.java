@@ -49,7 +49,6 @@ public class CancelaActivity extends AppCompatActivity {
                 Intent intent = new Intent(CancelaActivity.this, MenuActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-
                 finish();
             }
         });

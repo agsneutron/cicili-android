@@ -324,5 +324,6 @@
     <string name="error_invalid_selection">Debes seleccionar una Dirección y una Pipa para procesar tu pedido.</string>
     <string name="cambiar_mi_pedido">Cambiar mi Pedido</string>
     <string name="change_order">Cambiar Pedido</string>
+    <string name="hola">¡ Hola</string>
 
 </resources>

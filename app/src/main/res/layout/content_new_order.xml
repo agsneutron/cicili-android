@@ -8,7 +8,8 @@
     tools:context=".NewOrderActivity"
     tools:showIn="@layout/activity_new_order"
     android:layout_margin="20dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:id="@+id/CL_neworder">
 
     <LinearLayout
         android:id="@+id/view_error"
