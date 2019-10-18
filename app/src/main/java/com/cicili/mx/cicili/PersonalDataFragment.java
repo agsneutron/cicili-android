@@ -399,6 +399,10 @@ public class PersonalDataFragment extends Fragment {
                     Utilities.SetPerfilData(jousuario,client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalupdate, Toast.LENGTH_LONG);
                     toast.show();
+                    Intent intent = new Intent(getContext(),MenuActivity.class);
+                    intent.putExtra("active", "C");
+                    startActivity(intent);
+                    getActivity().finish();
                 }else {
                     Utilities.SetClientData(jousuario, client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalvalidation, Toast.LENGTH_LONG);
