@@ -315,5 +315,9 @@
     <string name="pedidos_programados_title">Pedidos Programados</string>
     <string name="title_order_acepted">Detalle de Pedido</string>
     <string name="btn_cancelar">CANCELAR</string>
+    <string name="error_invalid_ammount">El monto mínimo para solicitar tu pedido debe ser de $200.</string>
+    <string name="pedido_en_curso">Tienes un pedido en curso</string>
+    <string name="btn_pedido">Ver Pedido</string>
+    <string name="btn_cambiar">CAMBIAR PEDIDO</string>
 
 </resources>

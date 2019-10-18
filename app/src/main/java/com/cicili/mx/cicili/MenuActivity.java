@@ -39,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.widget.ImageView;
@@ -147,10 +148,12 @@ public class MenuActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
+
+        getSupportFragmentManager().beginTransaction().add(fragmentMain,"").commit(); //*************************************************************************************
+        FragmentTransaction transacction = getSupportFragmentManager().beginTransaction();
+
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +169,8 @@ public class MenuActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        //PErfil update data
+
+        //Perfil update data
         View headerView = navigationView.getHeaderView(0);
         TextView tvname = (TextView)headerView.findViewById(R.id.tv_name);
         tvname.setText(client.getName());
@@ -181,6 +185,7 @@ public class MenuActivity extends AppCompatActivity
 
         imageView.setImageBitmap(decodedByte);
         //
+
 
 
         //BOTTOMNAVIGATION OPTIONS
@@ -210,6 +215,7 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
                 active = fragmentMain;
+                fragmentMain.
             }
 
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(fragmentAddress).commit();
@@ -535,5 +541,6 @@ public class MenuActivity extends AppCompatActivity
         });
 
     }
+
 
 }

@@ -47,11 +47,13 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
+        if (interfaceNotification == null){
+            interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
+        }
 
         if (remoteMessage.getNotification() != null){
-            if (interfaceNotification!=null){
-                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"));
+            if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
+                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
             }
             Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
             if (remoteMessage.getData().get("tipo").toString().equals("3")){
@@ -126,14 +128,15 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                //.setAutoCancel(true)
+                .setSound(soundUri)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                .setStyle(new NotificationCompat.BigTextStyle())
                 .setVibrate(new long[]{0,1000,500,1000})
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setFullScreenIntent(pendingIntent, true)
                 .setAutoCancel(true)
-                .setSound(soundUri)
                 //.setExtras(bundle)
                 .setContentIntent(pendingIntent);
         //.addAction(R.mipmap.ic_launcher, "Toast", actionIntent);

@@ -277,8 +277,9 @@ public class WSkeys {
     // https://api.cicili.com.mx:8443/app/mv/cliente/status
     public static final String URL_VALIDATESTATUS = "app/mv/cliente/status";
 
-
-
+    //PEDIDO ACTIVO
+    //app/mv/cliente/pedidoactivo
+    public static final String URL_PEDIDO_ACTIVO = "app/mv/cliente/pedidoactivo";
 
     public static final Boolean log = true;
     public static int cplenght = 4;
@@ -296,4 +297,5 @@ public class WSkeys {
     //motivo programa
     //https://cicili.com.mx:8443/app/mv/cliente/pedido/programar
     public static final String URL_UBICACION_CONDUCTOR = "app/mv/cliente/pedido/ubicacion/";
+    public static int no_error_ok = 1;
 }

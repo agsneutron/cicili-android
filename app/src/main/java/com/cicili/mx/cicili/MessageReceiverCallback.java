@@ -3,5 +3,5 @@ package com.cicili.mx.cicili;
 public interface MessageReceiverCallback {
 
 
-    void getReceiverEstatusPedido(String status);
+    void getReceiverEstatusPedido(String status, String mensaje);
 }

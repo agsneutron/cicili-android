@@ -54,7 +54,10 @@ import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.AutotanquesDisponibles;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.PedidoActivo;
+import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -72,6 +75,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -125,8 +129,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     TextView name_usuario;
     LinearLayout featuredlayout;
     LinearLayout bottom_sheetmascercano;
-    LinearLayoutCompat layoutDirecciones;
+    LinearLayoutCompat layoutDirecciones, layoutPedidoActivo;
     BottomSheetBehavior bsb_mascercano;
+    MaterialButton btn_pedidoActivo;
+    PedidoActivo pedidoActivo = new PedidoActivo();
 
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -182,6 +188,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_map_main, container, false);
 
+
         name_usuario = view.findViewById(R.id.name_usuario);
         name_usuario.setText(client.getName());
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
@@ -189,14 +196,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         pipas = (Spinner) view.findViewById(R.id.spinner2);
 
 
-        direcciones.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        pipas.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
+        direcciones.setOnItemSelectedListener(this);
+        pipas.setOnItemSelectedListener(this);
 
         //map
         getMyLocationPermision();
 
-
-        layoutDirecciones = (LinearLayoutCompat) view.findViewById(R.id.LayoutDireccion);
+        layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
+        btn_pedidoActivo = view.findViewById(R.id.btnActivo);
+        layoutDirecciones = view.findViewById(R.id.LayoutDireccion);
         if (client.getOrder_id() !=null && client.getOrder_id() != ""){
             Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
             Gson gson = new Gson();
@@ -215,7 +224,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
                 String nuevoEstado = "";
-                final RadioGroup rgFormaPago = (RadioGroup) view.findViewById(R.id.rgFormaPago_mc);
+                final RadioGroup rgFormaPago = view.findViewById(R.id.rgFormaPago_mc);
                 rgFormaPago.check(R.id.tarjeta_mc);
                 String formapagoseleccionada="";
                 final RadioGroup rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro_mc);
@@ -261,12 +270,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             labelinput.setHint("Litros");
                             //calculoinput.setHint("Monto");
                             input_monto_litros.setText(input_monto_litros.getText().toString());
+                            litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                            monto_c =0.0;
                         }
 
                         if (radioGroup.getCheckedRadioButtonId() == R.id.monto_mc){
                             labelinput.setHint("Monto");
                             //calculoinput.setHint("Litros");
                             input_monto_litros.setText(input_monto_litros.getText().toString());
+                            monto_c = Double.parseDouble(input_monto_litros.getText().toString());
+                            litro_c = 0.0;
                         }
                     }
                 });
@@ -337,6 +350,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             cancel = true;
                         }
 
+
+
+                        if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto_mc){
+                            // Check for a valid ammount.
+                            if (monto_c < 200.00) {
+                                Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                                cancel = true;
+                            }
+                        }
+
                         // Check for a valid password, if the user entered one.
                         /*if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
                             Utilities.SetLog("ERROR PRECIO", String.valueOf(calculo_monto_litro.getText()), WSkeys.log);
@@ -404,7 +427,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         });
 
-        featuredlayout = (LinearLayout) view.findViewById(R.id.featuredlayout);
+        featuredlayout = view.findViewById(R.id.featuredlayout);
         featuredlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -589,6 +612,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             cancel = true;
                         }
 
+                        // Check for a valid ammount.
+                        if (monto_c < 200.00) {
+                            Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                            cancel = true;
+                        }
+
                         // Check for a valid password, if the user entered one.
                         if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
                             Utilities.SetLog("ERROR PRECIO", String.valueOf(calculo_monto_litro.getText()), WSkeys.log);
@@ -676,6 +705,37 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     }
                 }
                 return false;
+            }
+        });
+
+        try {
+            ValidaPedidoActivo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        btn_pedidoActivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
+                String json_pedido = gson.toJson(pedidoActivo);
+                intent.putExtra("pedido_data",json_pedido);
+                intent.putExtra("idPedido",pedidoActivo.getId());
+                intent.putExtra("pedido_data",json_pedido);
+                intent.putExtra("status",pedidoActivo.getStatus());
+                startActivity(intent);
+                SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
+                seguimientoPedido.setIdPedido(String.valueOf(pedidoActivo.getId()));
+                seguimientoPedido.setStatus(String.valueOf(pedidoActivo.getStatus()));
+                seguimientoPedido.setColor("");
+                seguimientoPedido.setNombreConcesionario(pedidoActivo.getNombreConcesionario());
+                seguimientoPedido.setNombreConductor(pedidoActivo.getNombreConductor());
+                seguimientoPedido.setLatitud(String.valueOf(pedidoActivo.getLatitud()));
+                seguimientoPedido.setLongitud(String.valueOf(pedidoActivo.getLongitud()));
+                seguimientoPedido.setNombreStatus(pedidoActivo.getNombreStatus());
+                seguimientoPedido.setTiempo("");
+                seguimientoPedido.setTipo("3");
+                client.setSeguimientoPedido(seguimientoPedido);
             }
         });
 
@@ -1250,6 +1310,84 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+
+    public void ValidaPedidoActivo() throws JSONException {
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO_ACTIVO;
+        Utilities.SetLog("MAINSEARCH-PEDIDOACTIVO?",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    ParserPedidoActivo(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
+                Snackbar.make(direcciones, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserPedidoActivo(JSONObject response) throws JSONException {
+        Gson gson = new Gson();
+        Utilities.SetLog("PARSER-MAIN_ACTIVO",response.toString(),WSkeys.log);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (response.getInt("codeError") == (WSkeys.okresponse)) {
+            JSONObject jo_data = response.getJSONObject(WSkeys.data);
+            pedidoActivo = gson.fromJson(jo_data.toString(), PedidoActivo.class);
+
+            layoutDirecciones.setVisibility(View.GONE);
+            layoutPedidoActivo.setVisibility(View.VISIBLE);
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
+
+            Utilities.SetLog("PARSER-MAIN_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
+        }else{
+            Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+
 
 }
 

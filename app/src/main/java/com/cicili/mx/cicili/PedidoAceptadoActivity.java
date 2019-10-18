@@ -189,9 +189,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             latOrderAddress = Double.parseDouble(seguimientoPedido.getLatitud());
             lonOrderAddress = Double.parseDouble(seguimientoPedido.getLongitud());
             time.setText(seguimientoPedido.getTiempo());
-            lbl1.setText("CONDUCTOR: " + seguimientoPedido.getConductor());
-            lbl2.setText("COLOR:" + seguimientoPedido.getColor());
-            lbl4.setText("PLACA: " + seguimientoPedido.getPlaca());
+            lbl1.setText("Conductor:  " + seguimientoPedido.getNombreConductor());
+            lbl2.setText("Color: " + seguimientoPedido.getColor());
+            lbl3.setText("");
+            lbl4.setText("Placa:  " + seguimientoPedido.getPlaca());
             f_row.setVisibility(View.GONE);
             status_order.setText(seguimientoPedido.getNombreStatus());
             aclarar = (Button) findViewById(R.id.aclaracion);
@@ -548,7 +549,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     private void ActualizarUbicacionTask(final Double latitud, final Double longitud) {
         moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latitud, longitud));
-        AddMarkerConductor(latitud, longitud, seguimientoPedido.getConductor(), seguimientoPedido.getConcesionario(), Double.parseDouble(seguimientoPedido.getMonto()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getIdPedido()));
+        AddMarkerConductor(latitud, longitud, seguimientoPedido.getNombreConductor(), seguimientoPedido.getNombreConcesionario(), Double.parseDouble(seguimientoPedido.getMonto()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getIdPedido()));
     }
 
 
@@ -654,8 +655,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             String respuestaDirecctions = new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving").toString();
 
-            Utilities.SetLog("DATA Directions: ", respuestaDirecctions, WSkeys.log);
-            
+            Utilities.SetLog("DATA Directions: ", respuestaDirecctions.toString(), WSkeys.log);
+
 
             Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
@@ -918,7 +919,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
     @Override
-    public void getReceiverEstatusPedido(final String status) {
+    public void getReceiverEstatusPedido(final String status, final String mensaje) {
         String nombreEstatus="";
 
         Utilities.SetLog("getReceiverEstatusPedido: ", status, WSkeys.log);
@@ -963,7 +964,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
             builder.setTitle("Estatus de tu pedido:");
-            builder.setMessage(nombreEstatus);
+            builder.setMessage(mensaje);
             builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
@@ -1103,6 +1104,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utilities.SetLog("Evento: "," onBackPressed",WSkeys.log);
+        handler.removeCallbacksAndMessages(null); // se deja de enviar la ubicación
+        client.setMessageContext(null);
+        super.onBackPressed();
     }
 
 }
