@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/anim"
             android:layout_width="100.1dp"
             android:layout_height="100.1dp"
             android:src="@drawable/success_anim_" />
@@ -86,14 +87,27 @@
             android:text="@string/cancel"/>-->
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/nuevo_pedido"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/nuevo_pedido"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:cornerRadius="20dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancela_pedido_bss"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="@string/cancel"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="@android:color/holo_red_light"
             app:cornerRadius="20dp" />
+
+
 
     </LinearLayout>
 

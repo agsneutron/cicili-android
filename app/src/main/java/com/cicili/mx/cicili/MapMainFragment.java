@@ -433,7 +433,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onClick(View view) {
                 Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
-                if(direccionSeleccionada>0){
+                if(pipas.getSelectedItemId()>0){
                     bsb_mascercano.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
                 else{
@@ -1570,6 +1570,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     if (i ==1){
                         latitudPedido=latCurrent;
                         longitudPedido=lonCurrent;
+                        try {
+                            ConsultaPrincipal(new LatLng(latitudPedido, longitudPedido));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        direccionSeleccionada = 0;
 
                     } else if (direcciones.getSelectedItemId()>1){
                         try {
