@@ -1195,8 +1195,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
-            //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
-            Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
+            JSONObject jo_usocfdi = respuesta.getJSONObject(WSkeys.data);
+            Snackbar.make(facturar, jo_usocfdi.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
                     .show();
 
         }
@@ -1261,7 +1261,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     break;
             }
 
-           
+
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
             //name.setText("Pedido : " + nombreEstatus);

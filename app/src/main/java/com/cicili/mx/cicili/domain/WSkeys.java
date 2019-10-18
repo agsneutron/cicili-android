@@ -305,4 +305,5 @@ public class WSkeys {
     public static int no_error_ok = 1;
     public static String cantidad= "cantidad";
     public static String monto= "monto";
+    public static String mensaje_facturar = "";
 }
