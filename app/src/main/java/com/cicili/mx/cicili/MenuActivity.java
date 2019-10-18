@@ -58,7 +58,7 @@ public class MenuActivity extends AppCompatActivity
         RfcDetailFragment.OnFragmentInteractionListener,
         ScheduleMainFragment.OnListFragmentInteractionListener,
         OrderMainFragment.OnListFragmentInteractionListener,
-        NotificationReceiver.OnNotificationReceiverListener{
+        NotificationReceiver.OnNotificationReceiverListener,MessageReceiverCallback{
 
 
     Application application = (Application) Client.getContext();
@@ -149,6 +149,9 @@ public class MenuActivity extends AppCompatActivity
 
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
+
+        client.setContextMap(MenuActivity.this);
+
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -537,6 +540,15 @@ public class MenuActivity extends AppCompatActivity
         });
 
     }
+
+    @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+        Utilities.SetLog("getReceiverEstatusPedido: ", status, WSkeys.log);
+        fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
+        fragmentMain.
+    }
+
+
 
     /*@Override
     protected void onRestart() {

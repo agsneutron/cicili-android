@@ -212,6 +212,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         direcciones.setOnItemSelectedListener(this);
         pipas.setOnItemSelectedListener(this);
 
+        client.setContextMap(getActivity());
+
+
 
         layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
         try {
@@ -1356,6 +1359,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -1766,6 +1770,18 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     .show();
         }
     }
+
+    /*@Override
+    public void getReceiverEstatusPedido(final String status, final String mensaje) {
+        String nombreEstatus="";
+
+        Utilities.SetLog("getReceiverEstatusPedido: ", status, WSkeys.log);
+
+        if (Integer.parseInt(status)==11){
+            getDeviceCurrentLocation();
+        }
+
+    }*/
 
 }
 

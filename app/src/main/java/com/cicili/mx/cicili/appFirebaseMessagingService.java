@@ -78,11 +78,12 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 }*/
             }
 
-            /*if (remoteMessage.getData().get("status").toString().equals("11")){
+            if (remoteMessage.getData().get("status").toString().equals("11")){
                 if (interfaceNotificationPipas == null){
-                    interfaceNotificationPipas = (MessageReceiverCallback) client.getMessageContext();
+                    interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
+                    interfaceNotificationPipas.getReceiverEstatusPedido("11","Nuevas Pipas");
                 }
-            }*/
+            }
 
 
 
