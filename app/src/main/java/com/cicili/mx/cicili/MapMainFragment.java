@@ -1324,7 +1324,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 .tilt(45)
                 .build();
 
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 1000, null);
 
         Marker mMarkerd = mMap.addMarker(new MarkerOptions()
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_home_blue_24dp))
