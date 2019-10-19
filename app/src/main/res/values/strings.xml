@@ -168,7 +168,7 @@
 
     <string name="conductor">Conductor</string>
     <string name="costo">Precio por litro</string>
-    <string name="error_pedido">Por favor revisa los datos de tu pedido</string>
+    <string name="error_pedido"></string>
     <string name="error_invalid_value">Favor indica los litros o precio a pagar.</string>
     <string name="tiempo">Tiempo aproximado de llegada</string>
     <string name="title_activity_new_order">Realizar Pedido</string>
@@ -306,9 +306,24 @@
     <string name="en_que_te_podemos_ayudar">¿En qué te podemos ayudar?</string>
     <string name="subtitle_help">Envíanos una pregunta, con gusto responderémos.</string>
     <string name="mensajelbl">Escribe tu pregunta</string>
-    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_message">Mensajes a Cicili</string>
     <string name="subtitle_aclr">Envíanos el asunto que deseas aclarar.</string>
     <string name="en_que_te_podemos_servir">¿En qué te podemos servir?</string>
-    <string name="mensajeacl">Escribe tu asunto a aclarar</string>
+    <string name="mensajeacl">Escribe tu mensaje de aclaración</string>
+    <string name="qu_pipa_enviamos_a_tu_domicilio">¿Qué pipa enviamos a tu domicilio?</string>
+    <string name="error_status">Ha ocurrido un error, intenta nuevamente.</string>
+    <string name="pedidos_programados_title">Pedidos Programados</string>
+    <string name="title_order_acepted">Detalle de Pedido</string>
+    <string name="btn_cancelar">CANCELAR</string>
+    <string name="error_invalid_ammount">El monto mínimo para solicitar tu pedido debe ser de $200.</string>
+    <string name="pedido_en_curso">Tienes un pedido en curso</string>
+    <string name="btn_pedido">Ver Pedido</string>
+    <string name="btn_cambiar">CAMBIAR PEDIDO</string>
+    <string name="enviar_mas_cercano">Enviar mas cercano</string>
+    <string name="pedido">Pedido</string>
+    <string name="error_invalid_selection">Debes seleccionar una Dirección y una Pipa para procesar tu pedido.</string>
+    <string name="cambiar_mi_pedido">Cambiar mi Pedido</string>
+    <string name="change_order">Cambiar Pedido</string>
+    <string name="hola">¡ Hola</string>
 
 </resources>

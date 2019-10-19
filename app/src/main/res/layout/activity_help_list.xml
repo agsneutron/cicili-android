@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|center"
         android:text="@string/ask_to_cicili"
         app:backgroundTint="@color/colorPrimaryDark"
         app:cornerRadius="20dp" />

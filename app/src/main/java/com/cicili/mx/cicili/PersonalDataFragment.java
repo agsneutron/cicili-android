@@ -202,6 +202,8 @@ public class PersonalDataFragment extends Fragment {
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Utilities.hideKeyboardwithoutPopulate(getActivity());
                 // put your code here
                 //TextInputEditText mcode = (TextInputEditText)v.findViewById(R.id.code);
                 mname.setError(null);
@@ -361,12 +363,6 @@ public class PersonalDataFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                /*params.put(WSkeys.user, client.getUsername());
-                params.put(WSkeys.name, vname);
-                params.put(WSkeys.apepat, vpat);
-                params.put(WSkeys.apemat, vmat);
-                params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 
@@ -390,7 +386,7 @@ public class PersonalDataFragment extends Fragment {
 
     public void ParserPersonal(JSONObject respuesta) throws JSONException {
 
-        Log.e("CodeResponse", respuesta.toString());
+        Log.e("RESP-PERSONALDATA", respuesta.toString());
 
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -403,10 +399,16 @@ public class PersonalDataFragment extends Fragment {
                     Utilities.SetPerfilData(jousuario,client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalupdate, Toast.LENGTH_LONG);
                     toast.show();
+                    Intent intent = new Intent(getContext(),MenuActivity.class);
+                    intent.putExtra("active", "C");
+                    startActivity(intent);
+                    getActivity().finish();
                 }else {
                     Utilities.SetClientData(jousuario, client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalvalidation, Toast.LENGTH_LONG);
                     toast.show();
+                    Intent intent = new Intent(getContext(),PerfilData.class);
+                    startActivity(intent);
                 }
 
 
@@ -416,23 +418,41 @@ public class PersonalDataFragment extends Fragment {
 
 
                 if (client.getStatus().equals(WSkeys.completo)){
-                Intent intent = new Intent(getContext(),MenuActivity.class);
-                intent.putExtra("active", WSkeys.completo);
-                startActivity(intent);
+                    Intent intent = new Intent(getContext(),MenuActivity.class);
+                    intent.putExtra("active", WSkeys.completo);
+                    startActivity(intent);
+                    getActivity().finish();
                 }else if(client.getStatus().equals(WSkeys.datos_direccion)){
                     Fragment fragmentAddress = new AddressDataFragment();
+                    FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction().hide(this);
+                    fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
+
+                    /*
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
                     transaction.remove(this);
                     transaction.show(fragmentAddress).commit();
-                    transaction.commit();
+                    active = fragmentAddress;*/
+
+                } else if(client.getStatus().equals(WSkeys.datos_pago)){
+                    Fragment fragmentPayment = new PaymentDataFragment();
+                    FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction().hide(this);
+                    fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
+
+                    /*Fragment fragmentPayment = new PaymentDataFragment();
+                    FragmentManager manager = getFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(this);
+                    transaction.show(fragmentPayment).commit();*/
                 }
                 else{
                     getActivity().onBackPressed();
                     //getActivity().getFragmentManager().popBackStack();
                     //getActivity().finish();
-
                 }
 
 
@@ -512,7 +532,7 @@ public class PersonalDataFragment extends Fragment {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG,10,baos);
         byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);  //NO_WRAP
+        String encImage = Base64.encodeToString(b, Base64.NO_WRAP);  //NO_WRAP
 
         return encImage;
 

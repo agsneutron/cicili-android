@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -95,14 +97,13 @@ public class RegisterClient extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+
                     attemptRegister();
                     return true;
                 }
                 return false;
             }
         });
-
-
 
         mRegisterFormView = (View)findViewById(R.id.register_login_form);
         mProgressView = (View)findViewById(R.id.login_progress);
@@ -114,13 +115,10 @@ public class RegisterClient extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent intent = new Intent(RegisterClient.this,MainActivity.class);
                 //startActivity(intent);
+
                 attemptRegister();
             }
         });
-
-
-
-
     }
 
     @Override
@@ -128,6 +126,7 @@ public class RegisterClient extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
     private final TextWatcher passwordStrength = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -144,8 +143,6 @@ public class RegisterClient extends AppCompatActivity {
 
 
     private void verifyPasswordStrength(String password) {
-
-
 
         //if (TextView.VISIBLE != strengthStatus.getVisibility())
         //    return;
@@ -168,10 +165,14 @@ public class RegisterClient extends AppCompatActivity {
 
         //strengthStatus.setTextColor(str.getColor());
 
-        tilpassword.setError("La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.");
-        tilpassword.setErrorTextColor(ColorStateList.valueOf(str.getColor()));
-
-
+        //tilpassword.setError("La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.");
+        //tilpassword.setErrorTextColor(ColorStateList.valueOf(str.getColor()));
+        if (str.getValue() >=2 ) {
+            mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tick, 0);
+        }
+        else {
+            mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+        }
         /*progressBar.getProgressDrawable().setColorFilter(str.getColor(), android.graphics.PorterDuff.Mode.SRC_IN);
         if (str.getValue() == 0) {
             progressBar.setProgress(25);
@@ -189,6 +190,7 @@ public class RegisterClient extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptRegister() {
+        Utilities.hideKeyboardwithoutPopulate(RegisterClient.this);
 
         // Reset errors.
         mEmailView.setError(null);
@@ -213,11 +215,11 @@ public class RegisterClient extends AppCompatActivity {
         }
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(cpassword) && !Utilities.isPasswordValid(cpassword)) {
+        /*if (!TextUtils.isEmpty(cpassword) && !Utilities.isPasswordValid(cpassword)) {
             mCPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mCPasswordView;
             cancel = true;
-        }
+        }*/
 
         //Check for a valid comfirm password
         if(!cpassword.equals(password)){
@@ -286,8 +288,6 @@ public class RegisterClient extends AppCompatActivity {
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
-
-
     }
 
 
@@ -361,21 +361,14 @@ public class RegisterClient extends AppCompatActivity {
 
                 token = jousuario.getString(WSkeys.token);
                 Snackbar.make(mEmailView, R.string.successregister, Snackbar.LENGTH_SHORT).show();
-
-
-
                 Intent intent = new Intent(RegisterClient.this,ValidateActivity.class);
                 intent.putExtra("token",token);
                 startActivity(intent);
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-                Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                Snackbar.make(mRegisterFormView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                         .show();
         }
     }
-
-
-
-
 
 }

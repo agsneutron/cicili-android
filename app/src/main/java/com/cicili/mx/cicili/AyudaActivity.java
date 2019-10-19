@@ -76,6 +76,8 @@ public class AyudaActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+
+        ValidaPreguntaPendiente();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mensaje = (TextInputEditText) findViewById(R.id.mensaje);
         categoria = (Spinner) findViewById(R.id.categoria);
@@ -308,6 +310,96 @@ public class AyudaActivity extends AppCompatActivity {
 
             AlertDialog dialog = builder.create();
             dialog.show();
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(mensaje, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    public void ValidaPreguntaPendiente(){
+        String url = WSkeys.URL_BASE + WSkeys.URL_OBTENER_SEGUIMIENTO_PREGUNTAS;
+
+        Utilities.SetLog("VALIDA SI HAY PREGUNTAS",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserPregunta(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(mensaje, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserPregunta(String respuesta) throws JSONException {
+
+        Utilities.SetLog("RESPONSE_ACLARACION",respuesta,WSkeys.log);
+        //Log.e("CodeResponse", response);
+
+        JSONObject response = new JSONObject(respuesta);
+        // si el response regresa ok, entonces si inicia la sesión
+        if (response.getInt("codeError") == (WSkeys.okresponse)) {
+            //ontener nivel de data
+            Utilities.SetLog("RESPONSE_PREGUNTAPENDIENTE",response.getString(WSkeys.data),WSkeys.log);
+            JSONArray ja_data = new JSONArray(response.getString(WSkeys.data));
+            Intent intent = new Intent(AyudaActivity.this, MessageActivity.class);
+            if (ja_data.length() > 0) {
+                Utilities.SetLog("LOGIN ja_data", ja_data.toString(), WSkeys.log);
+                for(int i=0; i<ja_data.length(); i++) {
+                    JSONObject jo_data = (JSONObject) ja_data.get(i);
+                    Utilities.SetLog("jo_data",jo_data.toString(),WSkeys.log);
+                    intent.putExtra("id",jo_data.getString("id"));
+                    intent.putExtra("order","0");
+                    intent.putExtra("aclaracion",jo_data.getString("aclaracion"));
+                    JSONObject tipo = new JSONObject(jo_data.getString("tipoAclaracion"));
+                    intent.putExtra("categoria",tipo.getString("text"));
+                    intent.putExtra("uso","2");
+                }
+                //si hay aclaraciones pendientes
+                startActivity(intent);
+            }
+
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{

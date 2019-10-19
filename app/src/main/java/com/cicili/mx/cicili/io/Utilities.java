@@ -16,6 +16,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.cicili.mx.cicili.LoginActivity;
 import com.cicili.mx.cicili.R;
@@ -122,7 +123,7 @@ public class Utilities {
 
     public static boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 7;
     }
 
 
@@ -225,7 +226,11 @@ public class Utilities {
         ArrayList<AddressData> direccionAux = new ArrayList<AddressData>();
         AddressData addressData= gson.fromJson(jo_address.toString() , AddressData.class);
         direccionAux.add(addressData);
-        client.getAddressDataArrayList().add(client.getAddressDataArrayList().size(),addressData);
+        if(client.getAddressDataArrayList() != null) {
+            client.getAddressDataArrayList().add(client.getAddressDataArrayList().size(), addressData);
+        }else{
+            client.setAddressDataArrayList(direccionAux);
+        }
     }
 
     public static void UpdateAddressData(JSONObject jo_address, Client client,int pos){
@@ -295,10 +300,13 @@ public class Utilities {
         PaymentData paymentData = gson.fromJson(js_payment , PaymentData.class);
         ArrayList<PaymentData> paymentAux = new ArrayList<PaymentData>();
         paymentAux.add(paymentData);
-        client.getPaymentDataArrayList().add(client.getPaymentDataArrayList().size(),paymentData);
-
+        if(client.getPaymentDataArrayList() != null){
+            client.getPaymentDataArrayList().add(client.getPaymentDataArrayList().size(), paymentData);
+        }
+        else{
+            client.setPaymentDataArrayList(paymentAux);
+        }
         Utilities.SetLog("PAYMENTDTA",String.valueOf(paymentData.getId()),WSkeys.log);
-
     }
 
     public static void UpdatePaymentData(String js_payment, Client client,int pos){
@@ -323,7 +331,7 @@ public class Utilities {
     public enum PasswordStrength
     {
 
-        WEAK(0, Color.RED), MEDIUM(1, Color.argb(255, 220, 185, 0)), STRONG(2, Color.GREEN), VERY_STRONG(3, Color.BLUE);
+        WEAK(0, Color.RED), MEDIUM(1, Color.YELLOW), STRONG(2, Color.GREEN), VERY_STRONG(3, Color.BLUE);
 
         //--------REQUIREMENTS--------
         static int REQUIRED_LENGTH = 8;
@@ -391,7 +399,7 @@ public class Utilities {
                 }
             }
 
-            if (password.length() > REQUIRED_LENGTH)
+            if (password.length() >= REQUIRED_LENGTH)
             {
                 if ((REQUIRE_SPECIAL_CHARACTERS && !sawSpecial) || (REQUIRE_UPPER_CASE && !sawUpper) || (REQUIRE_LOWER_CASE && !sawLower) || (REQUIRE_DIGITS && !sawDigit))
                 {
@@ -429,5 +437,13 @@ public class Utilities {
 
     }
 
+
+    public static void hideKeyboardwithoutPopulate(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
 }

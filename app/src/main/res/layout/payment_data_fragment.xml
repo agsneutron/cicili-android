@@ -185,13 +185,13 @@
                 android:layout_weight="1"
                 android:hint="@string/vencimiento"
                 app:errorEnabled="true"
-                app:helperText="MM/AAAA">
+                app:helperText="MM/AA">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/vencimiento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
+                    android:inputType="number"
                     android:textColor="@color/colorPrimaryDark" />
             </com.google.android.material.textfield.TextInputLayout>
 

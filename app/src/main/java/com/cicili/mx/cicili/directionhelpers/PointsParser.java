@@ -97,7 +97,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             // Starts parsing data
             routes = parser.parse(jObject);
             //mMap.addPolyline(lineOptions);
-            taskCallback.onTaskDone(lineOptions, routes);
+            taskCallback.onTaskDone(lineOptions);
 
         } else {
             Log.d("mylog", "without Polylines drawn");

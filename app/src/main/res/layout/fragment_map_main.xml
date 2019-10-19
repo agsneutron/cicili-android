@@ -12,35 +12,86 @@
 
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mapframe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+
 
 
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/cv_iniciapedido"
+            />
+
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_iniciapedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white">
+            android:layout_margin="0dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/map"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/LayoutPedidoActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/labelpedido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/pedido_en_curso"
+                    android:textColor="@color/black"
+                    android:textSize="14.3sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnActivo"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.1"
+                    android:padding="10dp"
+                    android:text="@string/btn_pedido"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:cornerRadius="20dp"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/LayoutDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:gravity="center">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
@@ -52,9 +103,9 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¡Hola"
+                        android:text="@string/hola"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="23dp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/name_usuario"
@@ -63,7 +114,7 @@
                         android:paddingLeft="7dp"
                         android:text="@string/empty"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="23dp" />
+                        android:textSize="18sp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
@@ -73,35 +124,60 @@
                     android:layout_marginTop="2dp"
                     android:text="@string/titulo_selecciona_direccion"
                     android:textColor="@color/black"
-                    android:textSize="14.3sp" />
+                    android:textSize="12sp" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinner1"
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:spinnerMode="dropdown"
                     android:textSize="12sp" />
 
                 <LinearLayout
-                    android:id="@+id/taglayout"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/qu_pipa_enviamos_a_tu_domicilio"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner2"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/taglayout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:id="@+id/populatlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0"
                         android:background="@drawable/roundtext"
                         android:gravity="bottom"
                         android:orientation="horizontal"
-                        android:padding="7dp">
+                        android:padding="7dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/imageView2"
@@ -114,23 +190,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Pedido"
+                            android:text="@string/pedido"
                             android:textColor="#bcbec2"
-                            android:textSize="13dp" />
-
-                    </LinearLayout>
+                            android:textSize="13sp" />
+                    </LinearLayout>-->
 
 
                     <LinearLayout
                         android:id="@+id/featuredlayout"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:background="@drawable/roundtext"
                         android:clickable="true"
-                        android:gravity="bottom"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:padding="7dp">
 
@@ -145,9 +220,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Enviar mas cercano"
+                            android:text="@string/enviar_mas_cercano"
                             android:textColor="#bcbec2"
-                            android:textSize="13dp" />
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
@@ -179,10 +254,10 @@
              android:layout_margin="@dimen/fab_margin"
              app:srcCompat="@drawable/ic_stat_name"
              />-->
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/bottom_sheet_main" />
     <include layout="@layout/bottom_sheet_mascercano" />
-
+    <include layout="@layout/bottom_sheet_cancela" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

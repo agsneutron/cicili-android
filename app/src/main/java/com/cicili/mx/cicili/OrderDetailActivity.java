@@ -67,6 +67,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     TextView mlbl1,mlbl2,mlbl3,mlbl4;
     MapFragment mapFragment;
     Button aclarar, facturar;
+    PedidoDetail pedidoData;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -170,7 +171,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
                             Location getCurrentLocation = (Location) task.getResult();
                             moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latOrderAddress, lonOrderAddress));
-                            AddMarker(latOrderAddress, lonOrderAddress,client.getPedidosDataArrayList().get(pos).getNombreStatus(),client.getPedidosDataArrayList().get(pos).getDireccion());
+                            AddMarker(latOrderAddress, lonOrderAddress,pedidoData.getNombreStatus(),pedidoData.getDireccion());
 
                         } else {
                             Utilities.SetLog("MAP-LOCATION", task.toString(), WSkeys.log);
@@ -341,7 +342,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
             //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
-            PedidoDetail pedidoData= gson.fromJson( respuesta.getJSONObject(WSkeys.data).toString() , PedidoDetail.class);
+            pedidoData= gson.fromJson( respuesta.getJSONObject(WSkeys.data).toString() , PedidoDetail.class);
             //setvalues to textviews
 
             mDate.setText(pedidoData.getFechaSolicitada());

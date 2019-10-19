@@ -273,10 +273,20 @@ public class WSkeys {
     //app/aclaracion/preguntas
     public static final String URL_OBTENER_SEGUIMIENTO_PREGUNTAS = "app/aclaracion/preguntas";
 
+    //VALIDACLIENTE
+    // https://api.cicili.com.mx:8443/app/mv/cliente/status
+    public static final String URL_VALIDATESTATUS = "app/mv/cliente/status";
 
-
+    //PEDIDO ACTIVO
+    //app/mv/cliente/pedidoactivo
+    public static final String URL_PEDIDO_ACTIVO = "app/mv/cliente/pedidoactivo";
 
     public static final Boolean log = true;
+
+
+    //Actualizar Pedido
+    //https://cicili.com.mx:8443/app/mv/cliente/pedido/actualizar
+    public static final String URL_UPDATE_ORDER = "app/mv/cliente/pedido/actualizar" ;
     public static int cplenght = 4;
     public static final float CAMERA_ZOOM = 15f;
 
@@ -292,4 +302,8 @@ public class WSkeys {
     //motivo programa
     //https://cicili.com.mx:8443/app/mv/cliente/pedido/programar
     public static final String URL_UBICACION_CONDUCTOR = "app/mv/cliente/pedido/ubicacion/";
+    public static int no_error_ok = 1;
+    public static String cantidad= "cantidad";
+    public static String monto= "monto";
+    public static String mensaje_facturar = "";
 }

@@ -1,23 +1,42 @@
 package com.cicili.mx.cicili;
 
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PerfilData extends AppCompatActivity implements PersonalDataFragment.OnFragmentInteractionListener,
         PaymentDataFragment.OnFragmentInteractionListener, AddressDataFragment.OnFragmentInteractionListener,
@@ -35,6 +54,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragmentPersonal;
     BottomNavigationView nv;
+    ScrollView view_scroll;
 
 
     @Override
@@ -87,6 +107,8 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             id =  bundle.getString("id");
 
             Utilities.SetLog("LOG ID",id,WSkeys.log);
+        }else{
+            CheckStatus();
         }
 
         //fm.beginTransaction().add(R.id.container, fragmentAddress, "3").hide(fragmentAddress).commit();
@@ -154,5 +176,103 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             active = fragmentDataSchedule;
         }
 
+    }
+
+    public void CheckStatus() {
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_VALIDATESTATUS;
+        RequestQueue queue = Volley.newRequestQueue(PerfilData.this);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserCode(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("El error", error.toString());
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserCode(String response) throws JSONException {
+        Log.e("CodeResponse", response);
+        JSONObject respuesta = new JSONObject(response);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
+            JSONObject jo_data = respuesta.getJSONObject(WSkeys.data);
+            String data = jo_data.getString("idCliente");
+            String dataactive = jo_data.getString("status");
+            if (!data.equals("")){
+
+                if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
+                    //navView.setSelectedItemId(R.id.navigation_perfil);
+                    fm.beginTransaction().hide(active);
+                    fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").show(fragmentPersonal).commit();
+                    active = fragmentPersonal;
+                }
+                else if (dataactive.equals(WSkeys.datos_pago)){
+                    fm.beginTransaction().hide(active);
+                    fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
+                    active = fragmentPayment;
+                }
+                else if (dataactive.equals(WSkeys.datos_direccion)){
+                    fm.beginTransaction().hide(active);
+                    fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
+                    active = fragmentAddress;
+                }
+                else if (dataactive.equals(WSkeys.datos_rfc)) {
+                    fm.beginTransaction().hide(active);
+                    fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
+                    active = fragmentRfc;
+                }else if(dataactive.equals(WSkeys.completo)){
+                    Intent intent = new Intent(PerfilData.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+                finish();
+            }
+            else{
+                Snackbar.make(view_scroll, R.string.error_status, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        } // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(view_scroll, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+        }
     }
 }

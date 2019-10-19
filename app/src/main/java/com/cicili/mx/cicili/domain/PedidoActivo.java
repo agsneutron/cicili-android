@@ -1,6 +1,7 @@
 package com.cicili.mx.cicili.domain;
 
-public class SeguimientoPedido {
+public class PedidoActivo {
+
     String id;
     String nombreConductor;
     String clave;
@@ -12,8 +13,8 @@ public class SeguimientoPedido {
     String longitud;
     String nombreConcesionario;
     String nombreCliente;
-    String logo; //no
-    String tipo; //no
+    String logo;
+    String tipo;
     String status;
     String nombreStatus;
     String horaSolicitada;
@@ -26,10 +27,11 @@ public class SeguimientoPedido {
     String formaPago;
 
 
-    public SeguimientoPedido() {
+
+    public PedidoActivo() {
     }
 
-    public SeguimientoPedido(String id, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago) {
+    public PedidoActivo(String id, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago) {
         this.id = id;
         this.nombreConductor = nombreConductor;
         this.clave = clave;
@@ -55,15 +57,6 @@ public class SeguimientoPedido {
         this.formaPago = formaPago;
     }
 
-    public SeguimientoPedido(String id, String tipo, String status, String nombreStatus) {
-        this.id = id;
-        this.tipo = tipo;
-        this.status = status;
-        this.nombreStatus = nombreStatus;
-    }
-    public SeguimientoPedido(String status) {
-        this.status = status;
-    }
 
     public String getId() {
         return id;
@@ -72,6 +65,7 @@ public class SeguimientoPedido {
     public void setId(String id) {
         this.id = id;
     }
+
 
     public String getNombreConductor() {
         return nombreConductor;

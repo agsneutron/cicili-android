@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -226,16 +228,13 @@ public class PaymentDataFragment extends Fragment {
             registra_pago.setText("ACTUALIZAR");
         }
 
-        vencimiento.addTextChangedListener(new TextValidator(vencimiento) {
-            @Override public void validate(TextInputEditText textView, String text) {
-                if ((Utilities.isFieldValid(vencimiento)) && vencimiento.length()==2) {
-                    //text = text.concat("/");
-                    //vencimiento.setText(text);
-                    //vencimiento.setSelection(text.length(), text.length());
-                    vencimiento.setError("Agrega /");
-                }
-            }
-        });
+
+
+        vencimiento.addTextChangedListener(dateExpireValidation);
+
+
+
+
 
 
         numero.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -255,6 +254,8 @@ public class PaymentDataFragment extends Fragment {
         registra_pago.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Utilities.hideKeyboardwithoutPopulate(getActivity());
                 View focusView = null;
                 Integer fp = 0;
                 Integer tp = 0;
@@ -302,7 +303,7 @@ public class PaymentDataFragment extends Fragment {
                     }else{
                         paymentData.setNumero(Long.parseLong(sNumero));
                     }
-                    if(sVencimiento.equals("") || sVencimiento.length() < 7 ){
+                    if(sVencimiento.equals("") || sVencimiento.length() < 5 ){
                         vencimiento.setError(getString(R.string.error_field_required));
                         error =  true;
                         focusView = vencimiento;
@@ -542,19 +543,37 @@ public class PaymentDataFragment extends Fragment {
                 Utilities.UpdatePaymentData(jsonPayment,client,pos);
                 Toast toast = Toast.makeText(getContext(),  R.string.successpaymentupdate, Toast.LENGTH_LONG);
                 toast.show();
+                Intent intent = new Intent(getContext(),MenuActivity.class);
+                //intent.putExtra("active", client.getStatus());
+                //client.setStatus("C");
+                intent.putExtra("active", client.getStatus());
+                startActivity(intent);
+                getActivity().finish();
             }else {
                 Utilities.AddPaymentData(jsonPayment, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successpaymentvalidation, Toast.LENGTH_LONG);
                 toast.show();
+                Intent intent = new Intent(getContext(),PerfilData.class);
+                startActivity(intent);
             }
 
 
             /*Snackbar.make(viewGroup.getChildAt(0), R.string.successpaymentvalidation, Snackbar.LENGTH_LONG)
                     .show();*/
-            Intent intent = new Intent(getContext(),MenuActivity.class);
-            intent.putExtra("active", client.getStatus());
-            getActivity().finish();
-            startActivity(intent);
+
+            /*if (client.getStatus().equals(WSkeys.completo)){
+                Intent intent = new Intent(getContext(),MenuActivity.class);
+                intent.putExtra("active", WSkeys.completo);
+                startActivity(intent);
+                getActivity().finish();
+            }else if(client.getStatus().equals(WSkeys.datos_direccion)){
+                Fragment fragmentAddress = new AddressDataFragment();
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                manager.getBackStackEntryCount();
+                transaction.remove(this);
+                transaction.show(fragmentAddress).commit();
+            }*/
 
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
@@ -774,4 +793,26 @@ public class PaymentDataFragment extends Fragment {
                     .show();
         }
     }*/
+
+    private final TextWatcher dateExpireValidation = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        public void afterTextChanged(Editable s) {
+            if ((Utilities.isFieldValid(vencimiento)) && vencimiento.length()==2) {
+                //text = text.concat("/");
+                vencimiento.setText(String.format("%s/", s));
+                vencimiento.setSelection(vencimiento.getText().length());
+                vencimiento.addTextChangedListener(this);
+                //vencimiento.setError("Agrega /");
+            }
+
+        }
+    };
 }
+

@@ -1,12 +1,17 @@
 package com.cicili.mx.cicili;
 
+import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.io.InputMessage;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +33,12 @@ public class AdapterMessage extends RecyclerView.Adapter<HolderMessage> {
         notifyItemInserted(listMensaje.size());
     }
 
+    public  void clearMensajes(){
+        listMensaje.clear();
+        notifyDataSetChanged();
+
+    }
+
     @Override
     public HolderMessage onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(c).inflate(R.layout.cardview_message,parent,false);
@@ -36,8 +47,17 @@ public class AdapterMessage extends RecyclerView.Adapter<HolderMessage> {
 
     @Override
     public void onBindViewHolder(HolderMessage holder, int position) {
+        Application application = (Application) Client.getContext();
+        Client client = (Client) application;
         holder.getNombre().setText(listMensaje.get(position).getUsuario());
         holder.getMensaje().setText(listMensaje.get(position).getTexto());
+        if (listMensaje.get(position).getIdUsuario().equals(client.getIdcte())) {
+
+            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            holder.getFotoMensajePerfil().setImageBitmap(decodedByte);
+        }
         /*if(listMensaje.get(position).getType_mensaje().equals("2")){
             holder.getFotoMensaje().setVisibility(View.VISIBLE);
             holder.getMensaje().setVisibility(View.VISIBLE);
