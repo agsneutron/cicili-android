@@ -561,6 +561,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (input_monto_litros.getText().toString().equals("0")){
+
+                            input_monto_litros.setText("");
+                        }
 
                     }
 
@@ -1770,9 +1774,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             }
             else {
                 label_pedido.setText(R.string.pedido_en_curso);
+                layoutDirecciones.setVisibility(View.GONE);
+                layoutPedidoActivo.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
+                String json_pedido = gson.toJson(pedidoActivo);
+                intent.putExtra("pedido_data",json_pedido);
+                intent.putExtra("idPedido",pedidoActivo.getId());
+                intent.putExtra("pedido_data",json_pedido);
+                intent.putExtra("status",pedidoActivo.getStatus());
+                startActivity(intent);
             }
-            layoutDirecciones.setVisibility(View.GONE);
-            layoutPedidoActivo.setVisibility(View.VISIBLE);
+
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
