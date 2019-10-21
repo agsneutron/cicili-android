@@ -399,6 +399,10 @@ public class PersonalDataFragment extends Fragment {
                     Utilities.SetPerfilData(jousuario,client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalupdate, Toast.LENGTH_LONG);
                     toast.show();
+                    Intent intent = new Intent(getContext(),MenuActivity.class);
+                    intent.putExtra("active", "C");
+                    startActivity(intent);
+                    getActivity().finish();
                 }else {
                     Utilities.SetClientData(jousuario, client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalvalidation, Toast.LENGTH_LONG);
@@ -528,7 +532,7 @@ public class PersonalDataFragment extends Fragment {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG,10,baos);
         byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);  //NO_WRAP
+        String encImage = Base64.encodeToString(b, Base64.NO_WRAP);  //NO_WRAP
 
         return encImage;
 

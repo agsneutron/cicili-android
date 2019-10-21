@@ -19,6 +19,7 @@ import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -59,7 +60,7 @@ public class MenuActivity extends AppCompatActivity
         RfcDetailFragment.OnFragmentInteractionListener,
         ScheduleMainFragment.OnListFragmentInteractionListener,
         OrderMainFragment.OnListFragmentInteractionListener,
-        NotificationReceiver.OnNotificationReceiverListener{
+        NotificationReceiver.OnNotificationReceiverListener,MessageReceiverCallback{
 
 
     Application application = (Application) Client.getContext();
@@ -151,8 +152,7 @@ public class MenuActivity extends AppCompatActivity
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
 
-        getSupportFragmentManager().beginTransaction().add(fragmentMain,"").commit(); //*************************************************************************************
-        FragmentTransaction transacction = getSupportFragmentManager().beginTransaction();
+        client.setContextMap(MenuActivity.this);
 
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
@@ -178,14 +178,16 @@ public class MenuActivity extends AppCompatActivity
         tvarea.setText(client.getEmail());
         ImageView imageView = (ImageView)headerView.findViewById(R.id.imageView);
 
-        byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (!client.getPhoto().isEmpty() || client.getPhoto()!=null) {
 
-        Utilities.SetLog("IMAGEN CLIENTE",client.getPhoto().substring(client.getPhoto().indexOf(",") + 1),WSkeys.log);
+            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-        imageView.setImageBitmap(decodedByte);
+            Utilities.SetLog("IMAGEN CLIENTE", client.getPhoto().substring(client.getPhoto().indexOf(",") + 1), WSkeys.log);
+
+            imageView.setImageBitmap(decodedByte);
+        }
         //
-
 
 
         //BOTTOMNAVIGATION OPTIONS
@@ -215,7 +217,6 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
                 active = fragmentMain;
-                fragmentMain.
             }
 
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(fragmentAddress).commit();
@@ -542,5 +543,36 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
+   @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
 
+
+
+       //Fragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+       //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.map);
+
+       Fragment  fragment =  fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+
+       Utilities.SetLog("instanceof : ",String.valueOf (fragment), WSkeys.log);
+
+       if (fragment instanceof SupportMapFragment){
+
+           /** Se valida que esta bien instanciado y se hace la comunicación*/
+
+          MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
+
+           /** Se envia el mensaje al metodo del receptor*/
+          receptor.setRecibeEstatusPedido(status);
+       }
+    }
+
+
+
+    /*@Override
+    protected void onRestart() {
+        fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
+        active = fragmentMain;
+        super.onRestart();
+
+    }*/
 }

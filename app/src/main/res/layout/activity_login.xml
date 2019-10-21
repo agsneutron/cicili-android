@@ -158,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="Qwe123@#$"
+                        android:text="1qa2ws3ed"
                         android:textColor="@color/textDark"
                         app:backgroundTint="@color/colorPrimaryDark"
                         android:textColorHint="@color/white" />

@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,11 +50,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.AutotanquesDisponibles;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.PedidoActivo;
@@ -92,6 +95,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.cicili.mx.cicili.domain.Client.getContext;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -114,6 +119,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private Integer pipaSeleccionada;
 
     private OnFragmentInteractionListener mListener;
+    private OnMessagePedidoListener statusListener;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     Spinner direcciones, pipas;
@@ -123,16 +129,24 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private ArrayList<String> autotanquesDisponiblesArray;
     Gson gson = new Gson();
     Integer direccionSeleccionada=0;
-    Double latitudPedido, longitudPedido, monto_c, litro_c;
+    Double latitudPedido, longitudPedido, monto_c, litro_c, latCurrent, lonCurrent;
     LinearLayout bottom_sheet;
     BottomSheetBehavior bsb;
-    TextView name_usuario;
-    LinearLayout featuredlayout;
+    TextView name_usuario, label_pedido;
+    LinearLayout featuredlayout, populatlayout;
     LinearLayout bottom_sheetmascercano;
     LinearLayoutCompat layoutDirecciones, layoutPedidoActivo;
     BottomSheetBehavior bsb_mascercano;
     MaterialButton btn_pedidoActivo;
     PedidoActivo pedidoActivo = new PedidoActivo();
+    SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
+    String motivo_seleccionado="";
+    String motivo_texto="";
+    LinearLayout bottom_sheet_cancelar;
+    BottomSheetBehavior bsb_cancelar;
+    String json_order="";
+    ArrayList<String> motivoArray = new ArrayList<String>();
+    ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
 
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -149,6 +163,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     View view;
+    public SupportMapFragment mMapFragment=null;
 
     public MapMainFragment() {
         // Required empty public constructor
@@ -165,10 +180,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     // TODO: Rename and change types and number of parameters
     public static MapMainFragment newInstance(String param1, String param2) {
         MapMainFragment fragment = new MapMainFragment();
-        Bundle args = new Bundle();
+        /*Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -188,6 +203,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_map_main, container, false);
 
+        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this);
 
         name_usuario = view.findViewById(R.id.name_usuario);
         name_usuario.setText(client.getName());
@@ -195,15 +212,21 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         LlenaDirecciones(direcciones);
         pipas = (Spinner) view.findViewById(R.id.spinner2);
 
-
+        label_pedido = view.findViewById(R.id.labelpedido);
 
         direcciones.setOnItemSelectedListener(this);
         pipas.setOnItemSelectedListener(this);
 
-        //map
-        getMyLocationPermision();
+        //client.setContextMap(getActivity());
+
+
 
         layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
+        try {
+            ValidaPedidoActivo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         btn_pedidoActivo = view.findViewById(R.id.btnActivo);
         layoutDirecciones = view.findViewById(R.id.LayoutDireccion);
         if (client.getOrder_id() !=null && client.getOrder_id() != ""){
@@ -215,6 +238,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             intent.putExtra("idPedido",client.getOrder_id());
             intent.putExtra("pedido_data",data);
         }
+
+
+        //map
+        getMyLocationPermision();
         //pedido mascercano
 
         bottom_sheetmascercano = (LinearLayout)view.findViewById(R.id.bottomSheetCercano);
@@ -227,28 +254,34 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 final RadioGroup rgFormaPago = view.findViewById(R.id.rgFormaPago_mc);
                 rgFormaPago.check(R.id.tarjeta_mc);
                 String formapagoseleccionada="";
-                final RadioGroup rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro_mc);
+                final RadioGroup rgMontoLitro = view.findViewById(R.id.rgMontoLitro_mc);
                 rgMontoLitro.check(R.id.litro_mc);
-                final TextInputEditText input_monto_litros = (TextInputEditText) view.findViewById(R.id.input_mc);
+                final TextInputEditText input_monto_litros = view.findViewById(R.id.input_mc);
                 //final TextInputEditText calculo_monto_litro = (TextInputEditText) view.findViewById(R.id.calculo_input_mc);
                 //final TextInputLayout calculoinput = (TextInputLayout)view.findViewById(R.id.calculoinput_mc);
                 final TextInputLayout labelinput = (TextInputLayout)view.findViewById(R.id.labelinput_mc);
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         nuevoEstado = "STATE_COLLAPSED";
+                        layoutDirecciones.setVisibility(View.VISIBLE);
+                        pipas.setSelection(0,true);
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         nuevoEstado = "STATE_EXPANDED";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
                         nuevoEstado = "STATE_HIDDEN";
+                        layoutDirecciones.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         nuevoEstado = "STATE_DRAGGING";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
 
                     case BottomSheetBehavior.STATE_SETTLING:
                         nuevoEstado = "STATE_SETTLING";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
                 }
 
@@ -263,6 +296,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     formapagoseleccionada = WSkeys.defectivo;
                 }
 
+
+
                 rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -270,66 +305,32 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             labelinput.setHint("Litros");
                             //calculoinput.setHint("Monto");
                             input_monto_litros.setText(input_monto_litros.getText().toString());
-                            litro_c = Double.parseDouble(input_monto_litros.getText().toString());
-                            monto_c =0.0;
+                            if (input_monto_litros.getText().toString().isEmpty()){
+                                monto_c=0.0;
+                                litro_c = 0.0;
+                            }else {
+                                litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                Utilities.SetLog("in cancel m 0", input_monto_litros.getText().toString(), WSkeys.log);
+                                monto_c = 0.0;
+                            }
                         }
 
                         if (radioGroup.getCheckedRadioButtonId() == R.id.monto_mc){
                             labelinput.setHint("Monto");
                             //calculoinput.setHint("Litros");
                             input_monto_litros.setText(input_monto_litros.getText().toString());
-                            monto_c = Double.parseDouble(input_monto_litros.getText().toString());
-                            litro_c = 0.0;
+                            if (input_monto_litros.getText().toString().isEmpty()){
+                                monto_c=0.0;
+                                litro_c = 0.0;
+                            }else {
+                                monto_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                Utilities.SetLog("in cancel l 0", input_monto_litros.getText().toString(), WSkeys.log);
+                                litro_c = 0.0;
+                            }
                         }
                     }
                 });
 
-
-
-                input_monto_litros.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        Double nuevoprecio;
-                        Double calculaLitros;
-                        if(!input_monto_litros.getText().toString().isEmpty()) {
-                            /*if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
-
-                                if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
-                                    calculo_monto_litro.setText(String.valueOf(nuevoprecio));
-                                    monto_c = nuevoprecio;
-                                    litro_c = Double.parseDouble(input_monto_litros.getText().toString());
-                                }
-                                else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
-                                }
-                            } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
-                                if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) / client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio());
-                                    calculo_monto_litro.setText(String.valueOf(calculaLitros));
-                                    monto_c = Double.parseDouble(input_monto_litros.getText().toString());
-                                    litro_c = calculaLitros;
-                                }
-                                else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
-                                }
-                            }*/
-                        }
-                        else {
-                            input_monto_litros.setText("0");
-                        }
-                    }
-                });
 
 
                 final String finalFormapagoseleccionada = formapagoseleccionada;
@@ -360,6 +361,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             }
                         }
 
+                        if(rgMontoLitro.getCheckedRadioButtonId() == R.id.litro_mc){
+                            litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                            monto_c =0.0;
+                        }
+
+                        if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto_mc){
+                            monto_c = Double.parseDouble(input_monto_litros.getText().toString());
+                            litro_c = 0.0;
+                        }
+
                         // Check for a valid password, if the user entered one.
                         /*if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
                             Utilities.SetLog("ERROR PRECIO", String.valueOf(calculo_monto_litro.getText()), WSkeys.log);
@@ -388,18 +399,18 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             //ejecuta pedido
                             Pedido pedido = new Pedido();
                             NumberFormat nf = NumberFormat.getInstance();
-                            Double cantidad = Double.valueOf(0);
-                            Double monto = Double.valueOf(0);
-                            // cantidad  = nf.parse(litros.getText().toString()).doubleValue();
-                            // monto = nf.parse(precio.getText().toString()).doubleValue();
-                            cantidad = litro_c;
-                            monto = monto_c;
 
+                            //monto_c  = nf.parse(litros.getText().toString()).doubleValue();
+                            // monto = nf.parse(precio.getText().toString()).doubleValue();
+
+
+                            Utilities.SetLog("MAS CERCANO MoNTO", String.valueOf(monto_c), WSkeys.log);
+                            Utilities.SetLog("MAS CERCANO Litros", String.valueOf(litro_c), WSkeys.log);
                             Utilities.SetLog("MAS CERCANO PEDIR", finalFormapagoseleccionada, WSkeys.log);
                             AddressData addressData = new AddressData();
                             addressData.setId(direccionSeleccionada);
-                            pedido.setCantidad(cantidad);
-                            pedido.setMonto(monto);
+                            pedido.setCantidad(litro_c);
+                            pedido.setMonto(monto_c);
                             pedido.setDomicilio(addressData);
                             pedido.setLatitud(latitudPedido);
                             pedido.setLongitud(longitudPedido);
@@ -432,7 +443,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onClick(View view) {
                 Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
-                if(direccionSeleccionada>0){
+                if(pipas.getSelectedItemId()>0){
                     bsb_mascercano.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
                 else{
@@ -444,6 +455,21 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             }
         });
         //endmascercano
+
+        /*populatlayout = view.findViewById(R.id.populatlayout);
+        populatlayout.setVisibility(View.GONE);
+        populatlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (direcciones.getSelectedItem().equals("") || direcciones.getSelectedItem().equals("0") || pipas.getSelectedItem().equals("") || pipas.getSelectedItem().equals("0") ){
+                    Snackbar.make(view, R.string.error_invalid_selection, Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+
+            }
+        });*/
 
         //bottomsheet pedido
 
@@ -614,9 +640,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                         // Check for a valid ammount.
                         if (monto_c < 200.00) {
-                            Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                            error = getString(R.string.error_invalid_ammount);
                             cancel = true;
                         }
+
+
 
                         // Check for a valid password, if the user entered one.
                         if (TextUtils.isEmpty(calculo_monto_litro.getText()) || String.valueOf(calculo_monto_litro.getText()).equals("0")) {
@@ -700,6 +728,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         if (bsb.getState()==BottomSheetBehavior.STATE_EXPANDED){
                             bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         }
+                        else if(bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
+                            return false;
+                        }
 
                         return true;
                     }
@@ -708,24 +739,43 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             }
         });
 
-        try {
-            ValidaPedidoActivo();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
         btn_pedidoActivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
-                String json_pedido = gson.toJson(pedidoActivo);
-                intent.putExtra("pedido_data",json_pedido);
-                intent.putExtra("idPedido",pedidoActivo.getId());
-                intent.putExtra("pedido_data",json_pedido);
-                intent.putExtra("status",pedidoActivo.getStatus());
-                startActivity(intent);
-                SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
-                seguimientoPedido.setIdPedido(String.valueOf(pedidoActivo.getId()));
+
+                if (pedidoActivo.getStatus().equals("1")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Estatus de tu pedido: " + pedidoActivo.getNombreStatus() );
+                    builder.setMessage("En breve recibiras información de tu pedido");
+                    builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            bsb_cancelar.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else{
+                    Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
+                    String json_pedido = gson.toJson(pedidoActivo);
+                    intent.putExtra("pedido_data",json_pedido);
+                    intent.putExtra("idPedido",pedidoActivo.getId());
+                    intent.putExtra("pedido_data",json_pedido);
+                    intent.putExtra("status",pedidoActivo.getStatus());
+                    startActivity(intent);
+                }
+
+
+
+                /*seguimientoPedido.setIdPedido(String.valueOf(pedidoActivo.getId()));
                 seguimientoPedido.setStatus(String.valueOf(pedidoActivo.getStatus()));
                 seguimientoPedido.setColor("");
                 seguimientoPedido.setNombreConcesionario(pedidoActivo.getNombreConcesionario());
@@ -734,12 +784,317 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 seguimientoPedido.setLongitud(String.valueOf(pedidoActivo.getLongitud()));
                 seguimientoPedido.setNombreStatus(pedidoActivo.getNombreStatus());
                 seguimientoPedido.setTiempo("");
-                seguimientoPedido.setTipo("3");
-                client.setSeguimientoPedido(seguimientoPedido);
+                seguimientoPedido.setTipo("3");*/
+
             }
         });
 
+        //CANCELAR
+
+        Spinner motivos = view.findViewById(R.id.motivos);
+        LlenaMotivos(motivos);
+
+        motivos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Log.e("onItemSelected",String.valueOf(i));
+
+                motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
+                motivo_texto = String.valueOf(motivoAux.get(i).getText());
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        bottom_sheet_cancelar = view.findViewById(R.id.bottomSheetCancela);
+        bsb_cancelar = BottomSheetBehavior.from(bottom_sheet_cancelar);
+        bsb_cancelar.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                String nuevoEstado = "";
+
+
+
+                switch(newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        nuevoEstado = "STATE_COLLAPSED";
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        nuevoEstado = "STATE_EXPANDED";
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        nuevoEstado = "STATE_HIDDEN";
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        nuevoEstado = "STATE_DRAGGING";
+                        break;
+
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        nuevoEstado = "STATE_SETTLING";
+                        break;
+                }
+
+                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+
+                Button btnCancelaPedido = (Button) view.findViewById(R.id.cancela_pedido);
+                btnCancelaPedido.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        boolean cancel = false;
+                        View focusView = null;
+                        String error="";
+
+                        // Check for a valid l/p, if the user entered one.
+                        if (motivo_seleccionado.equals("")) {
+                            // litros.setError(getString(R.string.error_invalid_value));
+                            // focusView = litros;
+                            error=getString(R.string.error_invalid_motivo);
+                            cancel = true;
+                        }
+
+
+                        if (cancel) {
+                            // There was an error
+                            //focusView.requestFocus();
+                            Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                            toast.show();
+                            //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
+                            Utilities.SetLog("in cancel pedido", error, WSkeys.log);
+                        }
+                        else{
+
+                            //ejecuta  cancela pedido
+                            try {
+                                //CancelOrderTask(String.valueOf(motivo_seleccionado),String.valueOf(order));
+                                Utilities.SetLog("in cancel motivo", motivo_seleccionado, WSkeys.log);
+                                Utilities.SetLog("in cancel pedido", seguimientoPedido.getId(), WSkeys.log);
+                                if(!seguimientoPedido.getId().equals("")) {
+                                    CancelOrderTask(motivo_seleccionado, seguimientoPedido.getId());
+                                }
+                                else{
+                                    Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Utilities.SetLog("ejecuta cancela pedido", "", WSkeys.log);
+
+                        }
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                Log.i("BottomSheets", "Offset: " + slideOffset);
+            }
+
+
+
+
+            public void CancelOrderTask(final String motivo, final String order) throws JSONException {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(WSkeys.pedido, order);
+                params.put(WSkeys.motivo, motivo);
+                Log.e("PARAMETROSCANCEL_B", params.toString());
+
+
+                String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
+                Utilities.SetLog("CANCELA",url,WSkeys.log);
+
+                RequestQueue queue = Volley.newRequestQueue(getContext());
+                //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
+                StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            ParserCancela(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
+                        Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                }) {
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded; charset=utf-8";
+                    }
+
+                    @Override
+                    public byte[] getBody() {
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put(WSkeys.pedido, order);
+                        params.put(WSkeys.motivo, motivo);
+                        return new JSONObject(params).toString().getBytes();
+                    }
+
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(WSkeys.pedido, order);
+                        params.put(WSkeys.motivo, motivo);
+                        Log.e("PARAMETROSCANCEL", params.toString());
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        //params.put("Content-Type", "application/x-www-form-urlencoded");
+                        //params.put("Content-Type", "application/json; charset=utf-8");
+                        params.put("Authorization", client.getToken());
+
+                        return params;
+                    }
+                };
+
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                queue.add(jsonObjectRequest);
+
+            }
+
+            public void ParserCancela(String response) throws JSONException {
+
+                Utilities.SetLog("PARSER-CANCELA",response.toString(),WSkeys.log);
+                JSONObject response_object = new JSONObject(response);
+
+                // si el response regresa ok, entonces si inicia la sesión
+                if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
+                    String pedido_data = gson.toJson(seguimientoPedido);
+                    Intent intent = new Intent(getActivity(), CancelaActivity.class);
+                    intent.putExtra("cancel_result",response_object.getString("data"));
+                    intent.putExtra("cause",motivo_texto);
+                    intent.putExtra("order",pedido_data);
+                    intent.putExtra("from","aceptado");
+                    startActivity(intent);
+                }
+                // si ocurre un error al registrar la solicitud se muestra mensaje de error
+                else{
+                    Snackbar.make(view, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+            }
+        });
+        //FIN CANCELAR
+
         return view;
+    }
+
+
+    public void LlenaMotivos(final Spinner motivos){
+
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_CANCELA;
+        Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserMotivos(response, motivos);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserMotivos(String response, Spinner motivos) throws JSONException {
+
+        Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
+        //Log.e("CodeResponse", response);
+
+
+        JSONObject respuesta = new JSONObject(response);
+        Integer posselected =0;
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            //ontener nivel de data
+            //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            Utilities.SetLog("MOTIVOSARRAY",ja_usocfdi.toString(),WSkeys.log);
+            for(int i=0; i<ja_usocfdi.length(); i++){
+                MotivoCancela motivoCancela = new MotivoCancela();
+                try {
+
+                    JSONObject jsonObject = (JSONObject) ja_usocfdi.get(i);
+                    motivoCancela.setId(jsonObject.getInt("id"));
+                    motivoCancela.setText(jsonObject.getString("text"));
+                    motivoAux.add(motivoCancela);
+                    motivoArray.add(jsonObject.getString("text"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
+            motivos.setSelection(posselected);
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();
+        }
     }
 
 
@@ -804,9 +1159,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         //ejecutarTarea();
     }
 
-    private void getDeviceCurrentLocation() {
-        Snackbar.make(direcciones, R.string.gettingDeviceLocation, Snackbar.LENGTH_SHORT)
-                .show();
+    public void getDeviceCurrentLocation() {
+        //Snackbar.make(direcciones, R.string.gettingDeviceLocation, Snackbar.LENGTH_SHORT)
+        //        .show();
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
         try {
@@ -821,6 +1176,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
                             try {
                                ConsultaPrincipal(new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
+                               latCurrent = getCurrentLocation.getLatitude();
+                               lonCurrent = getCurrentLocation.getLongitude();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -1007,6 +1364,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        client.setContextMap(context);
+
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -1063,6 +1424,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         void onFragmentInteraction(Uri uri);
     }
 
+    public interface OnMessagePedidoListener {
+        // TODO: Update argument type and name
+        void onStatusMessage(String status);
+    }
+
     public void LlenaDirecciones(final Spinner direcciones){
 
         direccionArray = new ArrayList<String>();
@@ -1070,6 +1436,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (client.getAddressDataArrayList() != null) {
 
             direccionArray.add("Selecciona una dirección");
+            direccionArray.add("Enviar a mi ubicación");
             for (int i = 0; i < client.getAddressDataArrayList().size(); i++) {
                 direccionArray.add(client.getAddressDataArrayList().get(i).getAlias());
             }
@@ -1219,31 +1586,51 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     //client.getAddressDataArrayList().get(i).getLatitud();
                     //client.getAddressDataArrayList().get(i).getLongitud();
                     Log.e("onItemSelected", String.valueOf(i));
-                    Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 1).getId()));
-                    Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 1).getAlias());
-                    try {
-                        //mMap.clear();
-                        ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud()));
-                        MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i - 1).getLatitud(), client.getAddressDataArrayList().get(i - 1).getLongitud(), client.getAddressDataArrayList().get(i - 1).getAlias(), client.getAddressDataArrayList().get(i-1).getId());
-                        direccionSeleccionada = client.getAddressDataArrayList().get(i - 1).getId();
-                        latitudPedido = client.getAddressDataArrayList().get(i - 1).getLatitud();
-                        longitudPedido = client.getAddressDataArrayList().get(i - 1).getLongitud();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (i ==1){
+                        latitudPedido=latCurrent;
+                        longitudPedido=lonCurrent;
+                        try {
+                            ConsultaPrincipal(new LatLng(latitudPedido, longitudPedido));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        direccionSeleccionada = 0;
+
+                    } else if (direcciones.getSelectedItemId()>1){
+                        try {
+                            //mMap.clear();
+                            Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 2).getId()));
+                            Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 2).getAlias());
+                            ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 2).getLatitud(), client.getAddressDataArrayList().get(i - 2).getLongitud()));
+                            MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i - 2).getLatitud(), client.getAddressDataArrayList().get(i - 2).getLongitud(), client.getAddressDataArrayList().get(i - 2).getAlias(), client.getAddressDataArrayList().get(i - 2).getId());
+                            direccionSeleccionada = client.getAddressDataArrayList().get(i - 2).getId();
+                            latitudPedido = client.getAddressDataArrayList().get(i - 2).getLatitud();
+                            longitudPedido = client.getAddressDataArrayList().get(i - 2).getLongitud();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 }
-            } /*else {
-                Intent intent = new Intent(getContext(), PerfilData.class);
+            } else {
+                /*Intent intent = new Intent(getContext(), PerfilData.class);
                 intent.putExtra("active", WSkeys.datos_direccion);
-                startActivity(intent);
+                startActivity(intent);*/
                 direcciones.setSelection(0);
-            }*/
+                direccionSeleccionada=0;
+            }
         }else if (adapterView.getId()==R.id.spinner2){
             if (i != 0) {
                 Log.e("onItemSelected PIPA", String.valueOf(i));
-                pipaSeleccionada = i-1;
-                bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                if(direcciones.getSelectedItemId()>0) {
+                    pipaSeleccionada = i - 1;
+                    bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }else{
+                    Snackbar.make(view, R.string.error_noaddressselected, Snackbar.LENGTH_SHORT).show();
+                    pipas.setSelection(0,true);
+                    pipaSeleccionada=0;
+                }
+
             }
         }
     }
@@ -1281,12 +1668,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public void MoveCameraSelectedDirection(Double lat, Double lon, String alias, Integer id){
         CameraPosition googlePlex = CameraPosition.builder()
                 .target(new LatLng(lat,lon))
-                .zoom(10)
-                .bearing(0)
+                .zoom(15)
+                .bearing(90)
                 .tilt(45)
                 .build();
 
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 1000, null);
 
         Marker mMarkerd = mMap.addMarker(new MarkerOptions()
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_home_blue_24dp))
@@ -1373,7 +1760,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONObject jo_data = response.getJSONObject(WSkeys.data);
             pedidoActivo = gson.fromJson(jo_data.toString(), PedidoActivo.class);
+            seguimientoPedido = gson.fromJson(jo_data.toString(), SeguimientoPedido.class);
+            seguimientoPedido.setTipo("3");
+            client.setSeguimientoPedido(seguimientoPedido);
+            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.getStatus(),WSkeys.log);
 
+            if (seguimientoPedido.getStatus().equals("1")){
+                label_pedido.setText("Tienes un pedido Solicitado");
+            }
+            else {
+                label_pedido.setText(R.string.pedido_en_curso);
+            }
             layoutDirecciones.setVisibility(View.GONE);
             layoutPedidoActivo.setVisibility(View.VISIBLE);
         }
@@ -1387,7 +1784,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         }
     }
 
+    //@Override
+    public void setRecibeEstatusPedido(final String status) {
+        String nombreEstatus="";
 
+        Utilities.SetLog("setRecibeEstatusPedido MAPA: ", status, WSkeys.log);
+
+       if (Integer.parseInt(status)==11){
+            getDeviceCurrentLocation();
+       }
+
+    }
 
 }
 

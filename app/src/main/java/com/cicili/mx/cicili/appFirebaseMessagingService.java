@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 
-public class appFirebaseMessagingService extends FirebaseMessagingService{
+public class appFirebaseMessagingService extends FirebaseMessagingService implements MessageReceiverCallback{
 
 
     Application application = (Application) Client.getContext();
@@ -43,6 +43,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
 
     MessageReceiverCallback interfaceNotification;
 
+    MessageReceiverCallback interfaceNotificationPipas;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -52,12 +54,13 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
         }
 
         if (remoteMessage.getNotification() != null){
+            Utilities.SetLog("NOTIFICATION DATA", remoteMessage.getData().toString(), WSkeys.log);
             if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
                 interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
             }
-            Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
-            if (remoteMessage.getData().get("tipo").toString().equals("3")){
-                if (remoteMessage.getData().get("status").toString().equals("2")) {
+            //Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
+            if (remoteMessage.getData().get("status").toString().equals("2")){
+                if (remoteMessage.getData().get("tipo").toString().equals("3")) {
 
                     GsonBuilder gsonMapBuilder = new GsonBuilder();
                     Gson gsonObject = gsonMapBuilder.create();
@@ -75,6 +78,13 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 }*/
             }
 
+            if (remoteMessage.getData().get("status").toString().equals("11")){
+                getReceiverEstatusPedido("11","");
+                if (interfaceNotificationPipas == null){
+                    interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
+                    interfaceNotificationPipas.getReceiverEstatusPedido("11","Nuevas Pipas");
+                }
+            }
 
 
 
@@ -175,4 +185,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
         Utilities.SetLog("Message Notification token: ",s,true);
     }
 
+    @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+
+    }
 }

@@ -38,6 +38,7 @@ public class Client extends Application {
     private ArrayList<PedidoData> pedidosDataArrayList;
     private SeguimientoPedido seguimientoPedido;
     private Context messageContext;
+    private Context contextMap;
 
 
     private static Context mContext;
@@ -55,7 +56,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -83,6 +84,15 @@ public class Client extends Application {
         this.pedidosDataArrayList = pedidosDataArrayList;
         this.seguimientoPedido = seguimientoPedido;
         this.messageContext = messageContext;
+        this.contextMap = contextMap;
+    }
+
+    public Context getContextMap() {
+        return contextMap;
+    }
+
+    public void setContextMap(Context contextMap) {
+        this.contextMap = contextMap;
     }
 
     public Context getMessageContext() {

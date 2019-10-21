@@ -2,6 +2,7 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,25 +15,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cicili.mx.cicili.domain.AddressData;
-import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.Pedido;
-import com.cicili.mx.cicili.domain.RfcData;
-import com.cicili.mx.cicili.domain.UsoCfdi;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -56,6 +52,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pl.droidsonroids.gif.GifImageView;
+
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class NewOrderActivity extends AppCompatActivity {
@@ -70,12 +68,14 @@ public class NewOrderActivity extends AppCompatActivity {
     BottomSheetBehavior bsb;
     String motivo_seleccionado="";
     String motivo_texto="";
-    Button cancela_bsb;
+    Button cancela_bsb, nuevo_pedido;
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String LOG = "ORDEN";
     String order ="";
     TextView estatuspedido;
+    GifImageView anim;
+
 
     Gson gson = new Gson();
     ArrayList<Pedido> pedidoAux = new ArrayList<Pedido>();
@@ -93,6 +93,7 @@ public class NewOrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         linearLayout = findViewById(R.id.view_error);
+        nuevo_pedido = findViewById(R.id.nuevo_pedido);
         cancela_bsb = findViewById(R.id.cancela_pedido_bss);
         cancela_bsb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,17 @@ public class NewOrderActivity extends AppCompatActivity {
                 bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
+
+        nuevo_pedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewOrderActivity.this, MenuActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
         estatuspedido = findViewById(R.id.estatuspedido);
+        anim = findViewById(R.id.anim);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -146,7 +157,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
 
 
-            bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheet);
+            bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheetCancela);
             bsb = BottomSheetBehavior.from(bottom_sheet);
             bsb.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
@@ -368,11 +379,9 @@ public class NewOrderActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                Log.e("El error", error.toString());
-                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
-                        .show();
+                Log.e("El error -- ORDER", error.toString());
                 progressDialog.dismiss();
+                Error_Order(error.toString());
             }
         }) {
             @Override
@@ -425,10 +434,34 @@ public class NewOrderActivity extends AppCompatActivity {
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
+            Error_Order(respuesta.getString(WSkeys.messageError));
+
             Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
 
+    }
+
+    public void Error_Order(String error){
+
+
+        cancela_bsb.setVisibility(View.GONE);
+        anim.setImageResource(R.drawable.error_anim);
+        estatuspedido.setText(error);
+        nuevo_pedido.setVisibility(View.VISIBLE);
+
+
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Solicitud de Pedido");
+        builder.setMessage("Por el momento no podemos procesar tu pedido, intenta nuevamente.");
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();*/
     }
 
     public void LlenaMotivos(final Spinner motivos){
