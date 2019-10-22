@@ -73,9 +73,10 @@ public class MessageActivity extends AppCompatActivity {
 
     private CircleImageView fotoPerfil;
     private TextView nombre;
+    private TextView nombreSub;
     private RecyclerView rvMensajes;
     private EditText txtMensaje;
-    private Button btnEnviar;
+    private ImageButton btnEnviar;
     private AdapterMessage adapter;
     private InputMessage messageData;
     private ImageButton btnEnviarFoto;
@@ -96,16 +97,14 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fotoPerfil = (CircleImageView) findViewById(R.id.fotoPerfil);
         nombre = (TextView) findViewById(R.id.nombre);
+        nombreSub = (TextView) findViewById(R.id.nombreSub);
         rvMensajes = (RecyclerView) findViewById(R.id.rvMensajes);
         txtMensaje = (EditText) findViewById(R.id.txtMensaje);
-        btnEnviar = (Button) findViewById(R.id.btnEnviar);
+        btnEnviar = (ImageButton) findViewById(R.id.btnEnviar);
         btnEnviarFoto = (ImageButton) findViewById(R.id.btnEnviarFoto);
         fotoPerfilCadena = "";
 
@@ -120,14 +119,18 @@ public class MessageActivity extends AppCompatActivity {
         if (bundle != null) {
             uso = bundle.getString("uso");
             if (uso.equals("1")) {
-                nombre.setText(String.format("%s \n Categoría: %s \n Aclaración: %s", client.getName(), bundle.getString("categoria"), bundle.getString("aclaracion")));
+                nombre.setText(String.format("%s ", client.getName()));
+                nombreSub.setText(String.format(" Categoría: %s \n Aclaración: %s", bundle.getString("categoria"), bundle.getString("aclaracion")));
+
                 id = bundle.getString("id");
                 order = bundle.getString("idPedido");
                 URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
 
             } else if (uso.equals("2")) {
-                nombre.setText(String.format("%s \n Categoría: %s \n Pregunta: %s", client.getName(), bundle.getString("categoria"), bundle.getString("aclaracion")));
+                nombre.setText(String.format("%s ", client.getName()));
+                nombreSub.setText(String.format(" Categoría: %s \n Pregunta: %s", bundle.getString("categoria"), bundle.getString("aclaracion")));
+
                 id = "0";
                 order = "0";
                 URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
