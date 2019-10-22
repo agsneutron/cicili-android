@@ -25,13 +25,14 @@ public class PedidoActivo {
     String cantidad;
     String idCliente;
     String formaPago;
+    String precio;
 
 
 
     public PedidoActivo() {
     }
 
-    public PedidoActivo(String id, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago) {
+    public PedidoActivo(String id, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago, String precio) {
         this.id = id;
         this.nombreConductor = nombreConductor;
         this.clave = clave;
@@ -55,8 +56,8 @@ public class PedidoActivo {
         this.cantidad = cantidad;
         this.idCliente = idCliente;
         this.formaPago = formaPago;
+        this.precio = precio;
     }
-
 
     public String getId() {
         return id;
@@ -241,5 +242,13 @@ public class PedidoActivo {
 
     public void setFormaPago(String formaPago) {
         this.formaPago = formaPago;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
     }
 }

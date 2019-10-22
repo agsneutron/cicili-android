@@ -348,7 +348,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto_mc){
                             // Check for a valid ammount.
                             if (monto_c < 200.00) {
-                                Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                                error =  getString(R.string.error_invalid_ammount);
                                 cancel = true;
                             }
                         }
@@ -434,8 +434,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         featuredlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
-                if(pipas.getSelectedItemId()>0){
+                Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direcciones.getSelectedItemId()), WSkeys.log);
+                if(direcciones.getSelectedItemId()>0){
                     bsb_mascercano.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
                 else{
@@ -553,10 +553,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (input_monto_litros.getText().toString().equals("0")){
 
-                            input_monto_litros.setText("");
-                        }
 
                     }
 
@@ -564,6 +561,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     public void afterTextChanged(Editable editable) {
                         Double nuevoprecio;
                         Double calculaLitros;
+
                         if(!input_monto_litros.getText().toString().isEmpty()) {
                             if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
 
@@ -574,7 +572,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                     litro_c = Double.parseDouble(input_monto_litros.getText().toString());
                                 }
                                 else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
+                                    calculo_monto_litro.setText("");
                                 }
                             } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
@@ -584,7 +582,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                     litro_c = calculaLitros;
                                 }
                                 else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
+                                    calculo_monto_litro.setText("");
                                 }
                             }
                         }
@@ -1754,11 +1752,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
             if (seguimientoPedido.getStatus().equals("1")){
                 label_pedido.setText("Tienes un pedido Solicitado");
+                layoutDirecciones.setVisibility(View.GONE);
+                layoutPedidoActivo.setVisibility(View.VISIBLE);
             }
             else {
                 label_pedido.setText(R.string.pedido_en_curso);
                 layoutDirecciones.setVisibility(View.GONE);
-                layoutPedidoActivo.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
                 String json_pedido = gson.toJson(pedidoActivo);
                 intent.putExtra("pedido_data",json_pedido);
