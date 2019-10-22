@@ -59,15 +59,7 @@ public class RateService extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        fab.setVisibility(View.GONE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -93,10 +85,11 @@ public class RateService extends AppCompatActivity {
 
                 // Check for a valid l/p, if the user entered one.
                 if (TextUtils.isEmpty(etComments.getText()) || String.valueOf(etComments.getText()).equals("")) {
-                    etComments.setError(getString(R.string.error_comments));
+                    etComments.setText("");
+                    /*etComments.setError(getString(R.string.error_comments));
                     error=getString(R.string.error_comments);
                     focusView = etComments;
-                    cancel = true;
+                    cancel = true;*/
                 }
 
                 if (ratingBar.getNumStars() == 0){
@@ -115,7 +108,7 @@ public class RateService extends AppCompatActivity {
                     Utilities.SetLog("in error rating", error, WSkeys.log);
                 }
                 else{
-                    progressDialog = ProgressDialog.show(getContext(), "Espera un momento por favor", "Estamos enviando la calificación y comentarios.", true);
+                    progressDialog = ProgressDialog.show(RateService.this, "Espera un momento por favor", "Estamos enviando la calificación y comentarios.", true);
                     try {
                         RateOrderTask();
                     } catch (JSONException e) {
@@ -129,17 +122,19 @@ public class RateService extends AppCompatActivity {
     public void RateOrderTask() throws JSONException {
 
 
+
         String url;
 
         url = WSkeys.URL_BASE + WSkeys.URL_CALIFICA_PEDIDO+WSkeys.pedido+"="+order+"&"+WSkeys.calificacion+"="+ratingBar.getNumStars()+"&"+WSkeys.comentario+"="+etComments.getText();
 
+        Utilities.SetLog("LOG_RATE", url,WSkeys.log);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-
+                    progressDialog.dismiss();
                     ParserRating(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -191,7 +186,6 @@ public class RateService extends AppCompatActivity {
 
     public void ParserRating(JSONObject respuesta) throws JSONException {
 
-        progressDialog.dismiss();
         Utilities.SetLog("ParserOrderResponse",respuesta.toString(),WSkeys.log);
         Integer pedido_id;
 
@@ -205,6 +199,9 @@ public class RateService extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
                     dialog.dismiss();
+                    Intent intent = new Intent(RateService.this, MenuActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     finish();
                 }
             });

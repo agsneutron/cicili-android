@@ -30,6 +30,8 @@ public class Client extends Application {
     private String sexo;
     private Integer rfcdatasize;
     private String order_id;
+    private String comision;
+    private String total;
     private ArrayList<PaymentData> paymentDataArrayList;
     private ArrayList<AddressData> addressDataArrayList;
     private ArrayList<RfcData> rfcDataArrayList;
@@ -56,7 +58,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, String comision, String total, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -76,6 +78,8 @@ public class Client extends Application {
         this.sexo = sexo;
         this.rfcdatasize = rfcdatasize;
         this.order_id = order_id;
+        this.comision = comision;
+        this.total = total;
         this.paymentDataArrayList = paymentDataArrayList;
         this.addressDataArrayList = addressDataArrayList;
         this.rfcDataArrayList = rfcDataArrayList;
@@ -326,5 +330,21 @@ public class Client extends Application {
 
     public  String getEstatusPedido(){
         return seguimientoPedido.getStatus();
+    }
+
+    public String getComision() {
+        return comision;
+    }
+
+    public void setComision(String comision) {
+        this.comision = comision;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }
