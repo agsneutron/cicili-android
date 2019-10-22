@@ -130,7 +130,7 @@ public class RateService extends AppCompatActivity {
 
         String url;
 
-        url = WSkeys.URL_BASE + WSkeys.URL_CALIFICA_PEDIDO+WSkeys.pedido+"="+order+WSkeys.calificacion+"="+ratingBar.getNumStars()+WSkeys.comentario+"="+etComments.getText();
+        url = WSkeys.URL_BASE + WSkeys.URL_CALIFICA_PEDIDO+WSkeys.pedido+"="+order+"&"+WSkeys.calificacion+"="+ratingBar.getNumStars()+"&"+WSkeys.comentario+"="+etComments.getText();
 
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -203,8 +203,8 @@ public class RateService extends AppCompatActivity {
             builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
-                    finish();
                     dialog.dismiss();
+                    finish();
                 }
             });
 
