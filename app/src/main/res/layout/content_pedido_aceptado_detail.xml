@@ -450,7 +450,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="0.1"
                     android:padding="10dp"
-                    android:text="@string/btnaclaracion"
+                    android:text="@string/btnChat"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:cornerRadius="20dp"
                     android:textSize="10sp"/>

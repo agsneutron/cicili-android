@@ -331,5 +331,6 @@
     <string name="error_rating">Califica el servicio seleccionando de 1 a 5 estrellas.</string>
     <string name="comments">Comentarios</string>
     <string name="califica_el_servicio">Califica el Servicio</string>
+    <string name="btnChat">Chat</string>
 
 </resources>
