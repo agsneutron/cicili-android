@@ -83,10 +83,14 @@ public class CancelaActivity extends AppCompatActivity {
             }
             else if (bundle.getString("from").equals("aceptado")){
                 seguimientoPedido = gson.fromJson(json_order , SeguimientoPedido.class);
-                address.setText(String.valueOf(seguimientoPedido.getNombreConcesionario()));
+                address.setText(String.valueOf(seguimientoPedido.getDireccion()));
                 alias.setText(String.valueOf(seguimientoPedido.getNombreConductor()));
                 //date.setText();
-                detalle.setVisibility(View.GONE);
+                alias.setText(String.valueOf(seguimientoPedido.getFormaPago()));
+                //date.setText();
+                ammount.setText(String.valueOf(seguimientoPedido.getMonto()));
+                liter.setText(String.valueOf(seguimientoPedido.getCantidad()));
+                detalle.setVisibility(View.VISIBLE);
             }
         }
 
