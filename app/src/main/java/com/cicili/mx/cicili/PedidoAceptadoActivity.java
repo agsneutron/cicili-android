@@ -720,7 +720,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 Log.e("PARAMETROSUPDATE", params.toString());
 
 
-                String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER;
+                String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.id+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
                 Utilities.SetLog("ACTUALIZA",url,WSkeys.log);
 
                 RequestQueue queue = Volley.newRequestQueue(getContext());
