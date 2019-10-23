@@ -7,41 +7,33 @@
     tools:context=".PedidoAceptadoActivity"
     tools:showIn="@layout/activity_pedido_aceptado">
 
-    <LinearLayout
-        android:id="@+id/linearL_pa"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/detalle_del_pedido"
-            android:fontFamily="@font/roboto_bold"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20.8sp" />
-    </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="9dp"
-        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+            <LinearLayout
+                android:id="@+id/linearL_pa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorPrimaryDark">
 
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/detalle_del_pedido"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/white"
+                    android:textSize="17.8sp" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -385,6 +377,112 @@
 
 
             </LinearLayout>
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#ffffff"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/cambiar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_history_black_24dp"
+                        android:background="@drawable/shape_circle"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Cambiar\nPedido"
+
+                        android:textAlignment="center"
+                        android:lines="2"
+                        android:layout_marginTop="3dp"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageButton
+                        android:id="@+id/facturar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_menu_send"
+                        android:background="@drawable/shape_circle"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/btn_facturar"
+                        android:layout_marginTop="3dp"
+                        android:textAlignment="center"
+                        android:lines="2"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageButton
+                        android:id="@+id/aclaracion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_chat_black_24dp"
+                        android:background="@drawable/shape_circle"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/btnChat"
+                        android:layout_marginTop="3dp"
+                        android:textAlignment="center"
+                        android:lines="2"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dddddd"/>
+
+
+
+
+
+
+
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -393,7 +491,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
+               <!-- <com.google.android.material.button.MaterialButton
                     android:id="@+id/cambiar"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
@@ -406,8 +504,8 @@
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:cornerRadius="20dp"
                     android:textSize="10sp"/>
-
-                <com.google.android.material.button.MaterialButton
+-->
+               <!-- <com.google.android.material.button.MaterialButton
                     android:id="@+id/facturar"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
@@ -419,7 +517,7 @@
                     android:text="@string/btn_facturar"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:cornerRadius="20dp"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp"/>-->
                 <!-- <Button
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -441,7 +539,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
+                <!--<com.google.android.material.button.MaterialButton
                     android:id="@+id/aclaracion"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
@@ -453,7 +551,7 @@
                     android:text="@string/btnChat"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:cornerRadius="20dp"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp"/>-->
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancelar"
@@ -465,13 +563,12 @@
                     android:layout_weight="0.1"
                     android:padding="10dp"
                     android:text="@string/btn_cancelar"
-                    app:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="@android:color/holo_red_light"
                     app:cornerRadius="20dp"
-                    android:textSize="10sp"/>
+                    />
 
             </LinearLayout>
 
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

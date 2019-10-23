@@ -36,6 +36,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -103,7 +105,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     private Double latOrderAddress, lonOrderAddress, monto_c, litro_c;
-    Button aclarar, facturar, cancelar, cambiar;
+    ImageButton aclarar, facturar, cambiar;
+    Button cancelar;
     LinearLayout bottom_sheet, linearLayout,f_row, bottom_sheet_cambiar;
     BottomSheetBehavior bsb, bsb_cambiar;
     String motivo_seleccionado="";
