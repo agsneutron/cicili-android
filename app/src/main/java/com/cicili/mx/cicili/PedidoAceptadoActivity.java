@@ -720,7 +720,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 Log.e("PARAMETROSUPDATE", params.toString());
 
 
-                String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.id+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
+                String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.pedido+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
                 Utilities.SetLog("ACTUALIZA",url,WSkeys.log);
 
                 RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -790,6 +790,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
                     JSONObject data = response_object.getJSONObject("data");
                     monto.setText(data.getString("monto"));
+                    cantidad.setText(data.getString("cantidad"));
                     bsb_cambiar.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     Snackbar.make(linearLayout, "Tu pedido se actualizó correctamente", Snackbar.LENGTH_SHORT)
                             .show();
@@ -1216,6 +1217,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
     public void AclararPedido(Integer pos) {
+        // no se aclara es comunicación con conductor
         Intent intent = new Intent(PedidoAceptadoActivity.this, Aclaracion.class);
         intent.putExtra("order", pos);
         startActivity(intent);
@@ -1270,8 +1272,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
             //name.setText("Pedido : " + nombreEstatus);
-            builder.setTitle("Estatus de tu pedido:");
-            builder.setMessage(mensaje);
+            builder.setTitle("El cobro de tu pedido es:");
+            builder.setMessage("Cargo de Comisión de Servicio: $" + client.getComision() +"\n" +
+                    "Monto  total a pagar al conductor: $" + client.getTotal());
             builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
@@ -1296,17 +1299,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
                             cambiar.setEnabled(false);
-                            Intent intent = new Intent(PedidoAceptadoActivity.this, RateService.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("order",client.getSeguimientoPedido().getId());
-                            startActivity(intent);
-                            finish();
                             break;
                         case 9:
-                            /*Intent intent = new Intent(PedidoAceptadoActivity.this, MenuActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();*/
                             break;
 
                         default:
@@ -1324,7 +1318,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             this.runOnUiThread(new Runnable() {
                 public void run() {
                     AlertDialog dialog = builder.create();
-                    //dialog.show();
+                    //
 
                     switch (Integer.parseInt(status)) {
                         case 4:
@@ -1341,6 +1335,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             name.setText("CARGA FINALIZADA");
                             cambiar.setEnabled(false);
                             cancelar.setEnabled(false);
+                            dialog.show();
                             break;
                         case 7:
                             name.setText("PEDIDO COBRADO");
@@ -1353,8 +1348,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
                             cambiar.setEnabled(false);
-                            Intent intent = new Intent(PedidoAceptadoActivity.this, MenuActivity.class);
+                            Intent intent = new Intent(PedidoAceptadoActivity.this, RateService.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("order",client.getSeguimientoPedido().getId());
                             startActivity(intent);
                             finish();
                             break;

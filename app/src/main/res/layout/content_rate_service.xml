@@ -12,7 +12,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Califica el Servicio"
+        android:text="@string/califica_el_servicio"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -28,21 +28,34 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/etComments" />
+        app:layout_constraintBottom_toTopOf="@+id/comments" />
 
-    <EditText
-        android:id="@+id/etComments"
-        android:layout_width="wrap_content"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/comments"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Escribe tus Comentarios sobre el servicio recibido"
-        android:text=""
+        android:hint="@string/comments"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/HintText"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bRate"
-        android:padding="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        app:passwordToggleTint="@color/colorPrimaryDark">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text=""
+            app:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="@color/textDark" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -51,15 +64,15 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="0.1"
         android:padding="10dp"
         android:text="@string/btn_rate"
         app:backgroundTint="@color/colorPrimaryDark"
         app:cornerRadius="20dp"
         android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@+id/etComments"
+        app:layout_constraintTop_toBottomOf="@+id/comments"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

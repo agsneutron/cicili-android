@@ -147,6 +147,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     String json_order="";
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
+    private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
+    private ArrayList<Marker> mMarkerArray_dir = new ArrayList<Marker>();
 
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -1164,7 +1166,6 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public void getDeviceCurrentLocation() {
         //Snackbar.make(direcciones, R.string.gettingDeviceLocation, Snackbar.LENGTH_SHORT)
         //        .show();
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
         try {
             if (mLocationPermissionGranted) {
@@ -1531,6 +1532,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         Utilities.SetLog("PARSER-MAIN_PIPASCERC",response.toString(),WSkeys.log);
         autotanquesCercanosAux.clear();
         // si el response regresa ok, entonces si inicia la sesión
+        for (Marker marker : mMarkerArray) {
+            //marker.setVisible(false);
+            marker.remove();
+        }
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONArray ja_data = response.getJSONArray(WSkeys.data);
             //Utilities.SetLog("ASENTAMIENTOSARRAY",ja_direcciones.toString(),WSkeys.log);
@@ -1553,6 +1558,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     //AddMarker(autotanquesDisponiblesAux.get(i).getAutotanque().getLatitud(),autotanquesDisponiblesAux.get(i).getAutotanque().getLongitud(),autotanquesDisponiblesAux.get(i).getPerfilConductor().getConductor().getNombre(),autotanquesDisponiblesAux.get(i).getConcecionario().getNombre());
                     //AddMarker(jo_data.getJSONObject(WSkeys.autotanque).getDouble("latitud"),jo_data.getJSONObject(WSkeys.autotanque).getDouble("longitud"),jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).getString("nombre"),jo_data.getJSONObject(WSkeys.concesionario).getString("nombre"), jo_data.getDouble("precio"), i);
                     AddMarker(jo_data.getDouble("latitud"),jo_data.getDouble("longitud"),jo_data.getString("conductor"),jo_data.getString("concesionario"), jo_data.getDouble("precio"),jo_data.getString("tiempoLlegada"), i);
+
                     //jo_data.getJSONObject(WSkeys.concesionario);
                     //jo_data.getJSONObject(WSkeys.conductor);
                     LlenaPipas(pipas);
@@ -1601,6 +1607,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     } else if (direcciones.getSelectedItemId()>1){
                         try {
                             //mMap.clear();
+                            for (Marker marker : mMarkerArray_dir) {
+                                //marker.setVisible(false);
+                                marker.remove();
+                            }
                             Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 2).getId()));
                             Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 2).getAlias());
                             ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 2).getLatitud(), client.getAddressDataArrayList().get(i - 2).getLongitud()));
@@ -1651,6 +1661,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMarker.showInfoWindow();
         mMarker.setTag(id);
+        mMarkerArray.add(mMarker);
     }
 
     public void AddMarkerConductor(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
@@ -1685,6 +1696,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMarkerd.showInfoWindow();
         mMarkerd.setTag(id);
+        mMarkerArray_dir.add(mMarkerd);
 
 
     }
@@ -1802,7 +1814,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         Utilities.SetLog("setRecibeEstatusPedido MAPA: ", status, WSkeys.log);
 
        if (Integer.parseInt(status)==11){
+
             getDeviceCurrentLocation();
+
+
        }
 
     }
