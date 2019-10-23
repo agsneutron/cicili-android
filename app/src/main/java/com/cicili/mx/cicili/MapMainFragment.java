@@ -119,6 +119,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private Integer pipaSeleccionada;
 
     private OnFragmentInteractionListener mListener;
+    private OnMessagePedidoListener statusListener;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     Spinner direcciones, pipas;
@@ -146,6 +147,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     String json_order="";
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
+    private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
+    private ArrayList<Marker> mMarkerArray_dir = new ArrayList<Marker>();
 
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -162,6 +165,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     View view;
+    public SupportMapFragment mMapFragment=null;
 
     public MapMainFragment() {
         // Required empty public constructor
@@ -178,10 +182,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     // TODO: Rename and change types and number of parameters
     public static MapMainFragment newInstance(String param1, String param2) {
         MapMainFragment fragment = new MapMainFragment();
-        Bundle args = new Bundle();
+        /*Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -201,6 +205,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_map_main, container, false);
 
+        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this);
+
         name_usuario = view.findViewById(R.id.name_usuario);
         name_usuario.setText(client.getName());
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
@@ -211,6 +218,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         direcciones.setOnItemSelectedListener(this);
         pipas.setOnItemSelectedListener(this);
+
+        //client.setContextMap(getActivity());
+
 
 
         layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
@@ -348,7 +358,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto_mc){
                             // Check for a valid ammount.
                             if (monto_c < 200.00) {
-                                Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                                error =  getString(R.string.error_invalid_ammount);
                                 cancel = true;
                             }
                         }
@@ -434,8 +444,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         featuredlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
-                if(pipas.getSelectedItemId()>0){
+                Utilities.SetLog("DIRECCIONSELECCIONADA", String.valueOf(direcciones.getSelectedItemId()), WSkeys.log);
+                if(direcciones.getSelectedItemId()>0){
                     bsb_mascercano.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
                 else{
@@ -553,10 +563,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (input_monto_litros.getText().toString().equals("0")){
 
-                            input_monto_litros.setText("");
-                        }
 
                     }
 
@@ -564,6 +571,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     public void afterTextChanged(Editable editable) {
                         Double nuevoprecio;
                         Double calculaLitros;
+
                         if(!input_monto_litros.getText().toString().isEmpty()) {
                             if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
 
@@ -574,7 +582,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                     litro_c = Double.parseDouble(input_monto_litros.getText().toString());
                                 }
                                 else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
+                                    calculo_monto_litro.setText("");
                                 }
                             } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
@@ -584,7 +592,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                     litro_c = calculaLitros;
                                 }
                                 else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
+                                    calculo_monto_litro.setText("");
                                 }
                             }
                         }
@@ -1155,10 +1163,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         //ejecutarTarea();
     }
 
-    private void getDeviceCurrentLocation() {
+    public void getDeviceCurrentLocation() {
         //Snackbar.make(direcciones, R.string.gettingDeviceLocation, Snackbar.LENGTH_SHORT)
         //        .show();
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
         try {
             if (mLocationPermissionGranted) {
@@ -1360,6 +1367,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        client.setContextMap(context);
+
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -1414,6 +1425,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public interface OnMessagePedidoListener {
+        // TODO: Update argument type and name
+        void onStatusMessage(String status);
     }
 
     public void LlenaDirecciones(final Spinner direcciones){
@@ -1516,6 +1532,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         Utilities.SetLog("PARSER-MAIN_PIPASCERC",response.toString(),WSkeys.log);
         autotanquesCercanosAux.clear();
         // si el response regresa ok, entonces si inicia la sesión
+        for (Marker marker : mMarkerArray) {
+            //marker.setVisible(false);
+            marker.remove();
+        }
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONArray ja_data = response.getJSONArray(WSkeys.data);
             //Utilities.SetLog("ASENTAMIENTOSARRAY",ja_direcciones.toString(),WSkeys.log);
@@ -1538,6 +1558,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     //AddMarker(autotanquesDisponiblesAux.get(i).getAutotanque().getLatitud(),autotanquesDisponiblesAux.get(i).getAutotanque().getLongitud(),autotanquesDisponiblesAux.get(i).getPerfilConductor().getConductor().getNombre(),autotanquesDisponiblesAux.get(i).getConcecionario().getNombre());
                     //AddMarker(jo_data.getJSONObject(WSkeys.autotanque).getDouble("latitud"),jo_data.getJSONObject(WSkeys.autotanque).getDouble("longitud"),jo_data.getJSONObject(WSkeys.perfilconductor).getJSONObject(WSkeys.conductor).getString("nombre"),jo_data.getJSONObject(WSkeys.concesionario).getString("nombre"), jo_data.getDouble("precio"), i);
                     AddMarker(jo_data.getDouble("latitud"),jo_data.getDouble("longitud"),jo_data.getString("conductor"),jo_data.getString("concesionario"), jo_data.getDouble("precio"),jo_data.getString("tiempoLlegada"), i);
+
                     //jo_data.getJSONObject(WSkeys.concesionario);
                     //jo_data.getJSONObject(WSkeys.conductor);
                     LlenaPipas(pipas);
@@ -1586,6 +1607,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     } else if (direcciones.getSelectedItemId()>1){
                         try {
                             //mMap.clear();
+                            for (Marker marker : mMarkerArray_dir) {
+                                //marker.setVisible(false);
+                                marker.remove();
+                            }
                             Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 2).getId()));
                             Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 2).getAlias());
                             ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 2).getLatitud(), client.getAddressDataArrayList().get(i - 2).getLongitud()));
@@ -1636,6 +1661,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMarker.showInfoWindow();
         mMarker.setTag(id);
+        mMarkerArray.add(mMarker);
     }
 
     public void AddMarkerConductor(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){
@@ -1670,6 +1696,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMarkerd.showInfoWindow();
         mMarkerd.setTag(id);
+        mMarkerArray_dir.add(mMarkerd);
 
 
     }
@@ -1754,11 +1781,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
             if (seguimientoPedido.getStatus().equals("1")){
                 label_pedido.setText("Tienes un pedido Solicitado");
+                layoutDirecciones.setVisibility(View.GONE);
+                layoutPedidoActivo.setVisibility(View.VISIBLE);
             }
             else {
                 label_pedido.setText(R.string.pedido_en_curso);
                 layoutDirecciones.setVisibility(View.GONE);
-                layoutPedidoActivo.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
                 String json_pedido = gson.toJson(pedidoActivo);
                 intent.putExtra("pedido_data",json_pedido);
@@ -1777,6 +1805,21 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    //@Override
+    public void setRecibeEstatusPedido(final String status) {
+        String nombreEstatus="";
+
+        Utilities.SetLog("setRecibeEstatusPedido MAPA: ", status, WSkeys.log);
+
+       if (Integer.parseInt(status)==11){
+
+            getDeviceCurrentLocation();
+
+
+       }
+
     }
 
 }

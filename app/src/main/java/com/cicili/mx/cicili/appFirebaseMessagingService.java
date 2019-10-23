@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 
-public class appFirebaseMessagingService extends FirebaseMessagingService{
+public class appFirebaseMessagingService extends FirebaseMessagingService implements MessageReceiverCallback{
 
 
     Application application = (Application) Client.getContext();
@@ -78,11 +78,21 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
                 }*/
             }
 
-            /*if (remoteMessage.getData().get("status").toString().equals("11")){
+            if (remoteMessage.getData().get("status").toString().equals("6")){
+                client.setComision(remoteMessage.getData().get("comision").toString());
+                client.setTotal(remoteMessage.getData().get("monto").toString());
+
+                Utilities.SetLog("NOTIFICATION comision", client.getComision(), WSkeys.log);
+                Utilities.SetLog("NOTIFICATION monto", client.getTotal(), WSkeys.log);
+            }
+
+            if (remoteMessage.getData().get("status").toString().equals("11")){
+                getReceiverEstatusPedido("11","");
                 if (interfaceNotificationPipas == null){
-                    interfaceNotificationPipas = (MessageReceiverCallback) client.getMessageContext();
+                    interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
+                    interfaceNotificationPipas.getReceiverEstatusPedido("11","Nuevas Pipas");
                 }
-            }*/
+            }
 
 
 
@@ -183,4 +193,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService{
         Utilities.SetLog("Message Notification token: ",s,true);
     }
 
+    @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+
+    }
 }

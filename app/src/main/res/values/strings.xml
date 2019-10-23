@@ -325,5 +325,12 @@
     <string name="cambiar_mi_pedido">Cambiar mi Pedido</string>
     <string name="change_order">Cambiar Pedido</string>
     <string name="hola">¡ Hola</string>
+    <string name="title_activity_score_service"> </string>
+    <string name="btn_rate">Calificar</string>
+    <string name="error_comments">Debes colocar un comentario sobre el servicio recibido</string>
+    <string name="error_rating">Califica el servicio seleccionando de 1 a 5 estrellas.</string>
+    <string name="comments">Comentarios</string>
+    <string name="califica_el_servicio">Califica el Servicio</string>
+    <string name="btnChat">Chat</string>
 
 </resources>

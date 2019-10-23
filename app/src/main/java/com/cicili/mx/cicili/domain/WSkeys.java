@@ -281,6 +281,14 @@ public class WSkeys {
     //app/mv/cliente/pedidoactivo
     public static final String URL_PEDIDO_ACTIVO = "app/mv/cliente/pedidoactivo";
 
+    //PEDIDO CALIFICA
+    //app/mv/cliente/pedido/calificar
+    public static final String URL_CALIFICA_PEDIDO = "app/mv/cliente/pedido/calificar?";
+
+    public static final String calificacion="calificacion";
+    public static final String comentario="comentario";
+
+
     public static final Boolean log = true;
 
 

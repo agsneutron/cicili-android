@@ -139,7 +139,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String pedido_data = "";
     TextView monto;
     TextView lbl1, lbl2, lbl3, lbl4;
-    TextView time, status_order, date, cantidad, name;
+    TextView time, status_order, date, cantidad, name, item_price;
     Gson gson = new Gson();
     SeguimientoPedido seguimientoPedido = client.getSeguimientoPedido();
 
@@ -162,6 +162,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         lbl4 = findViewById(R.id.lbl4);
         name = findViewById(R.id.name);
         status_order = findViewById(R.id.formaPago);
+        item_price = findViewById(R.id.item_price);
         date =  findViewById(R.id.date);
         cantidad =  findViewById(R.id.item_number);
         linearLayout = findViewById(R.id.linearL_pa);
@@ -204,7 +205,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             lbl2.setText(String.format("Color: %s", seguimientoPedido.getColor()));
             lbl3.setText("");
             lbl4.setText(String.format("Placa:  %s", seguimientoPedido.getPlaca()));
-
+            item_price.setText("$ " + seguimientoPedido.getPrecio());
 
             status_order.setText(seguimientoPedido.getFormaPago());
             aclarar = findViewById(R.id.aclaracion);
@@ -237,7 +238,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         cambiar.setEnabled(false);
                         handler.removeCallbacksAndMessages(null);
                         break;
-                    case 6:
+                    case 6:  //finaliza carga mostrar montos
                         nombreEstatus = "Cargado";
                         cambiar.setEnabled(false);
                         break;
@@ -258,6 +259,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         nombreEstatus = "Facturado";
                         cancelar.setEnabled(false);
                         facturar.setEnabled(true);
+                        cambiar.setEnabled(false);
                         break;
                 }
                 name.setText("Pedido : " + nombreEstatus);
@@ -601,7 +603,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
                                     //nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
-                                    nuevoprecio = (Double.parseDouble(client.getSeguimientoPedido().getMonto())/ Double.parseDouble(client.getSeguimientoPedido().getCantidad())) * Double.valueOf(input_monto_litros.getText().toString());
+                                    nuevoprecio = Double.parseDouble(client.getSeguimientoPedido().getPrecio()) * Double.valueOf(input_monto_litros.getText().toString());
                                     calculo_monto_litro.setText(String.valueOf(nuevoprecio));
                                     monto_c = nuevoprecio;
                                     litro_c = Double.parseDouble(input_monto_litros.getText().toString());
@@ -611,7 +613,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                                 }
                             } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) /  (Double.parseDouble(client.getSeguimientoPedido().getMonto())/ Double.parseDouble(client.getSeguimientoPedido().getCantidad())));
+                                    calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) /  Double.parseDouble(client.getSeguimientoPedido().getPrecio()));
                                     calculo_monto_litro.setText(String.valueOf(calculaLitros));
                                     monto_c = Double.parseDouble(input_monto_litros.getText().toString());
                                     litro_c = calculaLitros;
@@ -718,7 +720,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 Log.e("PARAMETROSUPDATE", params.toString());
 
 
-                String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER;
+                String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.pedido+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
                 Utilities.SetLog("ACTUALIZA",url,WSkeys.log);
 
                 RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -765,6 +767,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         Map<String, String> params = new HashMap<String, String>();
                         //params.put("Content-Type", "application/x-www-form-urlencoded");
                         //params.put("Content-Type", "application/json; charset=utf-8");
+                        params.put("Content-Type", "application/json; charset=utf-8");
                         params.put("Authorization", client.getToken());
 
                         return params;
@@ -787,6 +790,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
                     JSONObject data = response_object.getJSONObject("data");
                     monto.setText(data.getString("monto"));
+                    cantidad.setText(data.getString("cantidad"));
                     bsb_cambiar.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     Snackbar.make(linearLayout, "Tu pedido se actualizó correctamente", Snackbar.LENGTH_SHORT)
                             .show();
@@ -848,7 +852,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     private void ActualizarUbicacionTask(final Double latitud, final Double longitud) {
         moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latitud, longitud));
-        AddMarkerConductor(latitud, longitud, seguimientoPedido.getNombreConductor(), seguimientoPedido.getRazonSocial(), Double.parseDouble(seguimientoPedido.getMonto()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getId()));
+        AddMarkerConductor(latitud, longitud, seguimientoPedido.getNombreConductor(), seguimientoPedido.getRazonSocial(), Double.parseDouble(seguimientoPedido.getPrecio()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getId()));
     }
 
 
@@ -954,7 +958,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             String respuestaDirecctions = new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving").toString();
 
-            Utilities.SetLog("DATA Directions: ", respuestaDirecctions.toString(), WSkeys.log);
+            JSONArray ja_direction = new JSONArray(respuestaDirecctions);
+
+            Utilities.SetLog("DATA Directions: ", ja_direction.toString(), WSkeys.log);
 
             Utilities.SetLog("ubicación recibida: ", "ubicacion", WSkeys.log);
 
@@ -1084,7 +1090,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 .icon(bitmapDescriptorFromVector(PedidoAceptadoActivity.this, R.drawable.ic_pipa_2_01))
                 .position(new LatLng(lat, lon))
                 .title("Concesionario: " + concesionario)
-                .snippet("Conductor: " + conductor + "\n" + "Precio: $" + String.valueOf(precio) + "\n" + "Tiempo de Llegada: " + tiempo));
+                .snippet("Conductor: " + conductor + "\n" + "Precio: $" + String.valueOf(precio) + "por litro \n" + "Tiempo de Llegada: " + tiempo));
 
         mMarkerConductor.showInfoWindow();
         mMarkerConductor.setTag(id);
@@ -1195,8 +1201,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
-            JSONObject jo_usocfdi = respuesta.getJSONObject(WSkeys.data);
-            Snackbar.make(facturar, jo_usocfdi.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
+
+            Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
                     .show();
 
         }
@@ -1211,6 +1217,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
     public void AclararPedido(Integer pos) {
+        // no se aclara es comunicación con conductor
         Intent intent = new Intent(PedidoAceptadoActivity.this, Aclaracion.class);
         intent.putExtra("order", pos);
         startActivity(intent);
@@ -1265,8 +1272,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
             //name.setText("Pedido : " + nombreEstatus);
-            builder.setTitle("Estatus de tu pedido:");
-            builder.setMessage(mensaje);
+            builder.setTitle("El cobro de tu pedido es:");
+            builder.setMessage("Cargo de Comisión de Servicio: $" + client.getComision() +"\n" +
+                    "Monto  total a pagar al conductor: $" + client.getTotal());
             builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
@@ -1285,17 +1293,20 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         case 7:
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
+                            cambiar.setEnabled(false);
+                            break;
+                        case 8:
+                            cancelar.setEnabled(false);
+                            facturar.setEnabled(true);
+                            cambiar.setEnabled(false);
                             break;
                         case 9:
-                            Intent intent = new Intent(PedidoAceptadoActivity.this, MenuActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
                             break;
 
                         default:
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
+                            cambiar.setEnabled(false);
                             break;
                     }
                 }
@@ -1307,27 +1318,47 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             this.runOnUiThread(new Runnable() {
                 public void run() {
                     AlertDialog dialog = builder.create();
-                    //dialog.show();
+                    //
 
                     switch (Integer.parseInt(status)) {
                         case 4:
+                            name.setText("PREPARANDO CARGA ...");
                             cancelar.setEnabled(false);
                             break;
                         case 5:
+                            name.setText("CARGANDO PEDIDO ...");
+                            cambiar.setEnabled(false);
                             cancelar.setEnabled(false);
                             handler.removeCallbacksAndMessages(null);
                             break;
                         case 6:
+                            name.setText("CARGA FINALIZADA");
+                            cambiar.setEnabled(false);
                             cancelar.setEnabled(false);
+                            dialog.show();
                             break;
                         case 7:
+                            name.setText("PEDIDO COBRADO");
+                            cancelar.setEnabled(false);
+                            cambiar.setEnabled(false);
+                            facturar.setEnabled(true);
+                            break;
+                        case 8:
+                            name.setText("PEDIDO FINALIZADO, GRACIAS.");
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
+                            cambiar.setEnabled(false);
+                            Intent intent = new Intent(PedidoAceptadoActivity.this, RateService.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("order",client.getSeguimientoPedido().getId());
+                            startActivity(intent);
+                            finish();
                             break;
 
                         default:
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
+                            cambiar.setEnabled(false);
                             break;
                     }
 

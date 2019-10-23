@@ -19,6 +19,7 @@ import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -39,6 +40,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.widget.ImageView;
@@ -58,7 +60,7 @@ public class MenuActivity extends AppCompatActivity
         RfcDetailFragment.OnFragmentInteractionListener,
         ScheduleMainFragment.OnListFragmentInteractionListener,
         OrderMainFragment.OnListFragmentInteractionListener,
-        NotificationReceiver.OnNotificationReceiverListener{
+        NotificationReceiver.OnNotificationReceiverListener,MessageReceiverCallback{
 
 
     Application application = (Application) Client.getContext();
@@ -149,6 +151,9 @@ public class MenuActivity extends AppCompatActivity
 
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
+
+        client.setContextMap(MenuActivity.this);
+
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -537,6 +542,31 @@ public class MenuActivity extends AppCompatActivity
         });
 
     }
+
+   @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+
+
+
+       //Fragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+       //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.map);
+
+       Fragment  fragment =  fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+
+       Utilities.SetLog("instanceof : ",String.valueOf (fragment), WSkeys.log);
+
+       if (fragment instanceof SupportMapFragment){
+
+           /** Se valida que esta bien instanciado y se hace la comunicación*/
+
+          MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
+
+           /** Se envia el mensaje al metodo del receptor*/
+          receptor.setRecibeEstatusPedido(status);
+       }
+    }
+
+
 
     /*@Override
     protected void onRestart() {
