@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
+import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,7 +27,7 @@ public class CancelaActivity extends AppCompatActivity {
     TextView estatus_cancelado, message;
     TextView address,alias,liter, ammount;
     String json_order, cause;
-    Pedido pedidoData;
+    SeguimientoPedido pedidoData;
     SeguimientoPedido seguimientoPedido;
 
     Gson gson = new Gson();
@@ -73,12 +75,14 @@ public class CancelaActivity extends AppCompatActivity {
             estatus_cancelado.setText(data);
             message.setText(String.format("Motivo: %s", cause));
 
+            Utilities.SetLog("CANCEL-jsonORDER",json_order, WSkeys.log);
+
             if (bundle.getString("from").equals("solicitado")){
-                pedidoData = gson.fromJson(json_order , Pedido.class);
-                address.setText(pedidoData.getDomicilio().toString());
+                pedidoData = gson.fromJson(json_order , SeguimientoPedido.class);
+                address.setText(String.format("%s.", pedidoData.getDireccion()));
                 alias.setText(String.valueOf(pedidoData.getFormaPago()));
                 //date.setText();
-                ammount.setText(String.valueOf(pedidoData.getMonto()));
+                ammount.setText(String.format(String.valueOf(pedidoData.getMonto())));
                 liter.setText(String.valueOf(pedidoData.getCantidad()));
             }
             else if (bundle.getString("from").equals("aceptado")){

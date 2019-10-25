@@ -424,10 +424,15 @@ public class NewOrderActivity extends AppCompatActivity {
 
         Utilities.SetLog("ParserOrderResponse",respuesta.toString(),WSkeys.log);
         Integer pedido_id;
+        Gson gson = new Gson();
+
 
         // si el response regresa ok, entonces si inicia la sesión
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)){
             pedido_id = respuesta.getJSONObject("data").getInt("id");
+            json_order = respuesta.getJSONObject("data").toString();
+
+            Utilities.SetLog("JSON_ORDER-Response",json_order,WSkeys.log);
             order = String.valueOf(pedido_id);
             client.setOrder_id(order);
             estatuspedido.setText(" Estatus de Pedido: " + respuesta.getJSONObject("data").getString("nombreStatus")+ "\n"+ "Número de Orden: "+String.valueOf(order));

@@ -427,7 +427,9 @@ public class Aclaracion extends AppCompatActivity {
                     intent.putExtra("uso","1");
                 }
                 //si hay aclaraciones pendientes
+
                 startActivity(intent);
+                finish();
             }
 
         }

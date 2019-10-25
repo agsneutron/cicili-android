@@ -49,9 +49,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        if (interfaceNotification == null){
-            interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
-        }
+
 
         if (remoteMessage.getNotification() != null){
             Utilities.SetLog("NOTIFICATION DATA", remoteMessage.getData().toString(), WSkeys.log);
@@ -108,6 +106,9 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
         */
 
 
+        }
+        if (interfaceNotification == null){
+            interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
         }
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {

@@ -396,8 +396,10 @@ public class AyudaActivity extends AppCompatActivity {
                     intent.putExtra("categoria",tipo.getString("text"));
                     intent.putExtra("uso","2");
                 }
+
                 //si hay aclaraciones pendientes
                 startActivity(intent);
+                finish();
             }
 
         }
