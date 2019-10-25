@@ -84,7 +84,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
 
             if (remoteMessage.getData().get("status").toString().equals("11")){
                 getReceiverEstatusPedido("11","");
-                if (interfaceNotificationPipas == null){
+
+                if (interfaceNotificationPipas == null && client.getContextMap() != null){
                     interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
                     interfaceNotificationPipas.getReceiverEstatusPedido("11","Nuevas Pipas");
                 }

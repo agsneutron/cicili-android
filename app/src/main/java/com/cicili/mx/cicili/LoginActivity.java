@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mEmailView = (TextInputEditText) findViewById(R.id.email);
 
+        client.setContextMap(null);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -407,7 +408,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this,ValidateActivity.class);
                 intent.putExtra("token",client.getToken());
                 startActivity(intent);
-                client = null;
+                //client = null;
+                finish();
                 //DialogValidate(userName);
             }
 
