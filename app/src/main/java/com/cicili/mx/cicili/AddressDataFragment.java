@@ -146,12 +146,18 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             Bundle bundle=getArguments();
-            Utilities.SetLog(LOG,bundle.toString(),WSkeys.log);
-            Utilities.SetLog(LOG,mParam1,WSkeys.log);
-            Utilities.SetLog(LOG+ "pos",String.valueOf(pos),WSkeys.log);
-            mParam1=bundle.getString("ARG_PARAM1");
-            pos = Integer.parseInt(mParam1);
-            Utilities.SetLog(LOG+"ARGS",bundle.getString("ARG_PARAM1"),WSkeys.log);
+
+            if (bundle.getString("ARG_PARAM1")!=null) {
+                Utilities.SetLog(LOG, bundle.toString(), WSkeys.log);
+                Utilities.SetLog(LOG, mParam1, WSkeys.log);
+                Utilities.SetLog(LOG + "pos", String.valueOf(pos), WSkeys.log);
+                mParam1 = bundle.getString("ARG_PARAM1");
+                pos = Integer.parseInt(mParam1);
+                Utilities.SetLog(LOG + "ARGS", bundle.getString("ARG_PARAM1"), WSkeys.log);
+            }
+            else {
+                pos=null;
+            }
         }
     }
 
@@ -559,6 +565,8 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                 toast.show();
                 Intent intent = new Intent(getContext(),PerfilData.class);
                 startActivity(intent);
+                getActivity().finish();
+
             }
             //Snackbar.make(calle, R.string.successaddressvalidation, Snackbar.LENGTH_LONG)
             //        .show();

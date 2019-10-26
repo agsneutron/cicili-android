@@ -55,7 +55,10 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
     Fragment active = fragmentPersonal;
     BottomNavigationView nv;
     ScrollView view_scroll;
-
+    Bundle bundle;
+    String id="";
+    String dataactive="";
+    Intent intent;
 
     @Override
     public void onFragmentInteraction(Uri uri){
@@ -94,10 +97,9 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
 
 
 
-        String dataactive="";
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        String id="";
+        dataactive="";
+        intent = getIntent();
+        bundle = intent.getExtras();
 
 
 
@@ -105,11 +107,15 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             //si trae fragment por activar
             dataactive = bundle.getString("active");
             id =  bundle.getString("id");
-
             Utilities.SetLog("LOG ID",id,WSkeys.log);
+            Log.e("dataactive", dataactive);
+            if (id==null){
+                CheckStatus();
+            }
         }else{
             CheckStatus();
         }
+
 
         //fm.beginTransaction().add(R.id.container, fragmentAddress, "3").hide(fragmentAddress).commit();
         //fm.beginTransaction().add(R.id.container, fragmentPayment, "2").hide(fragmentPayment).commit();
@@ -117,7 +123,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
         //fm.beginTransaction().hide(active).show(fragmentPersonal).commit();
 
 
-        if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
+        /*if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
             //navView.setSelectedItemId(R.id.navigation_perfil);
             fm.beginTransaction().hide(active);
             fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").show(fragmentPersonal).commit();
@@ -175,7 +181,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             fm.beginTransaction().add(R.id.container, fragmentDataSchedule, "5").show(fragmentDataSchedule).commit();
             active = fragmentDataSchedule;
         }
-
+    */
     }
 
     public void CheckStatus() {
@@ -238,32 +244,73 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             String data = jo_data.getString("idCliente");
             String dataactive = jo_data.getString("status");
             if (!data.equals("")){
+                Log.e("DATA -- dataactive", data + " " + dataactive);
 
                 if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
+                    Log.e("dataactive -- PE", dataactive);
                     //navView.setSelectedItemId(R.id.navigation_perfil);
+                    if(id != null) {
+                        bundle = new Bundle();
+                        bundle.putString("ARG_PARAM1", id);
+                        bundle.putString("ARG_PARAM2", " ");
+                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
+                        fragmentPayment.setArguments(bundle);
+                    }
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").show(fragmentPersonal).commit();
                     active = fragmentPersonal;
                 }
                 else if (dataactive.equals(WSkeys.datos_pago)){
+                    Log.e("dataactive -- PA", dataactive);
+                    if(id != null) {
+                        bundle = new Bundle();
+                        bundle.putString("ARG_PARAM1", id);
+                        bundle.putString("ARG_PARAM2", " ");
+                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
+                        fragmentPayment.setArguments(bundle);
+                    }
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
                     active = fragmentPayment;
                 }
                 else if (dataactive.equals(WSkeys.datos_direccion)){
+                    Log.e("dataactive -- PD", dataactive);
+                    if(id != null) {
+                        bundle = new Bundle();
+                        bundle.putString("ARG_PARAM1", id);
+                        bundle.putString("ARG_PARAM2", " ");
+                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
+                        fragmentPayment.setArguments(bundle);
+                    }
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
                     active = fragmentAddress;
                 }
                 else if (dataactive.equals(WSkeys.datos_rfc)) {
+                    if(id != null) {
+                        bundle = new Bundle();
+                        bundle.putString("ARG_PARAM1", id);
+                        bundle.putString("ARG_PARAM2", " ");
+                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
+                        fragmentPayment.setArguments(bundle);
+                    }
                     fm.beginTransaction().hide(active);
                     fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
                     active = fragmentRfc;
                 }else if(dataactive.equals(WSkeys.completo)){
+                    Log.e("dataactive -- C", dataactive);
+                    if(id != null) {
+                        bundle = new Bundle();
+                        bundle.putString("ARG_PARAM1", id);
+                        bundle.putString("ARG_PARAM2", " ");
+                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
+                        fragmentPayment.setArguments(bundle);
+                    }
                     Intent intent = new Intent(PerfilData.this, MenuActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
-                finish();
+
             }
             else{
                 Snackbar.make(view_scroll, R.string.error_status, Snackbar.LENGTH_LONG)

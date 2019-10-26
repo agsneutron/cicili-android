@@ -409,6 +409,7 @@ public class PersonalDataFragment extends Fragment {
                     toast.show();
                     Intent intent = new Intent(getContext(),PerfilData.class);
                     startActivity(intent);
+                    getActivity().finish();
                 }
 
 
