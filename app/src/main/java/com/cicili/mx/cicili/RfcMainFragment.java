@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,6 +54,7 @@ public class RfcMainFragment extends Fragment {
     Client client = (Client) application;
     public ArrayList<RfcData> RFC_ITEMS = new ArrayList<RfcData>();
     View view;
+    ImageView img_back;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -83,6 +85,13 @@ public class RfcMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_itemrfc_list, container, false);
+        img_back = view.findViewById(R.id.img_back);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         Utilities.SetLog("MAINRFC", "ON RFC LIST", WSkeys.log);
         LlenaRFC();

@@ -407,53 +407,9 @@ public class PersonalDataFragment extends Fragment {
                     Utilities.SetClientData(jousuario, client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalvalidation, Toast.LENGTH_LONG);
                     toast.show();
-                    Intent intent = new Intent(getContext(),PerfilData.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-
-
-                //Snackbar.make(viewgroup.getChildAt(0), R.string.successpersonalvalidation, Snackbar.LENGTH_LONG)
-                //        .show();
-
-
-
-                if (client.getStatus().equals(WSkeys.completo)){
-                    Intent intent = new Intent(getContext(),MenuActivity.class);
-                    intent.putExtra("active", WSkeys.completo);
-                    startActivity(intent);
-                    getActivity().finish();
-                }else if(client.getStatus().equals(WSkeys.datos_direccion)){
-                    Fragment fragmentAddress = new AddressDataFragment();
-                    FragmentManager fm = getFragmentManager();
-                    fm.beginTransaction().hide(this);
-                    fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
-
-                    /*
-                    FragmentManager manager = getFragmentManager();
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    manager.getBackStackEntryCount();
-                    transaction.remove(this);
-                    transaction.show(fragmentAddress).commit();
-                    active = fragmentAddress;*/
-
-                } else if(client.getStatus().equals(WSkeys.datos_pago)){
-                    Fragment fragmentPayment = new PaymentDataFragment();
-                    FragmentManager fm = getFragmentManager();
-                    fm.beginTransaction().hide(this);
-                    fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
-
-                    /*Fragment fragmentPayment = new PaymentDataFragment();
-                    FragmentManager manager = getFragmentManager();
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    manager.getBackStackEntryCount();
-                    transaction.remove(this);
-                    transaction.show(fragmentPayment).commit();*/
-                }
-                else{
+                    getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).commit();
                     getActivity().onBackPressed();
-                    //getActivity().getFragmentManager().popBackStack();
-                    //getActivity().finish();
                 }
 
 
@@ -539,4 +495,6 @@ public class PersonalDataFragment extends Fragment {
 
 
     }
+
+
 }

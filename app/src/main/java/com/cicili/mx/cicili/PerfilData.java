@@ -107,11 +107,65 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             //si trae fragment por activar
             dataactive = bundle.getString("active");
             id =  bundle.getString("id");
-            Utilities.SetLog("LOG ID",id,WSkeys.log);
+            Utilities.SetLog("LOG ID-- >",id,WSkeys.log);
             Log.e("dataactive", dataactive);
-            if (id==null){
-                CheckStatus();
+
+            if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
+                //navView.setSelectedItemId(R.id.navigation_perfil);
+                fm.beginTransaction().hide(active);
+                fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").show(fragmentPersonal).commit();
+                active = fragmentPersonal;
+            } else if (dataactive.equals(WSkeys.datos_pago)) {
+                //navView.setSelectedItemId(R.id.navigation_payment);
+                if (id != null) {
+                    bundle = new Bundle();
+                    bundle.putString("ARG_PARAM1", id);
+                    bundle.putString("ARG_PARAM2", " ");
+                    Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
+                    fragmentPayment.setArguments(bundle);
+                }
+                fm.beginTransaction().hide(active);
+                fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
+                active = fragmentPayment;
+            } else if (dataactive.equals(WSkeys.datos_direccion)) {
+                //navView.setSelectedItemId(R.id.navigation_address);
+                if (id != null) {
+                    bundle = new Bundle();
+                    bundle.putString("ARG_PARAM1", id);
+                    bundle.putString("ARG_PARAM2", " ");
+                    Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
+                    fragmentAddress.setArguments(bundle);
+                }
+                fm.beginTransaction().hide(active);
+                fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
+                active = fragmentAddress;
+            } else if (dataactive.equals(WSkeys.datos_rfc)) {
+                //navView.setSelectedItemId(R.id.navigation_address);
+                Utilities.SetLog("in ID!=null", id, WSkeys.log);
+                if (id != null) {
+                    bundle = new Bundle();
+                    bundle.putString("ARG_PARAM1", id);
+                    bundle.putString("ARG_PARAM2", " ");
+                    Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
+                    fragmentRfc.setArguments(bundle);
+                }
+                fm.beginTransaction().hide(active);
+                fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
+                active = fragmentRfc;
+            } else if (dataactive.equals(WSkeys.datos_programar)) {
+                //navView.setSelectedItemId(R.id.navigation_address);
+                if (id != null) {
+                    bundle = new Bundle();
+                    bundle.putString("ARG_PARAM1", id);
+                    bundle.putString("ARG_PARAM2", " ");
+                    Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
+                    fragmentDataSchedule.setArguments(bundle);
+                }
+                fm.beginTransaction().hide(active);
+                fm.beginTransaction().add(R.id.container, fragmentDataSchedule, "5").show(fragmentDataSchedule).commit();
+                active = fragmentDataSchedule;
             }
+
         }else{
             CheckStatus();
         }
@@ -123,68 +177,13 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
         //fm.beginTransaction().hide(active).show(fragmentPersonal).commit();
 
 
-        /*if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
-            //navView.setSelectedItemId(R.id.navigation_perfil);
-            fm.beginTransaction().hide(active);
-            fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").show(fragmentPersonal).commit();
-            active = fragmentPersonal;
-        }
-        else if (dataactive.equals(WSkeys.datos_pago)){
-            //navView.setSelectedItemId(R.id.navigation_payment);
-            if(id != null) {
-                bundle = new Bundle();
-                bundle.putString("ARG_PARAM1", id);
-                bundle.putString("ARG_PARAM2", " ");
-                Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                fragmentPayment.setArguments(bundle);
-            }
-            fm.beginTransaction().hide(active);
-            fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
-            active = fragmentPayment;
-        }
-        else if (dataactive.equals(WSkeys.datos_direccion)){
-            //navView.setSelectedItemId(R.id.navigation_address);
-            if(id != null) {
-                bundle = new Bundle();
-                bundle.putString("ARG_PARAM1", id);
-                bundle.putString("ARG_PARAM2", " ");
-                Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                fragmentAddress.setArguments(bundle);
-            }
-            fm.beginTransaction().hide(active);
-            fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
-            active = fragmentAddress;
-        }
-        else if (dataactive.equals(WSkeys.datos_rfc)) {
-            //navView.setSelectedItemId(R.id.navigation_address);
-            if (id != null) {
-                bundle = new Bundle();
-                bundle.putString("ARG_PARAM1", id);
-                bundle.putString("ARG_PARAM2", " ");
-                Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
-                fragmentRfc.setArguments(bundle);
-            }
-            fm.beginTransaction().hide(active);
-            fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
-            active = fragmentRfc;
-        }
-        else if (dataactive.equals(WSkeys.datos_programar)) {
-            //navView.setSelectedItemId(R.id.navigation_address);
-            if (id != null) {
-                bundle = new Bundle();
-                bundle.putString("ARG_PARAM1", id);
-                bundle.putString("ARG_PARAM2", " ");
-                Utilities.SetLog("LOG ID in not null", id, WSkeys.log);
-                fragmentDataSchedule.setArguments(bundle);
-            }
-            fm.beginTransaction().hide(active);
-            fm.beginTransaction().add(R.id.container, fragmentDataSchedule, "5").show(fragmentDataSchedule).commit();
-            active = fragmentDataSchedule;
-        }
-    */
+
+
+
     }
 
     public void CheckStatus() {
+        Utilities.SetLog("PERFILDATA", "ONCHECKSTATUS",WSkeys.log);
 
         String url = WSkeys.URL_BASE + WSkeys.URL_VALIDATESTATUS;
         RequestQueue queue = Volley.newRequestQueue(PerfilData.this);
@@ -192,6 +191,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             @Override
             public void onResponse(String response) {
                 try {
+
                     ParserCode(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -249,68 +249,54 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
                 if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
                     Log.e("dataactive -- PE", dataactive);
                     //navView.setSelectedItemId(R.id.navigation_perfil);
-                    if(id != null) {
-                        bundle = new Bundle();
-                        bundle.putString("ARG_PARAM1", id);
-                        bundle.putString("ARG_PARAM2", " ");
-                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                        fragmentPayment.setArguments(bundle);
-                    }
+
                     fm.beginTransaction().hide(active);
-                    fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").show(fragmentPersonal).commit();
+                    if (!fragmentPersonal.isAdded()) {
+                        fm.beginTransaction().add(R.id.container, fragmentPersonal, "1").commit();
+                    }
+                    fm.beginTransaction().show(fragmentPersonal).commit();
+                    fm.beginTransaction().addToBackStack(null).commit();
                     active = fragmentPersonal;
                 }
                 else if (dataactive.equals(WSkeys.datos_pago)){
                     Log.e("dataactive -- PA", dataactive);
-                    if(id != null) {
-                        bundle = new Bundle();
-                        bundle.putString("ARG_PARAM1", id);
-                        bundle.putString("ARG_PARAM2", " ");
-                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                        fragmentPayment.setArguments(bundle);
-                    }
                     fm.beginTransaction().hide(active);
-                    fm.beginTransaction().add(R.id.container, fragmentPayment, "2").show(fragmentPayment).commit();
+                    if (!fragmentPayment.isAdded()) {
+                        fm.beginTransaction().add(R.id.container, fragmentPayment, "2").commit();
+                    }
+                    fm.beginTransaction().show(fragmentPayment).commit();
+                    fm.beginTransaction().addToBackStack(null).commit();
                     active = fragmentPayment;
                 }
                 else if (dataactive.equals(WSkeys.datos_direccion)){
                     Log.e("dataactive -- PD", dataactive);
-                    if(id != null) {
-                        bundle = new Bundle();
-                        bundle.putString("ARG_PARAM1", id);
-                        bundle.putString("ARG_PARAM2", " ");
-                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                        fragmentPayment.setArguments(bundle);
-                    }
+
                     fm.beginTransaction().hide(active);
-                    fm.beginTransaction().add(R.id.container, fragmentAddress, "3").show(fragmentAddress).commit();
+                    if (!fragmentAddress.isAdded()) {
+                        fm.beginTransaction().add(R.id.container, fragmentAddress, "3").commit();
+                    }
+                    fm.beginTransaction().show(fragmentAddress).commit();
+                    fm.beginTransaction().addToBackStack(null).commit();
                     active = fragmentAddress;
                 }
                 else if (dataactive.equals(WSkeys.datos_rfc)) {
-                    if(id != null) {
-                        bundle = new Bundle();
-                        bundle.putString("ARG_PARAM1", id);
-                        bundle.putString("ARG_PARAM2", " ");
-                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                        fragmentPayment.setArguments(bundle);
-                    }
+
                     fm.beginTransaction().hide(active);
-                    fm.beginTransaction().add(R.id.container, fragmentRfc, "4").show(fragmentRfc).commit();
+                    if (!fragmentRfc.isAdded()) {
+                        fm.beginTransaction().add(R.id.container, fragmentRfc, "4").commit();
+                    }
+                    fm.beginTransaction().show(fragmentRfc).commit();
+                    fm.beginTransaction().addToBackStack(null).commit();
                     active = fragmentRfc;
                 }else if(dataactive.equals(WSkeys.completo)){
                     Log.e("dataactive -- C", dataactive);
-                    if(id != null) {
-                        bundle = new Bundle();
-                        bundle.putString("ARG_PARAM1", id);
-                        bundle.putString("ARG_PARAM2", " ");
-                        Utilities.SetLog("LOG ID in not null",id,WSkeys.log);
-                        fragmentPayment.setArguments(bundle);
-                    }
                     Intent intent = new Intent(PerfilData.this, MenuActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
-
+                else{
+                    super.onBackPressed();
+                }
             }
             else{
                 Snackbar.make(view_scroll, R.string.error_status, Snackbar.LENGTH_LONG)
@@ -321,5 +307,11 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             Snackbar.make(view_scroll, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        CheckStatus();
+        //super.onBackPressed();
     }
 }

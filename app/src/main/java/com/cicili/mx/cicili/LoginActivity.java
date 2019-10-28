@@ -441,28 +441,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 finish();
                 //DialogValidate(userName);
             }
+            else {
+                if (client.getStatus().equals(WSkeys.datos_personales)) {
+                    Intent intent = new Intent(LoginActivity.this, PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_personales);
+                    startActivity(intent);
+                }
+                if (client.getStatus().equals(WSkeys.datos_pago)) {
+                    Intent intent = new Intent(LoginActivity.this, PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_pago);
+                    startActivity(intent);
+                }
 
+                if (client.getStatus().equals(WSkeys.datos_direccion)) {
+                    Intent intent = new Intent(LoginActivity.this, PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_direccion);
+                    startActivity(intent);
+                }
 
-            if (client.getStatus().equals(WSkeys.datos_personales)){
-                Intent intent = new Intent(LoginActivity.this, PerfilData.class);
-                intent.putExtra("active",WSkeys.datos_personales);
-                startActivity(intent);
-            }
-            if(client.getStatus().equals(WSkeys.datos_pago)){
-                Intent intent = new Intent(LoginActivity.this, PerfilData.class);
-                intent.putExtra("active",WSkeys.datos_pago);
-                startActivity(intent);
-            }
-
-            if(client.getStatus().equals(WSkeys.datos_direccion)){
-                Intent intent = new Intent(LoginActivity.this, PerfilData.class);
-                intent.putExtra("active",WSkeys.datos_direccion);
-                startActivity(intent);
-            }
-
-            if(client.getStatus().equals(WSkeys.completo)) {
-                Utilities.SetClientData(jousuario, client);
-               SessionToken();
+                if (client.getStatus().equals(WSkeys.completo)) {
+                    Utilities.SetClientData(jousuario, client);
+                    SessionToken();
+                }
             }
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error

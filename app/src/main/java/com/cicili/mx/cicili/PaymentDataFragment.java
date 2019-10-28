@@ -559,9 +559,12 @@ public class PaymentDataFragment extends Fragment {
                 Utilities.AddPaymentData(jsonPayment, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successpaymentvalidation, Toast.LENGTH_LONG);
                 toast.show();
-                Intent intent = new Intent(getContext(),PerfilData.class);
+                /*Intent intent = new Intent(getContext(),PerfilData.class);
                 startActivity(intent);
-                getActivity().finish();
+                getActivity().finish();*/
+                getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).commit();
+                getActivity().onBackPressed();
             }
 
 

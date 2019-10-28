@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
@@ -46,6 +47,7 @@ public class PaymentMainFragment extends Fragment {
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     public ArrayList<PaymentData> PAYMENT_ITEMS = new ArrayList<PaymentData>();
+    ImageView img_back;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -90,6 +92,13 @@ public class PaymentMainFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(new MyItemPaymentRecyclerViewAdapter(PAYMENT_ITEMS, mListener));
 
+        img_back = view.findViewById(R.id.img_back);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

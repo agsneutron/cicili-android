@@ -44,6 +44,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,8 @@ public class MenuActivity extends AppCompatActivity
     DrawerLayout drawer;
     FloatingActionButton fab_menu;
     FloatingActionButton fab_help;
+    LinearLayout encabezado;
+    ImageView img_back;
 
     protected static final String BUTTON_ACTION = "buttonaction";
     protected static final int REQUEST_BUTTON = 300;
@@ -151,6 +154,9 @@ public class MenuActivity extends AppCompatActivity
 
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
+        /*encabezado = findViewById(R.id.encabezado);
+        img_back = findViewById(R.id.img_back);*/
+
 
         client.setContextMap(MenuActivity.this);
 
@@ -196,7 +202,7 @@ public class MenuActivity extends AppCompatActivity
 
 
 
-        if (client.getStatus().equals(WSkeys.datos_personales)){
+        /*if (client.getStatus().equals(WSkeys.datos_personales)){
             Intent intent = new Intent(MenuActivity.this, PerfilData.class);
             intent.putExtra("active",WSkeys.datos_personales);
             startActivity(intent);
@@ -208,7 +214,7 @@ public class MenuActivity extends AppCompatActivity
             Intent intent = new Intent(MenuActivity.this, PerfilData.class);
             intent.putExtra("active",WSkeys.datos_direccion);
             startActivity(intent);
-        } else {
+        } else {*/
             if (findViewById(R.id.main_container) != null) {
 
                 if (savedInstanceState != null) {
@@ -231,7 +237,7 @@ public class MenuActivity extends AppCompatActivity
             IntentFilter intentFilter = new IntentFilter(BUTTON_ACTION);
             registerReceiver(broadcast,intentFilter);
 
-        }
+      /*  }*/
     }
 
     @Override
@@ -344,7 +350,7 @@ public class MenuActivity extends AppCompatActivity
             //active = fragmentPayment;
 
 
-        } /*else if (id == R.id.navigation_rfc) {
+        } else if (id == R.id.navigation_rfc) {
             //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(active).commit();
             //fm.beginTransaction().show(fragmentRfc).commit();
             //active = fragmentRfc;
@@ -355,8 +361,9 @@ public class MenuActivity extends AppCompatActivity
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentRfc).commit();
             active = fragmentRfc;
+            hideMenuHelpToBack();
 
-        }*/ else if (id == R.id.navigation_schedule) {
+        } else if (id == R.id.navigation_schedule) {
             if (!fragmentSchedule.isAdded()) {
                 Utilities.SetLog("FRAGMENT_Schedule", active.getTag(), WSkeys.log);
                 fm.beginTransaction().add(R.id.main_container, fragmentSchedule, "fragmentSchedule").commit();
@@ -519,7 +526,7 @@ public class MenuActivity extends AppCompatActivity
     }
 
     public void hideMenuHelpToBack(){
-        fab_menu.hide();
+        /*fab_menu.hide();
         fab_help.setImageResource(R.drawable.ic_close);
         fab_help.setImageResource(android.R.drawable.ic_menu_revert);
         fab_help.setOnClickListener(new View.OnClickListener() {
@@ -527,12 +534,13 @@ public class MenuActivity extends AppCompatActivity
             public void onClick(View view) {
                 onBackPressed();
             }
-        });
-
+        });*/
+        fab_menu.hide();
+        fab_help.hide();
     }
 
     public void showMenuBackToHelp(){
-        fab_menu.show();
+        /*fab_menu.show();
         fab_help.setImageResource(R.drawable.ic_help_outline_white_24dp);
         fab_help.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -540,8 +548,9 @@ public class MenuActivity extends AppCompatActivity
                 Intent intent = new Intent(MenuActivity.this, AyudaActivity.class);
                 startActivity(intent);
             }
-        });
-
+        });*/
+        fab_menu.show();
+        fab_help.show();
     }
 
    @Override

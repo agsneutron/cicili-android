@@ -6,15 +6,27 @@
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/colorPrimaryDark">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            app:srcCompat="@mipmap/ic_arrow_back" />
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/PaymentData"
-            android:padding="16dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"/>
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginStart="26dp"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
     <include layout="@layout/content_rv_payment_list" />

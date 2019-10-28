@@ -16,6 +16,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.ComunicaCC;
+import com.cicili.mx.cicili.domain.Message;
 import com.cicili.mx.cicili.domain.SeguimientoData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.InputMessage;
@@ -70,7 +72,7 @@ public class MessageActivity extends AppCompatActivity {
     private static final int PHOTO_PERFIL = 2;
     private String fotoPerfilCadena;
     private String id, order, URL_list, URL_seguimiento;
-
+    String uso = "";
     //USO SEGUIMIENTO ACL
 
 
@@ -94,7 +96,7 @@ public class MessageActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();*/
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String uso = "";
+
 
 
         if (bundle != null) {
@@ -116,6 +118,15 @@ public class MessageActivity extends AppCompatActivity {
                 order = "0";
                 URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
+
+            } else if (uso.equals("3")) {
+                nombre.setText(String.format("%s ", client.getName()));
+                nombreSub.setText("");
+
+                id = "0";
+                order = "0";
+                URL_list = WSkeys.URL_COMUNICACION_C_C;
+                URL_seguimiento = "";
             }
 
             byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
@@ -245,10 +256,19 @@ public class MessageActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json;
         JSONObject params;
-        SeguimientoData seguimientoData = new SeguimientoData();
-        seguimientoData.setTexto(message);
-        seguimientoData.setAclaracion(Integer.parseInt(id));
-        json = gson.toJson(seguimientoData);
+        if(uso.equals("3")){
+            ComunicaCC messageData = new ComunicaCC();
+            messageData.setMensaje(message);
+            messageData.setIdPedido(Integer.parseInt(id));
+            json = gson.toJson(messageData);
+        }
+        else {
+
+            SeguimientoData seguimientoData = new SeguimientoData();
+            seguimientoData.setTexto(message);
+            seguimientoData.setAclaracion(Integer.parseInt(id));
+            json = gson.toJson(seguimientoData);
+        }
         params = new JSONObject(json);
 
 
@@ -421,5 +441,10 @@ public class MessageActivity extends AppCompatActivity {
                         .show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

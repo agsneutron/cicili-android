@@ -563,10 +563,9 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                 Utilities.AddAddressData(jo_address, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successaddressvalidation, Toast.LENGTH_LONG);
                 toast.show();
-                Intent intent = new Intent(getContext(),PerfilData.class);
-                startActivity(intent);
-                getActivity().finish();
-
+                getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).commit();
+                getActivity().onBackPressed();
             }
             //Snackbar.make(calle, R.string.successaddressvalidation, Snackbar.LENGTH_LONG)
             //        .show();

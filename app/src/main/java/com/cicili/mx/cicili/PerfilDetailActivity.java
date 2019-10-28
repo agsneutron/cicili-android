@@ -7,11 +7,15 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Base64;
 import android.view.View;
@@ -22,7 +26,7 @@ import android.widget.TextView;
 public class PerfilDetailActivity extends AppCompatActivity {
     //widgets
     private TextView name,email,phone,date,sexo;
-    private Button mButton;
+    private Button mButton,rfcButton;
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -65,6 +69,7 @@ public class PerfilDetailActivity extends AppCompatActivity {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
                 Intent intent = new Intent(PerfilDetailActivity.this, PerfilData.class);
+                intent.putExtra("id","0");
                 intent.putExtra("active","PE");
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -84,6 +89,17 @@ public class PerfilDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /*rfcButton = findViewById(R.id.datosRfc);
+        rfcButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Fragment fragmentRfc = new RfcMainFragment();
+                final FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction().add(R.id.main_container,fragmentRfc,"fragmentRfc").commit();
+                fm.beginTransaction().addToBackStack("fragmentMain").commit();
+            }
+        });*/
 
 
     }
