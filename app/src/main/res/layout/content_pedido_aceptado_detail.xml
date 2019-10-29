@@ -562,7 +562,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="0.1"
                     android:padding="10dp"
-                    android:text="@string/btn_cancelar"
+                    android:text="Cancelar"
                     android:backgroundTint="@android:color/holo_red_light"
                     app:cornerRadius="20dp"
                     />
