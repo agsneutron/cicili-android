@@ -1270,10 +1270,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     public void AclararPedido(Integer pos) {
         // no se aclara es comunicación con conductor
+        Utilities.SetLog("uso 3 pedido", String.valueOf(pos), WSkeys.log);
         Intent intent = new Intent(PedidoAceptadoActivity.this, MessageActivity.class);
-        intent.putExtra("idPedido", pos);
+        intent.putExtra("idPedido", String.valueOf(pos));
         intent.putExtra("uso", "3");
-
         startActivity(intent);
     }
 

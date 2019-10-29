@@ -126,7 +126,8 @@ public class MessageActivity extends AppCompatActivity {
                 id = bundle.getString("idPedido");
                 order = bundle.getString("idPedido");
                 URL_list = WSkeys.URL_COMUNICACION_C_C;
-                URL_seguimiento = "";
+                URL_seguimiento = WSkeys.URL_COMUNICACION_C_C;
+                Utilities.SetLog("uso 3", id, WSkeys.log);
             }
 
             byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
