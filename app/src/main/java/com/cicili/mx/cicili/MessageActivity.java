@@ -263,7 +263,6 @@ public class MessageActivity extends AppCompatActivity {
             json = gson.toJson(messageData);
         }
         else {
-
             SeguimientoData seguimientoData = new SeguimientoData();
             seguimientoData.setTexto(message);
             seguimientoData.setAclaracion(Integer.parseInt(id));
