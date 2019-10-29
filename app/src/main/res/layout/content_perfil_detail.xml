@@ -104,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageView
                         android:id="@+id/sexo_icon"
@@ -153,7 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageView
                         android:id="@+id/date_icon"
@@ -200,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageView
                         android:id="@+id/phone_icon"
@@ -247,7 +247,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageView
                         android:id="@+id/email_icon"
@@ -311,7 +311,7 @@
                         style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp"
+                        android:padding="16dp"
                         android:text="Eliminar cuenta"
                         app:backgroundTint="@android:color/holo_red_light"
                         app:cornerRadius="20dp" />

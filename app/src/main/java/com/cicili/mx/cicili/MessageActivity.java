@@ -123,8 +123,8 @@ public class MessageActivity extends AppCompatActivity {
                 nombre.setText(String.format("%s ", client.getName()));
                 nombreSub.setText("");
 
-                id = "0";
-                order = "0";
+                id = bundle.getString("idPedido");
+                order = bundle.getString("idPedido");
                 URL_list = WSkeys.URL_COMUNICACION_C_C;
                 URL_seguimiento = "";
             }

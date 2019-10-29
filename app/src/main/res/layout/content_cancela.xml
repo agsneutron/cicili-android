@@ -96,7 +96,7 @@
                     android:id="@+id/formaPago"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Direccion"
+                    android:text="Dirección"
                     android:textColor="#262628"
                     android:textSize="14.4sp" />
 

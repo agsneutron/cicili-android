@@ -735,6 +735,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         Utilities.SetLog("BSB-BACK",String.valueOf(bsb.getState()),WSkeys.log);
                         if (bsb.getState()==BottomSheetBehavior.STATE_EXPANDED){
                             bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            pipas.setSelection(0,true);
+                            direcciones.setSelection(0,true);
+                            pipaSeleccionada=0;
+                            direccionSeleccionada=0;
                         }
                         else if(bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
                             return false;
