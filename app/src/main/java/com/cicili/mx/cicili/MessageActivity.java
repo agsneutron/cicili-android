@@ -1,11 +1,9 @@
 package com.cicili.mx.cicili;
 
 import android.app.Application;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
 import com.android.volley.AuthFailureError;
@@ -17,39 +15,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cicili.mx.cicili.domain.AclaracionData;
-import com.cicili.mx.cicili.domain.Categorias;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.ComunicaCC;
 import com.cicili.mx.cicili.domain.Message;
-import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.SeguimientoData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.InputMessage;
-import com.cicili.mx.cicili.io.OutputMessage;
 import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -57,8 +42,6 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,7 +72,7 @@ public class MessageActivity extends AppCompatActivity {
     private static final int PHOTO_PERFIL = 2;
     private String fotoPerfilCadena;
     private String id, order, URL_list, URL_seguimiento;
-
+    String uso = "";
     //USO SEGUIMIENTO ACL
 
 
@@ -99,12 +82,12 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
 
-        fotoPerfil = (CircleImageView) findViewById(R.id.fotoPerfil);
-        nombre = (TextView) findViewById(R.id.nombre);
-        nombreSub = (TextView) findViewById(R.id.nombreSub);
-        rvMensajes = (RecyclerView) findViewById(R.id.rvMensajes);
-        txtMensaje = (EditText) findViewById(R.id.txtMensaje);
-        btnEnviar = (ImageButton) findViewById(R.id.btnEnviar);
+        fotoPerfil = findViewById(R.id.fotoPerfil);
+        nombre = findViewById(R.id.nombre);
+        nombreSub = findViewById(R.id.nombreSub);
+        rvMensajes = findViewById(R.id.rvMensajes);
+        txtMensaje = findViewById(R.id.txtMensaje);
+        btnEnviar = findViewById(R.id.btnEnviar);
         btnEnviarFoto = (ImageButton) findViewById(R.id.btnEnviarFoto);
         fotoPerfilCadena = "";
 
@@ -113,7 +96,7 @@ public class MessageActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();*/
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String uso = "";
+
 
 
         if (bundle != null) {
@@ -135,6 +118,15 @@ public class MessageActivity extends AppCompatActivity {
                 order = "0";
                 URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
+
+            } else if (uso.equals("3")) {
+                nombre.setText(String.format("%s ", client.getName()));
+                nombreSub.setText("");
+
+                id = bundle.getString("idPedido");
+                order = bundle.getString("idPedido");
+                URL_list = WSkeys.URL_COMUNICACION_C_C;
+                URL_seguimiento = "";
             }
 
             byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
@@ -264,10 +256,19 @@ public class MessageActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json;
         JSONObject params;
-        SeguimientoData seguimientoData = new SeguimientoData();
-        seguimientoData.setTexto(message);
-        seguimientoData.setAclaracion(Integer.parseInt(id));
-        json = gson.toJson(seguimientoData);
+        if(uso.equals("3")){
+            ComunicaCC messageData = new ComunicaCC();
+            messageData.setMensaje(message);
+            messageData.setIdPedido(Integer.parseInt(id));
+            json = gson.toJson(messageData);
+        }
+        else {
+
+            SeguimientoData seguimientoData = new SeguimientoData();
+            seguimientoData.setTexto(message);
+            seguimientoData.setAclaracion(Integer.parseInt(id));
+            json = gson.toJson(seguimientoData);
+        }
         params = new JSONObject(json);
 
 
@@ -440,5 +441,10 @@ public class MessageActivity extends AppCompatActivity {
                         .show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

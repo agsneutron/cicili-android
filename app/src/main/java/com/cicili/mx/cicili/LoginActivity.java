@@ -1,5 +1,6 @@
 package com.cicili.mx.cicili;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -52,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.cicili.mx.cicili.domain.Client.getContext;
 
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
@@ -71,6 +73,8 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 /**
  * A login screen that offers login via email/password.
@@ -78,7 +82,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     private static final int REQUEST_READ_CONTACTS = 0;
-
+    private static final int REQUEST_LOCATION_PERMISSION = 0;
     // UI references.
     private TextInputEditText mEmailView;
     private EditText mPasswordView;
@@ -86,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private String token="";
     private String token_firebase="";
-    Application application = (Application) Client.getContext();
+    Application application = (Application) getContext();
     Client client = (Client) application;
     Boolean validated = false;
 
@@ -100,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mEmailView = (TextInputEditText) findViewById(R.id.email);
 
+        client.setContextMap(null);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -166,7 +171,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if(client.getToken()!=null){
             SessionToken();
         }
+
+        getMyLocationPermision();
     }
+
+    private void getMyLocationPermision() {
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                ActivityCompat.requestPermissions(LoginActivity.this, permissions, REQUEST_LOCATION_PERMISSION);
+            }
+
+        }
+        else{
+            ActivityCompat.requestPermissions(LoginActivity.this, permissions, REQUEST_LOCATION_PERMISSION);
+
+        }
+
+    }
+
+
 
     /**
      * Callback received when a permissions request has been completed.
@@ -174,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //populateAutoComplete();
             }
@@ -407,31 +437,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this,ValidateActivity.class);
                 intent.putExtra("token",client.getToken());
                 startActivity(intent);
-                client = null;
+                //client = null;
+                finish();
                 //DialogValidate(userName);
             }
+            else {
+                if (client.getStatus().equals(WSkeys.datos_personales)) {
+                    Intent intent = new Intent(LoginActivity.this, PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_personales);
+                    startActivity(intent);
+                }
+                if (client.getStatus().equals(WSkeys.datos_pago)) {
+                    Intent intent = new Intent(LoginActivity.this, PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_pago);
+                    startActivity(intent);
+                }
 
+                if (client.getStatus().equals(WSkeys.datos_direccion)) {
+                    Intent intent = new Intent(LoginActivity.this, PerfilData.class);
+                    intent.putExtra("active", WSkeys.datos_direccion);
+                    startActivity(intent);
+                }
 
-            if (client.getStatus().equals(WSkeys.datos_personales)){
-                Intent intent = new Intent(LoginActivity.this, PerfilData.class);
-                intent.putExtra("active",WSkeys.datos_personales);
-                startActivity(intent);
-            }
-            if(client.getStatus().equals(WSkeys.datos_pago)){
-                Intent intent = new Intent(LoginActivity.this, PerfilData.class);
-                intent.putExtra("active",WSkeys.datos_pago);
-                startActivity(intent);
-            }
-
-            if(client.getStatus().equals(WSkeys.datos_direccion)){
-                Intent intent = new Intent(LoginActivity.this, PerfilData.class);
-                intent.putExtra("active",WSkeys.datos_direccion);
-                startActivity(intent);
-            }
-
-            if(client.getStatus().equals(WSkeys.completo)) {
-                Utilities.SetClientData(jousuario, client);
-               SessionToken();
+                if (client.getStatus().equals(WSkeys.completo)) {
+                    Utilities.SetClientData(jousuario, client);
+                    SessionToken();
+                }
             }
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error

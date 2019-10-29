@@ -25,7 +25,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_chevron_left_black_24dp" />
+                app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoPerfil"
@@ -133,37 +133,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
+                android:layout_weight="0.9"
                 android:background="@android:color/transparent"
-                android:hint="Escribe un mensaje"
-                android:minWidth="250dp"
+                android:hint="@string/escribe_un_mensaje"
+                android:minWidth="270dp"
                 android:textColorHint="#ced5db" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="right">
+                android:layout_gravity="end"
+                android:layout_marginEnd="1dp"
+                android:layout_weight="0.1"
+                android:gravity="end"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/btnEnviarFoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_attach_file_black_24dp"
-                    android:tint="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="0dp"
                     android:background="@color/white"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    />
+                    android:tint="@color/colorPrimary"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_attach_file_black_24dp" />
 
                 <ImageButton
                     android:id="@+id/btnEnviar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu_send"
-                    android:tint="@color/colorPrimaryDark"
-                    android:background="@color/white"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    />
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_menu_send"
+                    android:tint="@color/colorPrimaryDark" />
                 <!--<Button
                     android:id="@+id/btnEnviar"
                     android:layout_width="wrap_content"

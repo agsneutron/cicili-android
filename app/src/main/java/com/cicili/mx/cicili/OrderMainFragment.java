@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -52,6 +53,7 @@ public class OrderMainFragment extends Fragment {
     Client client = (Client) application;
     public ArrayList<PedidoData> PEDIDO_ITEMS = new ArrayList<PedidoData>();
     View view;
+    ImageView img_back;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -84,6 +86,13 @@ public class OrderMainFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_order_list, container, false);
 
         LlenaPedido();
+        img_back = view.findViewById(R.id.img_back);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         return view;
     }
 

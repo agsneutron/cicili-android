@@ -219,6 +219,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         direcciones.setOnItemSelectedListener(this);
         pipas.setOnItemSelectedListener(this);
 
+
         //client.setContextMap(getActivity());
 
 
@@ -643,9 +644,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         }
 
                         // Check for a valid ammount.
-                        if (monto_c < 200.00) {
-                            error = getString(R.string.error_invalid_ammount);
-                            cancel = true;
+                        if (monto_c != null){
+                            if (monto_c < 200.00) {
+                                error = getString(R.string.error_invalid_ammount);
+                                cancel = true;
+                            }
                         }
 
 
@@ -729,8 +732,13 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        Utilities.SetLog("BSB-BACK",String.valueOf(bsb.getState()),WSkeys.log);
                         if (bsb.getState()==BottomSheetBehavior.STATE_EXPANDED){
                             bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            pipas.setSelection(0,true);
+                            direcciones.setSelection(0,true);
+                            pipaSeleccionada=0;
+                            direccionSeleccionada=0;
                         }
                         else if(bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
                             return false;

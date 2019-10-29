@@ -269,6 +269,10 @@ public class WSkeys {
     //https://cicili.com.mx:8443/app/aclaracion/seguimiento/agregar
     public static final String URL_DAR_SEGUIMIENTO_ACLARACION = "app/aclaracion/seguimiento/agregar";
 
+    //Comunicación Cliente Conductor
+    //https://cicili.com.mx:8443/app/chat/agregar
+    public static final String URL_COMUNICACION_C_C = "app/chat/agregar";
+
     //OBTENER PREGUNTAS
     //app/aclaracion/preguntas
     public static final String URL_OBTENER_SEGUIMIENTO_PREGUNTAS = "app/aclaracion/preguntas";

@@ -34,7 +34,10 @@
             android:id="@+id/navigation_payment"
             android:icon="@drawable/ic_credit_card_black_24dp"
             android:title="@string/PaymentData" />
-
+        <item
+            android:id="@+id/navigation_rfc"
+            android:icon="@mipmap/ic_step_incomplete"
+            android:title="@string/datos_fiscales" />
 
         <item
             android:id="@+id/navigation_schedule"

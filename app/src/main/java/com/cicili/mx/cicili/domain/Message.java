@@ -9,6 +9,7 @@ public class Message {
     private String type_mensaje;
 
     private Integer id;
+    private Integer idPedido;
     private Integer aclaracion;
     private String usuario;
     private Integer idUsuario;
@@ -41,6 +42,15 @@ public class Message {
         this.nombre = nombre;
         this.fotoPerfil = fotoPerfil;
         this.type_mensaje = type_mensaje;
+    }
+
+    public Message(String mensaje, Integer id, Integer idPedido, String usuario, Integer idUsuario, String fecha) {
+        this.mensaje = mensaje;
+        this.id = id;
+        this.idPedido = idPedido;
+        this.usuario = usuario;
+        this.idUsuario = idUsuario;
+        this.fecha = fecha;
     }
 
     public String getMensaje() {

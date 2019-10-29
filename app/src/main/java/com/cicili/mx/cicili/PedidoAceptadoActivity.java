@@ -86,7 +86,13 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
+
+
+//Google API classes
+//import com.google.api.GoogleAPI;
+//import com.google.api.translate.Language;
+//import com.google.api.translate.Translate;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -961,11 +967,11 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             String respuestaDirecctions = new FetchURL(PedidoAceptadoActivity.this).execute(getUrl(new LatLng(iLat, iLon), new LatLng(latOrderAddress, lonOrderAddress), "driving"), "driving").toString();
 
-            JSONArray ja_direction = new JSONArray(respuestaDirecctions);
+            /*JSONArray ja_direction = new JSONArray(respuestaDirecctions);
 
             Utilities.SetLog("DATA Directions: ", ja_direction.toString(), WSkeys.log);
 
-            Utilities.SetLog("ubicación recibida: ", "ubicacion", WSkeys.log);
+            Utilities.SetLog("ubicación recibida: ", "ubicacion", WSkeys.log);*/
 
             //Snackbar.make(vista, "ubicación recibida", Snackbar.LENGTH_SHORT).show();
 
@@ -1132,9 +1138,52 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
 
+    //translates the string from English to French
+    /*public String translateString( String source ) {
+        String translatedText = "";
+        GoogleAPI.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
+        //Translate.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
+        try {
+            translatedText = Translate.execute(source, Language.ENGLISH, Language.FRENCH);
+        } catch (Exception e) {
+            System.err.println( "Exception " + e.getMessage() );
+        }
+        return removeSpaces ( translatedText );
+    }*/
+
     @Override
     public void onTaskDoneData(String data) {
-        Utilities.SetLog("result onTaskDoneData: ", data.toString(), WSkeys.log);
+        JSONObject respuesta = null;
+        JSONObject rutasObj = null;
+        JSONObject legsObj = null;
+        JSONObject distanceObj = null;
+        JSONObject durationObj = null;
+        JSONArray rutas;
+        JSONArray legs;
+        JSONObject arrival_time = null;
+
+        try {
+            respuesta = new JSONObject(data);
+            rutas = new JSONArray(respuesta.getString("routes"));
+            rutasObj = new JSONObject(rutas.getString(0));
+            legs = new JSONArray(rutasObj.getString("legs"));
+            legsObj = new JSONObject(legs.getString(0));
+
+            distanceObj = new JSONObject(legsObj.getString("distance"));
+            durationObj = new JSONObject(legsObj.getString("duration"));
+
+
+            //arrival_time = new JSONObject(legs.getJSONArray(5).toString());
+
+            Utilities.SetLog("result onTaskDoneData distance object : ", legsObj.getString("distance"), WSkeys.log);
+            Utilities.SetLog("result onTaskDoneData duration object: ", legsObj.getString("duration"), WSkeys.log);
+            Utilities.SetLog("result onTaskDoneData distance: ", distanceObj.getString("text"), WSkeys.log);
+            Utilities.SetLog("result onTaskDoneData duration: ", durationObj.getString("text"), WSkeys.log);
+            time.setText(durationObj.getString("text"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -1221,11 +1270,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     public void AclararPedido(Integer pos) {
         // no se aclara es comunicación con conductor
-        Intent intent = new Intent(PedidoAceptadoActivity.this, Aclaracion.class);
+        Intent intent = new Intent(PedidoAceptadoActivity.this, MessageActivity.class);
         intent.putExtra("order", pos);
+        intent.putExtra("uso", "3");
+
         startActivity(intent);
     }
-
 
 
     @Override

@@ -129,10 +129,16 @@ public class PaymentDataFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
 
             Bundle bundle=getArguments();
-            mParam1=bundle.getString("ARG_PARAM1");
-            pos = Integer.parseInt(mParam1);
-            Utilities.SetLog(LOG,mParam1,WSkeys.log);
-            Utilities.SetLog(LOG+ "pos",String.valueOf(pos),WSkeys.log);
+            if (bundle.getString("ARG_PARAM1")!=null) {
+                mParam1 = bundle.getString("ARG_PARAM1");
+                pos = Integer.parseInt(mParam1);
+
+                Utilities.SetLog(LOG, mParam1, WSkeys.log);
+                Utilities.SetLog(LOG + "pos", String.valueOf(pos), WSkeys.log);
+            }
+            else{
+                pos=null;
+            }
         }
     }
 
@@ -553,8 +559,12 @@ public class PaymentDataFragment extends Fragment {
                 Utilities.AddPaymentData(jsonPayment, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successpaymentvalidation, Toast.LENGTH_LONG);
                 toast.show();
-                Intent intent = new Intent(getContext(),PerfilData.class);
+                /*Intent intent = new Intent(getContext(),PerfilData.class);
                 startActivity(intent);
+                getActivity().finish();*/
+                getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).commit();
+                getActivity().onBackPressed();
             }
 
 

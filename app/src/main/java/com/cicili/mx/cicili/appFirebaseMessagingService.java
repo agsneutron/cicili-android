@@ -49,15 +49,11 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        if (interfaceNotification == null){
-            interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
-        }
+
 
         if (remoteMessage.getNotification() != null){
             Utilities.SetLog("NOTIFICATION DATA", remoteMessage.getData().toString(), WSkeys.log);
-            if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
-                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
-            }
+
             //Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
             if (remoteMessage.getData().get("status").toString().equals("2")){
                 if (remoteMessage.getData().get("tipo").toString().equals("3")) {
@@ -88,13 +84,16 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
 
             if (remoteMessage.getData().get("status").toString().equals("11")){
                 getReceiverEstatusPedido("11","");
-                if (interfaceNotificationPipas == null){
+
+                if (interfaceNotificationPipas == null && client.getContextMap() != null){
                     interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
                     interfaceNotificationPipas.getReceiverEstatusPedido("11","Nuevas Pipas");
                 }
             }
 
-
+            if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
+                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
+            }
 
             /*Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);
@@ -108,6 +107,9 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
         */
 
 
+        }
+        if (interfaceNotification == null){
+            interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
         }
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
