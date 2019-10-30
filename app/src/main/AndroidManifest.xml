@@ -43,6 +43,16 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
+            android:name=".MessageChatActivity"
+            android:label="@string/title_activity_message"
+            android:parentActivityName=".MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cicili.mx.cicili.PedidoAceptadoActivity" />
+        </activity>
+        <activity
             android:name=".PedidoAceptadoActivity"
             android:label="@string/title_order_acepted"
             android:parentActivityName=".MenuActivity"

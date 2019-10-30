@@ -136,7 +136,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
             fotoPerfil.setImageBitmap(decodedByte);
 
-            if (!uso.equals(3)) {
+            if (!uso.equals("3")) {
+                Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
                 LlenaLista(id, order);
             }
         }
@@ -343,12 +344,13 @@ public class MessageChatActivity extends AppCompatActivity {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                    if(uso.equals("3")) {
-                        //adapter.clearMensajes();
-                        adapter.addMensaje(messageData);
+                    if(!uso.equals("3")) {
+                        Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
+                        LlenaLista(id, order);
                     }
                     else {
-                        LlenaLista(id, order);
+                        //adapter.clearMensajes();
+                        adapter.addMensaje(messageData);
                     }
 
                 }
