@@ -136,8 +136,9 @@ public class MessageActivity extends AppCompatActivity {
 
             fotoPerfil.setImageBitmap(decodedByte);
 
-
-            LlenaLista(id, order);
+            if (!uso.equals(3)) {
+                LlenaLista(id, order);
+            }
         }
 
         adapter = new AdapterMessage(this);
@@ -337,13 +338,13 @@ public class MessageActivity extends AppCompatActivity {
             JSONArray ja_data = new JSONArray(response.getString(WSkeys.data));
             Gson gson = new Gson();
             if (ja_data.length() > 0) {
-                Utilities.SetLog("LOGIN ja_data", ja_data.toString(), WSkeys.log);
+                Utilities.SetLog("CHAT ja_data", ja_data.toString(), WSkeys.log);
                 for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     if(uso.equals("3")) {
-                        adapter.clearMensajes();
+                        //adapter.clearMensajes();
                         adapter.addMensaje(messageData);
                     }
                     else {
