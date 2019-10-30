@@ -91,9 +91,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
                 }
             }
 
-            if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
-                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
-            }
+
+
 
             /*Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
             Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);
@@ -113,6 +112,10 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
         }
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
+
+            if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
+                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
+            }
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.

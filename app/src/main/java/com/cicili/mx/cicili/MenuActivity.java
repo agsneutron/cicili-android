@@ -10,9 +10,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
+import com.cicili.mx.cicili.domain.PedidoActivo;
 import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
@@ -32,6 +41,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -47,6 +57,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -84,6 +100,8 @@ public class MenuActivity extends AppCompatActivity
     FloatingActionButton fab_help;
     LinearLayout encabezado;
     ImageView img_back;
+    PedidoActivo pedidoActivo = new PedidoActivo();
+    SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
 
     protected static final String BUTTON_ACTION = "buttonaction";
     protected static final int REQUEST_BUTTON = 300;
@@ -160,6 +178,15 @@ public class MenuActivity extends AppCompatActivity
 
         client.setContextMap(MenuActivity.this);
 
+        if (savedInstanceState != null) {
+            return;
+        }
+
+        try {
+            ValidaPedidoActivo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,7 +242,7 @@ public class MenuActivity extends AppCompatActivity
             intent.putExtra("active",WSkeys.datos_direccion);
             startActivity(intent);
         } else {*/
-            if (findViewById(R.id.main_container) != null) {
+           /* if (findViewById(R.id.main_container) != null) {
 
                 if (savedInstanceState != null) {
                 return;
@@ -223,7 +250,7 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
                 active = fragmentMain;
-            }
+            }*/
 
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(fragmentAddress).commit();
             //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "fragmentOrder").hide(fragmentOrder).commit();
@@ -577,6 +604,99 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
+    public void ValidaPedidoActivo() throws JSONException {
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO_ACTIVO;
+        Utilities.SetLog("MAINSEARCH-PEDIDOACTIVO?",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(MenuActivity.this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    ParserPedidoActivo(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
+                /*Snackbar.make(direcciones, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();*/
+                Toast.makeText(MenuActivity.this,R.string.errorlistener,Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserPedidoActivo(JSONObject response) throws JSONException {
+        Gson gson = new Gson();
+        Utilities.SetLog("PARSER-MAIN_ACTIVO",response.toString(),WSkeys.log);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (response.getInt("codeError") == (WSkeys.okresponse)) {
+            JSONObject jo_data = response.getJSONObject(WSkeys.data);
+            pedidoActivo = gson.fromJson(jo_data.toString(), PedidoActivo.class);
+            seguimientoPedido = gson.fromJson(jo_data.toString(), SeguimientoPedido.class);
+            seguimientoPedido.setTipo("3");
+            client.setSeguimientoPedido(seguimientoPedido);
+            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.getStatus(),WSkeys.log);
+
+            if (seguimientoPedido.getStatus().equals("1")){
+               ActivaMap("1");
+            }
+            else {
+                Intent intent = new Intent(MenuActivity.this, PedidoAceptadoActivity.class);
+                String json_pedido = gson.toJson(pedidoActivo);
+                intent.putExtra("pedido_data",json_pedido);
+                intent.putExtra("idPedido",pedidoActivo.getId());
+                intent.putExtra("pedido_data",json_pedido);
+                intent.putExtra("status",pedidoActivo.getStatus());
+                startActivity(intent);
+            }
+
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
+
+            ActivaMap("0");
+            Utilities.SetLog("PARSER-MAIN_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
+        }else{
+            /*Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();*/
+            Toast.makeText(this,WSkeys.messageError,Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     /*@Override
     protected void onRestart() {
@@ -585,4 +705,15 @@ public class MenuActivity extends AppCompatActivity
         super.onRestart();
 
     }*/
+    public void ActivaMap(String activo){
+        if (findViewById(R.id.main_container) != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("ARG_PARAM1", activo);
+            bundle.putString("ARG_PARAM2", " ");
+            Utilities.SetLog("MENU - ACTIVO", activo, WSkeys.log);
+            fragmentMain.setArguments(bundle);
+            fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
+            active = fragmentMain;
+        }
+    }
 }

@@ -342,9 +342,13 @@ public class MessageActivity extends AppCompatActivity {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                   // adapter.clearMensajes();
-                   // adapter.addMensaje(messageData);
-                    LlenaLista(id, order);
+                    if(uso.equals("3")) {
+                        adapter.clearMensajes();
+                        adapter.addMensaje(messageData);
+                    }
+                    else {
+                        LlenaLista(id, order);
+                    }
 
                 }
 
