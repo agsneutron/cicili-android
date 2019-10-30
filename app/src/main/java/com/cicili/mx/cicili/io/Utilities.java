@@ -445,6 +445,7 @@ public class Utilities {
         if (activity.getCurrentFocus() != null){
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
+            //activity.getWindow().getDecorView().getRootView().getWindowToken();
         }
     }
 
