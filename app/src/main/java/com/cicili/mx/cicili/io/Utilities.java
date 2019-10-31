@@ -15,6 +15,7 @@ import android.os.Build;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -123,7 +124,7 @@ public class Utilities {
 
     public static boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
     public static boolean isPasswordValid(String password) {
