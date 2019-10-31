@@ -32,9 +32,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/cv_iniciapedido"
+
             />
 
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/rounded_sheet"
+            app:layout_anchor="@+id/cv_iniciapedido"
+            app:layout_constraintBottom_toTopOf="@+id/cv_iniciapedido" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_iniciapedido"
@@ -42,12 +48,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="0dp"
-            android:layout_marginBottom="1dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintBottom_toBottomOf="parent">
+
+
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/LayoutPedidoActivo"
@@ -56,6 +62,7 @@
                 android:orientation="vertical"
                 android:padding="8dp"
                 android:visibility="gone"
+
                 >
 
                 <TextView
@@ -92,7 +99,9 @@
                 android:orientation="vertical"
                 android:padding="8dp"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+
+                >
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
@@ -256,6 +265,8 @@
              app:srcCompat="@drawable/ic_stat_name"
              />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <include layout="@layout/bottom_sheet_main" />
     <include layout="@layout/bottom_sheet_mascercano" />
