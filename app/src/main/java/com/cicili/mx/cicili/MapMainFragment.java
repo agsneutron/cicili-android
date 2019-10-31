@@ -1373,6 +1373,30 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         initMyMap();
     }
 
+    public void RequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Utilities.SetLog("REQUESTPERMISSIONRESULT","in",WSkeys.log);
+        mLocationPermissionGranted = false;
+
+        switch (requestCode){
+            case REQUEST_LOCATION_PERMISSION:{
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length;i++){
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
+                            Utilities.SetLog("FAILDE PRERMISSIONS",String.valueOf(grantResults[i]),WSkeys.log);
+                            return;
+                        }
+                    }
+                    Utilities.SetLog("REQUESTPERMISSIONRESULT","GRANTED",WSkeys.log);
+                    mLocationPermissionGranted = true;
+                    initMyMap();
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        initMyMap();
+    }
+
 
 
 

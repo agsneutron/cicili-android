@@ -35,6 +35,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Base64;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -603,6 +604,25 @@ public class MenuActivity extends AppCompatActivity
        }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Utilities.SetLog("MenuActivity onRequestPermissionsResult: ", String.valueOf(requestCode), WSkeys.log);
+        Fragment  fragment =  fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+
+        Utilities.SetLog("instanceof : ",String.valueOf (fragment), WSkeys.log);
+
+        if (fragment instanceof SupportMapFragment){
+
+            /** Se valida que esta bien instanciado y se hace la comunicación*/
+
+            MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
+
+            /** Se envia el mensaje al metodo del receptor*/
+
+            receptor.RequestPermissionsResult(requestCode, permissions, grantResults);
+
+        }
+    }
 
     public void ValidaPedidoActivo() throws JSONException {
 

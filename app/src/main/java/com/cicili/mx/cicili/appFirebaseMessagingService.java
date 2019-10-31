@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 
-public class appFirebaseMessagingService extends FirebaseMessagingService implements MessageReceiverCallback{
+public class appFirebaseMessagingService extends FirebaseMessagingService {
 
 
     Application application = (Application) Client.getContext();
@@ -187,8 +187,5 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
         Utilities.SetLog("Message Notification token: ",s,true);
     }
 
-    @Override
-    public void getReceiverEstatusPedido(String status, String mensaje) {
 
-    }
 }
