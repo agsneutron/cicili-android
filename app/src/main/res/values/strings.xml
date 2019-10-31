@@ -334,5 +334,6 @@
     <string name="btnChat">Chat</string>
     <string name="datos_fiscales">Datos Fiscales</string>
     <string name="escribe_un_mensaje">Escribe un mensaje</string>
+    <string name="error_invalid_cellnumber">Número incorrecto.</string>
 
 </resources>

@@ -116,6 +116,11 @@ public class Utilities {
     }
 
 
+    public static boolean isCellNumber(String email) {
+        //TODO: Replace this with your own logic
+        return email.matches("\\d+");
+    }
+
     public static boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
