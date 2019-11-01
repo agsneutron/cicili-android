@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,566 +9,578 @@
     tools:showIn="@layout/activity_pedido_aceptado">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearL_pa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/detalle_del_pedido"
+                android:textColor="@color/white"
+                android:textSize="17.8sp" />
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="250dp"
             android:orientation="vertical"
-            >
+            android:theme="@style/AppTheme">
+
+            <fragment
+                android:id="@+id/map_ubicacion_detail"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+
+        <ScrollView
+            android:id="@+id/scrollOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
             <LinearLayout
-                android:id="@+id/linearL_pa"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/colorPrimaryDark">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/detalle_del_pedido"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/white"
-                    android:textSize="17.8sp"
-                    android:textAlignment="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:orientation="vertical"
-                android:theme="@style/AppTheme">
-
-                <fragment
-                    android:id="@+id/map_ubicacion_detail"
-                    android:name="com.google.android.gms.maps.MapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#dddddd" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ldata"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.7dp"
-                    android:background="#dddddd" />
 
                 <LinearLayout
+                    android:id="@+id/ldata"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
                     android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
+                    android:padding="10dp">
 
-                    <LinearLayout
-                        android:id="@+id/f_row"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginLeft="2dp"
-                                app:srcCompat="@drawable/ic_date_range_prim_24dp" />
-
-                            <TextView
-                                android:id="@+id/date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="6.7dp"
-                                android:layout_weight="1"
-                                android:text="Fecha"
-                                android:textColor="#4a4a4a"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginRight="2dp"
-                                android:layout_marginTop="3dp"
-                                android:tint="@color/colorPrimaryDark"
-                                app:srcCompat="@android:drawable/ic_menu_agenda" />
-                            <TextView
-                                android:id="@+id/item_price"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$ 1000"
-                                android:textAlignment="viewEnd"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="15sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text="por litro"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/s_row"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginLeft="2dp"
-                                app:srcCompat="@drawable/ic_access_time_black_24dp"
-                                android:tint="@color/colorPrimaryDark" />
-
-                            <TextView
-                                android:id="@+id/time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="6.7dp"
-                                android:layout_weight="1"
-                                android:text="Hora"
-                                android:textColor="#4a4a4a"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginRight="2dp"
-                                android:layout_marginTop="3dp"
-                                android:tint="@color/colorPrimaryDark"
-                                app:srcCompat="@drawable/ic_icon_gauge_01" />
-                            <TextView
-                                android:id="@+id/item_number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1000"
-                                android:textAlignment="viewEnd"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="15sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text="litros"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/t_row"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:id="@+id/i_trow"
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginLeft="2dp"
-                                android:tint="@color/colorPrimaryDark"
-                                app:srcCompat="@drawable/ic_payment" />
-
-                            <TextView
-                                android:id="@+id/formaPago"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="6.7dp"
-                                android:layout_weight="1"
-                                android:text="Forma pago"
-                                android:textColor="#4a4a4a"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginRight="1dp"
-                                android:layout_marginTop="3dp"
-                                android:tint="@color/colorPrimaryDark"
-                                app:srcCompat="@drawable/ic_attach_money_prim_24dp" />
-                            <TextView
-                                android:id="@+id/cantidad"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="6dp"
-
-                                android:text="312.00"
-                                android:textAlignment="viewEnd"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="#ffffff"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
+                        android:background="#ffffff"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
-                        <TextView
-                            android:id="@+id/lbl1"
+                        <LinearLayout
+                            android:id="@+id/f_row"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Alias"
-                            android:textColor="#262628"
-                            android:textSize="14.4sp" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/lbl2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="calle"
-                            android:textColor="#A2A2A2"
-                            android:textSize="12sp" />
-
-                        <TextView
-
-                            android:id="@+id/lbl3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:layout_marginTop="8dp"
-                            android:text="colonia"
-                            android:textColor="#A2A2A2"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/lbl4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="cp"
-                        android:textColor="#A2A2A2"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-
-                <!--            <LinearLayout
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:orientation="horizontal"
-                                android:layout_gravity="center"
-                                android:gravity="center">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
 
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginLeft="2dp"
+                                    app:srcCompat="@drawable/ic_date_range_prim_24dp" />
 
                                 <TextView
                                     android:id="@+id/date"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="fecha"
-                                    android:textAppearance="?attr/textAppearanceListItem" />
+                                    android:layout_marginLeft="6.7dp"
+                                    android:layout_weight="1"
+                                    android:text="Fecha"
+                                    android:textColor="#4a4a4a"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginRight="2dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    app:srcCompat="@android:drawable/ic_menu_agenda" />
+
+                                <TextView
+                                    android:id="@+id/item_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$ 1000"
+                                    android:textAlignment="viewEnd"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="4dp"
+                                    android:text="por litro"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/s_row"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right
+"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
                                 <TextView
                                     android:id="@+id/time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="hora"
-                                    android:textAppearance="?attr/textAppearanceListItem" />
-                            </LinearLayout>-->
-                <!--<LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-                    <TextView
-                        android:id="@+id/item_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="item_number"
-                        android:textAppearance="?attr/textAppearanceListItem"
-                        />
+                                    android:layout_marginLeft="6.7dp"
+                                    android:layout_weight="1"
+                                    android:text="Hora"
+                                    android:textColor="#4a4a4a"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/cantidad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="cantidad"
-                        android:textAppearance="?attr/textAppearanceListItem" />
-                </LinearLayout>-->
-                <!--            <LinearLayout
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:orientation="horizontal"
-                                android:layout_gravity="center"
-                                android:gravity="center">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginRight="2dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    app:srcCompat="@drawable/ic_icon_gauge_01" />
+
+                                <TextView
+                                    android:id="@+id/item_number"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1000"
+                                    android:textAlignment="viewEnd"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="4dp"
+                                    android:text="litros"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/t_row"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/i_trow"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    app:srcCompat="@drawable/ic_payment" />
 
                                 <TextView
                                     android:id="@+id/formaPago"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="forma pago"
-                                    android:textAppearance="?attr/textAppearanceListItem" />
+                                    android:layout_marginLeft="6.7dp"
+                                    android:layout_weight="1"
+                                    android:text="Forma pago"
+                                    android:textColor="#4a4a4a"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
 
-                            </LinearLayout>-->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginRight="1dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    app:srcCompat="@drawable/ic_attach_money_prim_24dp" />
+
+                                <TextView
+                                    android:id="@+id/cantidad"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="6dp"
+
+                                    android:text="312.00"
+                                    android:textAlignment="viewEnd"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#ffffff" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/lbl1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Alias"
+                                android:textColor="#262628"
+                                android:textSize="14.4sp" />
+
+                        </LinearLayout>
 
 
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/lbl2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="calle"
+                                android:textColor="#A2A2A2"
+                                android:textSize="12sp" />
+
+                            <TextView
+
+                                android:id="@+id/lbl3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="8dp"
+                                android:text="colonia"
+                                android:textColor="#A2A2A2"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/lbl4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="cp"
+                            android:textColor="#A2A2A2"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
 
 
+                    <!--            <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:orientation="horizontal"
+                                    android:layout_gravity="center"
+                                    android:gravity="center">
 
 
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="#ffffff"
-                android:paddingTop="15dp"
-                android:paddingBottom="10dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/cambiar"
+                                    <TextView
+                                        android:id="@+id/date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="fecha"
+                                        android:textAppearance="?attr/textAppearanceListItem" />
+                                    <TextView
+                                        android:id="@+id/time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="hora"
+                                        android:textAppearance="?attr/textAppearanceListItem" />
+                                </LinearLayout>-->
+                    <!--<LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/ic_history_black_24dp"
-                        android:background="@drawable/shape_circle"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/item_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="item_number"
+                            android:textAppearance="?attr/textAppearanceListItem"
+                            />
 
-                        />
+                        <TextView
+                            android:id="@+id/cantidad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="cantidad"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+                    </LinearLayout>-->
+                    <!--            <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:orientation="horizontal"
+                                    android:layout_gravity="center"
+                                    android:gravity="center">
 
+                                    <TextView
+                                        android:id="@+id/formaPago"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="forma pago"
+                                        android:textAppearance="?attr/textAppearanceListItem" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Cambiar\nPedido"
+                                </LinearLayout>-->
 
-                        android:textAlignment="center"
-                        android:lines="2"
-                        android:layout_marginTop="3dp"
-                        />
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <ImageButton
-                        android:id="@+id/facturar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_menu_send"
-                        android:background="@drawable/shape_circle"
-                        />
 
-                    <TextView
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:orientation="horizontal"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/btn_facturar"
-                        android:layout_marginTop="3dp"
-                        android:textAlignment="center"
-                        android:lines="2"/>
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/cambiar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/shape_circle"
+                            android:src="@drawable/ic_history_black_24dp"
+                            android:tint="@color/white"
+
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="3dp"
+
+                            android:lines="2"
+                            android:text="Cambiar\nPedido"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/facturar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/shape_circle"
+                            android:src="@drawable/ic_send_black_24dp"
+                            android:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="3dp"
+                            android:lines="2"
+                            android:text="@string/btn_facturar"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/aclaracion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/shape_circle"
+                            android:src="@drawable/ic_chat_black_24dp"
+                            android:tint="@color/white"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="3dp"
+                            android:lines="2"
+                            android:text="@string/btnChat"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#dddddd" />
+
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <ImageButton
+                    android:layout_gravity="bottom"
+
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <!-- <com.google.android.material.button.MaterialButton
+                         android:id="@+id/cambiar"
+                         style="@style/Widget.MaterialComponents.Button"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="5dp"
+                         android:layout_marginRight="5dp"
+                         android:layout_weight="0.1"
+                         android:padding="10dp"
+                         android:text="@string/btn_cambiar"
+                         app:backgroundTint="@color/colorPrimaryDark"
+                         app:cornerRadius="20dp"
+                         android:textSize="10sp"/>
+        -->
+                    <!-- <com.google.android.material.button.MaterialButton
+                         android:id="@+id/facturar"
+                         style="@style/Widget.MaterialComponents.Button"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="5dp"
+                         android:layout_marginRight="5dp"
+                         android:layout_weight="0.1"
+                         android:padding="10dp"
+                         android:text="@string/btn_facturar"
+                         app:backgroundTint="@color/colorPrimaryDark"
+                         app:cornerRadius="20dp"
+                         android:textSize="10sp"/>-->
+                    <!-- <Button
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="start"
+                         android:text="@string/btnaclaracion" />-->
+
+                    <!-- <Button
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="end"
+                         android:text="@string/btn_facturar" />-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+
+                    android:gravity="bottom"
+                    android:orientation="vertical">
+
+                    <!--<com.google.android.material.button.MaterialButton
                         android:id="@+id/aclaracion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/ic_chat_black_24dp"
-                        android:background="@drawable/shape_circle"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0.1"
+                        android:padding="10dp"
                         android:text="@string/btnChat"
-                        android:layout_marginTop="3dp"
-                        android:textAlignment="center"
-                        android:lines="2"/>
+                        app:backgroundTint="@color/colorPrimaryDark"
+                        app:cornerRadius="20dp"
+                        android:textSize="10sp"/>-->
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:backgroundTint="@android:color/holo_red_light"
+                        android:padding="10dp"
+                        android:text="Cancelar"
+                        app:cornerRadius="20dp" />
                 </LinearLayout>
-
-
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd"/>
-
-
-
-
-
-
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-
-                android:gravity="bottom"
-                android:orientation="horizontal">
-
-               <!-- <com.google.android.material.button.MaterialButton
-                    android:id="@+id/cambiar"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="0.1"
-                    android:padding="10dp"
-                    android:text="@string/btn_cambiar"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:cornerRadius="20dp"
-                    android:textSize="10sp"/>
--->
-               <!-- <com.google.android.material.button.MaterialButton
-                    android:id="@+id/facturar"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="0.1"
-                    android:padding="10dp"
-                    android:text="@string/btn_facturar"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:cornerRadius="20dp"
-                    android:textSize="10sp"/>-->
-                <!-- <Button
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="start"
-                     android:text="@string/btnaclaracion" />-->
-
-                <!-- <Button
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="end"
-                     android:text="@string/btn_facturar" />-->
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:orientation="horizontal">
-
-                <!--<com.google.android.material.button.MaterialButton
-                    android:id="@+id/aclaracion"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="0.1"
-                    android:padding="10dp"
-                    android:text="@string/btnChat"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:cornerRadius="20dp"
-                    android:textSize="10sp"/>-->
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/cancelar"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:text="@string/btn_cancelar"
-                    android:backgroundTint="@android:color/holo_red_light"
-                    app:cornerRadius="20dp"
-                    />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
