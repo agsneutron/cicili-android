@@ -41,6 +41,7 @@ public class Client extends Application {
     private SeguimientoPedido seguimientoPedido;
     private Context messageContext;
     private Context contextMap;
+    private Context contextChat;
 
 
     private static Context mContext;
@@ -58,7 +59,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, String comision, String total, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, String comision, String total, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap, Context contextChat) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -89,6 +90,15 @@ public class Client extends Application {
         this.seguimientoPedido = seguimientoPedido;
         this.messageContext = messageContext;
         this.contextMap = contextMap;
+        this.contextChat = contextChat;
+    }
+
+    public Context getContextChat() {
+        return contextChat;
+    }
+
+    public void setContextChat(Context contextChat) {
+        this.contextChat = contextChat;
     }
 
     public Context getContextMap() {

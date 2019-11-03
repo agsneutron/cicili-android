@@ -49,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
-public class MessageChatActivity extends AppCompatActivity {
+public class MessageChatActivity extends AppCompatActivity implements MessageReceiverCallback{
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -81,6 +81,7 @@ public class MessageChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_chat);
 
+        client.setContextChat(this);
 
         fotoPerfil = findViewById(R.id.fotoPerfil);
         nombre = findViewById(R.id.nombre);
@@ -453,5 +454,10 @@ public class MessageChatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+
     }
 }

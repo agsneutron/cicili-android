@@ -42,8 +42,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
     String sJSONObject;
 
     MessageReceiverCallback interfaceNotification;
-
     MessageReceiverCallback interfaceNotificationPipas;
+    MessageReceiverCallback interfaceNotificationChat;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -96,6 +96,15 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                         interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
                     }
                     interfaceNotificationPipas.getReceiverEstatusPedido("11", "Nuevas Pipas");
+                    break;
+                case 20:
+                    GsonBuilder gsonChatBuilder = new GsonBuilder();
+                    Gson gsonObjectChat = gsonChatBuilder.create();
+                    sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
+                    if (interfaceNotificationChat == null && client.getContextChat() != null) {
+                        interfaceNotificationChat = (MessageReceiverCallback) client.getContextChat();
+                    }
+                    interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), sJSONObject);
                     break;
 
             }
