@@ -451,13 +451,45 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         }
     }
 
+    public void ParserListMsg(String respuesta) throws JSONException {
+
+
+        if (!respuesta.equals("")) {
+            //obtener nivel de data
+            Utilities.SetLog("ParserListMsg", respuesta, WSkeys.log);
+
+            JSONArray ja_data = new JSONArray(respuesta);
+            Gson gson = new Gson();
+            if (ja_data.length() > 0) {
+                adapter.clearMensajes();
+                for (int i = 0; i < ja_data.length(); i++) {
+                    JSONObject jo_message = (JSONObject) ja_data.get(i);
+                    Utilities.SetLog("jo_msgLlenalist", jo_message.toString(), WSkeys.log);
+                    messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
+                    adapter.addMensaje(messageData);
+                }
+
+            }
+            // si ocurre un error al registrar la solicitud se muestra mensaje de error
+            else {
+                Snackbar.make(nombre, "Error al generar la lista de mensajes", Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
     @Override
     public void onBackPressed() {
+        client.setContextChat(null);
         super.onBackPressed();
     }
 
     @Override
     public void getReceiverEstatusPedido(String status, String mensaje) {
-
+        try {
+            ParserListMsg(mensaje);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
