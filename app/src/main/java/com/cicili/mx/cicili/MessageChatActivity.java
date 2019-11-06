@@ -458,7 +458,8 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             //obtener nivel de data
             Utilities.SetLog("ParserListMsg", respuesta, WSkeys.log);
 
-            JSONArray ja_data = new JSONArray(respuesta);
+            JSONObject data = new JSONObject(respuesta);
+            JSONArray ja_data = new JSONArray(data.getString("mensajes"));
             Gson gson = new Gson();
             if (ja_data.length() > 0) {
                 adapter.clearMensajes();

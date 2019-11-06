@@ -111,7 +111,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="0dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -123,7 +123,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/litrosomonto"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout

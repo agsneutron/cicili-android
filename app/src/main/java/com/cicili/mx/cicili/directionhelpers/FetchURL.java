@@ -71,7 +71,7 @@ public class FetchURL extends AsyncTask<String, Void, String> {
             Log.d("mylog", "Downloaded URL: " + data.toString());
             br.close();
         } catch (Exception e) {
-            Log.d("mylog", "Exception downloading URL: " + e.toString());
+                Log.d("mylog", "Exception downloading URL: " + e.toString());
         } finally {
             iStream.close();
             urlConnection.disconnect();
