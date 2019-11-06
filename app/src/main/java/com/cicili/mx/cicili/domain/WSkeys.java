@@ -86,6 +86,10 @@ public class WSkeys {
     public static final String URL_VALIDATETMPPASSWORD = "app/mv/cliente/password/validar";
     public static final String tmppsw="tmp_password";
 
+    //chat
+    //app/mv/conductor/pedidoactivo
+    public static final String URL_MENSAJES_CHAT = "app/chat/obtener/";
+
     //change psw
     //https://cicili.com.mx:8443/app/mv/cliente/password/cambiar
     public static final String URL_CHANGEPSW =  "app/mv/cliente/password/cambiar";
