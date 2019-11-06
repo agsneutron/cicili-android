@@ -5,6 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -17,7 +27,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.ComunicaCC;
-import com.cicili.mx.cicili.domain.Message;
 import com.cicili.mx.cicili.domain.SeguimientoData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.InputMessage;
@@ -28,20 +37,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
-public class MessageActivity extends AppCompatActivity {
+public class MessageChatActivity extends AppCompatActivity {
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -60,7 +60,7 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView rvMensajes;
     private EditText txtMensaje;
     private ImageButton btnEnviar;
-    private AdapterMessage adapter;
+    private AdapterMessageChat adapter;
     private InputMessage messageData;
     private ImageButton btnEnviarFoto;
 
@@ -79,7 +79,7 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+        setContentView(R.layout.activity_message_chat);
 
 
         fotoPerfil = findViewById(R.id.fotoPerfil);
@@ -141,7 +141,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         }
 
-        adapter = new AdapterMessage(this);
+        adapter = new AdapterMessageChat(this);
         LinearLayoutManager l = new LinearLayoutManager(this);
         rvMensajes.setLayoutManager(l);
         rvMensajes.setAdapter(adapter);

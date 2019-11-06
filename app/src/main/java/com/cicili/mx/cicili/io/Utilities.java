@@ -442,8 +442,11 @@ public class Utilities {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
+        if (activity.getCurrentFocus() != null){
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
+            //activity.getWindow().getDecorView().getRootView().getWindowToken();
+        }
     }
 
 }

@@ -121,6 +121,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String order ="";
+    String getStatus="";
 
 
 
@@ -657,10 +658,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         }
 
                         // Check for a valid ammount.
-                        if (monto_c < 200.00) {
-                            //Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
-                            error= getString(R.string.error_invalid_ammount);
-                            cancel = true;
+                        if (monto_c !=null){
+                            if (monto_c < 200.00) {
+                                //Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_SHORT).show();
+                                error= getString(R.string.error_invalid_ammount);
+                                cancel = true;
+                            }
                         }
 
                         // Check for a valid password, if the user entered one.
@@ -1270,10 +1273,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     public void AclararPedido(Integer pos) {
         // no se aclara es comunicación con conductor
-        Intent intent = new Intent(PedidoAceptadoActivity.this, MessageActivity.class);
-        intent.putExtra("idPedido", pos);
+        Utilities.SetLog("uso 3 pedido", String.valueOf(pos), WSkeys.log);
+        Intent intent = new Intent(PedidoAceptadoActivity.this, MessageChatActivity.class);
+        intent.putExtra("idPedido", String.valueOf(pos));
         intent.putExtra("uso", "3");
-
         startActivity(intent);
     }
 
@@ -1320,11 +1323,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     //facturar.setEnabled(true);
                     break;
             }
+            getStatus = nombreEstatus;
 
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
-            //name.setText("Pedido : " + nombreEstatus);
+
             builder.setTitle("El cobro de tu pedido es:");
             builder.setMessage("Cargo de Comisión de Servicio: $" + client.getComision() +"\n" +
                     "Monto  total a pagar al conductor: $" + client.getTotal());
@@ -1372,7 +1376,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 public void run() {
                     AlertDialog dialog = builder.create();
                     //
-
+                    name.setText("Pedido : " + getStatus);
                     switch (Integer.parseInt(status)) {
                         case 4:
                             name.setText("PREPARANDO CARGA ...");

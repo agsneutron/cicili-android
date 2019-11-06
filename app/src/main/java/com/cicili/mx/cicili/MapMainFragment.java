@@ -149,6 +149,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
     private ArrayList<Marker> mMarkerArray_dir = new ArrayList<Marker>();
+    String pos="";
 
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -195,6 +196,18 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            Bundle bundle=getArguments();
+            if (bundle.getString("ARG_PARAM1")!=null) {
+                mParam1 = bundle.getString("ARG_PARAM1");
+                pos = mParam1;
+
+                Utilities.SetLog("MAPFRG", mParam1, WSkeys.log);
+                Utilities.SetLog("MAPFRG" + "pos", pos, WSkeys.log);
+            }
+            else{
+                pos="";
+            }
         }
 
     }
@@ -208,20 +221,18 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mMapFragment.getMapAsync(this);
 
+
         name_usuario = view.findViewById(R.id.name_usuario);
         name_usuario.setText(client.getName());
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
         LlenaDirecciones(direcciones);
         pipas = (Spinner) view.findViewById(R.id.spinner2);
-
         label_pedido = view.findViewById(R.id.labelpedido);
-
         direcciones.setOnItemSelectedListener(this);
         pipas.setOnItemSelectedListener(this);
 
 
         //client.setContextMap(getActivity());
-
 
 
         layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);

@@ -23,6 +23,11 @@ public class InputMessage extends Message {
 
     }
 
+    public InputMessage(String mensaje, Integer id, Integer idPedido, String usuario, Integer idUsuario, String fecha){
+        super(mensaje, id, idPedido, usuario, idUsuario, fecha);
+
+    }
+
     public Long getHora() {
         return hora;
     }
