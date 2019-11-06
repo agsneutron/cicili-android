@@ -345,14 +345,15 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                    if(!uso.equals("3")) {
+                    adapter.clearMensajes();
+                    //if(!uso.equals("3")) {
                         Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
                         LlenaLista(id, order);
-                    }
+                    /*}
                     else {
                         //adapter.clearMensajes();
                         adapter.addMensaje(messageData);
-                    }
+                    }*/
 
                 }
 
