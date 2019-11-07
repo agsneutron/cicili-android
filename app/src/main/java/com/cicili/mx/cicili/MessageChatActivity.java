@@ -102,34 +102,15 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
 
         if (bundle != null) {
             uso = bundle.getString("uso");
-            if (uso.equals("1")) {
-                nombre.setText(String.format("%s ", client.getName()));
-                nombreSub.setText(String.format(" Categoría: %s \n Aclaración: %s", bundle.getString("categoria"), bundle.getString("aclaracion")));
 
-                id = bundle.getString("id");
-                order = bundle.getString("idPedido");
-                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
-                URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
+            nombre.setText(String.format("%s ", client.getName()));
+            nombreSub.setText("");
 
-            } else if (uso.equals("2")) {
-                nombre.setText(String.format("%s ", client.getName()));
-                nombreSub.setText(String.format(" Categoría: %s \n Pregunta: %s", bundle.getString("categoria"), bundle.getString("aclaracion")));
-
-                id = "0";
-                order = "0";
-                URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
-                URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
-
-            } else if (uso.equals("3")) {
-                nombre.setText(String.format("%s ", client.getName()));
-                nombreSub.setText("");
-
-                id = bundle.getString("idPedido");
-                order = bundle.getString("idPedido");
-                URL_list = WSkeys.URL_COMUNICACION_C_C;
-                URL_seguimiento = WSkeys.URL_COMUNICACION_C_C;
-                Utilities.SetLog("uso 3", id, WSkeys.log);
-            }
+            id = bundle.getString("idPedido");
+            order = bundle.getString("idPedido");
+            URL_list = WSkeys.URL_COMUNICACION_C_C;
+            URL_seguimiento = WSkeys.URL_COMUNICACION_C_C;
+            Utilities.SetLog("uso 3", id, WSkeys.log);
 
             byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -137,10 +118,12 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
 
             fotoPerfil.setImageBitmap(decodedByte);
 
-            if (!uso.equals("3")) {
-                Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
-                LlenaLista(id, order);
+            try {
+                ObtenerMensajesChat();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }
 
         adapter = new AdapterMessageChat(this);
@@ -260,18 +243,12 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         Gson gson = new Gson();
         String json;
         JSONObject params;
-        if(uso.equals("3")){
-            ComunicaCC messageData = new ComunicaCC();
-            messageData.setMensaje(message);
-            messageData.setIdPedido(Integer.parseInt(id));
-            json = gson.toJson(messageData);
-        }
-        else {
-            SeguimientoData seguimientoData = new SeguimientoData();
-            seguimientoData.setTexto(message);
-            seguimientoData.setAclaracion(Integer.parseInt(id));
-            json = gson.toJson(seguimientoData);
-        }
+
+        ComunicaCC messageData = new ComunicaCC();
+        messageData.setMensaje(message);
+        messageData.setIdPedido(Integer.parseInt(id));
+        json = gson.toJson(messageData);
+
         params = new JSONObject(json);
 
 
@@ -338,6 +315,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             //ontener nivel de data
             Utilities.SetLog("RESPONSE_GUARDADA", response.getString(WSkeys.data), WSkeys.log);
             JSONArray ja_data = new JSONArray(response.getString(WSkeys.data));
+            adapter.clearMensajes();
             Gson gson = new Gson();
             if (ja_data.length() > 0) {
                 Utilities.SetLog("CHAT ja_data", ja_data.toString(), WSkeys.log);
@@ -345,18 +323,8 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                    adapter.clearMensajes();
-                    //if(!uso.equals("3")) {
-                        Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
-                        LlenaLista(id, order);
-                    /*}
-                    else {
-                        //adapter.clearMensajes();
-                        adapter.addMensaje(messageData);
-                    }*/
-
+                    adapter.addMensaje(messageData);
                 }
-
             }
 
 
@@ -366,60 +334,6 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
         }
-    }
-
-    public void LlenaLista(String id, String order) {
-        String url = WSkeys.URL_BASE + URL_list;
-
-        Utilities.SetLog("OBTIENE SEGUIMIENTO", url, WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    ParserList(response);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.e("El error", error.toString());
-                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_SHORT)
-                        .show();
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded; charset=utf-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                //params.put("Content-Type", "application/x-www-form-urlencoded");
-                //params.put("Content-Type", "application/json; charset=utf-8");
-                params.put("Authorization", client.getToken());
-                return params;
-            }
-        };
-
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        queue.add(jsonObjectRequest);
-
     }
 
     public void ParserList(String respuesta) throws JSONException {
@@ -444,10 +358,10 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                 }
 
             }
-            // si ocurre un error al registrar la solicitud se muestra mensaje de error
+            // si lista viene vacia
             else {
-                Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
-                        .show();
+             //   Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+             //           .show();
             }
         }
     }

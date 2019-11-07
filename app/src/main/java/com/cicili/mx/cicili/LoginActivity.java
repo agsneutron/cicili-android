@@ -172,6 +172,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         getMyLocationPermision();
+
+
+        Intent intent = new Intent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Log.d("appfirebase--", getIntent().getExtras().toString());
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d("appfirebasenotif", "Key: " + key + " Value: " + value);
+            }
+        }
     }
 
     private void getMyLocationPermision() {

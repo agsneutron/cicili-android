@@ -183,11 +183,12 @@ public class MenuActivity extends AppCompatActivity
             return;
         }
 
-        try {
+
+        /*try {
             ValidaPedidoActivo();
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +222,8 @@ public class MenuActivity extends AppCompatActivity
 
             imageView.setImageBitmap(decodedByte);
         }
+
+        ActivaMap("0");
         //
 
 

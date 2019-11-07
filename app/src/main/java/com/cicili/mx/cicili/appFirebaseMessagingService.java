@@ -1,5 +1,7 @@
 package com.cicili.mx.cicili;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -49,10 +51,11 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
+        Utilities.SetLog("NOTIFICATION RemoteMessage", remoteMessage.getMessageId(), WSkeys.log);
 
 
         if (remoteMessage.getNotification() != null) {
-            Utilities.SetLog("NOTIFICATION DATA", remoteMessage.getData().toString(), WSkeys.log);
+            Utilities.SetLog("NOTIFICATION NOTIFICATION", remoteMessage.getData().toString(), WSkeys.log);
 
             if (interfaceNotification == null) {
                 interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
@@ -102,10 +105,23 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                     Gson gsonObjectChat = gsonChatBuilder.create();
                     sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
                     if (interfaceNotificationChat == null && client.getContextChat() != null) {
+                        Utilities.SetLog("NOTIFICATION GETCONTEX?", remoteMessage.getData().toString(), WSkeys.log);
+
                         interfaceNotificationChat = (MessageReceiverCallback) client.getContextChat();
+                        interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), sJSONObject);
                     }
-                    interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), sJSONObject);
-                    break;
+                    else{
+                        if(getApplicationContext()!=null) {
+                            Utilities.SetLog("uso 3 pedido", remoteMessage.getData().get("idPedido"), WSkeys.log);
+                            Intent intent = new Intent(getApplicationContext(), MessageChatActivity.class);
+                            intent.putExtra("idPedido", String.valueOf(remoteMessage.getData().get("idPedido")));
+                            intent.putExtra("uso", "3");
+                            startActivity(intent);
+                        }
+                    }
+
+
+                     break;
 
             }
 
@@ -113,6 +129,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
+
+            Utilities.SetLog("NOTIFICATION DATA", remoteMessage.getData().toString(), WSkeys.log);
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
