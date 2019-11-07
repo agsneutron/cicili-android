@@ -1225,7 +1225,16 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         if (task.isSuccessful()) {
 
                             Location getCurrentLocation = (Location) task.getResult();
-                            moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
+
+
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
+                            }
+                            else{
+                                getActivity().finish();
+                                Snackbar.make(direcciones, R.string.failedgetlocation, Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
                             try {
                                ConsultaPrincipal(new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
                                latCurrent = getCurrentLocation.getLatitude();
