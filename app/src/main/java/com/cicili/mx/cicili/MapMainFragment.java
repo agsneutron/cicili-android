@@ -232,6 +232,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         pipas.setOnItemSelectedListener(this);
 
 
+        if (client.getName()==null){
+            Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+
+        }
         //client.setContextMap(getActivity());
 
 
