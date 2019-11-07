@@ -56,7 +56,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
-public class NewOrderActivity extends AppCompatActivity {
+public class NewOrderActivity extends AppCompatActivity implements MessageReceiverCallback{
 
     String json_order="";
     ProgressDialog progressDialog;
@@ -88,7 +88,7 @@ public class NewOrderActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        client.setContextNewOrder(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -562,4 +562,31 @@ public class NewOrderActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+        Intent intent = new Intent(this, PedidoAceptadoActivity.class);
+        JSONObject respuesta=null;
+        try {
+            respuesta = new JSONObject(mensaje);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            Utilities.SetLog("intent DATA",respuesta.toString(), WSkeys.log);
+            intent.putExtra("idPedido",respuesta.getString("id"));
+            intent.putExtra("pedido_data",respuesta.toString());
+            intent.putExtra("status","2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        client.setContextNewOrder(null);
+        super.onBackPressed();
+    }
 }

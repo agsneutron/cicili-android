@@ -46,6 +46,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
     MessageReceiverCallback interfaceNotification;
     MessageReceiverCallback interfaceNotificationPipas;
     MessageReceiverCallback interfaceNotificationChat;
+    MessageReceiverCallback interfaceNotificationNewOrder;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -70,6 +71,13 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                     Utilities.SetLog("NOTIFICATION JSONObject", sJSONObject, WSkeys.log);
                     seguimientoPedido = gson.fromJson(sJSONObject, SeguimientoPedido.class);
                     client.setSeguimientoPedido(seguimientoPedido);
+
+                    if (interfaceNotificationNewOrder == null && client.getContextNewOrder() != null) {
+
+                        interfaceNotificationNewOrder = (MessageReceiverCallback) client.getContextNewOrder();
+                        interfaceNotificationNewOrder.getReceiverEstatusPedido(remoteMessage.getData().get("status"), sJSONObject);
+                        client.setContextNewOrder(null);
+                    }
 
                     mostrarNotificacion(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), sJSONObject);
 

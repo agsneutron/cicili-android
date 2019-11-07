@@ -42,6 +42,7 @@ public class Client extends Application {
     private Context messageContext;
     private Context contextMap;
     private Context contextChat;
+    private Context contextNewOrder;
 
 
     private static Context mContext;
@@ -59,7 +60,7 @@ public class Client extends Application {
     public Client() {
     }
 
-    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, String comision, String total, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap, Context contextChat) {
+    public Client(String username, String lastname, String lastsname, Integer idcte, String status, String token, String iddevice, String date, String device, String name, String access_token, String usertype, String address, String email, String cellphone, String photo, String sexo, Integer rfcdatasize, String order_id, String comision, String total, ArrayList<PaymentData> paymentDataArrayList, ArrayList<AddressData> addressDataArrayList, ArrayList<RfcData> rfcDataArrayList, ArrayList<AutotanquesCercanos> autotanquesCercanosArrayList, ArrayList<Pedido> pedidoDataArrayList, ArrayList<PedidoData> pedidosDataArrayList, SeguimientoPedido seguimientoPedido, Context messageContext, Context contextMap, Context contextChat, Context contextNewOrder) {
         this.username = username;
         this.lastname = lastname;
         this.lastsname = lastsname;
@@ -91,6 +92,15 @@ public class Client extends Application {
         this.messageContext = messageContext;
         this.contextMap = contextMap;
         this.contextChat = contextChat;
+        this.contextNewOrder = contextNewOrder;
+    }
+
+    public Context getContextNewOrder() {
+        return contextNewOrder;
+    }
+
+    public void setContextNewOrder(Context contextNewOrder) {
+        this.contextNewOrder = contextNewOrder;
     }
 
     public Context getContextChat() {
