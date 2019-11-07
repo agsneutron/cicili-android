@@ -358,10 +358,10 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                 }
 
             }
-            // si ocurre un error al registrar la solicitud se muestra mensaje de error
+            // si lista viene vacia
             else {
-                Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
-                        .show();
+             //   Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+             //           .show();
             }
         }
     }

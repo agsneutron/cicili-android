@@ -223,7 +223,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
 
         name_usuario = view.findViewById(R.id.name_usuario);
-        name_usuario.setText(client.getName());
+        name_usuario.setText(client.getName() + " !");
         direcciones = (Spinner) view.findViewById(R.id.spinner1);
         LlenaDirecciones(direcciones);
         pipas = (Spinner) view.findViewById(R.id.spinner2);
@@ -236,12 +236,13 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
 
         layoutPedidoActivo = view.findViewById(R.id.LayoutPedidoActivo);
+        btn_pedidoActivo = view.findViewById(R.id.btnActivo);
         try {
             ValidaPedidoActivo();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        btn_pedidoActivo = view.findViewById(R.id.btnActivo);
+
         layoutDirecciones = view.findViewById(R.id.LayoutDireccion);
         if (client.getOrder_id() !=null && client.getOrder_id() != ""){
             Intent intent = new Intent(getContext(), PedidoAceptadoActivity.class);
@@ -1853,6 +1854,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             else {
                 label_pedido.setText(R.string.pedido_en_curso);
                 layoutDirecciones.setVisibility(View.GONE);
+                layoutPedidoActivo.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(getActivity(), PedidoAceptadoActivity.class);
                 String json_pedido = gson.toJson(pedidoActivo);
                 intent.putExtra("pedido_data",json_pedido);
