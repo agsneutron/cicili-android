@@ -446,6 +446,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             String json_pedido = gson.toJson(pedido);
                             intent.putExtra("json_order",json_pedido);
                             startActivity(intent);
+                            getActivity().finish();
                             Utilities.SetLog("MO_MC-JSONORDER", json_pedido, WSkeys.log);
 
                         }
