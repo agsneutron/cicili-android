@@ -121,7 +121,6 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:text="ariaocho@gmail.com"
-                        app:backgroundTint="@color/colorPrimaryDark"
                         android:textColor="@color/textDark" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <!-- <EditText

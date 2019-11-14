@@ -16,26 +16,19 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -47,17 +40,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.Manifest.permission.READ_CONTACTS;
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.io.SessionManager;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,11 +56,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,33 +67,33 @@ import androidx.core.content.ContextCompat;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity {
 
-    private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_LOCATION_PERMISSION = 0;
     // UI references.
     private TextInputEditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private String token="";
     private String token_firebase="";
+
+    SessionManager session;
     Application application = (Application) getContext();
-    Client client = (Client) application;
-    Boolean validated = false;
+    Client client = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTheme(R.style.SplashTheme);
-        // Set up the login form.
+        // Set login form.
 
-        mEmailView = (TextInputEditText) findViewById(R.id.email);
+        client = (Client) application;
+        session = new SessionManager(getApplicationContext());
 
+        mEmailView = findViewById(R.id.email);
         client.setContextMap(null);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -118,8 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
 
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +117,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        Button mRegisterButton = (Button) findViewById(R.id.register_button);
+        Button mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(intent);
             }
         });
-        Button mForgotPswButton = (Button) findViewById(R.id.forgotpsw_button);
+        Button mForgotPswButton = findViewById(R.id.forgotpsw_button);
         mForgotPswButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,13 +144,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             return;
                         }
 
-                        // Get new Instance ID token
+                        // Get new token instance
                         token_firebase = task.getResult().getToken();
+                        client.setAccess_token(token_firebase);
                         Utilities.SetLog("TOKEN FIREBASE desde Login: ",token_firebase,true);
 
-                        // Log and toast
-                        //String msg = getString(R.string., token);
-                        //Toast.makeText(MenuActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -172,7 +157,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         getMyLocationPermision();
-
 
         Intent intent = new Intent();
         Bundle extras = intent.getExtras();
@@ -318,52 +302,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -456,11 +394,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this,ValidateActivity.class);
                 intent.putExtra("token",client.getToken());
                 startActivity(intent);
-                //client = null;
                 finish();
-                //DialogValidate(userName);
             }
             else {
+
+                session.createSession(client.getToken(), userName,userPassword);
+
                 if (client.getStatus().equals(WSkeys.datos_personales)) {
                     Intent intent = new Intent(LoginActivity.this, PerfilData.class);
                     intent.putExtra("active", WSkeys.datos_personales);
@@ -642,9 +581,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void SessionToken(){
 
-        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        //finish();
+        finish();
+
     }
 
 

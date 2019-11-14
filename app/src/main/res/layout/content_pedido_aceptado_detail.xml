@@ -419,7 +419,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/shape_circle"
-                            android:src="@drawable/ic_history_black_24dp"
+                            app:srcCompat="@drawable/ic_history_black_24dp"
                             android:tint="@color/white"
 
                             />
@@ -449,7 +449,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/shape_circle"
-                            android:src="@drawable/ic_send_black_24dp"
+                            app:srcCompat="@drawable/ic_send_black_24dp"
                             android:tint="@color/white" />
 
                         <TextView
@@ -474,7 +474,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/shape_circle"
-                            android:src="@drawable/ic_chat_black_24dp"
+                            app:srcCompat="@drawable/ic_chat_black_24dp"
                             android:tint="@color/white"
 
                             />

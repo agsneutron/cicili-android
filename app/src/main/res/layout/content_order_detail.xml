@@ -374,7 +374,8 @@
                         android:padding="15dp"
                         android:text="@string/btnaclaracion"
                         app:backgroundTint="@color/colorPrimaryDark"
-                        app:cornerRadius="20dp" />
+                        app:cornerRadius="20dp"
+                        android:visibility="gone"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/facturar"
@@ -387,7 +388,8 @@
                         android:padding="15dp"
                         android:text="@string/btn_facturar"
                         app:backgroundTint="@color/colorPrimaryDark"
-                        app:cornerRadius="20dp" />
+                        app:cornerRadius="20dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 

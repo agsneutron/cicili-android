@@ -474,9 +474,23 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 else{
                     Utilities.SetLog("no_DIRECCIONSELECCIONADA", String.valueOf(direccionSeleccionada), WSkeys.log);
 
-                    Snackbar.make(direcciones, R.string.error_noaddressselected, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(direcciones, R.string.error_noaddressselected, Snackbar.LENGTH_LONG)
                             .show();
+
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Verifica tus datos");
+                    builder.setMessage("Debes seleccionar una dirección antes de solicitar tu pedido");
+                    builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
+
             }
         });
         //endmascercano
@@ -1285,9 +1299,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                     }
                     mMap.setMyLocationEnabled(true);
                     //mMap.getUiSettings().setZoomControlsEnabled(true);
-                    mMap.getUiSettings().setZoomGesturesEnabled(true);
+
                     mMap.getUiSettings().isMapToolbarEnabled();
                     mMap.getUiSettings().setAllGesturesEnabled(true);
+                    mMap.getUiSettings().setZoomGesturesEnabled(true);
+
 
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
@@ -1798,7 +1814,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public void ValidaPedidoActivo() throws JSONException {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO_ACTIVO;
-        Utilities.SetLog("MAINSEARCH-PEDIDOACTIVO?",url,WSkeys.log);
+        Utilities.SetLog("MAINSEARCH-PEDIDOACTIVO?",url + client.getToken(),WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
@@ -1850,7 +1866,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     public void ParserPedidoActivo(JSONObject response) throws JSONException {
         Gson gson = new Gson();
-        Utilities.SetLog("PARSER-MAIN_ACTIVO",response.toString(),WSkeys.log);
+        Utilities.SetLog("PARSER-MAP_ACTIVO",response.toString(),WSkeys.log);
 
         // si el response regresa ok, entonces si inicia la sesión
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
@@ -1883,10 +1899,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
 
-            Utilities.SetLog("PARSER-MAIN_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
+            Utilities.SetLog("errPARSER-MAP_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
         }else{
             Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();
+            Utilities.SetLog("errPARSER-MAP",response.getString(WSkeys.messageError),WSkeys.log);
+
         }
     }
 

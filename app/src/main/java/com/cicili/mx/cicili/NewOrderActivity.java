@@ -564,24 +564,35 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
 
     @Override
     public void getReceiverEstatusPedido(String status, String mensaje) {
-        Intent intent = new Intent(this, PedidoAceptadoActivity.class);
-        JSONObject respuesta=null;
-        try {
-            respuesta = new JSONObject(mensaje);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            Utilities.SetLog("intent DATA",respuesta.toString(), WSkeys.log);
-            intent.putExtra("idPedido",respuesta.getString("id"));
-            intent.putExtra("pedido_data",respuesta.toString());
-            intent.putExtra("status","2");
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        switch (Integer.parseInt(status)) {
+            case 2:
+                Intent intent = new Intent(this, PedidoAceptadoActivity.class);
+                JSONObject respuesta=null;
+                try {
+                    respuesta = new JSONObject(mensaje);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Utilities.SetLog("intent DATA",respuesta.toString(), WSkeys.log);
+                    intent.putExtra("idPedido",respuesta.getString("id"));
+                    intent.putExtra("pedido_data",respuesta.toString());
+                    intent.putExtra("status",status);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            case 9:
+                client.setContextNewOrder(null);
+                finish();
+                break;
         }
 
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+
     }
 
     @Override

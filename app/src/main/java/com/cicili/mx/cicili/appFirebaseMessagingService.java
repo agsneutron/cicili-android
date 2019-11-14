@@ -12,31 +12,47 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.Pedido;
+import com.cicili.mx.cicili.domain.PedidoActivo;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
+import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class appFirebaseMessagingService extends FirebaseMessagingService {
 
 
-    Application application = (Application) Client.getContext();
+    Application application = (Application) getContext();
     Client client = (Client) application;
     SeguimientoPedido seguimientoPedido;
 
@@ -55,7 +71,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
         Utilities.SetLog("NOTIFICATION RemoteMessage", remoteMessage.getMessageId(), WSkeys.log);
 
 
-        if (remoteMessage.getNotification() != null) {
+        if (remoteMessage.getData() != null) {
             Utilities.SetLog("NOTIFICATION NOTIFICATION", remoteMessage.getData().toString(), WSkeys.log);
 
             if (interfaceNotification == null) {
@@ -65,12 +81,29 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
             switch (Integer.parseInt(remoteMessage.getData().get("status"))) {
                 case 2:
 
-                    GsonBuilder gsonMapBuilder = new GsonBuilder();
-                    Gson gsonObject = gsonMapBuilder.create();
-                    sJSONObject = gsonObject.toJson(remoteMessage.getData());
-                    Utilities.SetLog("NOTIFICATION JSONObject", sJSONObject, WSkeys.log);
-                    seguimientoPedido = gson.fromJson(sJSONObject, SeguimientoPedido.class);
-                    client.setSeguimientoPedido(seguimientoPedido);
+                    try {
+                        ValidaPedidoActivo(remoteMessage.getData().get("title"),remoteMessage.getData().get("body") );
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    break;
+                case 5:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    break;
+                case 6:
+                    client.setComision(remoteMessage.getData().get("comision").toString());
+                    client.setTotal(remoteMessage.getData().get("monto").toString());
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    break;
+                case 7:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    break;
+                case 8:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    break;
+                case 9:
 
                     if (interfaceNotificationNewOrder == null && client.getContextNewOrder() != null) {
 
@@ -79,34 +112,24 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                         client.setContextNewOrder(null);
                     }
 
-                    mostrarNotificacion(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), sJSONObject);
+                    if (interfaceNotification != null && client.getMessageContext() != null) {
+                        Utilities.SetLog("NOTIFICATION ESTATUS9CNTX", remoteMessage.getData().toString(), WSkeys.log);
+
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
+
+
 
                     break;
-                case 5:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
-                    break;
-                case 6:
-                    client.setComision(remoteMessage.getData().get("comision").toString());
-                    client.setTotal(remoteMessage.getData().get("monto").toString());
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
-                    break;
-                case 7:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
-                    break;
-                case 8:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
-                    break;
-                case 9:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
-                    break;
                 case 10:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
                     break;
                 case 11:
                     if (interfaceNotificationPipas == null && client.getContextMap() != null) {
                         interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
+                        interfaceNotificationPipas.getReceiverEstatusPedido("11", "Nuevas Pipas");
                     }
-                    interfaceNotificationPipas.getReceiverEstatusPedido("11", "Nuevas Pipas");
+
                     break;
                 case 20:
                     GsonBuilder gsonChatBuilder = new GsonBuilder();
@@ -151,8 +174,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Utilities.SetLog("Message Notification Body: ",remoteMessage.getNotification().getBody(),true);
+        if (remoteMessage.getData() != null) {
+            Utilities.SetLog("Message Notification Body: ",remoteMessage.getData().get("body"),true);
         }
     }
 
@@ -223,4 +246,97 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
+    public void ValidaPedidoActivo(final String title, final String body) throws JSONException {
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO_ACTIVO;
+        Utilities.SetLog("APPFB-PEDIDOACTIVO",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    ParserPedidoActivo(response,title,body);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
+
+                Toast.makeText(getContext(),R.string.errorlistener,Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserPedidoActivo(JSONObject response, String title, String body) throws JSONException {
+        Gson gson = new Gson();
+        Utilities.SetLog("PARSER-APPFB_ACTIVO",response.toString(),WSkeys.log);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (response.getInt("codeError") == (WSkeys.okresponse)) {
+            JSONObject jo_data = response.getJSONObject(WSkeys.data);
+            //pedidoActivo = gson.fromJson(jo_data.toString(), PedidoActivo.class);
+            seguimientoPedido = gson.fromJson(jo_data.toString(), SeguimientoPedido.class);
+            seguimientoPedido.setTipo("3");
+            client.setSeguimientoPedido(seguimientoPedido);
+            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.getStatus(),WSkeys.log);
+
+            if (interfaceNotificationNewOrder == null && client.getContextNewOrder() != null) {
+
+                interfaceNotificationNewOrder = (MessageReceiverCallback) client.getContextNewOrder();
+                interfaceNotificationNewOrder.getReceiverEstatusPedido(seguimientoPedido.getStatus(), sJSONObject);
+                client.setContextNewOrder(null);
+            }
+
+            mostrarNotificacion(title,body , sJSONObject);
+
+
+            Intent intent = new Intent(getApplicationContext(), PedidoAceptadoActivity.class);
+            String json_pedido = gson.toJson(seguimientoPedido);
+            intent.putExtra("pedido_data",json_pedido);
+            intent.putExtra("idPedido",seguimientoPedido.getId());
+            intent.putExtra("pedido_data",json_pedido);
+            intent.putExtra("status",seguimientoPedido.getStatus());
+            startActivity(intent);
+
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
+
+            Utilities.SetLog("APPFB_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
+        }else{
+            Toast.makeText(getContext(),response.getString(WSkeys.messageError),Toast.LENGTH_LONG).show();
+        }
+    }
 }
