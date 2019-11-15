@@ -163,6 +163,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         JSONObject objJson = null;
 
         client.setMessageContext(this);
+        client.setContextMap(null);
 
         vista = findViewById(R.id.name);
         monto = findViewById(R.id.cantidad);
