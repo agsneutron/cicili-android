@@ -123,6 +123,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String order ="";
     String getStatus="";
 
+    RequestQueue queue = Volley.newRequestQueue(getContext());
+    public static final String TAG = "TagQueue";
+
 
 
     protected static final String ESTATUS_ACTION = "statusaction";
@@ -457,13 +460,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
                 Utilities.SetLog("CANCELA",url,WSkeys.log);
 
-                RequestQueue queue = Volley.newRequestQueue(getContext());
+                //RequestQueue queue = Volley.newRequestQueue(getContext());
                 //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         try {
+                            onStop();
                             ParserCancela(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -515,6 +519,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                jsonObjectRequest.setTag(TAG);
                 queue.add(jsonObjectRequest);
 
             }
@@ -742,12 +747,13 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.pedido+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
                 Utilities.SetLog("ACTUALIZA",url,WSkeys.log);
 
-                RequestQueue queue = Volley.newRequestQueue(getContext());
+                //RequestQueue queue = Volley.newRequestQueue(getContext());
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            onStop();
                             ParserUPDATE(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -797,6 +803,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                jsonObjectRequest.setTag(TAG);
                 queue.add(jsonObjectRequest);
 
             }
@@ -899,11 +906,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
         String url = WSkeys.URL_BASE + WSkeys.URL_UBICACION_CONDUCTOR + seguimientoPedido.getId();
 
-        RequestQueue queue = Volley.newRequestQueue(client.getContext());
+        //RequestQueue queue = Volley.newRequestQueue(client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    onStop();
                     UbicacionParserData(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -945,6 +953,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
 
     }
@@ -1202,11 +1211,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
         String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA + pos;
         Utilities.SetLog("PIDE FACTURA", url, WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    onStop();
                     ParserFactura(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1248,6 +1258,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
 
     }
@@ -1471,11 +1482,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
         String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_CANCELA;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    onStop();
                     ParserMotivos(response, motivos);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1517,6 +1529,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
 
     }
@@ -1565,6 +1578,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         handler.removeCallbacksAndMessages(null); // se deja de enviar la ubicación
         client.setMessageContext(null);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
     }
 
 }
