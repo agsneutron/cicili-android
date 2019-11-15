@@ -315,7 +315,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
             if (interfaceNotificationNewOrder == null && client.getContextNewOrder() != null) {
 
                 interfaceNotificationNewOrder = (MessageReceiverCallback) client.getContextNewOrder();
-                interfaceNotificationNewOrder.getReceiverEstatusPedido(seguimientoPedido.getStatus(), sJSONObject);
+                interfaceNotificationNewOrder.getReceiverEstatusPedido(seguimientoPedido.getStatus(), jo_data.toString());
                 client.setContextNewOrder(null);
             }
 
