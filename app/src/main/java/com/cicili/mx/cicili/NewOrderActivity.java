@@ -89,6 +89,7 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
         setSupportActionBar(toolbar);
 
         client.setContextNewOrder(this);
+        client.setContextMap(null);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
