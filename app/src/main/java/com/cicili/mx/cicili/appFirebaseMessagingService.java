@@ -125,9 +125,15 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                     interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
                     break;
                 case 11:
+
                     if (interfaceNotificationPipas == null && client.getContextMap() != null) {
+                        Utilities.SetLog("interfaceNotificationPipas", "interfaceNotificationPipas", WSkeys.log);
                         interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
                         interfaceNotificationPipas.getReceiverEstatusPedido("11", "Nuevas Pipas");
+                    }else{
+                        if (interfaceNotificationPipas != null && client.getContextMap() != null){
+                            interfaceNotificationPipas.getReceiverEstatusPedido("11", "Nuevas Pipas");
+                        }
                     }
 
                     break;
@@ -319,7 +325,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                 client.setContextNewOrder(null);
             }
 
-            mostrarNotificacion(title,body , sJSONObject);
+            mostrarNotificacion(title,body , jo_data.toString());
 
 
             Intent intent = new Intent(getApplicationContext(), PedidoAceptadoActivity.class);
