@@ -467,8 +467,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     @Override
                     public void onResponse(String response) {
                         try {
-                            onStop();
+                            //onStop();
                             ParserCancela(response);
+                            queue.cancelAll(TAG);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -753,8 +754,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            onStop();
+                            //onStop();
                             ParserUPDATE(response);
+                            queue.cancelAll(TAG);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -911,8 +913,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    onStop();
+                    //onStop();
                     UbicacionParserData(response);
+                    queue.cancelAll(TAG);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1216,8 +1219,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onResponse(String response) {
                 try {
-                    onStop();
+                    //onStop();
                     ParserFactura(response);
+                    queue.cancelAll(TAG);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1487,8 +1491,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onResponse(String response) {
                 try {
-                    onStop();
+                    //onStop();
                     ParserMotivos(response, motivos);
+                    queue.cancelAll(TAG);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
