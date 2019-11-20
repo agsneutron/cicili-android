@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
 
-public class appFirebaseMessagingService extends FirebaseMessagingService implements MessageReceiverCallback{
+public class appFirebaseMessagingService extends FirebaseMessagingService {
 
 
     Application application = (Application) Client.getContext();
@@ -42,8 +42,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
     String sJSONObject;
 
     MessageReceiverCallback interfaceNotification;
-
     MessageReceiverCallback interfaceNotificationPipas;
+    MessageReceiverCallback interfaceNotificationChat;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -51,12 +51,15 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
 
 
 
-        if (remoteMessage.getNotification() != null){
+        if (remoteMessage.getNotification() != null) {
             Utilities.SetLog("NOTIFICATION DATA", remoteMessage.getData().toString(), WSkeys.log);
 
-            //Utilities.SetLog("NOTIFICATION TIPO: ", remoteMessage.getData().get("tipo").toString(), WSkeys.log);
-            if (remoteMessage.getData().get("status").toString().equals("2")){
-                if (remoteMessage.getData().get("tipo").toString().equals("3")) {
+            if (interfaceNotification == null) {
+                interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
+            }
+
+            switch (Integer.parseInt(remoteMessage.getData().get("status"))) {
+                case 2:
 
                     GsonBuilder gsonMapBuilder = new GsonBuilder();
                     Gson gsonObject = gsonMapBuilder.create();
@@ -66,56 +69,50 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
                     client.setSeguimientoPedido(seguimientoPedido);
 
                     mostrarNotificacion(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), sJSONObject);
-                }/*else{
-                    Intent intent = new Intent(client.getContext(), PedidoAceptadoActivity.class);
-                    intent.putExtra("status",remoteMessage.getData().get("status").toString());
-                    startActivity(intent);
 
-                }*/
+                    break;
+                case 5:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    break;
+                case 6:
+                    client.setComision(remoteMessage.getData().get("comision").toString());
+                    client.setTotal(remoteMessage.getData().get("monto").toString());
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    break;
+                case 7:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    break;
+                case 8:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    break;
+                case 9:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    break;
+                case 10:
+                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getNotification().getBody());
+                    break;
+                case 11:
+                    if (interfaceNotificationPipas == null && client.getContextMap() != null) {
+                        interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
+                    }
+                    interfaceNotificationPipas.getReceiverEstatusPedido("11", "Nuevas Pipas");
+                    break;
+                case 20:
+                    GsonBuilder gsonChatBuilder = new GsonBuilder();
+                    Gson gsonObjectChat = gsonChatBuilder.create();
+                    sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
+                    if (interfaceNotificationChat == null && client.getContextChat() != null) {
+                        interfaceNotificationChat = (MessageReceiverCallback) client.getContextChat();
+                    }
+                    interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), sJSONObject);
+                    break;
+
             }
-
-            if (remoteMessage.getData().get("status").toString().equals("6")){
-                client.setComision(remoteMessage.getData().get("comision").toString());
-                client.setTotal(remoteMessage.getData().get("monto").toString());
-
-                Utilities.SetLog("NOTIFICATION comision", client.getComision(), WSkeys.log);
-                Utilities.SetLog("NOTIFICATION monto", client.getTotal(), WSkeys.log);
-            }
-
-            if (remoteMessage.getData().get("status").toString().equals("11")){
-                getReceiverEstatusPedido("11","");
-
-                if (interfaceNotificationPipas == null && client.getContextMap() != null){
-                    interfaceNotificationPipas = (MessageReceiverCallback) client.getContextMap();
-                    interfaceNotificationPipas.getReceiverEstatusPedido("11","Nuevas Pipas");
-                }
-            }
-
-
-
-
-            /*Utilities.SetLog("NOTIFICATION",remoteMessage.toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("idPedido").toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("conductor").toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("clave").toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("placa").toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("color").toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("tiempo").toString(), WSkeys.log);
-            Utilities.SetLog("NOTIFICATION data",remoteMessage.getData().get("monto").toString(), WSkeys.log);
-        */
-
 
         }
-        if (interfaceNotification == null){
-            interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
-        }
+
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-
-            if (interfaceNotification!=null && !remoteMessage.getData().get("status").equals("2")){
-                interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"),remoteMessage.getNotification().getBody());
-            }
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
@@ -132,6 +129,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
             Utilities.SetLog("Message Notification Body: ",remoteMessage.getNotification().getBody(),true);
         }
     }
+
     private void mostrarNotificacion(String title, String body,String data){
 
         //++++++++++++++++++++++++++++++++
@@ -198,8 +196,5 @@ public class appFirebaseMessagingService extends FirebaseMessagingService implem
         Utilities.SetLog("Message Notification token: ",s,true);
     }
 
-    @Override
-    public void getReceiverEstatusPedido(String status, String mensaje) {
 
-    }
 }

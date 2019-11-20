@@ -92,7 +92,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     app:backgroundTint="@color/colorPrimaryDark"
 
                     />
@@ -114,8 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimaryDark"
-
-                    android:inputType="text" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -134,7 +133,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimaryDark"
-
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 

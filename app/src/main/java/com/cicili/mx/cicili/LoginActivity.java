@@ -96,10 +96,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.SplashTheme);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTheme(R.style.SplashTheme);
         // Set up the login form.
 
         mEmailView = (TextInputEditText) findViewById(R.id.email);
@@ -244,9 +243,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         } else if (!Utilities.isEmailValid(email)) {
+
+            if (Utilities.isCellNumber(email)){
+                if (email.length()<10){
+                    mEmailView.setError(getString(R.string.error_invalid_cellnumber));
+                    focusView = mEmailView;
+                    cancel = true;
+                }
+            }else{
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+            }
         }
 
         if (cancel) {

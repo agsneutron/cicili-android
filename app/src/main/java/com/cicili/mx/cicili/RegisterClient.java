@@ -239,6 +239,14 @@ public class RegisterClient extends AppCompatActivity {
             cancel = true;
         }
 
+        if(!Utilities.isCellNumber(cellphone) || cellphone.length()<10){
+            mCellPhoneView.setError(getString(R.string.error_invalid_cellnumber));
+            focusView = mCellPhoneView;
+            cancel = true;
+        }
+
+
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.

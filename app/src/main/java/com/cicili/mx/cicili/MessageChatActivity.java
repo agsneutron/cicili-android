@@ -49,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.cicili.mx.cicili.domain.Client.getContext;
 
-public class MessageChatActivity extends AppCompatActivity {
+public class MessageChatActivity extends AppCompatActivity implements MessageReceiverCallback{
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -81,6 +81,7 @@ public class MessageChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_chat);
 
+        client.setContextChat(this);
 
         fotoPerfil = findViewById(R.id.fotoPerfil);
         nombre = findViewById(R.id.nombre);
@@ -136,7 +137,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
             fotoPerfil.setImageBitmap(decodedByte);
 
-            if (!uso.equals(3)) {
+            if (!uso.equals("3")) {
+                Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
                 LlenaLista(id, order);
             }
         }
@@ -343,12 +345,13 @@ public class MessageChatActivity extends AppCompatActivity {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                    if(uso.equals("3")) {
-                        //adapter.clearMensajes();
-                        adapter.addMensaje(messageData);
+                    if(!uso.equals("3")) {
+                        Utilities.SetLog("USO DIFERENTE DE", uso, WSkeys.log);
+                        LlenaLista(id, order);
                     }
                     else {
-                        LlenaLista(id, order);
+                        //adapter.clearMensajes();
+                        adapter.addMensaje(messageData);
                     }
 
                 }
@@ -448,8 +451,99 @@ public class MessageChatActivity extends AppCompatActivity {
         }
     }
 
+    public void ParserListMsg(String respuesta) throws JSONException {
+
+
+        if (!respuesta.equals("")) {
+            //obtener nivel de data
+            Utilities.SetLog("ParserListMsg", respuesta, WSkeys.log);
+
+            JSONObject data = new JSONObject(respuesta);
+            JSONArray ja_data = new JSONArray(data.getString("mensajes"));
+            Gson gson = new Gson();
+            if (ja_data.length() > 0) {
+                adapter.clearMensajes();
+                for (int i = 0; i < ja_data.length(); i++) {
+                    JSONObject jo_message = (JSONObject) ja_data.get(i);
+                    Utilities.SetLog("jo_msgLlenalist", jo_message.toString(), WSkeys.log);
+                    messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
+                    adapter.addMensaje(messageData);
+                }
+
+            }
+            // si ocurre un error al registrar la solicitud se muestra mensaje de error
+            else {
+                Snackbar.make(nombre, "Error al generar la lista de mensajes", Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    // obtener listado de mensajes
+    public void ObtenerMensajesChat() throws JSONException {
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_MENSAJES_CHAT + id;
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    ParserList(response.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
+                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
     @Override
     public void onBackPressed() {
+        client.setContextChat(null);
         super.onBackPressed();
+    }
+
+    @Override
+    public void getReceiverEstatusPedido(String status, String mensaje) {
+        try {
+            ObtenerMensajesChat();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

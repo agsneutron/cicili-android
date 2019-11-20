@@ -61,6 +61,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -444,6 +445,8 @@ public class PersonalDataFragment extends Fragment {
              */
         },anio, mes, dia);
         //show widget
+        Date newDate = c.getTime();
+        recogerFecha.getDatePicker().setMinDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
         recogerFecha.show();
 
     }

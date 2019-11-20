@@ -376,13 +376,17 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         }
 
                         if(rgMontoLitro.getCheckedRadioButtonId() == R.id.litro_mc){
-                            litro_c = Double.parseDouble(input_monto_litros.getText().toString());
-                            monto_c =0.0;
+                            if (input_monto_litros.getText().toString().length()!=0) {
+                                litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                monto_c = 0.0;
+                            }
                         }
 
                         if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto_mc){
-                            monto_c = Double.parseDouble(input_monto_litros.getText().toString());
-                            litro_c = 0.0;
+                            if (input_monto_litros.getText().toString().length()!=0) {
+                                monto_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                litro_c = 0.0;
+                            }
                         }
 
                         // Check for a valid password, if the user entered one.
@@ -512,19 +516,26 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         nuevoEstado = "STATE_COLLAPSED";
+                        layoutDirecciones.setVisibility(View.VISIBLE);
+                        direcciones.setSelection(0,true);
+                        direccionSeleccionada=0;
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         nuevoEstado = "STATE_EXPANDED";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
                         nuevoEstado = "STATE_HIDDEN";
+                        layoutDirecciones.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         nuevoEstado = "STATE_DRAGGING";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
 
                     case BottomSheetBehavior.STATE_SETTLING:
                         nuevoEstado = "STATE_SETTLING";
+                        layoutDirecciones.setVisibility(View.GONE);
                         break;
                 }
 
@@ -751,7 +762,19 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             pipaSeleccionada=0;
                             direccionSeleccionada=0;
                         }
-                        else if(bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
+                        else if(bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED && bsb_mascercano.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
+                            return false;
+                        }
+
+                        Utilities.SetLog("BSB_MASCERCANO-BACK",String.valueOf(bsb_mascercano.getState()),WSkeys.log);
+                        if (bsb_mascercano.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                            bsb_mascercano.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            pipas.setSelection(0,true);
+                            direcciones.setSelection(0,true);
+                            pipaSeleccionada=0;
+                            direccionSeleccionada=0;
+                        }
+                        else if(bsb_mascercano.getState()==BottomSheetBehavior.STATE_COLLAPSED && bsb.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
                             return false;
                         }
 
@@ -1350,6 +1373,30 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Utilities.SetLog("REQUESTPERMISSIONRESULT","in",WSkeys.log);
+        mLocationPermissionGranted = false;
+
+        switch (requestCode){
+            case REQUEST_LOCATION_PERMISSION:{
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length;i++){
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
+                            Utilities.SetLog("FAILDE PRERMISSIONS",String.valueOf(grantResults[i]),WSkeys.log);
+                            return;
+                        }
+                    }
+                    Utilities.SetLog("REQUESTPERMISSIONRESULT","GRANTED",WSkeys.log);
+                    mLocationPermissionGranted = true;
+                    initMyMap();
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        initMyMap();
+    }
+
+    public void RequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Utilities.SetLog("REQUESTPERMISSIONRESULT","in",WSkeys.log);
         mLocationPermissionGranted = false;
 
