@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
@@ -27,12 +28,16 @@ import com.cicili.mx.cicili.domain.RfcData;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent;
+import com.cicili.mx.cicili.io.SessionManager;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,6 +48,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -78,7 +85,7 @@ public class MenuActivity extends AppCompatActivity
         RfcDetailFragment.OnFragmentInteractionListener,
         ScheduleMainFragment.OnListFragmentInteractionListener,
         OrderMainFragment.OnListFragmentInteractionListener,
-        NotificationReceiver.OnNotificationReceiverListener,MessageReceiverCallback{
+        NotificationReceiver.OnNotificationReceiverListener,MessageReceiverCallback {
 
 
     Application application = (Application) Client.getContext();
@@ -88,7 +95,7 @@ public class MenuActivity extends AppCompatActivity
     final Fragment fragmentAddress = new AddressMainFragment();
     final Fragment fragmentOrder = new OrderMainFragment();
     final Fragment fragmenUserProfile = new UserProfileFragment();
-    final Fragment fragmentPayment= new PaymentMainFragment();
+    final Fragment fragmentPayment = new PaymentMainFragment();
     final Fragment fragmentRfc = new RfcMainFragment();
     final Fragment fragmentSchedule = new ScheduleMainFragment();
     final FragmentManager fm = getSupportFragmentManager();
@@ -99,6 +106,8 @@ public class MenuActivity extends AppCompatActivity
     DrawerLayout drawer;
     FloatingActionButton fab_menu;
     FloatingActionButton fab_help;
+    TextView tvname, tvarea;
+    ImageView imageView;
     LinearLayout encabezado;
     ImageView img_back;
     PedidoActivo pedidoActivo = new PedidoActivo();
@@ -107,9 +116,10 @@ public class MenuActivity extends AppCompatActivity
     protected static final String BUTTON_ACTION = "buttonaction";
     protected static final int REQUEST_BUTTON = 300;
 
-    private  NotificationReceiver broadcast;
+    private NotificationReceiver broadcast;
 
-
+    SessionManager session;
+    private String token_firebase="";
     /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -160,6 +170,15 @@ public class MenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        session = new SessionManager(getApplicationContext());
+        if (session.checkLogin()) {
+
+            finish();
+        }
+
+        final HashMap<String, String> user = session.getSession();
+
         //FloatingActionButton fab = findViewById(R.id.fab_menu);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setHomeAsUpIndicator(R.id.fab_menu);
@@ -183,11 +202,12 @@ public class MenuActivity extends AppCompatActivity
             return;
         }
 
-        try {
+
+        /*try {
             ValidaPedidoActivo();
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         fab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,27 +226,17 @@ public class MenuActivity extends AppCompatActivity
 
         //Perfil update data
         View headerView = navigationView.getHeaderView(0);
-        TextView tvname = (TextView)headerView.findViewById(R.id.tv_name);
-        tvname.setText(client.getName());
-        TextView tvarea = (TextView)headerView.findViewById(R.id.tv_email);
-        tvarea.setText(client.getEmail());
-        ImageView imageView = (ImageView)headerView.findViewById(R.id.imageView);
+        tvname = headerView.findViewById(R.id.tv_name);
+        tvarea =  headerView.findViewById(R.id.tv_email);
+        imageView = headerView.findViewById(R.id.imageView);
 
-        if (!client.getPhoto().isEmpty() || client.getPhoto()!=null) {
 
-            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            Utilities.SetLog("IMAGEN CLIENTE", client.getPhoto().substring(client.getPhoto().indexOf(",") + 1), WSkeys.log);
-
-            imageView.setImageBitmap(decodedByte);
-        }
         //
 
 
         //BOTTOMNAVIGATION OPTIONS
         // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-       // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
 
@@ -253,19 +263,40 @@ public class MenuActivity extends AppCompatActivity
                 active = fragmentMain;
             }*/
 
-            //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(fragmentAddress).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "fragmentOrder").hide(fragmentOrder).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "fragmenUserProfile").hide(fragmenUserProfile).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(fragmentPayment).commit();
-            //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(fragmentRfc).commit();
-            //fm.beginTransaction().hide(active).show(fragmentMain).commit();
+        //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(fragmentAddress).commit();
+        //fm.beginTransaction().add(R.id.main_container, fragmentOrder, "fragmentOrder").hide(fragmentOrder).commit();
+        //fm.beginTransaction().add(R.id.main_container, fragmenUserProfile, "fragmenUserProfile").hide(fragmenUserProfile).commit();
+        //fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").hide(fragmentPayment).commit();
+        //fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").hide(fragmentRfc).commit();
+        //fm.beginTransaction().hide(active).show(fragmentMain).commit();
 
+        if (client.getAccess_token()=="" || client.getAccess_token()== null) {
 
-            broadcast = new NotificationReceiver(this);
-            IntentFilter intentFilter = new IntentFilter(BUTTON_ACTION);
-            registerReceiver(broadcast,intentFilter);
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                Utilities.SetLog("getInstanceId failed: ",task.getException().toString(),true);
+                                return;
+                            }
 
-      /*  }*/
+                            // Get new token instance
+                            token_firebase = task.getResult().getToken();
+                            client.setAccess_token(token_firebase);
+                            Utilities.SetLog("TOKEN FIREBASE MENUACT: ",token_firebase,true);
+                            UserLoginTask(user.get(SessionManager.KEY_EMAIL), user.get(SessionManager.KEY_PSW));
+                        }
+                    });
+            Utilities.SetLog("LOGINFROMMENU", "MENUACTIVITY", WSkeys.log);
+        }else{
+            ActivaMap("0");
+        }
+
+        broadcast = new NotificationReceiver(this);
+        IntentFilter intentFilter = new IntentFilter(BUTTON_ACTION);
+        registerReceiver(broadcast, intentFilter);
+
     }
 
     @Override
@@ -277,17 +308,16 @@ public class MenuActivity extends AppCompatActivity
         } else {
             showMenuBackToHelp();
             //super.onBackPressed();
-            if (active==fragmentMain){
+            if (active == fragmentMain) {
                 super.onBackPressed();
-            }
-            else{
-                Utilities.SetLog("ONBACKPRESED",active.getTag(),WSkeys.log);
+            } else {
+                Utilities.SetLog("ONBACKPRESED", active.getTag(), WSkeys.log);
                 fm.beginTransaction().hide(active).show(fragmentMain).commit();
-                active=fragmentMain;
+                active = fragmentMain;
             }
 
         }
-        Utilities.SetLog("ONBACKPRESED","MENUACTIVITY",WSkeys.log);
+        Utilities.SetLog("ONBACKPRESED", "MENUACTIVITY", WSkeys.log);
     }
 
     @Override
@@ -321,9 +351,8 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.navigation_perfil) {
 
-           Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
-           startActivity(intent);
-
+            Intent intent = new Intent(MenuActivity.this, PerfilDetailActivity.class);
+            startActivity(intent);
 
 
         } /*else if (id == R.id.navigation_datos) {
@@ -345,7 +374,7 @@ public class MenuActivity extends AppCompatActivity
             //userProfileFragment.show(getSupportFragmentManager(),"fragmenUserProfile");
 
         }*/ else if (id == R.id.navigation_address) {
-            Utilities.SetLog("FRAGMENT_ADDRESS", active.getTag(),WSkeys.log);
+            Utilities.SetLog("FRAGMENT_ADDRESS", active.getTag(), WSkeys.log);
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
 
             //fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").hide(active).commit();
@@ -353,8 +382,8 @@ public class MenuActivity extends AppCompatActivity
             //fm.beginTransaction().show(fragmentAddress).commit();
             //active = fragmentAddress;
             if (!fragmentAddress.isAdded()) {
-                Utilities.SetLog("FRAGMENT_ADDRESS",  active.getTag(),WSkeys.log);
-                fm.beginTransaction().add(R.id.main_container,fragmentAddress,"fragmentAddress").commit();
+                Utilities.SetLog("FRAGMENT_ADDRESS", active.getTag(), WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container, fragmentAddress, "fragmentAddress").commit();
             }
             fm.beginTransaction().addToBackStack("fragmentMain");
             fm.beginTransaction().hide(active).show(fragmentAddress).commit();
@@ -364,8 +393,8 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.navigation_payment) {
 
             if (!fragmentPayment.isAdded()) {
-                Utilities.SetLog("FRAGMENT_PAYMENT",  active.getTag(),WSkeys.log);
-                fm.beginTransaction().add(R.id.main_container,fragmentPayment,"fragmentPayment").commit();
+                Utilities.SetLog("FRAGMENT_PAYMENT", active.getTag(), WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container, fragmentPayment, "fragmentPayment").commit();
             }
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentPayment).commit();
@@ -383,8 +412,8 @@ public class MenuActivity extends AppCompatActivity
             //fm.beginTransaction().show(fragmentRfc).commit();
             //active = fragmentRfc;
             if (!fragmentRfc.isAdded()) {
-                Utilities.SetLog("FRAGMENT_RFC", active.getTag(),WSkeys.log);
-                fm.beginTransaction().add(R.id.main_container,fragmentRfc,"fragmentRfc").commit();
+                Utilities.SetLog("FRAGMENT_RFC", active.getTag(), WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container, fragmentRfc, "fragmentRfc").commit();
             }
             fm.beginTransaction().addToBackStack("fragmentMain").commit();
             fm.beginTransaction().hide(active).show(fragmentRfc).commit();
@@ -401,33 +430,33 @@ public class MenuActivity extends AppCompatActivity
             active = fragmentSchedule;
             hideMenuHelpToBack();
 
-        }else if(id == R.id.navigation_history){
+        } else if (id == R.id.navigation_history) {
             if (!fragmentOrder.isAdded()) {
-                Utilities.SetLog("FRAGMENT_ORDER",  active.getTag(),WSkeys.log);
-                fm.beginTransaction().add(R.id.main_container,fragmentOrder,"fragmentOrder").commit();
+                Utilities.SetLog("FRAGMENT_ORDER", active.getTag(), WSkeys.log);
+                fm.beginTransaction().add(R.id.main_container, fragmentOrder, "fragmentOrder").commit();
             }
             fm.beginTransaction().addToBackStack("fragmentMain");
             fm.beginTransaction().hide(active).show(fragmentOrder).commit();
             active = fragmentOrder;
             hideMenuHelpToBack();
 
-        }else if (id == R.id.nav_legal) {
+        } else if (id == R.id.nav_legal) {
             Intent intent = new Intent(MenuActivity.this, LegalListActivity.class);
             startActivity(intent);
 
 
-        }else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_help) {
             Intent intent = new Intent(MenuActivity.this, HelpListActivity.class);
             startActivity(intent);
 
-        }
-        else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_exit) {
 
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
+            session.logoutSession();
             android.os.Process.killProcess(android.os.Process.myPid());
             finish();
             System.exit(0);
@@ -442,7 +471,7 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri){
+    public void onFragmentInteraction(Uri uri) {
         //you can leave it empty
     }
 
@@ -507,7 +536,7 @@ public class MenuActivity extends AppCompatActivity
         String index = String.valueOf(client.getPedidosDataArrayList().indexOf(item));
         Intent intent = new Intent(MenuActivity.this, OrderDetailActivity.class);
         String order = String.valueOf(item.getId());
-        intent.putExtra("ARG_PARAM1",order);
+        intent.putExtra("ARG_PARAM1", order);
         startActivity(intent);
         /*
         RfcDetailFragment rfcDetailFragment = new RfcDetailFragment();
@@ -517,11 +546,10 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (broadcast!=null)unregisterReceiver(broadcast);
+        if (broadcast != null) unregisterReceiver(broadcast);
     }
 
     @Override
@@ -538,10 +566,10 @@ public class MenuActivity extends AppCompatActivity
         Intent intent = new Intent(MenuActivity.this, PedidoAceptadoActivity.class);
 
         Utilities.SetLog("intent idpedido: ", idPedido, WSkeys.log);
-        Utilities.SetLog("intent DATA",data, WSkeys.log);
-        intent.putExtra("idPedido",idPedido);
-        intent.putExtra("pedido_data",data);
-        intent.putExtra("status","2");
+        Utilities.SetLog("intent DATA", data, WSkeys.log);
+        intent.putExtra("idPedido", idPedido);
+        intent.putExtra("pedido_data", data);
+        intent.putExtra("status", "2");
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
@@ -553,7 +581,7 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
-    public void hideMenuHelpToBack(){
+    public void hideMenuHelpToBack() {
         /*fab_menu.hide();
         fab_help.setImageResource(R.drawable.ic_close);
         fab_help.setImageResource(android.R.drawable.ic_menu_revert);
@@ -567,7 +595,7 @@ public class MenuActivity extends AppCompatActivity
         fab_help.hide();
     }
 
-    public void showMenuBackToHelp(){
+    public void showMenuBackToHelp() {
         /*fab_menu.show();
         fab_help.setImageResource(R.drawable.ic_help_outline_white_24dp);
         fab_help.setOnClickListener(new View.OnClickListener() {
@@ -581,37 +609,36 @@ public class MenuActivity extends AppCompatActivity
         fab_help.show();
     }
 
-   @Override
+    @Override
     public void getReceiverEstatusPedido(String status, String mensaje) {
 
 
+        //Fragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.map);
 
-       //Fragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-       //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.map);
+        Fragment fragment = fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
 
-       Fragment  fragment =  fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+        Utilities.SetLog("instanceof : ", String.valueOf(fragment), WSkeys.log);
 
-       Utilities.SetLog("instanceof : ",String.valueOf (fragment), WSkeys.log);
+        if (fragment instanceof SupportMapFragment) {
 
-       if (fragment instanceof SupportMapFragment){
+            /** Se valida que esta bien instanciado y se hace la comunicación*/
 
-           /** Se valida que esta bien instanciado y se hace la comunicación*/
+            MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
 
-          MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
-
-           /** Se envia el mensaje al metodo del receptor*/
-          receptor.setRecibeEstatusPedido(status);
-       }
+            /** Se envia el mensaje al metodo del receptor*/
+            receptor.setRecibeEstatusPedido(status);
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Utilities.SetLog("MenuActivity onRequestPermissionsResult: ", String.valueOf(requestCode), WSkeys.log);
-        Fragment  fragment =  fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+        Fragment fragment = fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
 
-        Utilities.SetLog("instanceof : ",String.valueOf (fragment), WSkeys.log);
+        Utilities.SetLog("instanceof : ", String.valueOf(fragment), WSkeys.log);
 
-        if (fragment instanceof SupportMapFragment){
+        if (fragment instanceof SupportMapFragment) {
 
             /** Se valida que esta bien instanciado y se hace la comunicación*/
 
@@ -624,10 +651,10 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
-    public void ValidaPedidoActivo() throws JSONException {
+    /*public void ValidaPedidoActivo() throws JSONException {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO_ACTIVO;
-        Utilities.SetLog("MAINSEARCH-PEDIDOACTIVO?",url,WSkeys.log);
+        Utilities.SetLog("MAINSEARCH-PEDIDOACTIVO?", url, WSkeys.log);
         RequestQueue queue = Volley.newRequestQueue(MenuActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
@@ -642,10 +669,10 @@ public class MenuActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
-                /*Snackbar.make(direcciones, R.string.errorlistener, Snackbar.LENGTH_SHORT)
-                        .show();*/
-                Toast.makeText(MenuActivity.this,R.string.errorlistener,Toast.LENGTH_LONG).show();
+                Utilities.SetLog("ERROR RESPONSE", error.toString(), WSkeys.log);
+                *//*Snackbar.make(direcciones, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        .show();*//*
+                Toast.makeText(MenuActivity.this, R.string.errorlistener, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -680,7 +707,7 @@ public class MenuActivity extends AppCompatActivity
 
     public void ParserPedidoActivo(JSONObject response) throws JSONException {
         Gson gson = new Gson();
-        Utilities.SetLog("PARSER-MAIN_ACTIVO",response.toString(),WSkeys.log);
+        Utilities.SetLog("PARSER-MAIN_ACTIVO", response.toString(), WSkeys.log);
 
         // si el response regresa ok, entonces si inicia la sesión
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
@@ -689,18 +716,17 @@ public class MenuActivity extends AppCompatActivity
             seguimientoPedido = gson.fromJson(jo_data.toString(), SeguimientoPedido.class);
             seguimientoPedido.setTipo("3");
             client.setSeguimientoPedido(seguimientoPedido);
-            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.getStatus(),WSkeys.log);
+            Utilities.SetLog("PARSER-STATUS_ACTIVO", seguimientoPedido.getStatus(), WSkeys.log);
 
-            if (seguimientoPedido.getStatus().equals("1")){
-               ActivaMap("1");
-            }
-            else {
+            if (seguimientoPedido.getStatus().equals("1")) {
+                ActivaMap("1");
+            } else {
                 Intent intent = new Intent(MenuActivity.this, PedidoAceptadoActivity.class);
                 String json_pedido = gson.toJson(pedidoActivo);
-                intent.putExtra("pedido_data",json_pedido);
-                intent.putExtra("idPedido",pedidoActivo.getId());
-                intent.putExtra("pedido_data",json_pedido);
-                intent.putExtra("status",pedidoActivo.getStatus());
+                intent.putExtra("pedido_data", json_pedido);
+                intent.putExtra("idPedido", pedidoActivo.getId());
+                intent.putExtra("pedido_data", json_pedido);
+                intent.putExtra("status", pedidoActivo.getStatus());
                 startActivity(intent);
             }
 
@@ -709,13 +735,13 @@ public class MenuActivity extends AppCompatActivity
         else if (response.getInt("codeError") == (WSkeys.no_error_ok)) {
 
             ActivaMap("0");
-            Utilities.SetLog("PARSER-MAIN_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
-        }else{
-            /*Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
-                    .show();*/
-            Toast.makeText(this,WSkeys.messageError,Toast.LENGTH_LONG).show();
+            Utilities.SetLog("PARSER-MAIN_ACTIVO", response.getString(WSkeys.messageError), WSkeys.log);
+        } else {
+            *//*Snackbar.make(direcciones, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    .show();*//*
+            Toast.makeText(this, WSkeys.messageError, Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
 
     /*@Override
@@ -725,15 +751,141 @@ public class MenuActivity extends AppCompatActivity
         super.onRestart();
 
     }*/
-    public void ActivaMap(String activo){
+    public void ActivaMap(String activo) {
+        Utilities.SetLog("MENU - activamap", activo, WSkeys.log);
         if (findViewById(R.id.main_container) != null) {
             Bundle bundle = new Bundle();
             bundle.putString("ARG_PARAM1", activo);
             bundle.putString("ARG_PARAM2", " ");
             Utilities.SetLog("MENU - ACTIVO", activo, WSkeys.log);
             fragmentMain.setArguments(bundle);
-            fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commit();
+            fm.beginTransaction().add(R.id.main_container, fragmentMain, "fragmentMain").commitAllowingStateLoss();
             active = fragmentMain;
         }
     }
+
+
+    public void UserLoginTask(final String mEmail, final String mPassword) {
+        Utilities.SetLog("TOKEN FIREBASE MNLOGTSK: ",token_firebase,true);
+
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_LOGIN;
+        RequestQueue queue = Volley.newRequestQueue(MenuActivity.this);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserData(response, mEmail, mPassword);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    session.logoutSession();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                session.logoutSession();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(WSkeys.PUSERNAME, mEmail);
+                params.put(WSkeys.PPASSWORD, mPassword);
+                params.put(WSkeys.TOKENFIREBASE, token_firebase);
+                Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+
+    public void ParserData(String response, String userName, String userPassword) throws JSONException {
+
+        //Log.e("LoginResponse", response);
+        JSONObject respuesta = new JSONObject(response);
+        Utilities.SetLog("MENULOGIN response", response, true);
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            JSONObject jousuario = respuesta.getJSONObject(WSkeys.data);
+            //JSONArray jousuario = respuesta.getJSONArray(WSkeys.data);
+
+            //Utilities.SetLog("LOGIN idcte",Integer.toString(jousuario.getInt(WSkeys.idcte)).toString(),true);
+            client.setIdcte(jousuario.getInt(WSkeys.idcte));
+            client.setStatus(jousuario.getString(WSkeys.status));
+            client.setToken(jousuario.getString(WSkeys.token));
+            client.setEmail(jousuario.getString(WSkeys.email));
+            client.setCellphone(jousuario.getString(WSkeys.cel));
+            client.setUsername(userName);
+            client.setSexo(jousuario.getString(WSkeys.sexo));
+            client.setPhoto(jousuario.getString(WSkeys.img));
+            Utilities.SetLog("MENULOGIN TOKEN", client.getToken(), WSkeys.log);
+
+            //Utilities.SetLog("MENULOGIN IMAGEN", jousuario.getString(WSkeys.img), WSkeys.log);
+            //client.setSexo("");
+            Utilities.SetClientData(jousuario, client);
+
+            session.createSession(client.getToken(), userName, userPassword);
+
+            if (client.getStatus().equals(WSkeys.datos_personales)) {
+                Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+                intent.putExtra("active", WSkeys.datos_personales);
+                startActivity(intent);
+            }
+            if (client.getStatus().equals(WSkeys.datos_pago)) {
+                Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+                intent.putExtra("active", WSkeys.datos_pago);
+                startActivity(intent);
+            }
+
+            if (client.getStatus().equals(WSkeys.datos_direccion)) {
+                Intent intent = new Intent(MenuActivity.this, PerfilData.class);
+                intent.putExtra("active", WSkeys.datos_direccion);
+                startActivity(intent);
+            }
+
+            IniciaPerfil();
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else {
+            session.logoutSession();
+        }
+    }
+
+    public void IniciaPerfil(){
+        tvname.setText(client.getName());
+        tvarea.setText(client.getEmail());
+        if (!client.getPhoto().isEmpty() || client.getPhoto() != null) {
+
+            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+           // Utilities.SetLog("IMAGEN CLIENTE", client.getPhoto().substring(client.getPhoto().indexOf(",") + 1), WSkeys.log);
+            imageView.setImageBitmap(decodedByte);
+        }
+        ActivaMap("0");
+
+    }
 }
+
+

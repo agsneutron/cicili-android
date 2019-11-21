@@ -446,7 +446,7 @@ public class PersonalDataFragment extends Fragment {
         },anio, mes, dia);
         //show widget
         Date newDate = c.getTime();
-        recogerFecha.getDatePicker().setMinDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
+        recogerFecha.getDatePicker().setMaxDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
         recogerFecha.show();
 
     }

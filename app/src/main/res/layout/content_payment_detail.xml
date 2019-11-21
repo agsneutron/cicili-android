@@ -48,7 +48,7 @@
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="70dp"
-                            android:src="@drawable/ic_visa" />
+                            app:srcCompat="@drawable/ic_credit_card_black_24dp" />
 
                         <TextView
                             android:id="@+id/tipocta"

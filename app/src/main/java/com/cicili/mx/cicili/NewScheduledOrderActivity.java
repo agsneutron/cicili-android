@@ -63,7 +63,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
     BottomSheetBehavior bsb;
     String motivo_seleccionado="";
     String motivo_texto="";
-    Button cancela_bsb;
+    Button cancela_bsb, nuevo_pedido;
     ArrayList<String> motivoArray = new ArrayList<String>();
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String LOG = "ORDEN";
@@ -83,7 +83,8 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
 
 
 
-       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +105,16 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
             }
         });
         estatuspedido = findViewById(R.id.estatuspedido);
+
+        nuevo_pedido = findViewById(R.id.nuevo_pedido);
+        nuevo_pedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewScheduledOrderActivity.this, MenuActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -151,7 +162,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
 
 
 
-            bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheet);
+            bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheetCancela);
             bsb = BottomSheetBehavior.from(bottom_sheet);
             bsb.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
@@ -321,6 +332,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                     Utilities.SetLog("PARSER-CANCELA",response.toString(),WSkeys.log);
                     JSONObject response_object = new JSONObject(response);
 
+
                     // si el response regresa ok, entonces si inicia la sesión
                     if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
 
@@ -328,6 +340,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                         intent.putExtra("cancel_result",response_object.getString("data"));
                         intent.putExtra("cause",motivo_texto);
                         intent.putExtra("order",json_order);
+                        intent.putExtra("from","programado");
 
                         startActivity(intent);
 
@@ -429,6 +442,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
             pedido_id = respuesta.getJSONObject(WSkeys.nameValuePairs).getInt("id");
             order = String.valueOf(pedido_id);
             estatuspedido.setText(String.format(" Estatus de Pedido: %s\nNúmero de Orden: %s", respuesta.getJSONObject(WSkeys.nameValuePairs).getString("nombreStatus"), String.valueOf(order)));
+            json_order = jo_sheduled.toString();
 
         //} // si ocurre un error al registrar la solicitud se muestra mensaje de error
         //else{

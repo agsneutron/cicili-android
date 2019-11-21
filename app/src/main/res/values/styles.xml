@@ -40,6 +40,7 @@
 
     <style name="HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">@android:color/black</item>
+
     </style>
 
 
@@ -59,4 +60,16 @@
         <item name="android:windowBackground">@color/gray</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="TextInputLayoutAppearance" parent="TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColorHint">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

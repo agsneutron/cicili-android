@@ -363,6 +363,11 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             if (lonOrderAddress==null){
                 lonOrderAddress=0.0;
             }
+
+            if (pedidoData.getStatus()!=0){
+                aclarar.setVisibility(View.VISIBLE);
+                facturar.setVisibility(View.VISIBLE);
+            }
             //map
             getMyLocationPermision();
 

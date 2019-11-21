@@ -119,15 +119,6 @@ public class MessageActivity extends AppCompatActivity {
                 URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;
 
-            } else if (uso.equals("3")) {
-                nombre.setText(String.format("%s ", client.getName()));
-                nombreSub.setText("");
-
-                id = bundle.getString("idPedido");
-                order = bundle.getString("idPedido");
-                URL_list = WSkeys.URL_COMUNICACION_C_C;
-                URL_seguimiento = WSkeys.URL_COMUNICACION_C_C;
-                Utilities.SetLog("uso 3", id, WSkeys.log);
             }
 
             byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
@@ -258,18 +249,12 @@ public class MessageActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json;
         JSONObject params;
-        if(uso.equals("3")){
-            ComunicaCC messageData = new ComunicaCC();
-            messageData.setMensaje(message);
-            messageData.setIdPedido(Integer.parseInt(id));
-            json = gson.toJson(messageData);
-        }
-        else {
+
             SeguimientoData seguimientoData = new SeguimientoData();
             seguimientoData.setTexto(message);
             seguimientoData.setAclaracion(Integer.parseInt(id));
             json = gson.toJson(seguimientoData);
-        }
+
         params = new JSONObject(json);
 
 
@@ -343,13 +328,7 @@ public class MessageActivity extends AppCompatActivity {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
-                    if(uso.equals("3")) {
-                        //adapter.clearMensajes();
-                        adapter.addMensaje(messageData);
-                    }
-                    else {
                         LlenaLista(id, order);
-                    }
 
                 }
 

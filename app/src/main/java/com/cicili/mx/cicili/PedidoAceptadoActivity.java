@@ -123,6 +123,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String order ="";
     String getStatus="";
 
+    RequestQueue queue = Volley.newRequestQueue(getContext());
+    public static final String TAG = "TagQueue";
+
 
 
     protected static final String ESTATUS_ACTION = "statusaction";
@@ -162,7 +165,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         String status = "2";
         JSONObject objJson = null;
 
-        client.setMessageContext(PedidoAceptadoActivity.this);
+        client.setMessageContext(this);
+        client.setContextMap(null);
+
         vista = findViewById(R.id.name);
         monto = findViewById(R.id.cantidad);
         time = findViewById(R.id.time);
@@ -190,6 +195,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         IntentFilter intentFilter = new IntentFilter(ESTATUS_ACTION);
         registerReceiver(broadcast,intentFilter);
 
+
+
+        Utilities.SetLog("PEDIDOACP bundle", intent.getExtras().toString(), WSkeys.log);
+
         if (bundle != null) {
             //recuperar datos de pedido
             pedido_data = bundle.getString("pedido_data");
@@ -202,6 +211,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
             //seguimientoPedido= gson.fromJson(pedido_data , SeguimientoPedido.class);
             //seguimientoPedido= client.getSeguimientoPedido();
             order = seguimientoPedido.getId();
@@ -215,7 +225,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             lbl2.setText(String.format("Color: %s", seguimientoPedido.getColor()));
             lbl3.setText("");
             lbl4.setText(String.format("Placa:  %s", seguimientoPedido.getPlaca()));
-            item_price.setText("$ " + seguimientoPedido.getPrecio());
+            item_price.setText(String.format("$ %s", seguimientoPedido.getPrecio()));
 
             status_order.setText(seguimientoPedido.getFormaPago());
             aclarar = findViewById(R.id.aclaracion);
@@ -290,7 +300,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 //dialog.show();
             }
-        }
+
         //map
         getMyLocationPermision();
 
@@ -450,14 +460,16 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
                 Utilities.SetLog("CANCELA",url,WSkeys.log);
 
-                RequestQueue queue = Volley.newRequestQueue(getContext());
+                //RequestQueue queue = Volley.newRequestQueue(getContext());
                 //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         try {
+                            //onStop();
                             ParserCancela(response);
+                            queue.cancelAll(TAG);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -508,6 +520,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                jsonObjectRequest.setTag(TAG);
                 queue.add(jsonObjectRequest);
 
             }
@@ -735,13 +748,15 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.pedido+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
                 Utilities.SetLog("ACTUALIZA",url,WSkeys.log);
 
-                RequestQueue queue = Volley.newRequestQueue(getContext());
+                //RequestQueue queue = Volley.newRequestQueue(getContext());
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            //onStop();
                             ParserUPDATE(response);
+                            queue.cancelAll(TAG);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -790,6 +805,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                jsonObjectRequest.setTag(TAG);
                 queue.add(jsonObjectRequest);
 
             }
@@ -892,12 +908,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
         String url = WSkeys.URL_BASE + WSkeys.URL_UBICACION_CONDUCTOR + seguimientoPedido.getId();
 
-        RequestQueue queue = Volley.newRequestQueue(client.getContext());
+        //RequestQueue queue = Volley.newRequestQueue(client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    //onStop();
                     UbicacionParserData(response);
+                    queue.cancelAll(TAG);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -938,6 +956,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
 
     }
@@ -1195,12 +1214,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
         String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA + pos;
         Utilities.SetLog("PIDE FACTURA", url, WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    //onStop();
                     ParserFactura(response);
+                    queue.cancelAll(TAG);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1241,6 +1262,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
 
     }
@@ -1329,13 +1351,28 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             final AlertDialog.Builder builder = new AlertDialog.Builder(client.getMessageContext());
             // Add the buttons
 
-            builder.setTitle("El cobro de tu pedido es:");
-            builder.setMessage("Cargo de Comisión de Servicio: $" + client.getComision() +"\n" +
-                    "Monto  total a pagar al conductor: $" + client.getTotal());
+            switch (Integer.parseInt(status)) {
+                case 6:
+                    builder.setTitle("El cobro de tu pedido es:");
+                    builder.setMessage("Cargo de Comisión de Servicio: $" + client.getComision() +"\n" +
+                            "Monto  total a pagar al conductor: $" + client.getTotal());
+                    break;
+                case 9:
+                    builder.setTitle("Pedido Cancelado");
+                    builder.setMessage("Tu pedido ha sido cancelado por el conductor");
+                    break;
+            }
+
             builder.setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
                     dialog.dismiss();
+                    if (Integer.parseInt(status)==9){
+                        Intent intent = new Intent(PedidoAceptadoActivity.this, MenuActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
                     switch (Integer.parseInt(status)) {
                         case 4:
                             cancelar.setEnabled(false);
@@ -1358,6 +1395,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             cambiar.setEnabled(false);
                             break;
                         case 9:
+                            handler.removeCallbacksAndMessages(null);
+                            client.setMessageContext(null);
+                            finish();
                             break;
 
                         default:
@@ -1405,11 +1445,21 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             cancelar.setEnabled(false);
                             facturar.setEnabled(true);
                             cambiar.setEnabled(false);
+                            handler.removeCallbacksAndMessages(null);
+                            client.setMessageContext(null);
                             Intent intent = new Intent(PedidoAceptadoActivity.this, RateService.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("order",client.getSeguimientoPedido().getId());
                             startActivity(intent);
                             finish();
+                            break;
+                        case 9:
+                            name.setText("PEDIDO CANCELADO.");
+                            dialog.show();
+
+                            handler.removeCallbacksAndMessages(null);
+                            client.setMessageContext(null);
+                            //finish();
                             break;
 
                         default:
@@ -1438,12 +1488,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
         String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_CANCELA;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    //onStop();
                     ParserMotivos(response, motivos);
+                    queue.cancelAll(TAG);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1484,6 +1536,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
 
     }
@@ -1532,6 +1585,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         handler.removeCallbacksAndMessages(null); // se deja de enviar la ubicación
         client.setMessageContext(null);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
     }
 
 }

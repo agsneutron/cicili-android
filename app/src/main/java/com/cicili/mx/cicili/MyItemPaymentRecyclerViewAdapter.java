@@ -56,7 +56,8 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
         holder.mIdView.setText(stipopago);
         holder.mContentView.setText(String.valueOf(mValues.get(position).getNumero()));
         holder.mDescriptionView.setText(String.valueOf(mValues.get(position).getVencimiento()));
-        switch (mValues.get(position).getTipoTarjeta()) {
+        Utilities.SetLog("P-TIPOTARJETA ",mValues.get(position).getTipoTarjeta(),WSkeys.log );
+       /* switch (mValues.get(position).getTipoTarjeta()) {
             case WSkeys.dvisa:
                 holder.mImage.setImageResource(R.drawable.ic_visa);
                 Utilities.SetLog("P-RVH-V ",mValues.get(position).getTipoTarjeta(),WSkeys.log );
@@ -70,7 +71,7 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
                 Utilities.SetLog("P-RVH-AMX ",mValues.get(position).getTipoTarjeta(),WSkeys.log );
                 break;
         }
-
+*/
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

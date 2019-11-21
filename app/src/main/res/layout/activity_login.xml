@@ -108,21 +108,29 @@
                     android:hint="@string/userfield"
                     android:textColorHint="@color/colorPrimaryDark"
                     app:errorEnabled="true"
-                    app:hintTextAppearance="@style/HintText"
+                    android:theme="@style/TextInputLayoutAppearance"
                     app:layout_constraintBottom_toTopOf="@+id/password_text_input"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:passwordToggleTint="@color/colorPrimaryDark">
+                    app:passwordToggleTint="@color/colorPrimaryDark"
+                    >
+
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:focusable="auto"
                         android:inputType="text"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="false"
                         android:text="ariaocho@gmail.com"
-                        app:backgroundTint="@color/colorPrimaryDark"
-                        android:textColor="@color/textDark" />
+                        android:textColor="@color/textDark"
+                        android:textColorLink="#3F51B5"
+                        android:textCursorDrawable="@color/colorPrimaryDark"
+
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <!-- <EditText
                      android:layout_width="match_parent"
@@ -144,7 +152,7 @@
                     android:hint="@string/passwordlbl"
                     android:textColorHint="@color/colorPrimaryDark"
                     app:errorEnabled="true"
-                    app:hintTextAppearance="@style/HintText"
+                    android:theme="@style/TextInputLayoutAppearance"
                     app:passwordToggleTint="@color/colorPrimaryDark"
                     app:layout_constraintTop_toBottomOf="@+id/email_text_input"
                     app:layout_constraintBottom_toBottomOf="parent"
