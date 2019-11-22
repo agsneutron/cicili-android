@@ -319,7 +319,7 @@ public class PaymentDataFragment extends Fragment {
                     paymentData.setVencimiento(sVencimiento);
                     }
                     if(sCvv.equals("") || sCvv.length()<3){
-                        cvv.setError(getString(R.string.error_field_required));
+                        cvv.setError(getString(R.string.error_field_helpcvv));
                         error =  true;
                         focusView = cvv;
                         Utilities.SetLog("cvv----<",sCvv,WSkeys.log);
