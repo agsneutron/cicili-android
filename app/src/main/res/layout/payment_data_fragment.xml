@@ -202,7 +202,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/cvv"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:helperText="Busca al reverso de tu Tarjeta">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/cvv"

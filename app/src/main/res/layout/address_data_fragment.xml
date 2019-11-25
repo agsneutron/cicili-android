@@ -87,7 +87,7 @@
                     android:layout_weight="1"
                     android:hint="@string/alias"
                     app:errorEnabled="true"
-                    app:helperText="Nombre corto">
+                    app:helperText="Casa, Negocio, Oficina">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/alias"
@@ -109,7 +109,8 @@
                         android:id="@+id/cp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="5"/>
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -207,11 +208,15 @@
 
             </FrameLayout>
 
+
+
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/favorita"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/favorito" />
+                android:text="@string/favorito"
+                android:textOff="No"
+                android:textOn="Si"/>
 
 
             <!--        <androidx.appcompat.widget.AppCompatButton
