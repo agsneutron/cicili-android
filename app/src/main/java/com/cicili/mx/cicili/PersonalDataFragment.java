@@ -425,7 +425,7 @@ public class PersonalDataFragment extends Fragment {
     //END SECTION TO REGISTER PERSONAL DATA
 
     private void getDate(final EditText mnac){
-        DatePickerDialog recogerFecha = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog recogerFecha = new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Light, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
@@ -437,7 +437,6 @@ public class PersonalDataFragment extends Fragment {
                 //Muestro la fecha con el formato deseado
                 mnac.setText(diaFormateado + BARRA + mesFormateado + BARRA + year);
 
-
             }
             //Estos valores deben ir en ese orden, de lo contrario no mostrara la fecha actual
             /**
@@ -446,6 +445,9 @@ public class PersonalDataFragment extends Fragment {
         },anio, mes, dia);
         //show widget
         Date newDate = c.getTime();
+        recogerFecha.getDatePicker().setSpinnersShown(true);
+        recogerFecha.getDatePicker().setCalendarViewShown(false);
+        recogerFecha.getDatePicker().setLayoutMode(1);
         recogerFecha.getDatePicker().setMaxDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
         recogerFecha.show();
 

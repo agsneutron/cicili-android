@@ -365,6 +365,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/monto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/monto"
+                android:layout_marginRight="5dp"/>
+
+            <RadioButton
                 android:id="@+id/litro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -372,13 +380,7 @@
                 android:text="@string/litro"
                 android:layout_marginLeft="5dp"/>
 
-            <RadioButton
-                android:id="@+id/monto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/monto"
-                android:layout_marginRight="5dp"/>
+
 
 
         </RadioGroup>
@@ -402,7 +404,7 @@
                 android:id="@+id/labelinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/litros"
+                android:hint="@string/precio"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:errorEnabled="true"
                 app:hintTextAppearance="@style/HintText">
@@ -456,7 +458,7 @@
                 android:id="@+id/calculoinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/precio"
+                android:hint="@string/litros"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:errorEnabled="true"
                 app:hintTextAppearance="@style/HintText">
