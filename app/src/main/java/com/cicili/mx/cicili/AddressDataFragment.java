@@ -20,6 +20,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -238,6 +240,25 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                 }
             }
         });
+        cp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(cp.getText().length()==5 && (Utilities.isFieldValid(cp))) {
+                    LlenaColonia(cp.getText().toString());
+                }
+            }
+        });
+
 
         cp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

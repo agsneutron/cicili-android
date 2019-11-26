@@ -153,6 +153,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                             Intent intent = new Intent(getApplicationContext(), MessageChatActivity.class);
                             intent.putExtra("idPedido", String.valueOf(remoteMessage.getData().get("idPedido")));
                             intent.putExtra("uso", "3");
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
                     }

@@ -58,7 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_blanco"
+            app:srcCompat="@drawable/logo_colores"
             android:contentDescription="@string/empty" />
 
         <!-- <TextView
@@ -82,10 +82,22 @@
             android:layout_marginRight="4dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:layout_constraintBottom_toTopOf="@+id/forgot"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:text="La manera más fácil de pedir el GAS"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19.3sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/layoutlog"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutlog"
@@ -100,6 +112,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 >
+
+
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/email_text_input"
@@ -201,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/action_forgotpsw"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimaryDark"
                 app:backgroundTint="@android:color/transparent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutlog"
                 app:layout_constraintBottom_toTopOf="@+id/email_sign_in_button"
@@ -226,6 +242,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+
+
+            <LinearLayout
+                android:id="@+id/forgot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/email_sign_in_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/action_no_account"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="19.3sp" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/register_button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/action_register"
+                    android:textSize="24dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:backgroundTint="@android:color/transparent" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--<Button
             android:id="@+id/email_sign_in_button"
@@ -253,45 +303,7 @@
             android:textStyle="bold" />-->
 
 
-        <LinearLayout
-            android:id="@+id/forgot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
 
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_light"
-                android:text="@string/action_no_account"
-                android:textColor="@color/white"
-                android:textSize="17.3sp" />
-
-            <!--<TextView
-                android:id="@+id/register_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10.5dp"
-                android:fontFamily="@font/roboto_light"
-                android:text="@string/action_register"
-                android:textColor="@color/white"
-                android:textSize="17.3dp" />-->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/register_button"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/action_register"
-                android:textColor="@color/white"
-                app:backgroundTint="@android:color/transparent" />
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
