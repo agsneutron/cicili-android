@@ -168,10 +168,10 @@ public class RegisterClient extends AppCompatActivity {
         //tilpassword.setError("La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.");
         //tilpassword.setErrorTextColor(ColorStateList.valueOf(str.getColor()));
         if (str.getValue() >=2 ) {
-            mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tick, 0);
+            mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_tick_b, 0);
         }
         else {
-            mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+            mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_close_b, 0);
         }
         /*progressBar.getProgressDrawable().setColorFilter(str.getColor(), android.graphics.PorterDuff.Mode.SRC_IN);
         if (str.getValue() == 0) {
