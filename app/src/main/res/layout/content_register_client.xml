@@ -126,6 +126,7 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 app:errorEnabled="true"
                 app:hintTextAppearance="@style/HintText"
+                app:helperText="@string/helptextpsw"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText

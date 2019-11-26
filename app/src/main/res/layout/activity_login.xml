@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/action_forgotpsw"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 app:backgroundTint="@android:color/transparent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutlog"
                 app:layout_constraintBottom_toTopOf="@+id/email_sign_in_button"
@@ -253,17 +253,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
                 android:text="@string/action_no_account"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="17.3sp" />
-
             <!--<TextView
                 android:id="@+id/register_button"
                 android:layout_width="wrap_content"
@@ -281,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/action_register"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 app:backgroundTint="@android:color/transparent" />
         </LinearLayout>
 

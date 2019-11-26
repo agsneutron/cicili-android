@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +64,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     private AdapterMessageChat adapter;
     private InputMessage messageData;
     private ImageButton btnEnviarFoto;
+    private ImageView imgBack;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -89,6 +91,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         rvMensajes = findViewById(R.id.rvMensajes);
         txtMensaje = findViewById(R.id.txtMensaje);
         btnEnviar = findViewById(R.id.btnEnviar);
+        imgBack = findViewById(R.id.img_back);
         btnEnviarFoto = (ImageButton) findViewById(R.id.btnEnviarFoto);
         fotoPerfilCadena = "";
 
@@ -141,6 +144,13 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                     e.printStackTrace();
                 }
                 txtMensaje.setText("");
+            }
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

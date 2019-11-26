@@ -290,7 +290,8 @@ public class MenuActivity extends AppCompatActivity
                     });
             Utilities.SetLog("LOGINFROMMENU", "MENUACTIVITY", WSkeys.log);
         }else{
-            ActivaMap("0");
+            IniciaPerfil();
+            //ActivaMap("0");
         }
 
         broadcast = new NotificationReceiver(this);
