@@ -43,7 +43,7 @@
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Verificación"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold"
 
@@ -58,7 +58,7 @@
             android:fontFamily="@font/roboto_medium"
             android:text="@string/mensajeverificacion"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorPrimaryDark" />
         <!-- <TextView
                 android:id="@+id/textViewsd"
                 android:layout_width="wrap_content"
