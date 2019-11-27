@@ -338,7 +338,7 @@ public class RegisterClient extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 showProgress(false);
                 Log.e("El error", error.toString());
-                Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -385,13 +385,13 @@ public class RegisterClient extends AppCompatActivity {
                 JSONObject jousuario = respuesta.getJSONObject(WSkeys.data);
 
                 token = jousuario.getString(WSkeys.token);
-                Snackbar.make(mEmailView, R.string.successregister, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mEmailView, R.string.successregister, Snackbar.LENGTH_LONG).show();
                 Intent intent = new Intent(RegisterClient.this,ValidateActivity.class);
                 intent.putExtra("token",token);
                 startActivity(intent);
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-                Snackbar.make(mRegisterFormView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                Snackbar.make(mRegisterFormView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                         .show();
         }
     }

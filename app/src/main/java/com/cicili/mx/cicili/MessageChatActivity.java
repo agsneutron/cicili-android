@@ -279,7 +279,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("El error", error.toString());
-                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -341,7 +341,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
-            Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }
@@ -398,7 +398,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             }
             // si ocurre un error al registrar la solicitud se muestra mensaje de error
             else {
-                Snackbar.make(nombre, "Error al generar la lista de mensajes", Snackbar.LENGTH_SHORT)
+                Snackbar.make(nombre, "Error al generar la lista de mensajes", Snackbar.LENGTH_LONG)
                         .show();
             }
         }
@@ -423,7 +423,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             public void onErrorResponse(VolleyError error) {
 
                 Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
-                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {

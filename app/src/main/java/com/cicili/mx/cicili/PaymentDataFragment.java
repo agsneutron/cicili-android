@@ -494,7 +494,7 @@ public class PaymentDataFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(numero, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(numero, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -588,7 +588,7 @@ public class PaymentDataFragment extends Fragment {
 
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }
@@ -634,7 +634,7 @@ public class PaymentDataFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -682,7 +682,7 @@ public class PaymentDataFragment extends Fragment {
             tipotarjeta.setText(jo_respuesta.getJSONObject("data").getString("tipoTarjeta"));
         }
         else{
-            Snackbar.make(viewGroup.getChildAt(0), jo_respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(viewGroup.getChildAt(0), jo_respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }

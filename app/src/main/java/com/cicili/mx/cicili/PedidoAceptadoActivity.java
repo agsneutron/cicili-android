@@ -479,7 +479,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     public void onErrorResponse(VolleyError error) {
 
                         Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
-                        Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                                 .show();
                     }
                 }) {
@@ -545,7 +545,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 }
                 // si ocurre un error al registrar la solicitud se muestra mensaje de error
                 else{
-                    Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                             .show();
                 }
             }
@@ -694,7 +694,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             //focusView.requestFocus();
                             //Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
                             //toast.show();
-                            Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(view, error, Snackbar.LENGTH_LONG).show();
 
                             //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                             Utilities.SetLog("in error update pedido", error, WSkeys.log);
@@ -712,7 +712,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                                 else{
                                    // Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                    // toast.show();
-                                    Snackbar.make(view, "por el momento, no es posible actualizar tu pedido.", Snackbar.LENGTH_SHORT).show();
+                                    Snackbar.make(view, "por el momento, no es posible actualizar tu pedido.", Snackbar.LENGTH_LONG).show();
 
                                 }
                             } catch (JSONException e) {
@@ -766,7 +766,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     public void onErrorResponse(VolleyError error) {
 
                         Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
-                        Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                        Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                                 .show();
                     }
                 }) {
@@ -820,12 +820,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     monto.setText(data.getString("monto"));
                     cantidad.setText(data.getString("cantidad"));
                     bsb_cambiar.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    Snackbar.make(linearLayout, "Tu pedido se actualizó correctamente", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(linearLayout, "Tu pedido se actualizó correctamente", Snackbar.LENGTH_LONG)
                             .show();
                 }
                 // si ocurre un error al registrar la solicitud se muestra mensaje de error
                 else{
-                    Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                             .show();
                 }
             }
@@ -859,7 +859,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                             } else {
                                 Utilities.SetLog("MAP-LOcATION", task.toString(), WSkeys.log);
-                                Snackbar.make(vista, R.string.failedgetlocation, Snackbar.LENGTH_SHORT)
+                                Snackbar.make(vista, R.string.failedgetlocation, Snackbar.LENGTH_LONG)
                                         .show();
                             }
                         }
@@ -925,7 +925,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(vista, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(vista, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -1002,7 +1002,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         else {
             Utilities.SetLog("ERROR api ubicación: ", respuesta.getString(WSkeys.messageError), WSkeys.log);
 
-            Snackbar.make(vista, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(vista, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
 
@@ -1231,7 +1231,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(facturar, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(facturar, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -1279,13 +1279,13 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
 
-            Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
+            Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_LONG)
                     .show();
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
-            Snackbar.make(facturar, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(facturar, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
 
             Utilities.SetLog("ERRORPARSER", response, WSkeys.log);
@@ -1505,7 +1505,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -1574,7 +1574,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }

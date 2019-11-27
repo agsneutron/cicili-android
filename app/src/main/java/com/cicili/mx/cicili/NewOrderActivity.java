@@ -278,7 +278,7 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
                         public void onErrorResponse(VolleyError error) {
 
                             Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
-                            Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                            Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                                     .show();
                         }
                     }) {
@@ -343,7 +343,7 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
                     }
                     // si ocurre un error al registrar la solicitud se muestra mensaje de error
                     else{
-                        Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                        Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                                 .show();
                     }
                 }
@@ -442,7 +442,7 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
         else{
             Error_Order(respuesta.getString(WSkeys.messageError));
 
-            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
 
@@ -490,7 +490,7 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -558,7 +558,7 @@ public class NewOrderActivity extends AppCompatActivity implements MessageReceiv
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }

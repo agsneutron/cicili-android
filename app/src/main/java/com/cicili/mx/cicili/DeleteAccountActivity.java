@@ -136,7 +136,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(btnDelete, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(btnDelete, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -211,7 +211,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
         }
         // si ocurre un error al eliminar la cuenta se muestra mensaje de error
         else{
-            Snackbar.make(btnDelete, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(btnDelete, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
 
             Utilities.SetLog("ERRORPARSER",response,WSkeys.log);

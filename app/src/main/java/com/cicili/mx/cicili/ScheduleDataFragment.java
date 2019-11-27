@@ -155,6 +155,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         view = inflater.inflate(R.layout.schedule_data_fragment, container, false);
 
         spinnerSchedule = (Spinner) view.findViewById(R.id.spinnerSchedule);
+        spinnerSchedule.requestFocus();
         //calle = view.findViewById(R.id.calle);
         //numext = view.findViewById(R.id.numext);
         //numint = view.findViewById(R.id.numint);

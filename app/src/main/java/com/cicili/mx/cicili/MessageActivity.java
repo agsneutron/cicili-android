@@ -285,7 +285,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("El error", error.toString());
-                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -348,7 +348,7 @@ public class MessageActivity extends AppCompatActivity {
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
-            Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }
@@ -372,7 +372,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -431,7 +431,7 @@ public class MessageActivity extends AppCompatActivity {
             }
             // si ocurre un error al registrar la solicitud se muestra mensaje de error
             else {
-                Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                         .show();
             }
         }

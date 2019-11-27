@@ -186,7 +186,7 @@ public class RequestPassword extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(mUserView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mUserView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -246,7 +246,7 @@ public class RequestPassword extends AppCompatActivity {
             }
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(mUserView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mUserView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }
@@ -279,7 +279,7 @@ public class RequestPassword extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(mUserView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mUserView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -324,7 +324,7 @@ public class RequestPassword extends AppCompatActivity {
             DialogValidate(user);
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(mUserView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mUserView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }

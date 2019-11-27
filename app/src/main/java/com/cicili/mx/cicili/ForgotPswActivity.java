@@ -248,7 +248,7 @@ public class ForgotPswActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 showProgress(false);
                 Log.e("El error", error.toString());
-                Snackbar.make(mPasswordView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mPasswordView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -312,7 +312,7 @@ public class ForgotPswActivity extends AppCompatActivity {
             dialog.show();
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
-            Snackbar.make(mPasswordView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mPasswordView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }
