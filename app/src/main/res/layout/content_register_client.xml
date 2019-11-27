@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     app:backgroundTint="@color/colorPrimaryDark"
-
+                    android:theme="@style/TextInputLayoutAppearance"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +114,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimaryDark"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:theme="@style/TextInputLayoutAppearance"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -134,7 +135,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimaryDark"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:theme="@style/TextInputLayoutAppearance"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -152,7 +154,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimaryDark"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:theme="@style/TextInputLayoutAppearance"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
