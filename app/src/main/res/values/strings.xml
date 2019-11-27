@@ -34,13 +34,13 @@
     <string name="telefono_celular">Teléfono Celular</string>
     <string name="correo_electronico">Correo Electrónico</string>
     <string name="successregister">Registro realizado correctamente</string>
-    <string name="error_invalid_code">Código SMS incorrecto</string>
+    <string name="error_invalid_code">Código de verificación incorrecto</string>
     <string name="successvalidation">Validación correcta, Iniciar sesión.</string>
-    <string name="successpendingvalidation">Validación de SMS correcta.</string>
+    <string name="successpendingvalidation">Validación de código correcto.</string>
     <string name="action_validate">Verificar</string>
-    <string name="codeSMS">Código SMS</string>
+    <string name="codeSMS">Código</string>
     <string name="errorvalidation">Código incorrecto, intentar nuevamente.</string>
-    <string name="title_activity_validate">Verificación SMS</string>
+    <string name="title_activity_validate">Verificación de Código</string>
     <string name="mensajeverificacion">Hemos enviado un código de verificación a tu número de celular. Ingresalo para terminar el proceso de registro. </string>
     <string name="successlogin">Sesión iniciada satisfactoriamente</string>
     <string name="mensajeverificado">Has concluido tu registro satisfactoriamente. Ya puedes iniciar sesión en Cicili</string>
@@ -70,7 +70,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="errordata">Ocurrio un error al registrar tus datos personales. Intentar nuevamente</string>
     <string name="calendario">Calendario</string>
-    <string name="PersonalDataTitle">Ingresa tus datos Personales</string>
+    <string name="PersonalDataTitle">Ingresa tus datos personales</string>
     <string name="PaymentDataTitle">Registra Datos de Pago</string>
     <string name="pais">Pais</string>
     <string name="efectivo">Efectivo</string>
@@ -170,10 +170,10 @@
     <string name="conductor">Conductor</string>
     <string name="costo">Precio por litro</string>
     <string name="error_pedido"></string>
-    <string name="error_invalid_value">Favor indica los litros o precio a pagar.</string>
+    <string name="error_invalid_value">Indica los litros o precio a pagar.</string>
     <string name="tiempo">Tiempo aproximado de llegada</string>
     <string name="title_activity_new_order">Realizar Pedido</string>
-    <string name="error_invalid_motivo">Selecciona el motivo de la cancelación.</string>
+    <string name="error_invalid_motivo">Selecciona el motivo de cancelación.</string>
     <string name="title_activity_aclaracion">Aclaración</string>
     <string name="programar_pedido">Programar Pedido</string>
     <string name="schedule">Programa tu pedido para una fecha próxima.</string>
@@ -181,7 +181,7 @@
     <string name="horaschedule">Hora</string>
     <string name="direccionschedule">Dirección de Entrega</string>
     <string name="scheduebutton">Programar Pedido</string>
-    <string name="litrosomonto">Indica la cantidad de litros o monto a surtir</string>
+    <string name="litrosomonto">Indica los litros o precio a pagar.</string>
     <string name="error_noaddressselected">Selecciona una dirección</string>
     <string name="title_activity_legal">Contrato de Servicios</string>
     <string name="large_text">
@@ -316,7 +316,7 @@
     <string name="pedidos_programados_title">Pedidos Programados</string>
     <string name="title_order_acepted">Detalle de Pedido</string>
     <string name="btn_cancelar">CANCELAR</string>
-    <string name="error_invalid_ammount">El monto mínimo para solicitar tu pedido debe ser de $200.</string>
+    <string name="error_invalid_ammount">El monto mínimo para solicitar tu pedido es de $200.</string>
     <string name="pedido_en_curso">Tienes un pedido en curso</string>
     <string name="btn_pedido">Ver Pedido</string>
     <string name="btn_cambiar">CAMBIAR PEDIDO</string>
@@ -338,6 +338,9 @@
     <string name="error_invalid_cellnumber">Número incorrecto.</string>
     <string name="passwordlbl">Contraseña</string>
     <string name="addresslocationexp">manten presionada la pantalla para colocar el pin</string>
-    <string name="helptextpsw">La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.</string>
+    <string name="helptextpsw">La contraseña debe contener de 8 a 12 caracteres, al menos una mayúscula, una minúscula y un caracter especial.</string>
+    <string name="slogan">La manera más fácil de pedir el GAS</string>
+    <string name="titlecode">Ingresa el código de verificación que llegó a tu correo.</string>
+    <string name="title_personales">Datos Personales</string>
 
 </resources>

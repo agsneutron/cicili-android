@@ -295,7 +295,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -374,7 +374,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(mIdView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mIdView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
 
             Utilities.SetLog("ERRORPARSER",response,WSkeys.log);
@@ -401,7 +401,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -448,13 +448,13 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
             //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
-            Snackbar.make(mIdView, respuesta.getString(WSkeys.data), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mIdView, respuesta.getString(WSkeys.data), Snackbar.LENGTH_LONG)
                     .show();
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(mIdView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mIdView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
 
             Utilities.SetLog("ERRORPARSER",response,WSkeys.log);

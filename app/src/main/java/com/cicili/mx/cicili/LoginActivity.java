@@ -325,7 +325,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 showProgress(false);
                 Log.e("El error", error.toString());
-                Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -373,7 +373,7 @@ public class LoginActivity extends AppCompatActivity {
             JSONObject jousuario = respuesta.getJSONObject(WSkeys.data);
             //JSONArray jousuario = respuesta.getJSONArray(WSkeys.data);
 
-            Snackbar.make(mEmailView, R.string.successlogin, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mEmailView, R.string.successlogin, Snackbar.LENGTH_LONG).show();
 
             //Utilities.SetLog("LOGIN idcte",Integer.toString(jousuario.getInt(WSkeys.idcte)).toString(),true);
             client.setIdcte(jousuario.getInt(WSkeys.idcte));
@@ -426,7 +426,7 @@ public class LoginActivity extends AppCompatActivity {
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
 
-            Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
         showProgress(false);
@@ -508,7 +508,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -570,7 +570,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(mEmailView, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
     }

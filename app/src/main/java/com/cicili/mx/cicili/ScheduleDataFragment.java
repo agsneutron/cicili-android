@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,6 +155,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         view = inflater.inflate(R.layout.schedule_data_fragment, container, false);
 
         spinnerSchedule = (Spinner) view.findViewById(R.id.spinnerSchedule);
+        spinnerSchedule.requestFocus();
         //calle = view.findViewById(R.id.calle);
         //numext = view.findViewById(R.id.numext);
         //numint = view.findViewById(R.id.numint);
@@ -182,7 +184,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         labelinput = (TextInputLayout)view.findViewById(R.id.labelinput);
 
         rgMontoLitro = (RadioGroup) view.findViewById(R.id.rgMontoLitro);
-        rgMontoLitro.check(R.id.litro);
+        rgMontoLitro.check(R.id.monto);
         rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -212,13 +214,24 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     formapagoseleccionada = WSkeys.defectivo;
                 }
 
-                if (input.getText().equals("") ){
+                if (input.getText().toString().equals("")){
                     Snackbar.make(view, "Indica los litros o monto de tu pedido", Snackbar.LENGTH_LONG)
                             .show();
                     focusView = input;
                     error=true;
+                } else if (input.getText().toString().equals("0")){
+                    Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_LONG)
+                            .show();
+                    focusView = input;
+                    error=true;
+                }else if (TextUtils.isDigitsOnly(input.getText())){
+                    if (Double.parseDouble(input.getText().toString())<200 && rgMontoLitro.getCheckedRadioButtonId()== R.id.monto){
+                        Snackbar.make(view, R.string.error_invalid_ammount, Snackbar.LENGTH_LONG)
+                                .show();
+                        focusView = input;
+                        error=true;
+                    }
                 }
-
 
                 if(spinnerSchedule.getSelectedItemId()==0){
                     Snackbar.make(view, "Selecciona una dirección para enviar tu pedido ", Snackbar.LENGTH_LONG)
@@ -240,13 +253,22 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     Programa schedule = new Programa();
                     if(rgMontoLitro.getCheckedRadioButtonId() == R.id.litro){
                         //litros in input
-                        cantidad =  Double.parseDouble(input.getText().toString());
+                        if (input.getText().toString().equals("")){
+                            cantidad = 0.0;
+                        }else {
+                            cantidad = Double.parseDouble(input.getText().toString());
+                        }
                         monto=0.0;
                     }
 
                     if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto){
                        //monto in input
-                        monto = Double.parseDouble(input.getText().toString());
+                        if (input.getText().toString().equals("")){
+                            cantidad = 0.0;
+                        }else {
+                            monto = Double.parseDouble(input.getText().toString());
+                        }
+
                         cantidad= 0.0;
                     }
 
@@ -491,7 +513,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     }
 
     private void getTime(final EditText time_picked){
-        TimePickerDialog recogerHora = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog recogerHora = new TimePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener() {
 
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -517,6 +539,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             //Pero el sistema devuelve la hora en formato 24 horas
         }   , hora, minuto, false);
 
+        recogerHora.setTitle("Indica la hora de entrega.");
         recogerHora.show();
     }
 

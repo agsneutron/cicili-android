@@ -102,12 +102,12 @@ public class UserProfileFragment extends DialogFragment {
         getDialog().getWindow().setAttributes(lp);
 
         //Find the textviews objects
-        name = (TextView) view.findViewById(R.id.name);
-        email = (TextView) view.findViewById(R.id.email);
-        phone = (TextView) view.findViewById(R.id.phone);
-        date = (TextView) view.findViewById(R.id.date);
-        sexo = (TextView) view.findViewById(R.id.sexo);
-        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        name = view.findViewById(R.id.name);
+        email = view.findViewById(R.id.email);
+        phone = view.findViewById(R.id.phone);
+        date =  view.findViewById(R.id.date);
+        sexo =  view.findViewById(R.id.sexo);
+        ImageView imageView = view.findViewById(R.id.imageView);
 
         byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

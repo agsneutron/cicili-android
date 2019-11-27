@@ -174,7 +174,7 @@ public class ScheduleMainFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("El error", error.toString());
-                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
         }) {
@@ -242,7 +242,7 @@ public class ScheduleMainFragment extends Fragment {
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
-            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(view, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
 
             Utilities.SetLog("ERRORPARSER",response,WSkeys.log);

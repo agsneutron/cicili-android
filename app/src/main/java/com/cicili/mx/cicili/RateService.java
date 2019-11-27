@@ -247,7 +247,7 @@ public class RateService extends AppCompatActivity {
         } // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
 
-            Snackbar.make(etComments, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+            Snackbar.make(etComments, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
                     .show();
         }
 
