@@ -343,5 +343,6 @@
     <string name="titlecode">Ingresa el código de verificación que llegó a tu correo.</string>
     <string name="title_personales">Datos Personales</string>
     <string name="e_imageperfil">Debes agregar una imagen a tu perfil.</string>
+    <string name="title_registra_cliente">Regístrate como cliente</string>
 
 </resources>

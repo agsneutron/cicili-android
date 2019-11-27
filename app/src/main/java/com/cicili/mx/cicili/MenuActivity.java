@@ -285,7 +285,12 @@ public class MenuActivity extends AppCompatActivity
                             token_firebase = task.getResult().getToken();
                             client.setAccess_token(token_firebase);
                             Utilities.SetLog("TOKEN FIREBASE MENUACT: ",token_firebase,true);
-                            UserLoginTask(user.get(SessionManager.KEY_EMAIL), user.get(SessionManager.KEY_PSW));
+                            if(user.get(SessionManager.KEY_EMAIL)!=null) {
+                                UserLoginTask(user.get(SessionManager.KEY_EMAIL), user.get(SessionManager.KEY_PSW));
+                            }
+                            else{
+                                session.logoutSession();
+                            }
                         }
                     });
             Utilities.SetLog("LOGINFROMMENU", "MENUACTIVITY", WSkeys.log);

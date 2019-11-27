@@ -239,6 +239,12 @@ public class RegisterClient extends AppCompatActivity {
         }*/
 
         //Check for a valid comfirm password
+        if(TextUtils.isEmpty(cpassword)){
+            mCPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mCPasswordView;
+            cancel = true;
+        }
+
         if(!cpassword.equals(password)){
             mCPasswordView.setError(getString(R.string.error_invalid_cpassword));
             focusView = mCPasswordView;
