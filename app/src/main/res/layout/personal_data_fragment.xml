@@ -43,29 +43,42 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/nav_header_height_xs"
         android:gravity="center"
-        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/picture"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:layout_gravity="center"
-            app:srcCompat="@mipmap/ic_add_perfil" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_edit"
-            android:tint="@color/colorPrimaryDark"
-            android:layout_gravity="bottom|end"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-    </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/picture"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                app:srcCompat="@mipmap/ic_add_perfil" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:foregroundGravity="right"
+                android:tint="@color/colorPrimaryDark"
+                app:srcCompat="@drawable/ic_edit"
+                android:layout_gravity="bottom"
+                />
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
