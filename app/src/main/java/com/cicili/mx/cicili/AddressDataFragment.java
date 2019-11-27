@@ -24,11 +24,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -181,6 +183,19 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
         favorito = view.findViewById(R.id.favorita);
         favorito.setChecked(false);
         switchtxt = view.findViewById(R.id.switchtxt);
+
+        numint.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_NEXT) {
+                    colonia.setFocusable(true);
+                    colonia.setFocusableInTouchMode(true);
+                    colonia.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         button = view.findViewById(R.id.register_address);
         button.setOnClickListener(new View.OnClickListener() {

@@ -96,7 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="@string/tdd" />
+                android:text="@string/tdd"
+                android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/tres"
@@ -135,7 +136,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorPrimaryDark"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/vencimiento"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--<TextView
@@ -185,14 +189,17 @@
                 android:layout_weight="1"
                 android:hint="@string/vencimiento"
                 app:errorEnabled="true"
-                app:helperText="MM/AA">
+                app:helperText="MM/AA"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/vencimiento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@+id/cvv"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -210,7 +217,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:imeOptions="actionGo"/>
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

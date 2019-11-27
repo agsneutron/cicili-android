@@ -87,18 +87,20 @@
                     android:layout_weight="1"
                     android:hint="@string/alias"
                     app:errorEnabled="true"
-                    app:helperText="Casa, Negocio, Oficina">
+                    app:helperText="Casa, Negocio, Oficina"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/alias"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords" />
+                        android:inputType="textCapWords"
+                        android:imeOptions="actionNext"
+                        android:nextFocusForward="@+id/cp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/cps"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -128,7 +130,9 @@
                     android:id="@+id/calle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@+id/numext"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -149,7 +153,9 @@
                         android:id="@+id/numext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords" />
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
+                        android:nextFocusForward="@+id/numint" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -167,7 +173,10 @@
                         android:id="@+id/numint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords" />
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
+                        android:nextFocusForward="@+id/fragment_qc_flSelectWorkDone"
+                        />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -190,6 +199,8 @@
                         android:layout_marginTop="5dp"
                         android:spinnerMode="dropdown"
                         android:textSize="12sp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
                 </FrameLayout>
 

@@ -8,13 +8,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -144,6 +147,19 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
         //numint = view.findViewById(R.id.numint);
         /*favorito = view.findViewById(R.id.favorita);
         favorito.setChecked(false);*/
+
+        razonsocial.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_NEXT) {
+                    usoCFDI.setFocusable(true);
+                    usoCFDI.setFocusableInTouchMode(true);
+                    usoCFDI.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         button = view.findViewById(R.id.register);
         button.setOnClickListener(new View.OnClickListener() {
