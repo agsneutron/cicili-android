@@ -149,6 +149,7 @@ public class RegisterClient extends AppCompatActivity {
 
         if (password.isEmpty()) {
             tilpassword.setError("");
+            tilpassword.setHelperText(getString(R.string.helptextpsw));
             //progressBar.setProgress(0);
             return;
         }
@@ -167,11 +168,17 @@ public class RegisterClient extends AppCompatActivity {
 
         //tilpassword.setError("La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.");
         //tilpassword.setErrorTextColor(ColorStateList.valueOf(str.getColor()));
+        Utilities.SetLog("VALUE", String.valueOf(str.getValue()), WSkeys.log);
         if (str.getValue() >=2 ) {
             mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_tick_b, 0);
+            Utilities.SetLog("VALUE if", String.valueOf(str.getValue()), WSkeys.log);
+
         }
         else {
             mPasswordView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_close_b, 0);
+            Utilities.SetLog("VALUE else", String.valueOf(str.getValue()), WSkeys.log);
+
+
         }
         /*progressBar.getProgressDrawable().setColorFilter(str.getColor(), android.graphics.PorterDuff.Mode.SRC_IN);
         if (str.getValue() == 0) {
@@ -209,10 +216,20 @@ public class RegisterClient extends AppCompatActivity {
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !Utilities.isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError(getString(R.string.helptextpsw));
             focusView = mPasswordView;
             cancel = true;
         }
+
+        Utilities.PasswordStrength str = Utilities.PasswordStrength.calculateStrength(password);
+        if (str.getValue() <2 ) {
+            mPasswordView.setError(getString(R.string.helptextpsw));
+            mPasswordView.setText("");
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        Utilities.SetLog("VALUE", String.valueOf(str.getValue()) + str, WSkeys.log);
+
 
         // Check for a valid password, if the user entered one.
         /*if (!TextUtils.isEmpty(cpassword) && !Utilities.isPasswordValid(cpassword)) {

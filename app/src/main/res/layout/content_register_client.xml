@@ -59,7 +59,7 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Regístrate como cliente"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
                 android:textStyle="bold"
 
@@ -74,7 +74,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/register_content"
                 android:textAlignment="center"
-                android:textColor="@color/white" />
+                android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
 
@@ -120,7 +120,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_text_input"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/contrasenia"
@@ -141,7 +140,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cpassword_text_input"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/confirma_contrasenia"

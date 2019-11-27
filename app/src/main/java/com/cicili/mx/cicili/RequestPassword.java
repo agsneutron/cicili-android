@@ -117,7 +117,7 @@ public class RequestPassword extends AppCompatActivity {
     public void DialogValidate(final String sUser){
         AlertDialog.Builder builder = new AlertDialog.Builder(RequestPassword.this);
         builder.setCancelable(true)
-                .setMessage("Ingresa el código SMS")
+                .setMessage("")
                 .setView(R.layout.validate_sms_layout) //<-- layout containing EditText
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

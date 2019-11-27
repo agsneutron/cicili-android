@@ -34,13 +34,13 @@
     <string name="telefono_celular">Teléfono Celular</string>
     <string name="correo_electronico">Correo Electrónico</string>
     <string name="successregister">Registro realizado correctamente</string>
-    <string name="error_invalid_code">Código SMS incorrecto</string>
+    <string name="error_invalid_code">Código de verificación incorrecto</string>
     <string name="successvalidation">Validación correcta, Iniciar sesión.</string>
-    <string name="successpendingvalidation">Validación de SMS correcta.</string>
+    <string name="successpendingvalidation">Validación de código correcto.</string>
     <string name="action_validate">Verificar</string>
-    <string name="codeSMS">Código SMS</string>
+    <string name="codeSMS">Código</string>
     <string name="errorvalidation">Código incorrecto, intentar nuevamente.</string>
-    <string name="title_activity_validate">Verificación SMS</string>
+    <string name="title_activity_validate">Verificación de Código</string>
     <string name="mensajeverificacion">Hemos enviado un código de verificación a tu número de celular. Ingresalo para terminar el proceso de registro. </string>
     <string name="successlogin">Sesión iniciada satisfactoriamente</string>
     <string name="mensajeverificado">Has concluido tu registro satisfactoriamente. Ya puedes iniciar sesión en Cicili</string>
@@ -338,6 +338,8 @@
     <string name="error_invalid_cellnumber">Número incorrecto.</string>
     <string name="passwordlbl">Contraseña</string>
     <string name="addresslocationexp">manten presionada la pantalla para colocar el pin</string>
-    <string name="helptextpsw">La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.</string>
+    <string name="helptextpsw">La contraseña debe contener de 8 a 12 caracteres, al menos una mayúscula, una minúscula y un caracter especial.</string>
+    <string name="slogan">La manera más fácil de pedir el GAS</string>
+    <string name="titlecode">Ingresa el código de verificación que llegó a tu correo.</string>
 
 </resources>
