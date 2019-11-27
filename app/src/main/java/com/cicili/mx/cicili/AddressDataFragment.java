@@ -32,7 +32,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -101,10 +103,10 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
     Spinner colonia;
     TextInputEditText alias,calle,numint,numext,cp;
     SwitchCompat favorito;
+    TextView switchtxt;
     AppCompatButton button;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
-
 
     private ArrayList<String> asentamientoArray;
     private ArrayList<Asentamiento> asentamientoAux;
@@ -178,6 +180,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
         numint = view.findViewById(R.id.numint);
         favorito = view.findViewById(R.id.favorita);
         favorito.setChecked(false);
+        switchtxt = view.findViewById(R.id.switchtxt);
 
         button = view.findViewById(R.id.register_address);
         button.setOnClickListener(new View.OnClickListener() {
@@ -288,6 +291,19 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
         // attaching data adapter to spinner
         colonia.setAdapter(dataAdapter);
+
+        //switch
+        favorito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    switchtxt.setText("Si");
+                }
+                else {
+                    switchtxt.setText("No");
+                }
+            }
+        });
 
 
 
@@ -767,7 +783,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
         dialog.getWindow().setAttributes(lp);
         AppCompatTextView tv_alias = (AppCompatTextView) dialog.findViewById(R.id.alias);
-        tv_alias.setText(addressData.getAlias());
+        tv_alias.setText("Ubicación de: " +  addressData.getAlias());
 
 
         final MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);

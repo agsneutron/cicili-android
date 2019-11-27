@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -93,7 +93,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:text="La manera más fácil de pedir el GAS"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="19.3sp"
+                android:textSize="16.3sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/layoutlog"
                 app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginRight="4dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent"
@@ -267,14 +267,13 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/register_button"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:padding="15dp"
                     android:text="@string/action_register"
-                    android:textSize="24dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:backgroundTint="@android:color/transparent" />
+                    app:backgroundTint="@color/colorAccent"
+                    app:cornerRadius="20dp"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--<Button

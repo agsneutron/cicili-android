@@ -37,6 +37,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -63,6 +64,7 @@ public class MessageActivity extends AppCompatActivity {
     private AdapterMessage adapter;
     private InputMessage messageData;
     private ImageButton btnEnviarFoto;
+    private ImageView imgBack;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -89,6 +91,7 @@ public class MessageActivity extends AppCompatActivity {
         txtMensaje = findViewById(R.id.txtMensaje);
         btnEnviar = findViewById(R.id.btnEnviar);
         btnEnviarFoto = (ImageButton) findViewById(R.id.btnEnviarFoto);
+        imgBack = findViewById(R.id.img_back);
         fotoPerfilCadena = "";
 
         /*database = FirebaseDatabase.getInstance();
@@ -147,6 +150,13 @@ public class MessageActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 txtMensaje.setText("");
+            }
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

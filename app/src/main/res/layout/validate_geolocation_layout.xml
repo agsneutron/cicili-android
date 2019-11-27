@@ -16,20 +16,20 @@
 
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:text="¡Hola"
+            android:text="@string/addresslocation"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:text="@string/addresslocation"
+            android:text="@string/addresslocationexp"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 <!--    <LinearLayout
@@ -55,7 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/alias"
-        android:textSize="18sp"
+        android:textSize="15sp"
+        android:padding="8dp"
         />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

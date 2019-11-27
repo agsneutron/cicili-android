@@ -46,6 +46,7 @@ public class RateService extends AppCompatActivity {
     EditText etComments;
     MaterialButton bRate;
     ProgressDialog progressDialog;
+    String rateValue="0";
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -60,7 +61,7 @@ public class RateService extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -99,6 +100,37 @@ public class RateService extends AppCompatActivity {
                 }
 
 
+                Utilities.SetLog("--rating", String.valueOf(ratingBar.getRating()), WSkeys.log);
+
+                if (ratingBar.getRating() == 0f) {
+                    rateValue="0";
+                    error=getString(R.string.error_rating);
+                    focusView=ratingBar;
+                    cancel = true;
+                } else if (ratingBar.getRating() >= 0f && ratingBar.getRating() <= 1f) {
+                    rateValue="1";
+                } else if (ratingBar.getRating() >= 1f && ratingBar.getRating() <= 2f) {
+                    rateValue="2";
+                } else if (ratingBar.getRating() >= 2f && ratingBar.getRating() <= 3f) {
+                    rateValue="3";
+                }else if (ratingBar.getRating() >= 3f && ratingBar.getRating() <= 4f) {
+                    rateValue="4";
+                }else if (ratingBar.getRating() >= 4f && ratingBar.getRating() <= 5f) {
+                    rateValue="5";
+                }else if (ratingBar.getRating() == 5f) {
+                    rateValue="5";
+                }
+
+                Utilities.SetLog("--rated", rateValue, WSkeys.log);
+
+
+                if (rateValue.equals("0")){
+                    error=getString(R.string.error_rating);
+                    focusView=ratingBar;
+                    cancel = true;
+                }
+
+
                 if (cancel) {
                     // There was an error
                     focusView.requestFocus();
@@ -125,7 +157,9 @@ public class RateService extends AppCompatActivity {
 
         String url;
 
-        url = WSkeys.URL_BASE + WSkeys.URL_CALIFICA_PEDIDO+WSkeys.pedido+"="+order+"&"+WSkeys.calificacion+"="+ratingBar.getNumStars()+"&"+WSkeys.comentario+"="+etComments.getText();
+
+
+        url = WSkeys.URL_BASE + WSkeys.URL_CALIFICA_PEDIDO+WSkeys.pedido+"="+order+"&"+WSkeys.calificacion+"="+rateValue+"&"+WSkeys.comentario+"="+etComments.getText();
 
         Utilities.SetLog("LOG_RATE", url,WSkeys.log);
 

@@ -209,14 +209,23 @@
             </FrameLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/favorita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favorito"
+                    android:textOff="No"
+                    android:textOn="Si"/>
+                    <TextView
+                        android:id="@+id/switchtxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"/>
+            </LinearLayout>
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/favorita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/favorito"
-                android:textOff="No"
-                android:textOn="Si"/>
 
 
             <!--        <androidx.appcompat.widget.AppCompatButton

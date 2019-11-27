@@ -130,7 +130,7 @@
     <string name="gettingDeviceLocation">Obteniendo ubicación de tu dispositivo</string>
     <string name="failedgetlocation">No se pudo obtener la ubicación de tu equipo.</string>
     <string name="setlocation">Especifica la ubicación de tu domicilio</string>
-    <string name="addresslocation">Indica la ubicación de tu domicilio</string>
+    <string name="addresslocation">Ubica en el mapa el punto de encuentro.</string>
     <string name="Guardar">Guardar</string>
     <string name="cliente">Cliente</string>
     <string name="fecha_de_nacimiento">Fecha de Nacimiento</string>
@@ -337,5 +337,7 @@
     <string name="escribe_un_mensaje">Escribe un mensaje</string>
     <string name="error_invalid_cellnumber">Número incorrecto.</string>
     <string name="passwordlbl">Contraseña</string>
+    <string name="addresslocationexp">manten presionada la pantalla para colocar el pin</string>
+    <string name="helptextpsw">La contraseña debe contener de 8 a 12 carácteres, al menos una mayúscula, una minúscula y un carácter especial.</string>
 
 </resources>
