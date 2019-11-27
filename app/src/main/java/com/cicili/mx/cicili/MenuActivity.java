@@ -885,7 +885,6 @@ public class MenuActivity extends AppCompatActivity
             imageView.setImageBitmap(decodedByte);
         }
         ActivaMap("0");
-
     }
 }
 
