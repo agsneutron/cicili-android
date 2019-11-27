@@ -513,7 +513,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     }
 
     private void getTime(final EditText time_picked){
-        TimePickerDialog recogerHora = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog recogerHora = new TimePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener() {
 
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -539,6 +539,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             //Pero el sistema devuelve la hora en formato 24 horas
         }   , hora, minuto, false);
 
+        recogerHora.setTitle("Indica la hora de entrega.");
         recogerHora.show();
     }
 

@@ -70,7 +70,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="errordata">Ocurrio un error al registrar tus datos personales. Intentar nuevamente</string>
     <string name="calendario">Calendario</string>
-    <string name="PersonalDataTitle">Ingresa tus datos Personales</string>
+    <string name="PersonalDataTitle">Ingresa tus datos personales</string>
     <string name="PaymentDataTitle">Registra Datos de Pago</string>
     <string name="pais">Pais</string>
     <string name="efectivo">Efectivo</string>
@@ -341,5 +341,6 @@
     <string name="helptextpsw">La contraseña debe contener de 8 a 12 caracteres, al menos una mayúscula, una minúscula y un caracter especial.</string>
     <string name="slogan">La manera más fácil de pedir el GAS</string>
     <string name="titlecode">Ingresa el código de verificación que llegó a tu correo.</string>
+    <string name="title_personales">Datos Personales</string>
 
 </resources>

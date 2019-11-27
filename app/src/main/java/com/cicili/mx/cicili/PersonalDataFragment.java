@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -65,6 +66,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 
 
@@ -97,7 +100,7 @@ public class PersonalDataFragment extends Fragment {
     View view;
     ViewGroup viewgroup;
     String ts ="";
-    Button picture;
+    ImageView picture;
     private static final String CERO = "0";
     private static final String BARRA = "-";
     private static final int SETPHOTO = 100;
@@ -150,13 +153,21 @@ public class PersonalDataFragment extends Fragment {
 
         view = inflater.inflate(R.layout.personal_data_fragment, container, false);
         // Inflate the layout for this fragment
-         mname = (TextInputEditText) view.findViewById(R.id.name);
-         mpat = (TextInputEditText) view.findViewById(R.id.apppat);
-         mmat = (TextInputEditText) view.findViewById(R.id.appmat);
-         mnac = (EditText) view.findViewById(R.id.fecha);
-         sexo = (RadioGroup) view.findViewById(R.id.rgSexo);
-         picture = (Button) view.findViewById(R.id.picture);
+         mname =  view.findViewById(R.id.name);
+         mpat =  view.findViewById(R.id.apppat);
+         mmat =  view.findViewById(R.id.appmat);
+         mnac =  view.findViewById(R.id.fecha);
+         sexo =  view.findViewById(R.id.rgSexo);
+         picture =  view.findViewById(R.id.picture);
          viewgroup = container;
+
+
+        if (!client.getPhoto().isEmpty() || client.getPhoto() != null) {
+
+            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            picture.setImageBitmap(decodedByte);
+        }
 
 
         picture.setOnClickListener(new View.OnClickListener() {
@@ -425,7 +436,7 @@ public class PersonalDataFragment extends Fragment {
     //END SECTION TO REGISTER PERSONAL DATA
 
     private void getDate(final EditText mnac){
-        DatePickerDialog recogerFecha = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog recogerFecha = new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
@@ -446,6 +457,8 @@ public class PersonalDataFragment extends Fragment {
         },anio, mes, dia);
         //show widget
         Date newDate = c.getTime();
+        recogerFecha.setTitle("Fecha de nacimiento.");
+
         recogerFecha.getDatePicker().setMaxDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
         recogerFecha.show();
 
