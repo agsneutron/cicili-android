@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -101,6 +102,7 @@ public class PersonalDataFragment extends Fragment {
     ViewGroup viewgroup;
     String ts ="";
     ImageView picture;
+    AppCompatImageView picture_edit;
     String encodedImage="";
     private static final String CERO = "0";
     private static final String BARRA = "-";
@@ -160,6 +162,7 @@ public class PersonalDataFragment extends Fragment {
          mnac =  view.findViewById(R.id.fecha);
          sexo =  view.findViewById(R.id.rgSexo);
          picture =  view.findViewById(R.id.picture);
+        picture_edit  =  view.findViewById(R.id.picture_edit);
          viewgroup = container;
 
 
@@ -172,6 +175,15 @@ public class PersonalDataFragment extends Fragment {
 
 
         picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, SETPHOTO);
+            }
+        });
+
+        picture_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -345,7 +357,7 @@ public class PersonalDataFragment extends Fragment {
         params.put(WSkeys.apemat, vmat);
         params.put(WSkeys.fechanacimiento, vnac);
         params.put(WSkeys.sexo, ts);
-        params.put(WSkeys.img,client.getPhoto());
+        params.put(WSkeys.img,encodedImage);
 
 
 
@@ -415,6 +427,7 @@ public class PersonalDataFragment extends Fragment {
 
 
                 JSONObject jousuario = respuesta.getJSONObject(WSkeys.data);
+                client.setPhoto(encodedImage);
                 if (bRegister.getText().equals("Actualizar")){
                     Utilities.SetPerfilData(jousuario,client);
                     Toast toast = Toast.makeText(getContext(),  R.string.successpersonalupdate, Toast.LENGTH_LONG);
@@ -502,7 +515,8 @@ public class PersonalDataFragment extends Fragment {
 */
                         Bitmap selectedImagebt = BitmapFactory.decodeStream(imageStream);
                         encodedImage = encodeImage(selectedImagebt);
-                        client.setPhoto(encodedImage);
+                        picture.setImageBitmap(selectedImagebt);
+
                     }
                 }
         }
