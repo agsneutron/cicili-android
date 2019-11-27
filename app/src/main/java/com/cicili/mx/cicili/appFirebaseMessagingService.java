@@ -74,7 +74,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData() != null) {
             Utilities.SetLog("NOTIFICATION NOTIFICATION", remoteMessage.getData().toString(), WSkeys.log);
 
-            if (interfaceNotification == null) {
+            if (interfaceNotification == null && client.getMessageContext()!=null) {
                 interfaceNotification = (MessageReceiverCallback) client.getMessageContext();
             }
 
@@ -90,18 +90,26 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
                     break;
                 case 5:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
                     break;
                 case 6:
-                    client.setComision(remoteMessage.getData().get("comision").toString());
-                    client.setTotal(remoteMessage.getData().get("monto").toString());
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        client.setComision(remoteMessage.getData().get("comision").toString());
+                        client.setTotal(remoteMessage.getData().get("monto").toString());
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
                     break;
                 case 7:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
                     break;
                 case 8:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
                     break;
                 case 9:
 
@@ -122,7 +130,9 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
                     break;
                 case 10:
-                    interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
                     break;
                 case 11:
 

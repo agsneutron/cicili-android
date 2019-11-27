@@ -101,7 +101,7 @@
                                     android:layout_width="16dp"
                                     android:layout_height="16dp"
                                     android:layout_marginLeft="2dp"
-                                    android:src="@drawable/ic_date_range_prim_24dp" />
+                                    app:srcCompat="@drawable/ic_date_range_prim_24dp" />
 
                                 <TextView
                                     android:id="@+id/date"
@@ -126,7 +126,7 @@
                                     android:layout_height="16dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginRight="2dp"
-                                    android:src="@drawable/ic_icon_gauge_01"
+                                    app:srcCompat="@drawable/ic_icon_gauge_01"
                                     android:tint="@color/colorPrimary" />
 
                                 <TextView
@@ -166,7 +166,7 @@
                                     android:layout_width="16dp"
                                     android:layout_height="16dp"
                                     android:layout_marginLeft="2dp"
-                                    android:src="@drawable/ic_access_time_black_24dp"
+                                    app:srcCompat="@drawable/ic_access_time_black_24dp"
                                     android:tint="@color/colorPrimaryDark" />
 
                                 <TextView
@@ -192,7 +192,7 @@
                                     android:layout_height="16dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginRight="1dp"
-                                    android:src="@drawable/ic_attach_money_prim_24dp"
+                                    app:srcCompat="@drawable/ic_attach_money_prim_24dp"
                                     android:tint="@color/colorPrimary" />
 
                                 <TextView
@@ -218,7 +218,7 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_marginLeft="2dp"
-                                android:src="@drawable/ic_payment"
+                                app:srcCompat="@drawable/ic_payment"
                                 android:tint="@color/colorPrimaryDark" />
 
                             <TextView
@@ -227,7 +227,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6.7dp"
                                 android:layout_weight="1"
-                                android:text="Forma pago"
+                                android:text="@string/empty"
                                 android:textColor="#4a4a4a"
                                 android:textSize="12sp" />
 
@@ -388,6 +388,17 @@
                         android:padding="15dp"
                         android:text="@string/btn_facturar"
                         app:backgroundTint="@color/colorPrimaryDark"
+                        app:cornerRadius="20dp"
+                        android:visibility="gone"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelar"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:text="@string/cancel"
+                        app:backgroundTint="@android:color/holo_red_light"
                         app:cornerRadius="20dp"
                         android:visibility="gone"/>
 

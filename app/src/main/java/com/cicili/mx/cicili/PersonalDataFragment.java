@@ -101,6 +101,7 @@ public class PersonalDataFragment extends Fragment {
     ViewGroup viewgroup;
     String ts ="";
     ImageView picture;
+    String encodedImage="";
     private static final String CERO = "0";
     private static final String BARRA = "-";
     private static final int SETPHOTO = 100;
@@ -269,6 +270,13 @@ public class PersonalDataFragment extends Fragment {
                     Utilities.SetLog("SEXO",ts,WSkeys.log);
                 }else{
                     client.setSexo(ts);
+                }
+
+                if(encodedImage.equals("")){
+                    Snackbar.make(view, getString(R.string.e_imageperfil), Snackbar.LENGTH_LONG)
+                            .show();
+                    cancel = true;
+                    Utilities.SetLog("IMG",encodedImage ,WSkeys.log);
                 }
 
                 if (!cancel){
@@ -493,7 +501,7 @@ public class PersonalDataFragment extends Fragment {
                         String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 */
                         Bitmap selectedImagebt = BitmapFactory.decodeStream(imageStream);
-                        String encodedImage = encodeImage(selectedImagebt);
+                        encodedImage = encodeImage(selectedImagebt);
                         client.setPhoto(encodedImage);
                     }
                 }

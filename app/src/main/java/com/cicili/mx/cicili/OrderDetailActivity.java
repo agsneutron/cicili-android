@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.PedidoDetail;
 import com.cicili.mx.cicili.domain.WSkeys;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -45,12 +47,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +67,7 @@ import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class OrderDetailActivity extends AppCompatActivity implements  OnMapReadyCallback{
 
+    String json_order="";
     TextView mIdView;
     TextView mContentView;
     TextView mDate;
@@ -66,8 +76,16 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     TextView mFormaPago;
     TextView mlbl1,mlbl2,mlbl3,mlbl4;
     MapFragment mapFragment;
-    Button aclarar, facturar;
+    Button aclarar, facturar, cancelar;
     PedidoDetail pedidoData;
+    String motivo_seleccionado="";
+    String motivo_texto="";
+    ArrayList<String> motivoArray = new ArrayList<String>();
+    ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
+
+    LinearLayout linearLayout;
+    LinearLayout bottom_sheet;
+    BottomSheetBehavior bsb;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -96,18 +114,19 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         });*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mIdView = (TextView) findViewById(R.id.item_number);
-        mContentView = (TextView) findViewById(R.id.content);
-        mDate = (TextView) findViewById(R.id.date);
-        mTime = (TextView) findViewById(R.id.time);
-        mCantidad = (TextView) findViewById(R.id.cantidad);
-        mFormaPago = (TextView) findViewById(R.id.formaPago);
-        mlbl1 = (TextView) findViewById(R.id.lbl1);
-        mlbl2 = (TextView) findViewById(R.id.lbl2);
-        mlbl3 = (TextView) findViewById(R.id.lbl3);
-        mlbl4 = (TextView) findViewById(R.id.lbl4);
-        aclarar = (Button)  findViewById(R.id.aclaracion);
-        facturar = (Button)  findViewById(R.id.facturar);
+        mIdView = findViewById(R.id.item_number);
+        mContentView = findViewById(R.id.content);
+        mDate = findViewById(R.id.date);
+        mTime = findViewById(R.id.time);
+        mCantidad = findViewById(R.id.cantidad);
+        mFormaPago = findViewById(R.id.formaPago);
+        mlbl1 = findViewById(R.id.lbl1);
+        mlbl2 = findViewById(R.id.lbl2);
+        mlbl3 = findViewById(R.id.lbl3);
+        mlbl4 = findViewById(R.id.lbl4);
+        aclarar = findViewById(R.id.aclaracion);
+        facturar = findViewById(R.id.facturar);
+        cancelar = findViewById(R.id.cancelar);
 
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_order_detail);
 
@@ -142,6 +161,228 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             @Override
             public void onClick(View view) {
                 AclararPedido(pos);
+            }
+        });
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
+        //bottomsheet
+        Spinner motivos = (Spinner) findViewById(R.id.motivos);
+        LlenaMotivos(motivos);
+
+        motivos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Log.e("onItemSelected",String.valueOf(i));
+
+                motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
+                motivo_texto = String.valueOf(motivoAux.get(i).getText());
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
+        bottom_sheet = (LinearLayout)findViewById(R.id.bottomSheetCancela);
+        bsb = BottomSheetBehavior.from(bottom_sheet);
+        bsb.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                String nuevoEstado = "";
+
+
+
+                switch(newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        nuevoEstado = "STATE_COLLAPSED";
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        nuevoEstado = "STATE_EXPANDED";
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        nuevoEstado = "STATE_HIDDEN";
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        nuevoEstado = "STATE_DRAGGING";
+                        break;
+
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        nuevoEstado = "STATE_SETTLING";
+                        break;
+                }
+
+                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+
+                Button btnCancelaPedido = (Button) findViewById(R.id.cancela_pedido);
+                btnCancelaPedido.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        boolean cancel = false;
+                        View focusView = null;
+                        String error="";
+
+                        // Check for a valid l/p, if the user entered one.
+                        if (motivo_seleccionado.equals("")) {
+                            // litros.setError(getString(R.string.error_invalid_value));
+                            // focusView = litros;
+                            error=getString(R.string.error_invalid_motivo);
+                            cancel = true;
+                        }
+
+
+                        if (cancel) {
+                            // There was an error
+                            //focusView.requestFocus();
+                            Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                            toast.show();
+                            //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
+                            Utilities.SetLog("in cancel pedido", error, WSkeys.log);
+                        }
+                        else{
+
+                            //ejecuta  cancela pedido
+                            try {
+                                //CancelOrderTask(String.valueOf(motivo_seleccionado),String.valueOf(order));
+                                Utilities.SetLog("in cancel motivo", motivo_seleccionado, WSkeys.log);
+                                Utilities.SetLog("in cancel pedido", String.valueOf(pos), WSkeys.log);
+                                if(!String.valueOf(pos).equals("")) {
+                                    CancelOrderTask(motivo_seleccionado, String.valueOf(pos));
+                                }
+                                else{
+                                    Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Utilities.SetLog("ejecuta cancela pedido", "", WSkeys.log);
+
+                        }
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                Log.i("BottomSheets", "Offset: " + slideOffset);
+            }
+
+
+
+
+            public void CancelOrderTask(final String motivo, final String order) throws JSONException {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(WSkeys.pedido, order);
+                params.put(WSkeys.motivo, motivo);
+                Log.e("PARAMETROSCANCEL_B", params.toString());
+
+
+                String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
+                Utilities.SetLog("CANCELA",url,WSkeys.log);
+
+                RequestQueue queue = Volley.newRequestQueue(getContext());
+                //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
+                StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            ParserCancela(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
+                        Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                }) {
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded; charset=utf-8";
+                    }
+
+                    @Override
+                    public byte[] getBody() {
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put(WSkeys.pedido, order);
+                        params.put(WSkeys.motivo, motivo);
+                        return new JSONObject(params).toString().getBytes();
+                    }
+
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(WSkeys.pedido, order);
+                        params.put(WSkeys.motivo, motivo);
+                        Log.e("PARAMETROSCANCEL", params.toString());
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        //params.put("Content-Type", "application/x-www-form-urlencoded");
+                        //params.put("Content-Type", "application/json; charset=utf-8");
+                        params.put("Authorization", client.getToken());
+
+                        return params;
+                    }
+                };
+
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                queue.add(jsonObjectRequest);
+
+            }
+
+            public void ParserCancela(String response) throws JSONException {
+
+                Utilities.SetLog("PARSER-CANCELA",response.toString(),WSkeys.log);
+                JSONObject response_object = new JSONObject(response);
+
+                // si el response regresa ok, entonces si inicia la sesión
+                if (response_object.getInt("codeError") == (WSkeys.okresponse)) {
+
+                    Intent intent = new Intent(OrderDetailActivity.this, CancelaActivity.class);
+                    intent.putExtra("cancel_result",response_object.getString("data"));
+                    intent.putExtra("cause",motivo_texto);
+                    intent.putExtra("order",json_order);
+                    intent.putExtra("from","solicitado");
+
+                    startActivity(intent);
+
+                    finish();
+                }
+                // si ocurre un error al registrar la solicitud se muestra mensaje de error
+                else{
+                    Snackbar.make(linearLayout, response_object.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
+                            .show();
+                }
             }
         });
     }
@@ -367,6 +608,8 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             if (pedidoData.getStatus()!=0){
                 aclarar.setVisibility(View.VISIBLE);
                 facturar.setVisibility(View.VISIBLE);
+            }else{
+                cancelar.setVisibility(View.VISIBLE);
             }
             //map
             getMyLocationPermision();
@@ -466,5 +709,99 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         Intent intent = new Intent(OrderDetailActivity.this, Aclaracion.class);
         intent.putExtra("order",pos);
         startActivity(intent);
+    }
+
+
+    public void LlenaMotivos(final Spinner motivos){
+
+
+        String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_CANCELA;
+        Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    ParserMotivos(response, motivos);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("El error", error.toString());
+                Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=utf-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put(WSkeys.PEMAIL, mCode);
+                //Log.e("PARAMETROS", params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/x-www-form-urlencoded");
+                //params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", client.getToken());
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+    public void ParserMotivos(String response, Spinner motivos) throws JSONException {
+
+        Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
+        //Log.e("CodeResponse", response);
+
+
+        JSONObject respuesta = new JSONObject(response);
+        Integer posselected =0;
+
+        // si el response regresa ok, entonces si inicia la sesión
+        if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
+            //ontener nivel de data
+            //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
+            Utilities.SetLog("MOTIVOSARRAY",ja_usocfdi.toString(),WSkeys.log);
+            for(int i=0; i<ja_usocfdi.length(); i++){
+                MotivoCancela motivoCancela = new MotivoCancela();
+                try {
+
+                    JSONObject jsonObject = (JSONObject) ja_usocfdi.get(i);
+                    motivoCancela.setId(jsonObject.getInt("id"));
+                    motivoCancela.setText(jsonObject.getString("text"));
+                    motivoAux.add(motivoCancela);
+                    motivoArray.add(jsonObject.getString("text"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
+            motivos.setSelection(posselected);
+        }
+        // si ocurre un error al registrar la solicitud se muestra mensaje de error
+        else{
+            Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
+                    .show();
+        }
     }
 }
