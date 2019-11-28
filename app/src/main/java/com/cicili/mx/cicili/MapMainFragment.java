@@ -354,11 +354,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
 
 
-                final String finalFormapagoseleccionada = formapagoseleccionada;
+
                 Button btnConformaPedido = (Button) view.findViewById(R.id.btnConfirmaMasCercano);
                 btnConformaPedido.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        String finalFormapagoseleccionada = "";
 
                         boolean cancel = false;
                         View focusView = null;
@@ -428,6 +429,15 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             cancel = true;
                         }*/
 
+
+                            if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta_mc){
+                                finalFormapagoseleccionada = WSkeys.dtarjeta;
+                            }
+
+                            if (rgFormaPago.getCheckedRadioButtonId() == R.id.efectivo_mc){
+                                finalFormapagoseleccionada = WSkeys.defectivo;
+                            }
+
                             if (finalFormapagoseleccionada.equals("")) {
                                 //focusView = rgFormaPago;
                                 error = "Indica la forma de pago";
@@ -451,7 +461,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                 //monto_c  = nf.parse(litros.getText().toString()).doubleValue();
                                 // monto = nf.parse(precio.getText().toString()).doubleValue();
 
-
+                                Utilities.SetLog("MAS CERCANO formapago", String.valueOf(finalFormapagoseleccionada), WSkeys.log);
                                 Utilities.SetLog("MAS CERCANO MoNTO", String.valueOf(monto_c), WSkeys.log);
                                 Utilities.SetLog("MAS CERCANO Litros", String.valueOf(litro_c), WSkeys.log);
                                 Utilities.SetLog("MAS CERCANO PEDIR", finalFormapagoseleccionada, WSkeys.log);
@@ -710,7 +720,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 });*/
 
                 Button btnConformaPedido = (Button) view.findViewById(R.id.btnConfirma);
-                final String finalFormapagoseleccionada = formapagoseleccionada;
+
                 btnConformaPedido.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -718,7 +728,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         boolean cancel = false;
                         View focusView = null;
                         String error="";
-
+                        String finalFormapagoseleccionada = "";
                         // Check for a valid l/p, if the user entered one.
                         if (TextUtils.isEmpty(input_monto_litros.getText()) || String.valueOf(input_monto_litros.getText()).equals("0")) {
                             // litros.setError(getString(R.string.error_invalid_value));
@@ -745,6 +755,14 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             //focusView = precio;
                             error=getString(R.string.error_invalid_value);
                             cancel = true;
+                        }
+
+                        if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta){
+                            finalFormapagoseleccionada = WSkeys.dtarjeta;
+                        }
+
+                        if (rgFormaPago.getCheckedRadioButtonId() == R.id.efectivo){
+                            finalFormapagoseleccionada = WSkeys.defectivo;
                         }
 
                         if (finalFormapagoseleccionada.equals("")){
@@ -788,6 +806,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             String json_pedido = gson.toJson(pedido);
                             intent.putExtra("json_order",json_pedido);
                             startActivity(intent);
+                            Utilities.SetLog("MO_PS-PAGOSELEc", finalFormapagoseleccionada, WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER", json_pedido, WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
@@ -1285,22 +1304,24 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                             if (task.isSuccessful() && task.getResult() != null) {
                                 moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
+                                try {
+                                    ConsultaPrincipal(new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
+                                    latCurrent = getCurrentLocation.getLatitude();
+                                    lonCurrent = getCurrentLocation.getLongitude();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             else{
-                                getActivity().finish();
-                                Snackbar.make(direcciones, R.string.failedgetlocation, Snackbar.LENGTH_SHORT)
+                                Utilities.SetLog("MAP-NO LOcATION", task.getException().toString(), WSkeys.log);
+                                Snackbar.make(direcciones, R.string.failedgetlocation, Snackbar.LENGTH_LONG)
                                         .show();
+                                getActivity().finish();
                             }
-                            try {
-                               ConsultaPrincipal(new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
-                               latCurrent = getCurrentLocation.getLatitude();
-                               lonCurrent = getCurrentLocation.getLongitude();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+
                         } else {
                             Utilities.SetLog("MAP-LOcATION", task.toString(), WSkeys.log);
-                            Snackbar.make(direcciones, R.string.failedgetlocation, Snackbar.LENGTH_SHORT)
+                            Snackbar.make(direcciones, R.string.failedgetlocation, Snackbar.LENGTH_LONG)
                                     .show();
                         }
                     }

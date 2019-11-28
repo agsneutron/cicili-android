@@ -345,6 +345,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("idPedido",seguimientoPedido.getId());
             intent.putExtra("pedido_data",json_pedido);
             intent.putExtra("status",seguimientoPedido.getStatus());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         }

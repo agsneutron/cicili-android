@@ -591,10 +591,11 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             mCantidad.setText(String.valueOf(pedidoData.getCantidad()));
             mIdView.setText(String.valueOf(pedidoData.getMonto()));
             mFormaPago.setText(pedidoData.getFormaPago());
-            mlbl1.setText(String.format("%s %s", pedidoData.getAlias(), pedidoData.getDireccion()));
-            mlbl2.setText(pedidoData.getNombreConcesionario());
+            mlbl1.setText(String.format("%s: %s", pedidoData.getAlias(), pedidoData.getDireccion()));
+            //mlbl2.setText(pedidoData.getNombreConcesionario());
+            mlbl2.setText("CONDUCTOR: ");
             mlbl3.setText(pedidoData.getNombreConductor());
-            mlbl4.setText(pedidoData.getPlaca());
+            mlbl4.setText("PLACAS: " + pedidoData.getPlaca());
             latOrderAddress = pedidoData.getLatitud();
             lonOrderAddress = pedidoData.getLongitud();
 
