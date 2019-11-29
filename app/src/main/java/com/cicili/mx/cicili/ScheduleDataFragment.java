@@ -92,6 +92,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     RadioGroup rgMontoLitro;
     RadioGroup rgFormaPago;
     String formapagoseleccionada="";
+    Double latitudPedido, longitudPedido;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     private ArrayList<String> direccionArray;
@@ -283,10 +284,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     schedule.setFechaSolicitada(dateSchedule.getText().toString());
                     schedule.setHoraSolicitada(timeSchedule.getText().toString());
                     schedule.setFormaPago(formapagoseleccionada);
-
-                    schedule.setLatitud(0.0);
-                    schedule.setLongitud(0.0);
-
+                    schedule.setLatitud(latitudPedido);
+                    schedule.setLongitud(longitudPedido);
 
                     try {
                         progressDialog = ProgressDialog.show(getContext(), "Espera un momento por favor", "Estamos programando tu pedido.", true);
@@ -380,6 +379,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         Log.e("onItemSelected",String.valueOf(i));
         if (i!=0) {
             selectedAddress = client.getAddressDataArrayList().get(i-1).getId();
+            latitudPedido = client.getAddressDataArrayList().get(i - 1).getLatitud();
+            longitudPedido = client.getAddressDataArrayList().get(i - 1).getLongitud();
         }
 
     }

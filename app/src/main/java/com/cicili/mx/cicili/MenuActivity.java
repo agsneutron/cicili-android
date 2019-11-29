@@ -1,12 +1,16 @@
 package com.cicili.mx.cicili;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,17 +34,31 @@ import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent;
 import com.cicili.mx.cicili.io.SessionManager;
 import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -120,6 +138,16 @@ public class MenuActivity extends AppCompatActivity
 
     SessionManager session;
     private String token_firebase="";
+
+
+    //Location
+    private static final int REQUEST_CHECK_SETTINGS = 1;
+    private static final int REQUEST_GRANT_PERMISSION = 2;
+    private FusedLocationProviderClient fusedLocationClient;
+    LocationRequest locationRequest;
+    private Location currentLocation;
+    private LocationCallback locationCallback;
+    //end location
     /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -175,9 +203,14 @@ public class MenuActivity extends AppCompatActivity
         if (session.checkLogin()) {
 
             finish();
-        }
+        }else{
 
+        }
         final HashMap<String, String> user = session.getSession();
+
+
+        //locationcheck
+        LocationVerification();
 
         //FloatingActionButton fab = findViewById(R.id.fab_menu);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -288,13 +321,14 @@ public class MenuActivity extends AppCompatActivity
                             if(user.get(SessionManager.KEY_EMAIL)!=null) {
                                 UserLoginTask(user.get(SessionManager.KEY_EMAIL), user.get(SessionManager.KEY_PSW));
                             }
-                            else{
-                                session.logoutSession();
-                            }
+                            //else{
+                            //    session.logoutSession();
+                            //}
                         }
                     });
             Utilities.SetLog("LOGINFROMMENU", "MENUACTIVITY", WSkeys.log);
-        }else{
+        }
+        else{
             IniciaPerfil();
             //ActivaMap("0");
         }
@@ -622,22 +656,24 @@ public class MenuActivity extends AppCompatActivity
         //Fragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.map);
 
-        Fragment fragment = fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+        if (fragmentMain.isAdded()) {
+            Fragment fragment = fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
 
-        Utilities.SetLog("instanceof : ", String.valueOf(fragment), WSkeys.log);
+            Utilities.SetLog("instanceof :instanceof : ", String.valueOf(fragment), WSkeys.log);
 
-        if (fragment instanceof SupportMapFragment) {
+            if (fragment instanceof SupportMapFragment) {
 
-            /** Se valida que esta bien instanciado y se hace la comunicación*/
+                /** Se valida que esta bien instanciado y se hace la comunicación*/
 
-            MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
+                MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
 
-            /** Se envia el mensaje al metodo del receptor*/
-            receptor.setRecibeEstatusPedido(status);
+                /** Se envia el mensaje al metodo del receptor*/
+                receptor.setRecibeEstatusPedido(status);
+            }
         }
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Utilities.SetLog("MenuActivity onRequestPermissionsResult: ", String.valueOf(requestCode), WSkeys.log);
         Fragment fragment = fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
@@ -646,16 +682,16 @@ public class MenuActivity extends AppCompatActivity
 
         if (fragment instanceof SupportMapFragment) {
 
-            /** Se valida que esta bien instanciado y se hace la comunicación*/
+            *//** Se valida que esta bien instanciado y se hace la comunicación*//*
 
             MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
 
-            /** Se envia el mensaje al metodo del receptor*/
+            *//** Se envia el mensaje al metodo del receptor*//*
 
             receptor.RequestPermissionsResult(requestCode, permissions, grantResults);
 
         }
-    }
+    }*/
 
     /*public void ValidaPedidoActivo() throws JSONException {
 
@@ -882,16 +918,163 @@ public class MenuActivity extends AppCompatActivity
     public void IniciaPerfil(){
         tvname.setText(client.getName());
         tvarea.setText(client.getEmail());
-        if (!client.getPhoto().isEmpty() || client.getPhoto() != null) {
+        if (client.getPhoto() != null){
+            if (!client.getPhoto().isEmpty()) {
 
-            byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-           // Utilities.SetLog("IMAGEN CLIENTE", client.getPhoto().substring(client.getPhoto().indexOf(",") + 1), WSkeys.log);
-            imageView.setImageBitmap(decodedByte);
+                byte[] decodedString = Base64.decode(client.getPhoto().substring(client.getPhoto().indexOf(",") + 1).getBytes(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                // Utilities.SetLog("IMAGEN CLIENTE", client.getPhoto().substring(client.getPhoto().indexOf(",") + 1), WSkeys.log);
+                imageView.setImageBitmap(decodedByte);
+            }
         }
+
         ActivaMap("0");
 
     }
+
+
+    public void LocationVerification(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        createLocationRequest();
+        settingsCheck();
+
+        getUpdates();
+    }
+
+    public void getUpdates(){
+        if (ActivityCompat.checkSelfPermission(MenuActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(MenuActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_GRANT_PERMISSION);
+            return;
+        }
+        if(locationCallback==null)
+            buildLocationCallback();
+        if(currentLocation==null)
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+    }
+
+
+    protected void createLocationRequest() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    // Check for location settings
+    public void settingsCheck() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                // All location settings are satisfied. The client can initialize
+                // location requests here.
+                Log.d("TAG", "onSuccess: settingsCheck");
+                getCurrentLocation();
+            }
+        });
+
+        task.addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof ResolvableApiException) {
+                    // Location settings are not satisfied, but this can be fixed
+                    // by showing the user a dialog.
+                    Log.d("TAG", "onFailure: settingsCheck");
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                        resolvable.startResolutionForResult(MenuActivity.this,
+                                REQUEST_CHECK_SETTINGS);
+                    } catch (IntentSender.SendIntentException sendEx) {
+                        // Ignore the error.
+                    }
+                }
+            }
+        });
+    }
+
+    public void getCurrentLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        Log.d("TAG", "onSuccess: getLastLocation");
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            currentLocation=location;
+                            Log.d("TAG", "onSuccess:latitude "+location.getLatitude());
+                            Log.d("TAG", "onSuccess:longitude "+location.getLongitude());
+                        }else{
+                            Log.d("TAG", "location is null");
+                            buildLocationCallback();
+                        }
+                    }
+                });
+    }
+
+    private void buildLocationCallback() {
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    // Update UI with location data
+                    currentLocation=location;
+                    Log.d("TAG", "onLocationResult: "+currentLocation.getLatitude());
+                }
+            };
+        };
+    }
+
+    //called after user responds to location permission popup
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==REQUEST_GRANT_PERMISSION){
+            getCurrentLocation();
+        }
+
+        if (fragmentMain.isAdded()) {
+
+            Utilities.SetLog("MenuActivity onRequestPermissionsResult: ", String.valueOf(requestCode), WSkeys.log);
+            Fragment fragment = fragmentMain.getChildFragmentManager().findFragmentById(R.id.map);
+            Utilities.SetLog("instanceof : ", String.valueOf(fragment), WSkeys.log);
+            if (fragment instanceof SupportMapFragment) {
+
+                /** Se valida que esta bien instanciado y se hace la comunicación*/
+
+                MapMainFragment receptor = (MapMainFragment) fragment.getParentFragment();
+
+                /** Se envia el mensaje al metodo del receptor*/
+
+                receptor.RequestPermissionsResult(requestCode, permissions, grantResults);
+
+            }
+        }
+    }
+    //called after user responds to location settings popup
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("TAG", "onActivityResult: ");
+        if(requestCode==REQUEST_CHECK_SETTINGS && resultCode==RESULT_OK)
+            getCurrentLocation();
+        if(requestCode==REQUEST_CHECK_SETTINGS && resultCode==RESULT_CANCELED)
+            Toast.makeText(this, "Please enable Location settings...!!!", Toast.LENGTH_SHORT).show();
+    }
 }
+
+
 
 

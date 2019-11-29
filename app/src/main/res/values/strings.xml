@@ -344,5 +344,7 @@
     <string name="title_personales">Datos Personales</string>
     <string name="e_imageperfil">Debes agregar una imagen a tu perfil.</string>
     <string name="title_registra_cliente">Regístrate como cliente</string>
+    <string name="fecha_lbl">Fecha</string>
+    <string name="litroslbl">litros</string>
 
 </resources>

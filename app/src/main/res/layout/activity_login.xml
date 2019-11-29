@@ -137,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="ariaocho@gmail.com"
+                        android:text="@string/empty"
                         android:textColor="@color/textDark"
                         android:theme="@style/TextInputLayoutAppearance"
 
@@ -178,7 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="1qa2ws3ed"
+                        android:text="@string/empty"
                         android:textColor="@color/textDark"
                         app:backgroundTint="@color/colorPrimaryDark"
                         android:textColorHint="@color/white"

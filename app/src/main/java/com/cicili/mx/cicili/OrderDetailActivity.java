@@ -585,11 +585,11 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             //JSONArray ja_usocfdi = respuesta.getJSONArray(WSkeys.data);
             pedidoData= gson.fromJson( respuesta.getJSONObject(WSkeys.data).toString() , PedidoDetail.class);
             //setvalues to textviews
-
+            json_order = respuesta.getJSONObject(WSkeys.data).toString();
             mDate.setText(pedidoData.getFechaSolicitada());
             mTime.setText(pedidoData.getHoraSolicitada());
-            mCantidad.setText(String.valueOf(pedidoData.getCantidad()));
-            mIdView.setText(String.valueOf(pedidoData.getMonto()));
+            mCantidad.setText(String.valueOf(pedidoData.getMonto()));
+            mIdView.setText(String.valueOf(pedidoData.getCantidad()));
             mFormaPago.setText(pedidoData.getFormaPago());
             mlbl1.setText(String.format("%s: %s", pedidoData.getAlias(), pedidoData.getDireccion()));
             //mlbl2.setText(pedidoData.getNombreConcesionario());

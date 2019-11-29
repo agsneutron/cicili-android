@@ -62,6 +62,7 @@ import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.PedidoActivo;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.io.SessionManager;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -117,6 +118,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private String mParam1;
     private String mParam2;
     private Integer pipaSeleccionada;
+    SessionManager session;
 
     private OnFragmentInteractionListener mListener;
     private OnMessagePedidoListener statusListener;
@@ -220,6 +222,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mMapFragment.getMapAsync(this);
+
 
 
         name_usuario = view.findViewById(R.id.name_usuario);
@@ -1301,8 +1304,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
                             Location getCurrentLocation = (Location) task.getResult();
 
-
                             if (task.isSuccessful() && task.getResult() != null) {
+                                Utilities.SetLog("MAP-si LOcATION", task.getResult().toString(), WSkeys.log);
                                 moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
                                 try {
                                     ConsultaPrincipal(new LatLng(getCurrentLocation.getLatitude(), getCurrentLocation.getLongitude()));
@@ -1313,10 +1316,25 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                 }
                             }
                             else{
-                                Utilities.SetLog("MAP-NO LOcATION", task.getException().toString(), WSkeys.log);
+                                Utilities.SetLog("MAP-NO LOcATION", task.toString(), WSkeys.log);
                                 Snackbar.make(direcciones, R.string.failedgetlocation, Snackbar.LENGTH_LONG)
                                         .show();
-                                getActivity().finish();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Permisos de Ubicación.");
+                                builder.setMessage(getString(R.string.failedgetlocation) + " Verifica que tu equipo tenga permisos para usar los servicios de localización de Google.");
+                                builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //session.logoutSession();
+                                        Utilities.SetLog("MAP-onlogout", "show login", WSkeys.log);
+                                        dialog.cancel();
+                                        getActivity().finish();
+
+                                    }
+                                });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
                             }
 
                         } else {
@@ -1348,7 +1366,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 mMap = gmMap;
                 //ejecutarTarea();
                 if (mLocationPermissionGranted) {
-                    getDeviceCurrentLocation();
+                    //getDeviceCurrentLocation();
                     if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                             && ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling

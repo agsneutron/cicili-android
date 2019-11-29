@@ -152,9 +152,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-        if(client.getToken()!=null){
+        /*if(client.getToken()!=null){
             SessionToken();
-        }
+        }*/
 
         getMyLocationPermision();
 
