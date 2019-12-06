@@ -469,13 +469,13 @@ public class PaymentDataFragment extends Fragment {
             paymentData.setId(client.getPaymentDataArrayList().get(pos).getId());
             json = gson.toJson(paymentData);
             params = new JSONObject(json);
-            Log.e("PaymentValuesUpdate--", json);
+            //Log.e("PaymentValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_PAYMENTUPPDATE;
         }else{
             //toadd
             json = gson.toJson(paymentData);
             params = new JSONObject(json);
-            Log.e("PaymentValuePairs--", json);
+            //Log.e("PaymentValuePairs--", json);
             url =  WSkeys.URL_BASE + WSkeys.URL_PAYMENTDATA;
         }
 
@@ -493,7 +493,7 @@ public class PaymentDataFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(numero, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -512,7 +512,7 @@ public class PaymentDataFragment extends Fragment {
                 params.put(WSkeys.apepat, vpat);
                 params.put(WSkeys.apemat, vmat);
                 params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
+                //Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 
@@ -536,7 +536,7 @@ public class PaymentDataFragment extends Fragment {
 
     public void ParserPayment(JSONObject respuesta) throws JSONException {
 
-        Log.e("CodeResponse", respuesta.toString());
+        //Log.e("CodeResponse", respuesta.toString());
 
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -633,7 +633,7 @@ public class PaymentDataFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -647,7 +647,7 @@ public class PaymentDataFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -671,7 +671,7 @@ public class PaymentDataFragment extends Fragment {
 
     public void ParserBank(String response) throws JSONException {
 
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         JSONObject jo_respuesta = new JSONObject(response);
         Utilities.SetLog("RESPONSEbank",jo_respuesta.toString(),WSkeys.log);
 
@@ -708,7 +708,7 @@ public class PaymentDataFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(spinner, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -722,7 +722,7 @@ public class PaymentDataFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -746,7 +746,7 @@ public class PaymentDataFragment extends Fragment {
 
     /*public void ParserCountry(String response) throws JSONException {
 
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         paisAux = new ArrayList<Paises>();
         paisArray = new ArrayList<String>();
         JSONObject jo_respuesta = new JSONObject(response);

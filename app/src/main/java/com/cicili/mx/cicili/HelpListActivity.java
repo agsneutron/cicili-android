@@ -179,7 +179,7 @@ public class HelpListActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 /*Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();*/
             }
@@ -193,7 +193,7 @@ public class HelpListActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -218,7 +218,7 @@ public class HelpListActivity extends AppCompatActivity {
     public void ParserCategories(String response) throws JSONException {
         Gson gson = new Gson();
         Utilities.SetLog("RESPONSE_CATEGORIAS",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         JSONObject respuesta = new JSONObject(response);
@@ -242,7 +242,7 @@ public class HelpListActivity extends AppCompatActivity {
         else{
             /*Snackbar.make(linearLayout, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
                     .show();*/
-            Log.e("El error", respuesta.getString(WSkeys.messageError));
+            //Log.e("El error", respuesta.getString(WSkeys.messageError));
         }
     }
 
@@ -294,7 +294,7 @@ public class HelpListActivity extends AppCompatActivity {
                     }
                     // si ocurre un error al registrar la solicitud se muestra mensaje de error
                     else{
-                        Log.e("El error", respuesta.getString(WSkeys.messageError));
+                        //Log.e("El error", respuesta.getString(WSkeys.messageError));
                     }
 
                 } catch (JSONException e) {
@@ -307,7 +307,7 @@ public class HelpListActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 /*Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();*/
                 //progressDialog.dismiss();
@@ -322,7 +322,7 @@ public class HelpListActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 

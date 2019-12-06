@@ -102,16 +102,16 @@ public class DeleteAccountActivity extends AppCompatActivity {
                         //kill the application
                         System.exit(0);
                     } else {
-                        Log.e(TAG, "Was not able to restart application, mStartActivity null");
+                        //Log.e(TAG, "Was not able to restart application, mStartActivity null");
                     }
                 } else {
-                    Log.e(TAG, "Was not able to restart application, PM null");
+                    //Log.e(TAG, "Was not able to restart application, PM null");
                 }
             } else {
-                Log.e(TAG, "Was not able to restart application, Context null");
+                //Log.e(TAG, "Was not able to restart application, Context null");
             }
         } catch (Exception ex) {
-            Log.e(TAG, "Was not able to restart application");
+            //Log.e(TAG, "Was not able to restart application");
         }
 
     }
@@ -135,7 +135,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(btnDelete, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -149,7 +149,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -174,7 +174,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
     public void ParserDelete(String response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_Factura",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         Gson gson = new Gson();
         JSONObject respuesta = new JSONObject(response);
 

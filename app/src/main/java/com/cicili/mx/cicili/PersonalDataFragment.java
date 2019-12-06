@@ -361,7 +361,7 @@ public class PersonalDataFragment extends Fragment {
 
 
 
-        Log.e("nameValuePairs--",params.toString());
+        //Log.e("nameValuePairs--",params.toString());
 
         String url = WSkeys.URL_BASE + WSkeys.URL_PERSONALDATA;
 
@@ -381,7 +381,7 @@ public class PersonalDataFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mname, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -418,7 +418,7 @@ public class PersonalDataFragment extends Fragment {
 
     public void ParserPersonal(JSONObject respuesta) throws JSONException {
 
-        Log.e("RESP-PERSONALDATA", respuesta.toString());
+        //Log.e("RESP-PERSONALDATA", respuesta.toString());
 
 
         // si el response regresa ok, entonces si inicia la sesión

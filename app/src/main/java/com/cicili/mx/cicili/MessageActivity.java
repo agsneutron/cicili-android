@@ -284,7 +284,7 @@ public class MessageActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -298,7 +298,7 @@ public class MessageActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -323,7 +323,7 @@ public class MessageActivity extends AppCompatActivity {
     public void ParserPushList(JSONObject response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_GUARDA", response.toString(), WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -371,7 +371,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(nombre, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -385,7 +385,7 @@ public class MessageActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 

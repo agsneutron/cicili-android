@@ -199,7 +199,7 @@ public class ValidateActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showProgress(false);
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mCodeView, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -213,7 +213,7 @@ public class ValidateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -237,7 +237,7 @@ public class ValidateActivity extends AppCompatActivity {
 
     public void ParserCode(String response, String code) throws JSONException {
         showProgress(false);
-        Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
         JSONObject respuesta = new JSONObject(response);
 
         // si el response regresa ok, entonces si inicia la sesión

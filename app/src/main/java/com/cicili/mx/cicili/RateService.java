@@ -177,7 +177,7 @@ public class RateService extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("El error -- ORDER", error.toString());
+                //Log.e("El error -- ORDER", error.toString());
                 progressDialog.dismiss();
 
             }
@@ -196,7 +196,7 @@ public class RateService extends AppCompatActivity {
                 params.put(WSkeys.apepat, vpat);
                 params.put(WSkeys.apemat, vmat);
                 params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
+                //Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 

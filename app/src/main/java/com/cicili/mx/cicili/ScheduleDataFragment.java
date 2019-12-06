@@ -376,7 +376,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        Log.e("onItemSelected",String.valueOf(i));
+        //Log.e("onItemSelected",String.valueOf(i));
         if (i!=0) {
             selectedAddress = client.getAddressDataArrayList().get(i-1).getId();
             latitudPedido = client.getAddressDataArrayList().get(i - 1).getLatitud();
@@ -432,7 +432,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
         //to_shedule
         json = gson.toJson(scheduleData);
         params = new JSONObject(json);
-        Log.e("ScheduleValuePairs--", json);
+        //Log.e("ScheduleValuePairs--", json);
         url = WSkeys.URL_BASE + WSkeys.URL_PROGRAMA;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -449,7 +449,7 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
                 progressDialog.dismiss();

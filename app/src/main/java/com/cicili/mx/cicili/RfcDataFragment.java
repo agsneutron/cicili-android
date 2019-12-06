@@ -302,7 +302,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        Log.e("onItemSelected",String.valueOf(i));
+        //Log.e("onItemSelected",String.valueOf(i));
         if (i!=0) {
             cfdisel = cfdiAux.get(i).getId();
             cfdiname = cfdiAux.get(i).getText();
@@ -352,7 +352,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -366,7 +366,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -391,7 +391,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
     public void ParserCFDI(String response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_CFDI",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         cfdiAux = new ArrayList<UsoCfdi>();
         cfdiArray = new ArrayList<String>();
         JSONObject respuesta = new JSONObject(response);
@@ -448,14 +448,14 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             rfcData.setId(client.getRfcDataArrayList().get(pos).getId());
             json = gson.toJson(rfcData);
             params = new JSONObject(json);
-            Log.e("RFCValuesUpdate--", json);
+            //Log.e("RFCValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_RFCUPDATE;
         }else{
 
             //toadd
             json = gson.toJson(rfcData);
             params = new JSONObject(json);
-            Log.e("RFCValuePairs--", json);
+            //Log.e("RFCValuePairs--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_RFCDATA;
 
         }
@@ -474,7 +474,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -493,7 +493,7 @@ public class RfcDataFragment extends Fragment implements AdapterView.OnItemSelec
                 params.put(WSkeys.apepat, vpat);
                 params.put(WSkeys.apemat, vmat);
                 params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
+                //Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 

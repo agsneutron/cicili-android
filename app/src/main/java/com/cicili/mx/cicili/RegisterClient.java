@@ -343,7 +343,7 @@ public class RegisterClient extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showProgress(false);
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -359,7 +359,7 @@ public class RegisterClient extends AppCompatActivity {
                 params.put(WSkeys.PEMAIL, mEmail);
                 params.put(WSkeys.PPASSWORD, mPassword);
                 params.put(WSkeys.PCELLPHONE, mCellphone);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -383,7 +383,7 @@ public class RegisterClient extends AppCompatActivity {
 
     public void ParserData(String response, String userName, String userPassword, String userCellphone) throws JSONException {
         showProgress(false);
-        Log.e("LoginResponse", response);
+        //Log.e("LoginResponse", response);
         JSONObject respuesta = new JSONObject(response);
 
         // si el response regresa ok, entonces si inicia la sesión

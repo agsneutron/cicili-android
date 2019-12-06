@@ -840,7 +840,7 @@ public class MenuActivity extends AppCompatActivity
                 params.put(WSkeys.PUSERNAME, mEmail);
                 params.put(WSkeys.PPASSWORD, mPassword);
                 params.put(WSkeys.TOKENFIREBASE, token_firebase);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -864,7 +864,7 @@ public class MenuActivity extends AppCompatActivity
 
     public void ParserData(String response, String userName, String userPassword) throws JSONException {
 
-        //Log.e("LoginResponse", response);
+        ////Log.e("LoginResponse", response);
         JSONObject respuesta = new JSONObject(response);
         Utilities.SetLog("MENULOGIN response", response, true);
 
@@ -972,7 +972,7 @@ public class MenuActivity extends AppCompatActivity
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 // All location settings are satisfied. The client can initialize
                 // location requests here.
-                Log.d("TAG", "onSuccess: settingsCheck");
+                //Log.d("TAG", "onSuccess: settingsCheck");
                 getCurrentLocation();
             }
         });
@@ -983,7 +983,7 @@ public class MenuActivity extends AppCompatActivity
                 if (e instanceof ResolvableApiException) {
                     // Location settings are not satisfied, but this can be fixed
                     // by showing the user a dialog.
-                    Log.d("TAG", "onFailure: settingsCheck");
+                    //Log.d("TAG", "onFailure: settingsCheck");
                     try {
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
@@ -1007,14 +1007,14 @@ public class MenuActivity extends AppCompatActivity
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        Log.d("TAG", "onSuccess: getLastLocation");
+                        //Log.d("TAG", "onSuccess: getLastLocation");
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             currentLocation=location;
-                            Log.d("TAG", "onSuccess:latitude "+location.getLatitude());
-                            Log.d("TAG", "onSuccess:longitude "+location.getLongitude());
+                            //Log.d("TAG", "onSuccess:latitude "+location.getLatitude());
+                            //Log.d("TAG", "onSuccess:longitude "+location.getLongitude());
                         }else{
-                            Log.d("TAG", "location is null");
+                            //Log.d("TAG", "location is null");
                             buildLocationCallback();
                         }
                     }
@@ -1031,7 +1031,7 @@ public class MenuActivity extends AppCompatActivity
                 for (Location location : locationResult.getLocations()) {
                     // Update UI with location data
                     currentLocation=location;
-                    Log.d("TAG", "onLocationResult: "+currentLocation.getLatitude());
+                    //Log.d("TAG", "onLocationResult: "+currentLocation.getLatitude());
                 }
             };
         };
@@ -1067,7 +1067,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAG", "onActivityResult: ");
+        //Log.d("TAG", "onActivityResult: ");
         if(requestCode==REQUEST_CHECK_SETTINGS && resultCode==RESULT_OK)
             getCurrentLocation();
         if(requestCode==REQUEST_CHECK_SETTINGS && resultCode==RESULT_CANCELED)

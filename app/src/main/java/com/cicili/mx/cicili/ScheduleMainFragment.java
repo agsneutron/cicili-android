@@ -173,7 +173,7 @@ public class ScheduleMainFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -187,7 +187,7 @@ public class ScheduleMainFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -212,7 +212,7 @@ public class ScheduleMainFragment extends Fragment {
     public void ParserPedido(String response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_PEDIDOLIST",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
         JSONObject respuesta = new JSONObject(response);
 
