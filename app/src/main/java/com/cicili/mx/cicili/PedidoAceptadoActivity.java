@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -106,6 +107,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String order ="";
     String getStatus="";
+    ProgressDialog progressDialog;
 
     RequestQueue queue = Volley.newRequestQueue(Client.getContext());
     public static final String TAG = "TagQueue";
@@ -1194,7 +1196,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
     public void FacturaPedido(Integer pos) {
-
+        progressDialog = ProgressDialog.show(this, "Espera un momento por favor", "Estamos procesando tu petición.", true);
 
         String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA + pos;
         Utilities.SetLog("PIDE FACTURA", url, WSkeys.log);
@@ -1213,7 +1215,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                progressDialog.dismiss();
                 Log.e("El error", error.toString());
                 Snackbar.make(facturar, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
@@ -1252,28 +1254,42 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
     public void ParserFactura(String response) throws JSONException {
-
+        progressDialog.dismiss();
         Utilities.SetLog("RESPONSE_Factura", response, WSkeys.log);
         //Log.e("CodeResponse", response);
         Gson gson = new Gson();
         JSONObject respuesta = new JSONObject(response);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Facturar pedido.");
+
+
+
         // si el response regresa ok, entonces si inicia la sesión
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            builder.setMessage(respuesta.getString(WSkeys.data));
 
-            Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_LONG)
-                    .show();
+            //Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_LONG)
+            //        .show();
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
-            Snackbar.make(facturar, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
-                    .show();
+            //Snackbar.make(facturar, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
+             //       .show();
+            builder.setMessage(respuesta.getString(WSkeys.messageError));
 
             Utilities.SetLog("ERRORPARSER", response, WSkeys.log);
         }
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
