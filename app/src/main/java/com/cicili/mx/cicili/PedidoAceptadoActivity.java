@@ -355,6 +355,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
+
                         nuevoEstado = "STATE_COLLAPSED";
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
