@@ -566,12 +566,12 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 Log.i("BottomSheetsCambiar", "Nuevo estado: " + nuevoEstado);
                 final RadioGroup rgMontoLitro = (RadioGroup) findViewById(R.id.rgMontoLitro);
-                rgMontoLitro.check(R.id.litro);
+                rgMontoLitro.check(R.id.monto);
                 String formapagoseleccionada="";
-                final TextInputEditText input_monto_litros = (TextInputEditText) findViewById(R.id.input);
-                final TextInputEditText calculo_monto_litro = (TextInputEditText) findViewById(R.id.calculo_input);
-                final TextInputLayout calculoinput = (TextInputLayout) findViewById(R.id.calculoinput);
-                final TextInputLayout labelinput = (TextInputLayout) findViewById(R.id.labelinput);
+                final TextInputEditText input_monto_litros = findViewById(R.id.input);
+                final TextInputEditText calculo_monto_litro = findViewById(R.id.calculo_input);
+                final TextInputLayout calculoinput = findViewById(R.id.calculoinput);
+                final TextInputLayout labelinput = findViewById(R.id.labelinput);
 
                 rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
@@ -605,35 +605,38 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                     @Override
                     public void afterTextChanged(Editable editable) {
+
                         Double nuevoprecio;
                         Double calculaLitros;
-                        if(!input_monto_litros.getText().toString().isEmpty()) {
-                            if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
 
+                        if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
+                            if(input_monto_litros.getText().toString().equals("")){
+                                calculo_monto_litro.setText("");
+                            }
+                            else {
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    //nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
                                     nuevoprecio = Double.parseDouble(client.getSeguimientoPedido().getPrecio()) * Double.valueOf(input_monto_litros.getText().toString());
                                     calculo_monto_litro.setText(String.valueOf(nuevoprecio));
                                     monto_c = nuevoprecio;
                                     litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                } else {
+                                    calculo_monto_litro.setText("");
                                 }
-                                else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
-                                }
-                            } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
+                            }
+                        } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
+                            if (input_monto_litros.getText().toString().equals("")) {
+                                calculo_monto_litro.setText("");
+                            }
+                            else{
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
                                     calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) /  Double.parseDouble(client.getSeguimientoPedido().getPrecio()));
                                     calculo_monto_litro.setText(String.valueOf(calculaLitros));
                                     monto_c = Double.parseDouble(input_monto_litros.getText().toString());
                                     litro_c = calculaLitros;
-                                }
-                                else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
+                                } else {
+                                    calculo_monto_litro.setText("");
                                 }
                             }
-                        }
-                        else {
-                            input_monto_litros.setText("0");
                         }
                     }
                 });
@@ -698,7 +701,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                                 else{
                                    // Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                    // toast.show();
-                                    Snackbar.make(view, "por el momento, no es posible actualizar tu pedido.", Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(view, "Por el momento, no es posible actualizar tu pedido.", Snackbar.LENGTH_LONG).show();
 
                                 }
                             } catch (JSONException e) {
