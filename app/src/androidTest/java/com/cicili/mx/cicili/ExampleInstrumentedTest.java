@@ -1,4 +1,4 @@
-package com.cicili;
+package com.cicili.mx.cicili;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
