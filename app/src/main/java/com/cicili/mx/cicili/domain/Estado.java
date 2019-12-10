@@ -1,7 +1,5 @@
 package com.cicili.mx.cicili.domain;
 
-import java.util.ArrayList;
-
 public class Estado {
 
     Integer id;

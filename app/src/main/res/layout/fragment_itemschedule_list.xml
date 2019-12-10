@@ -29,13 +29,13 @@
 <androidx.recyclerview.widget.RecyclerView
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="com.cicili.mx.cicili.ItemScheduleFragment"
+    android:name="mx.com.cicili.ItemScheduleFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ScheduleMainFragment"
+    tools:context=".cliente.ScheduleMainFragment"
     tools:listitem="@layout/fragment_itemschedule"
     android:layout_marginTop="60dp"/>
 

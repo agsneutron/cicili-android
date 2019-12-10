@@ -2,29 +2,21 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.WSkeys;
-import com.cicili.mx.cicili.dummy.DummyContent;
-import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

@@ -14,15 +14,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Categorias;
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.Preguntas;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,10 +29,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,8 +40,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class HelpListActivity extends AppCompatActivity {
 
@@ -165,7 +159,7 @@ public class HelpListActivity extends AppCompatActivity {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_CATEGORIAS_PREGUNTAS;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -262,7 +256,7 @@ public class HelpListActivity extends AppCompatActivity {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_PREGUNTAS_POR_CATEGORIA+categorias_item.getId();
         Utilities.SetLog("LLENA PREGUNTAS CATEGORIA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -288,7 +282,7 @@ public class HelpListActivity extends AppCompatActivity {
                         expandableListDetail.put(categorias_item.getText(), preguntas_list);
                         //expandableListDetail = ExpandableListDataPump.getData();
                         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                        expandableListAdapter = new CustomExpandableListAdapter(getContext(), expandableListTitle, expandableListDetail);
+                        expandableListAdapter = new CustomExpandableListAdapter(Client.getContext(), expandableListTitle, expandableListDetail);
                         expandableListView.setAdapter(expandableListAdapter);
 
                     }

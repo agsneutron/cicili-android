@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
 public class HolderMessage extends RecyclerView.ViewHolder {
 
     private TextView nombre;

@@ -15,15 +15,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.AclaracionData;
 import com.cicili.mx.cicili.domain.Categorias;
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.WSkeys;
-import com.cicili.mx.cicili.io.InputMessage;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -37,8 +35,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -48,8 +44,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class Aclaracion extends AppCompatActivity {
 
@@ -160,7 +154,7 @@ public class Aclaracion extends AppCompatActivity {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_CATEGORIAS_PREGUNTAS;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -238,7 +232,7 @@ public class Aclaracion extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            categoria_sp.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,categoriaArray));
+            categoria_sp.setAdapter(new ArrayAdapter<String>(Client.getContext(),android.R.layout.simple_spinner_dropdown_item,categoriaArray));
             categoria_sp.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
@@ -266,7 +260,7 @@ public class Aclaracion extends AppCompatActivity {
         String url = WSkeys.URL_BASE + WSkeys.URL_AGREGA_ACLARACION;
         Utilities.SetLog("GUARDA PREGUNTA",url,WSkeys.log);
         Utilities.SetLog("DATA PREGUNTA",json,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -352,7 +346,7 @@ public class Aclaracion extends AppCompatActivity {
         String url = WSkeys.URL_BASE + WSkeys.URL_OBTENER_ACLARACION+order;
 
         Utilities.SetLog("VALIDA SI HAY ACLARACION",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -8,7 +8,6 @@ import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,11 +17,9 @@ import android.widget.Adapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import static com.cicili.mx.cicili.domain.Client.getContext;
-
 public class PaymentDetailActivity extends AppCompatActivity {
 
-    Application application = (Application) getContext();
+    Application application = (Application) Client.getContext();
     Client client = (Client) application;
     private Spinner spinner;
     private Adapter adapter;
@@ -108,7 +105,7 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                Intent intent = new Intent(getContext(), PerfilData.class);
+                Intent intent = new Intent(Client.getContext(), PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_pago);
                 intent.putExtra("id",String.valueOf(pos));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

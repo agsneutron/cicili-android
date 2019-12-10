@@ -3,11 +3,9 @@ package com.cicili.mx.cicili;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,11 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.WSkeys;
-import com.cicili.mx.cicili.dummy.DummyContent;
-import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

@@ -2,7 +2,6 @@ package com.cicili.mx.cicili;
 
 import android.Manifest;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,9 +15,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
-import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.domain.PedidoDetail;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -33,7 +32,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -42,8 +40,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -62,8 +58,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class OrderDetailActivity extends AppCompatActivity implements  OnMapReadyCallback{
 
@@ -95,7 +89,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     private  Integer pos;
 
     private  String LOG = "ORDERS DETAIL ACT";
-    Application application = (Application) getContext();
+    Application application = (Application) Client.getContext();
     Client client = (Client) application;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,7 +241,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                         if (cancel) {
                             // There was an error
                             //focusView.requestFocus();
-                            Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(Client.getContext(),  error, Toast.LENGTH_LONG);
                             toast.show();
                             //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                             Utilities.SetLog("in cancel pedido", error, WSkeys.log);
@@ -263,7 +257,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                                     CancelOrderTask(motivo_seleccionado, String.valueOf(pos));
                                 }
                                 else{
-                                    Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(Client.getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             } catch (JSONException e) {
@@ -298,7 +292,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
                 Utilities.SetLog("CANCELA",url,WSkeys.log);
 
-                RequestQueue queue = Volley.newRequestQueue(getContext());
+                RequestQueue queue = Volley.newRequestQueue(Client.getContext());
                 //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -401,7 +395,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     private void getDeviceCurrentLocation() {
 
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Client.getContext());
         try {
             if (mLocationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
@@ -452,8 +446,8 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
-                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                            && ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Client.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ContextCompat.checkSelfPermission(Client.getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    Activity#requestPermissions
                         // here to request the missing permissions, and then overriding
@@ -475,10 +469,10 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
     private void getMyLocationPermision() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(Client.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(getContext(),
+            if (ContextCompat.checkSelfPermission(Client.getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
@@ -521,7 +515,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
         String url = WSkeys.URL_BASE + WSkeys.URL_CONSULTA_PEDIDO_ID+pos;
         Utilities.SetLog("LLENAPEDIDOs",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -630,7 +624,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
         String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA+pos;
         Utilities.SetLog("PIDE FACTURA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -718,7 +712,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
         String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_CANCELA;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -796,7 +790,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                     e.printStackTrace();
                 }
             }
-            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
+            motivos.setAdapter(new ArrayAdapter<String>(Client.getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
             motivos.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error

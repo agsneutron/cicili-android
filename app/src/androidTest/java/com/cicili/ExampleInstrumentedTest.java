@@ -1,4 +1,4 @@
-package com.cicili.mx.cicili;
+package com.cicili;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.cicili.mx.cicili", appContext.getPackageName());
+        assertEquals("mx.com.cicili", appContext.getPackageName());
     }
 }

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 public class LegalListActivity extends AppCompatActivity {
 
     String[] legalItemsArray = {"Contrato de Servicios", "Términos y Condiciones", "Aviso de Privacidad"};

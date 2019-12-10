@@ -2,7 +2,6 @@ package com.cicili.mx.cicili;
 
 import android.Manifest;
 import android.app.Application;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -52,12 +50,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.AutotanquesCercanos;
-import com.cicili.mx.cicili.domain.AutotanquesDisponibles;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
-import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.PedidoActivo;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
@@ -80,7 +77,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -91,12 +87,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 
 /**

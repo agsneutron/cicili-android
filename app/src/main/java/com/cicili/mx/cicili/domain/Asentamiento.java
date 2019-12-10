@@ -1,8 +1,5 @@
 package com.cicili.mx.cicili.domain;
 
-import java.lang.ref.SoftReference;
-import java.util.ArrayList;
-
 public class Asentamiento {
 
     private Integer id;

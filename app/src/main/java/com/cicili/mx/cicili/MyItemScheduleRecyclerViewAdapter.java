@@ -5,18 +5,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cicili.mx.cicili.ScheduleMainFragment.OnListFragmentInteractionListener;
-import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.PedidoData;
-import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
-import com.cicili.mx.cicili.io.Utilities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the

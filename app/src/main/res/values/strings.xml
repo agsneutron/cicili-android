@@ -49,9 +49,9 @@
     <string name="successvalidate">Has finalizado tu registro, ahora puedes iniciar sesión en Cicili.</string>
     <string name="seccesschange">Tu contraseña se ha cambiado, ahora puedes iniciar sesión en Cicili.</string>
     <string name="coderequest">Recuperar Contraseña</string>
-    <string name="iniciorecuperacontrasenia">Para recuperar tu contraseña, ingresa el correo electrónico o número de celular que registraste en CICILI.</string>
+    <string name="iniciorecuperacontrasenia">Para recuperar tu contraseña, ingresa el correo electrónico que registraste en CICILI.</string>
     <string name="requestpsw">Recuperar Contraseña</string>
-    <string name="userfield">E-mail / Teléfono</string>
+    <string name="userfield">Correo Electrónico</string>
     <string name="validatecode">Valida Código</string>
     <string name="cancel">Cancelar</string>
     <string name="changepsw">Guardar Nueva Contraseña</string>

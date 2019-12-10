@@ -24,11 +24,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.ComunicaCC;
-import com.cicili.mx.cicili.domain.SeguimientoData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.InputMessage;
 import com.cicili.mx.cicili.io.Utilities;
@@ -47,8 +46,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class MessageChatActivity extends AppCompatActivity implements MessageReceiverCallback{
 
@@ -265,7 +262,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         String url = WSkeys.URL_BASE + URL_seguimiento;
         Utilities.SetLog("GUARDA SEGUIMIENTO", url, WSkeys.log);
         Utilities.SetLog("DATA SEGUIMIENTO", json, WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -408,7 +405,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     public void ObtenerMensajesChat() throws JSONException {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_MENSAJES_CHAT + id;
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

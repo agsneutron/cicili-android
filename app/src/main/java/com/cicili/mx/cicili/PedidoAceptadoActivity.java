@@ -4,15 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,12 +15,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -53,16 +44,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.directionhelpers.FetchURL;
 import com.cicili.mx.cicili.directionhelpers.TaskLoadedCallback;
-import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
-import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -82,11 +72,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 
 //Google API classes
@@ -100,9 +86,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, MessageReceiverCallback {
 
@@ -123,7 +107,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String order ="";
     String getStatus="";
 
-    RequestQueue queue = Volley.newRequestQueue(getContext());
+    RequestQueue queue = Volley.newRequestQueue(Client.getContext());
     public static final String TAG = "TagQueue";
 
 
@@ -143,7 +127,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     MapFragment mapFragment;
     TextView vista;
-    Application application = (Application) getContext();
+    Application application = (Application) Client.getContext();
     Client client = (Client) application;
 
     /**
@@ -409,7 +393,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         if (cancel) {
                             // There was an error
                             //focusView.requestFocus();
-                            Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(Client.getContext(),  error, Toast.LENGTH_LONG);
                             toast.show();
                             //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                             Utilities.SetLog("in cancel pedido", error, WSkeys.log);
@@ -425,7 +409,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                                     CancelOrderTask(motivo_seleccionado, order);
                                 }
                                 else{
-                                    Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(Client.getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             } catch (JSONException e) {
@@ -841,7 +825,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 // función a ejecutar
                 //actualizarChofer(); // función para refrescar la ubicación del conductor, creada en otra línea de código
-                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Client.getContext());
                 try {
 
                     Task location = mFusedLocationProviderClient.getLastLocation();
@@ -1016,10 +1000,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     private void getMyLocationPermision() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(Client.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(getContext(),
+            if (ContextCompat.checkSelfPermission(Client.getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
@@ -1042,8 +1026,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
-                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                            && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Client.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ContextCompat.checkSelfPermission(Client.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    Activity#requestPermissions
                         // here to request the missing permissions, and then overriding
@@ -1069,7 +1053,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     private void getDeviceCurrentLocation() {
 
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Client.getContext());
         try {
             if (mLocationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
@@ -1569,7 +1553,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     e.printStackTrace();
                 }
             }
-            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
+            motivos.setAdapter(new ArrayAdapter<String>(Client.getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
             motivos.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error

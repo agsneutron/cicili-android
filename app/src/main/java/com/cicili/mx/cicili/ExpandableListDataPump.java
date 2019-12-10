@@ -1,34 +1,12 @@
 package com.cicili.mx.cicili;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.MotivoCancela;
-import com.cicili.mx.cicili.domain.WSkeys;
-import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class ExpandableListDataPump {
 

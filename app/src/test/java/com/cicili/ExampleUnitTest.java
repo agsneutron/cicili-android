@@ -1,4 +1,4 @@
-package com.cicili.mx.cicili;
+package com.cicili;
 
 import org.junit.Test;
 

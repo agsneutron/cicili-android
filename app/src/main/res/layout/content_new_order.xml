@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".NewOrderActivity"
+    tools:context=".cliente.NewOrderActivity"
     tools:showIn="@layout/activity_new_order"
     android:layout_margin="20dp"
     android:background="@color/white"

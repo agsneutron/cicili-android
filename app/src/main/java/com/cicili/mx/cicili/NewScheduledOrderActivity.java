@@ -14,16 +14,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,8 +45,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class NewScheduledOrderActivity extends AppCompatActivity {
 
@@ -214,7 +211,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                             if (cancel) {
                                 // There was an error
                                 //focusView.requestFocus();
-                                Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                                Toast toast = Toast.makeText(Client.getContext(),  error, Toast.LENGTH_LONG);
                                 toast.show();
                                 //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                                 Utilities.SetLog("in cancel pedido", error, WSkeys.log);
@@ -230,7 +227,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                                         CancelOrderTask(motivo_seleccionado, order);
                                     }
                                     else{
-                                        Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                        Toast toast = Toast.makeText(Client.getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                         toast.show();
                                     }
                                 } catch (JSONException e) {
@@ -265,7 +262,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                     String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
                     Utilities.SetLog("CANCELA",url,WSkeys.log);
 
-                    RequestQueue queue = Volley.newRequestQueue(getContext());
+                    RequestQueue queue = Volley.newRequestQueue(Client.getContext());
                     //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
                     StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -371,7 +368,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
         url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO;
 
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -457,7 +454,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_MOTIVO_CANCELA;
         Utilities.SetLog("LLENA motivo CANCELA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -535,7 +532,7 @@ public class NewScheduledOrderActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
+            motivos.setAdapter(new ArrayAdapter<String>(Client.getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
             motivos.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error

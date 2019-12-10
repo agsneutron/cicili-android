@@ -14,11 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
@@ -37,8 +37,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class RateService extends AppCompatActivity {
 
@@ -134,7 +132,7 @@ public class RateService extends AppCompatActivity {
                 if (cancel) {
                     // There was an error
                     focusView.requestFocus();
-                    Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(Client.getContext(),  error, Toast.LENGTH_LONG);
                     toast.show();
                     //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                     Utilities.SetLog("in error rating", error, WSkeys.log);
@@ -163,7 +161,7 @@ public class RateService extends AppCompatActivity {
 
         Utilities.SetLog("LOG_RATE", url,WSkeys.log);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

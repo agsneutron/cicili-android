@@ -16,11 +16,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.WSkeys;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**

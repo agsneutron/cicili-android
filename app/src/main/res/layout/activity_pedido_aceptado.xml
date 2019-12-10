@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderDetailActivity"
+    tools:context=".cliente.OrderDetailActivity"
     android:background="#00ffffff">
 
     <!--<com.google.android.material.appbar.AppBarLayout

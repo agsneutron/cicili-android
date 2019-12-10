@@ -1,21 +1,16 @@
 package com.cicili.mx.cicili;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
 import com.android.volley.AuthFailureError;
@@ -26,14 +21,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.cicili.mx.cicili.domain.AddressData;
+
+import com.cicili.mx.cicili.domain.ChannelsNotification;
 import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.Pedido;
-import com.cicili.mx.cicili.domain.PedidoActivo;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
@@ -42,17 +36,13 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.ChannelsNotification.CHANNEL_1_ID;
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class appFirebaseMessagingService extends FirebaseMessagingService {
 
 
-    Application application = (Application) getContext();
+    Application application = (Application) Client.getContext();
     Client client = (Client) application;
     SeguimientoPedido seguimientoPedido;
 
@@ -211,7 +201,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,CHANNEL_1_ID)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ChannelsNotification.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentTitle(title)
                 .setContentText(body)
@@ -238,7 +228,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
-                    CHANNEL_1_ID,
+                    ChannelsNotification.CHANNEL_1_ID,
                     "Channel 1",
                     NotificationManager.IMPORTANCE_HIGH
             );
@@ -267,7 +257,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_PEDIDO_ACTIVO;
         Utilities.SetLog("APPFB-PEDIDOACTIVO",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -283,7 +273,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
                 Utilities.SetLog("ERROR RESPONSE",error.toString(),WSkeys.log);
 
-                Toast.makeText(getContext(),R.string.errorlistener,Toast.LENGTH_LONG).show();
+                Toast.makeText(Client.getContext(),R.string.errorlistener,Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -354,7 +344,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
             Utilities.SetLog("APPFB_ACTIVO",response.getString(WSkeys.messageError),WSkeys.log);
         }else{
-            Toast.makeText(getContext(),response.getString(WSkeys.messageError),Toast.LENGTH_LONG).show();
+            Toast.makeText(Client.getContext(),response.getString(WSkeys.messageError),Toast.LENGTH_LONG).show();
         }
     }
 }
