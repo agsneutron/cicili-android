@@ -302,7 +302,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         break;
                 }
 
-                Log.i("BottomSheetsMASCERCANA", "Nuevo estado: " + nuevoEstado);
+                //Log.i("BottomSheetsMASCERCANA", "Nuevo estado: " + nuevoEstado);
 
 
                 if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta_mc){
@@ -491,7 +491,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheets", "Offset: " + slideOffset);
+                //Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -605,7 +605,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         break;
                 }
 
-                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+                //Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
 
 
@@ -816,7 +816,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheets", "Offset: " + slideOffset);
+                //Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -922,7 +922,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Log.e("onItemSelected",String.valueOf(i));
+                //Log.e("onItemSelected",String.valueOf(i));
 
                 motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
                 motivo_texto = String.valueOf(motivoAux.get(i).getText());
@@ -964,7 +964,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         break;
                 }
 
-                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+                //Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
                 Button btnCancelaPedido = (Button) view.findViewById(R.id.cancela_pedido);
                 btnCancelaPedido.setOnClickListener(new View.OnClickListener() {
@@ -1021,7 +1021,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheets", "Offset: " + slideOffset);
+                //Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -1032,7 +1032,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.pedido, order);
                 params.put(WSkeys.motivo, motivo);
-                Log.e("PARAMETROSCANCEL_B", params.toString());
+                //Log.e("PARAMETROSCANCEL_B", params.toString());
 
 
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
@@ -1077,7 +1077,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         Map<String, String> params = new HashMap<String, String>();
                         params.put(WSkeys.pedido, order);
                         params.put(WSkeys.motivo, motivo);
-                        Log.e("PARAMETROSCANCEL", params.toString());
+                        //Log.e("PARAMETROSCANCEL", params.toString());
                         return params;
                     }
 
@@ -1147,7 +1147,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -1161,7 +1161,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1186,7 +1186,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public void ParserMotivos(String response, Spinner motivos) throws JSONException {
 
         Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         JSONObject respuesta = new JSONObject(response);
@@ -1752,7 +1752,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.e("onItemSelected if",String.valueOf(i) + view + l + adapterView.toString());
+        //Log.e("onItemSelected if",String.valueOf(i) + view + l + adapterView.toString());
 
         if (adapterView.getId()==R.id.spinner1) {
 
@@ -1765,7 +1765,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 } else {
                     //client.getAddressDataArrayList().get(i).getLatitud();
                     //client.getAddressDataArrayList().get(i).getLongitud();
-                    Log.e("onItemSelected", String.valueOf(i));
+                    //Log.e("onItemSelected", String.valueOf(i));
                     if (i ==1){
                         latitudPedido=latCurrent;
                         longitudPedido=lonCurrent;
@@ -1783,8 +1783,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                                 //marker.setVisible(false);
                                 marker.remove();
                             }
-                            Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 2).getId()));
-                            Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 2).getAlias());
+                            //Log.e("Selected--idaddress", String.valueOf(client.getAddressDataArrayList().get(i - 2).getId()));
+                            //Log.e("Selected--alias", client.getAddressDataArrayList().get(i - 2).getAlias());
                             ConsultaPrincipal(new LatLng(client.getAddressDataArrayList().get(i - 2).getLatitud(), client.getAddressDataArrayList().get(i - 2).getLongitud()));
                             MoveCameraSelectedDirection(client.getAddressDataArrayList().get(i - 2).getLatitud(), client.getAddressDataArrayList().get(i - 2).getLongitud(), client.getAddressDataArrayList().get(i - 2).getAlias(), client.getAddressDataArrayList().get(i - 2).getId());
                             direccionSeleccionada = client.getAddressDataArrayList().get(i - 2).getId();
@@ -1805,7 +1805,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             }
         }else if (adapterView.getId()==R.id.spinner2){
             if (i != 0) {
-                Log.e("onItemSelected PIPA", String.valueOf(i));
+                //Log.e("onItemSelected PIPA", String.valueOf(i));
                 if(direcciones.getSelectedItemId()>0) {
                     pipaSeleccionada = i - 1;
                     bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -1821,7 +1821,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        Log.e("nothing",adapterView.toString());
+        //Log.e("nothing",adapterView.toString());
     }
 
     public void AddMarker(Double lat, Double lon, String conductor, String concesionario,Double precio, String tiempo, Integer id){

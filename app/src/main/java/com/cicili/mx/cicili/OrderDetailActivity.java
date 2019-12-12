@@ -173,7 +173,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Log.e("onItemSelected",String.valueOf(i));
+                //Log.e("onItemSelected",String.valueOf(i));
 
                 motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
                 motivo_texto = String.valueOf(motivoAux.get(i).getText());
@@ -218,7 +218,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                         break;
                 }
 
-                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+                //Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
                 Button btnCancelaPedido = (Button) findViewById(R.id.cancela_pedido);
                 btnCancelaPedido.setOnClickListener(new View.OnClickListener() {
@@ -275,7 +275,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheets", "Offset: " + slideOffset);
+                //Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -286,7 +286,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.pedido, order);
                 params.put(WSkeys.motivo, motivo);
-                Log.e("PARAMETROSCANCEL_B", params.toString());
+                //Log.e("PARAMETROSCANCEL_B", params.toString());
 
 
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
@@ -331,7 +331,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                         Map<String, String> params = new HashMap<String, String>();
                         params.put(WSkeys.pedido, order);
                         params.put(WSkeys.motivo, motivo);
-                        Log.e("PARAMETROSCANCEL", params.toString());
+                        //Log.e("PARAMETROSCANCEL", params.toString());
                         return params;
                     }
 
@@ -529,7 +529,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -543,7 +543,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -568,7 +568,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     public void ParserPedido(String response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_PEDIDOLIST",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         Gson gson = new Gson();
         JSONObject respuesta = new JSONObject(response);
 
@@ -638,7 +638,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mIdView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -652,7 +652,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -677,7 +677,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     public void ParserFactura(String response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_Factura",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         Gson gson = new Gson();
         JSONObject respuesta = new JSONObject(response);
 
@@ -726,7 +726,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -740,7 +740,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -765,7 +765,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     public void ParserMotivos(String response, Spinner motivos) throws JSONException {
 
         Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         JSONObject respuesta = new JSONObject(response);

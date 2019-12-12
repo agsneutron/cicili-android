@@ -53,7 +53,7 @@ public class Utilities {
     public static void SetLog(String tittle, String msg, Boolean isenabled){
         if (isenabled) {
             System.out.println("<- EXCEC LOG ->   " + tittle + msg);
-            //Log.e(tittle,msg);
+            ////Log.e(tittle,msg);
         }
     }
 

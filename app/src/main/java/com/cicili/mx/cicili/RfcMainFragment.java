@@ -161,7 +161,7 @@ public class RfcMainFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(view, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -175,7 +175,7 @@ public class RfcMainFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -200,7 +200,7 @@ public class RfcMainFragment extends Fragment {
     public void ParserRFC(String response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_RFC",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
         JSONObject respuesta = new JSONObject(response);
 

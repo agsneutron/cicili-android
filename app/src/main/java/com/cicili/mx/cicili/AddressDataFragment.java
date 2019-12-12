@@ -378,7 +378,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        Log.e("onItemSelected",String.valueOf(i));
+        //Log.e("onItemSelected",String.valueOf(i));
         if (i!=0) {
             asentamientosel = asentamientoAux.get(i).getId();
             asentamientoname = asentamientoAux.get(i).getText();
@@ -428,7 +428,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(alias, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -442,7 +442,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -466,7 +466,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
     public void ParserTown(String response) throws JSONException {
 
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         asentamientoAux = new ArrayList<Asentamiento>();
         asentamientoArray = new ArrayList<String>();
         JSONObject respuesta = new JSONObject(response);
@@ -526,14 +526,14 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             addressData.setId(client.getAddressDataArrayList().get(pos).getId());
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            Log.e("AddressValuesUpdate--", json);
+            //Log.e("AddressValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESUPPDATE;
         }else{
 
             //toadd
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            Log.e("AddressValuePairs--", json);
+            //Log.e("AddressValuePairs--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESSDATA;
 
         }
@@ -553,7 +553,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(calle, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
                 dialog.dismiss();
@@ -573,7 +573,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                 params.put(WSkeys.apepat, vpat);
                 params.put(WSkeys.apemat, vmat);
                 params.put(WSkeys.fechanacimiento, vnac);
-                Log.e("PARAMETROS", params.toString());*/
+                //Log.e("PARAMETROS", params.toString());*/
                 return params;
             }
 

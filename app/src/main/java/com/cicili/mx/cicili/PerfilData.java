@@ -104,7 +104,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             dataactive = bundle.getString("active");
             id =  bundle.getString("id");
             Utilities.SetLog("LOG ID-- >",id,WSkeys.log);
-            Log.e("dataactive", dataactive);
+            //Log.e("dataactive", dataactive);
 
             if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
                 //navView.setSelectedItemId(R.id.navigation_perfil);
@@ -196,7 +196,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
             }
         }) {
             @Override
@@ -208,7 +208,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -231,7 +231,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
     }
 
     public void ParserCode(String response) throws JSONException {
-        Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
         JSONObject respuesta = new JSONObject(response);
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -240,10 +240,10 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
             String data = jo_data.getString("idCliente");
             String dataactive = jo_data.getString("status");
             if (!data.equals("")){
-                Log.e("DATA -- dataactive", data + " " + dataactive);
+                //Log.e("DATA -- dataactive", data + " " + dataactive);
 
                 if (dataactive.equals(WSkeys.datos_personales) || active.equals("")) {
-                    Log.e("dataactive -- PE", dataactive);
+                    //Log.e("dataactive -- PE", dataactive);
                     //navView.setSelectedItemId(R.id.navigation_perfil);
 
                     fm.beginTransaction().hide(active);
@@ -255,7 +255,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
                     active = fragmentPersonal;
                 }
                 else if (dataactive.equals(WSkeys.datos_pago)){
-                    Log.e("dataactive -- PA", dataactive);
+                    //Log.e("dataactive -- PA", dataactive);
                     fm.beginTransaction().hide(active);
                     if (!fragmentPayment.isAdded()) {
                         fm.beginTransaction().add(R.id.container, fragmentPayment, "2").commit();
@@ -265,7 +265,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
                     active = fragmentPayment;
                 }
                 else if (dataactive.equals(WSkeys.datos_direccion)){
-                    Log.e("dataactive -- PD", dataactive);
+                    //Log.e("dataactive -- PD", dataactive);
 
                     fm.beginTransaction().hide(active);
                     if (!fragmentAddress.isAdded()) {
@@ -285,7 +285,7 @@ public class PerfilData extends AppCompatActivity implements PersonalDataFragmen
                     fm.beginTransaction().addToBackStack(null).commit();
                     active = fragmentRfc;
                 }else if(dataactive.equals(WSkeys.completo)){
-                    Log.e("dataactive -- C", dataactive);
+                    //Log.e("dataactive -- C", dataactive);
                     Intent intent = new Intent(PerfilData.this, MenuActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

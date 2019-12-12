@@ -136,7 +136,7 @@ public class Aclaracion extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Log.e("onItemSelected",String.valueOf(i));
+                //Log.e("onItemSelected",String.valueOf(i));
                 if (i!=0) {
                     motivo_seleccionado = categoriaAux.get(i-1).getId();
                 }
@@ -168,7 +168,7 @@ public class Aclaracion extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mensaje, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -182,7 +182,7 @@ public class Aclaracion extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -207,7 +207,7 @@ public class Aclaracion extends AppCompatActivity {
     public void ParserMotivos(String response, Spinner categoria_sp) throws JSONException {
 
         Utilities.SetLog("RESPONSE_AYUDA",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         JSONObject respuesta = new JSONObject(response);
@@ -273,7 +273,7 @@ public class Aclaracion extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mensaje, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -287,7 +287,7 @@ public class Aclaracion extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -312,7 +312,7 @@ public class Aclaracion extends AppCompatActivity {
     public void ParserGuardaPregunta(JSONObject response) throws JSONException {
 
         Utilities.SetLog("RESPONSE_GUARDA",response.toString(),WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -360,7 +360,7 @@ public class Aclaracion extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mensaje, R.string.errorlistener, Snackbar.LENGTH_SHORT)
                         .show();
             }
@@ -374,7 +374,7 @@ public class Aclaracion extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -399,7 +399,7 @@ public class Aclaracion extends AppCompatActivity {
     public void ParserAclaracion(String respuesta) throws JSONException {
 
         Utilities.SetLog("RESPONSE_ACLARACION",respuesta,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
         JSONObject response = new JSONObject(respuesta);
         // si el response regresa ok, entonces si inicia la sesión

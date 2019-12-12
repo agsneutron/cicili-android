@@ -149,10 +149,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            Log.d("appfirebase--", getIntent().getExtras().toString());
+            //Log.d("appfirebase--", getIntent().getExtras().toString());
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
-                Log.d("appfirebasenotif", "Key: " + key + " Value: " + value);
+                //Log.d("appfirebasenotif", "Key: " + key + " Value: " + value);
             }
         }
     }
@@ -312,7 +312,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showProgress(false);
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -328,7 +328,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.put(WSkeys.PUSERNAME, mEmail);
                 params.put(WSkeys.PPASSWORD, mPassword);
                 params.put(WSkeys.TOKENFIREBASE, token_firebase);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -352,7 +352,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void ParserData(String response, String userName, String userPassword) throws JSONException {
 
-        //Log.e("LoginResponse", response);
+        ////Log.e("LoginResponse", response);
         JSONObject respuesta = new JSONObject(response);
         Utilities.SetLog("LOGIN response",response,true);
 
@@ -495,7 +495,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mEmailView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -510,7 +510,7 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.user, sUser);
                 params.put(WSkeys.tmppsw, mCode);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -534,7 +534,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void ParserCode(String response, DialogInterface dialog, String code, String user) throws JSONException {
 
-        Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
         JSONObject respuesta = new JSONObject(response);
 
         // si el response regresa ok, entonces si inicia la sesión

@@ -181,7 +181,7 @@ public class RequestPassword extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mUserView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -196,7 +196,7 @@ public class RequestPassword extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.user, sUser);
                 params.put(WSkeys.tmppsw, mCode);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -220,7 +220,7 @@ public class RequestPassword extends AppCompatActivity {
 
     public void ParserCode(String response, DialogInterface dialog, String code, String user) throws JSONException {
 
-        Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
         JSONObject respuesta = new JSONObject(response);
 
         // si el response regresa ok, entonces si inicia la sesión
@@ -274,7 +274,7 @@ public class RequestPassword extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(mUserView, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -288,7 +288,7 @@ public class RequestPassword extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.user, sUser);
-                Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -312,7 +312,7 @@ public class RequestPassword extends AppCompatActivity {
 
     public void ParserUser(String response, String user) throws JSONException {
 
-        Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
         JSONObject respuesta = new JSONObject(response);
 
         // si el response regresa ok, entonces si inicia la sesión

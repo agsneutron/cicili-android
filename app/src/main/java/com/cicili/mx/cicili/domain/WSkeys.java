@@ -297,7 +297,7 @@ public class WSkeys {
     public static final String comentario="comentario";
 
 
-    public static final Boolean log = true;
+    public static final Boolean log = false;
 
 
     //Actualizar Pedido
