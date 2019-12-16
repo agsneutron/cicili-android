@@ -1,7 +1,5 @@
 package com.cicili.mx.cicili.domain;
 
-import java.math.BigInteger;
-
 public class Pedido {
 
     private Double cantidad;

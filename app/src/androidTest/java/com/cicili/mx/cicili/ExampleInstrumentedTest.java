@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.cicili.mx.cicili", appContext.getPackageName());
+        assertEquals("mx.com.cicili", appContext.getPackageName());
     }
 }

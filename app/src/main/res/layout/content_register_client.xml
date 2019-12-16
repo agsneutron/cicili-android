@@ -7,13 +7,13 @@
     android:background="@drawable/gradient_1"
     android:orientation="vertical"
 
-    tools:context="com.cicili.mx.cicili.RequestPassword">
+    tools:context="com.cicili.cliente.mx.com.cicili.mx.cicili.RequestPassword">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        tools:context="com.cicili.mx.cicili.RegisterClient"
+        tools:context="com.cicili.cliente.mx.com.cicili.mx.cicili.RegisterClient"
         tools:showIn="@layout/activity_register_client">
 
 

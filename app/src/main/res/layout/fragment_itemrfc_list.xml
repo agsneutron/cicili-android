@@ -30,11 +30,11 @@
 <androidx.recyclerview.widget.RecyclerView
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="com.cicili.mx.cicili.RfcMainFragment"
+    android:name="mx.com.cicili.RfcMainFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".RfcMainFragment"
+    tools:context=".cliente.RfcMainFragment"
     tools:listitem="@layout/fragment_itemrfc"
     android:layout_marginTop="60dp"/>
 

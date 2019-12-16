@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="com.cicili.mx.cicili.ItemPaymentFragment"
+    android:name="mx.com.cicili.ItemPaymentFragment"
     android:layout_width="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".PaymentMainFragment"
+    tools:context=".cliente.PaymentMainFragment"
     tools:listitem="@layout/fragment_itempayment"
     android:layout_marginTop="60dp"/>

@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.io.InputMessage;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AdapterMessage extends RecyclerView.Adapter<HolderMessage> {

@@ -12,12 +12,11 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
 
     <application
-        android:name=".domain.Client"
+        android:name="com.cicili.mx.cicili.domain.Client"
         android:allowBackup="true"
         android:icon="@mipmap/ic_cicili_launcher"
         android:label="@string/app_name"
@@ -27,19 +26,19 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".RateService"
+            android:name="com.cicili.mx.cicili.RateService"
             android:label="@string/title_activity_score_service"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
-        <activity android:name=".ValidaStatusActivity" />
+        <activity android:name="com.cicili.mx.cicili.ValidaStatusActivity" />
         <activity
-            android:name=".MessageActivity"
+            android:name="com.cicili.mx.cicili.MessageActivity"
             android:label="@string/title_activity_message"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -47,9 +46,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".MessageChatActivity"
+            android:name="com.cicili.mx.cicili.MessageChatActivity"
             android:label="@string/title_activity_message"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -57,9 +56,9 @@
                 android:value="com.cicili.mx.cicili.PedidoAceptadoActivity" />
         </activity>
         <activity
-            android:name=".PedidoAceptadoActivity"
+            android:name="com.cicili.mx.cicili.PedidoAceptadoActivity"
             android:label="@string/title_order_acepted"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -67,9 +66,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".NewScheduledOrderActivity"
+            android:name="com.cicili.mx.cicili.NewScheduledOrderActivity"
             android:label="@string/title_activity_new_scheduled_order"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -77,9 +76,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".DeleteAccountActivity"
+            android:name="com.cicili.mx.cicili.DeleteAccountActivity"
             android:label="@string/title_activity_delete_account"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -87,9 +86,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".CancelaActivity"
+            android:name="com.cicili.mx.cicili.CancelaActivity"
             android:label="@string/title_activity_cancela"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -97,9 +96,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".AdviceActivity"
+            android:name="com.cicili.mx.cicili.AdviceActivity"
             android:label="@string/title_activity_advice"
-            android:parentActivityName=".LegalListActivity"
+            android:parentActivityName="com.cicili.mx.cicili.LegalListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -107,9 +106,9 @@
                 android:value="com.cicili.mx.cicili.LegalListActivity" />
         </activity>
         <activity
-            android:name=".TermsActivity"
+            android:name="com.cicili.mx.cicili.TermsActivity"
             android:label="@string/title_activity_terms"
-            android:parentActivityName=".LegalListActivity"
+            android:parentActivityName="com.cicili.mx.cicili.LegalListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -117,9 +116,9 @@
                 android:value="com.cicili.mx.cicili.LegalListActivity" />
         </activity>
         <activity
-            android:name=".LegalListActivity"
+            android:name="com.cicili.mx.cicili.LegalListActivity"
             android:label="@string/title_activity_legal_list"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -127,9 +126,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".HelpListActivity"
+            android:name="com.cicili.mx.cicili.HelpListActivity"
             android:label="@string/title_activity_ayuda"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -137,15 +136,15 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".OrderDetailActivity"
+            android:name="com.cicili.mx.cicili.OrderDetailActivity"
             android:label="@string/title_activity_order_detail"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PaymentDetailActivity"
+            android:name="com.cicili.mx.cicili.PaymentDetailActivity"
             android:label="@string/title_activity_payment_detail"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -153,9 +152,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".RfcDetailActivity"
+            android:name="com.cicili.mx.cicili.RfcDetailActivity"
             android:label="@string/title_activity_rfc_detail_acticity"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -163,9 +162,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".AddressDetailActivity"
+            android:name="com.cicili.mx.cicili.AddressDetailActivity"
             android:label="@string/title_activity_address_detail"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -173,9 +172,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".PerfilDetailActivity"
+            android:name="com.cicili.mx.cicili.PerfilDetailActivity"
             android:label="@string/title_activity_perfil_detail"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -183,7 +182,7 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".AyudaActivity"
+            android:name="com.cicili.mx.cicili.AyudaActivity"
             android:label="@string/title_activity_ayuda"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -192,9 +191,9 @@
                 android:value="com.cicili.mx.cicili.HelpListActivity" />
         </activity>
         <activity
-            android:name=".LegalActivity"
+            android:name="com.cicili.mx.cicili.LegalActivity"
             android:label="@string/title_activity_legal"
-            android:parentActivityName=".LegalListActivity"
+            android:parentActivityName="com.cicili.mx.cicili.LegalListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -202,9 +201,9 @@
                 android:value="com.cicili.mx.cicili.LegalListActivity" />
         </activity>
         <activity
-            android:name=".Aclaracion"
+            android:name="com.cicili.mx.cicili.Aclaracion"
             android:label="@string/title_activity_aclaracion"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -212,9 +211,9 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".NewOrderActivity"
+            android:name="com.cicili.mx.cicili.NewOrderActivity"
             android:label="@string/title_activity_new_order"
-            android:parentActivityName=".MenuActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -222,7 +221,7 @@
                 android:value="com.cicili.mx.cicili.MenuActivity" />
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name="com.cicili.mx.cicili.MenuActivity"
             android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -245,19 +244,19 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.cicili.mx.cicili.MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PerfilData"
+            android:name="com.cicili.mx.cicili.PerfilData"
             android:background="@color/white"
             android:label="Completar información"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.cicili.mx.cicili.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ValidateActivity"
+            android:name="com.cicili.mx.cicili.ValidateActivity"
             android:label="@string/title_activity_validate"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName="com.cicili.mx.cicili.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -265,34 +264,34 @@
                 android:value="com.cicili.mx.cicili.LoginActivity" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.cicili.mx.cicili.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.cicili.mx.cicili.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RequestPassword"
+            android:name="com.cicili.mx.cicili.RequestPassword"
             android:label="@string/title_activity_request_password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterClient"
+            android:name="com.cicili.mx.cicili.RegisterClient"
             android:label="@string/title_activity_register_client"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ForgotPswActivity"
+            android:name="com.cicili.mx.cicili.ForgotPswActivity"
             android:label="@string/title_activity_forgot_psw"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <receiver android:name=".NotificationReceiver" />
+        <receiver android:name="com.cicili.mx.cicili.NotificationReceiver" />
 
-        <service android:name=".appFirebaseMessagingService">
+        <service android:name="com.cicili.mx.cicili.appFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

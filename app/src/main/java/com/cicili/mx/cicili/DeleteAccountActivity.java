@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -37,8 +38,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class DeleteAccountActivity extends AppCompatActivity {
 
@@ -121,7 +120,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
         String url = WSkeys.URL_BASE + WSkeys.URL_ELIMINA_CUENTA;
         Utilities.SetLog("ELIMINACUENTA",url,WSkeys.log);
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(Client.getContext());
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -198,7 +197,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
                     client=null;
                     android.os.Process.killProcess(android.os.Process.myPid());
                     finish();*/
-                    Reestart(getContext());
+                    Reestart(Client.getContext());
                 }
             });
 

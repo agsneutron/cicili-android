@@ -3,9 +3,9 @@ package com.cicili.mx.cicili;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.cicili.mx.cicili.RfcMainFragment.OnListFragmentInteractionListener;
 import androidx.recyclerview.widget.RecyclerView;
 import com.cicili.mx.cicili.domain.RfcData;

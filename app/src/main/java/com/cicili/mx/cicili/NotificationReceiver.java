@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.cicili.mx.cicili.io.Utilities;
-
 
 public class NotificationReceiver extends BroadcastReceiver {
 

@@ -7,7 +7,7 @@
     android:background="@drawable/gradient_1"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.cicili.mx.cicili.LoginActivity">
+    tools:context="com.cicili.cliente.mx.com.cicili.mx.cicili.LoginActivity">
 
     <!--    <ProgressBar
             android:id="@+id/login_progress"

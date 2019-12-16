@@ -2,7 +2,6 @@ package com.cicili.mx.cicili;
 
 import android.Manifest;
 import android.app.Application;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -32,15 +31,13 @@ import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import static com.cicili.mx.cicili.domain.Client.getContext;
-
 public class AddressDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     //widgets
     TextView street,alias,town,state,cp;
 
     private  String LOG = "ADDRESS DETAIL FRAGMENT";
-    Application application = (Application) getContext();
+    Application application = (Application) Client.getContext();
     Client client = (Client) application;
 
 
@@ -115,7 +112,7 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                Intent intent = new Intent(getContext(), PerfilData.class);
+                Intent intent = new Intent(Client.getContext(), PerfilData.class);
                 intent.putExtra("active",WSkeys.datos_direccion);
                 intent.putExtra("id",String.valueOf(pos));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -144,7 +141,7 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
     private void getDeviceCurrentLocation() {
 
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Client.getContext());
         try {
             if (mLocationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
@@ -195,8 +192,8 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
 
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
-                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                            && ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Client.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ContextCompat.checkSelfPermission(Client.getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    Activity#requestPermissions
                         // here to request the missing permissions, and then overriding
@@ -218,10 +215,10 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
 
     private void getMyLocationPermision() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(Client.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(getContext(),
+            if (ContextCompat.checkSelfPermission(Client.getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;

@@ -3,13 +3,10 @@ package com.cicili.mx.cicili;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;

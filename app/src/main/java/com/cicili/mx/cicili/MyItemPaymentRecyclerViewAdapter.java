@@ -15,7 +15,6 @@ import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
 import com.cicili.mx.cicili.io.Utilities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the

@@ -4,15 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,12 +16,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -53,16 +45,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.cicili.mx.cicili.directionhelpers.FetchURL;
 import com.cicili.mx.cicili.directionhelpers.TaskLoadedCallback;
-import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
-import com.cicili.mx.cicili.domain.Pedido;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -82,11 +73,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 
 //Google API classes
@@ -100,9 +87,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, MessageReceiverCallback {
 
@@ -122,8 +107,9 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     ArrayList<MotivoCancela> motivoAux = new ArrayList<MotivoCancela>();
     String order ="";
     String getStatus="";
+    ProgressDialog progressDialog;
 
-    RequestQueue queue = Volley.newRequestQueue(getContext());
+    RequestQueue queue = Volley.newRequestQueue(Client.getContext());
     public static final String TAG = "TagQueue";
 
 
@@ -143,7 +129,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     MapFragment mapFragment;
     TextView vista;
-    Application application = (Application) getContext();
+    Application application = (Application) Client.getContext();
     Client client = (Client) application;
 
     /**
@@ -341,7 +327,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                //Log.e("onItemSelected",String.valueOf(i));
+                Log.e("onItemSelected",String.valueOf(i));
 
                 motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
                 motivo_texto = String.valueOf(motivoAux.get(i).getText());
@@ -369,6 +355,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 switch(newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
+
                         nuevoEstado = "STATE_COLLAPSED";
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
@@ -386,7 +373,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         break;
                 }
 
-                //Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
                 Button btnCancelaPedido = (Button) findViewById(R.id.cancela_pedido);
                 btnCancelaPedido.setOnClickListener(new View.OnClickListener() {
@@ -409,7 +396,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         if (cancel) {
                             // There was an error
                             //focusView.requestFocus();
-                            Toast toast = Toast.makeText(getContext(),  error, Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(Client.getContext(),  error, Toast.LENGTH_LONG);
                             toast.show();
                             //Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
                             Utilities.SetLog("in cancel pedido", error, WSkeys.log);
@@ -425,7 +412,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                                     CancelOrderTask(motivo_seleccionado, order);
                                 }
                                 else{
-                                    Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(Client.getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             } catch (JSONException e) {
@@ -443,7 +430,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                //Log.i("BottomSheets", "Offset: " + slideOffset);
+                Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -454,7 +441,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.pedido, order);
                 params.put(WSkeys.motivo, motivo);
-                //Log.e("PARAMETROSCANCEL_B", params.toString());
+                Log.e("PARAMETROSCANCEL_B", params.toString());
 
 
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
@@ -501,7 +488,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         Map<String, String> params = new HashMap<String, String>();
                         params.put(WSkeys.pedido, order);
                         params.put(WSkeys.motivo, motivo);
-                        //Log.e("PARAMETROSCANCEL", params.toString());
+                        Log.e("PARAMETROSCANCEL", params.toString());
                         return params;
                     }
 
@@ -578,14 +565,14 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         break;
                 }
 
-                //Log.i("BottomSheetsCambiar", "Nuevo estado: " + nuevoEstado);
+                Log.i("BottomSheetsCambiar", "Nuevo estado: " + nuevoEstado);
                 final RadioGroup rgMontoLitro = (RadioGroup) findViewById(R.id.rgMontoLitro);
-                rgMontoLitro.check(R.id.litro);
+                rgMontoLitro.check(R.id.monto);
                 String formapagoseleccionada="";
-                final TextInputEditText input_monto_litros = (TextInputEditText) findViewById(R.id.input);
-                final TextInputEditText calculo_monto_litro = (TextInputEditText) findViewById(R.id.calculo_input);
-                final TextInputLayout calculoinput = (TextInputLayout) findViewById(R.id.calculoinput);
-                final TextInputLayout labelinput = (TextInputLayout) findViewById(R.id.labelinput);
+                final TextInputEditText input_monto_litros = findViewById(R.id.input);
+                final TextInputEditText calculo_monto_litro = findViewById(R.id.calculo_input);
+                final TextInputLayout calculoinput = findViewById(R.id.calculoinput);
+                final TextInputLayout labelinput = findViewById(R.id.labelinput);
 
                 rgMontoLitro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
@@ -619,35 +606,38 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                     @Override
                     public void afterTextChanged(Editable editable) {
+
                         Double nuevoprecio;
                         Double calculaLitros;
-                        if(!input_monto_litros.getText().toString().isEmpty()) {
-                            if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
 
+                        if (rgMontoLitro.getCheckedRadioButtonId() == R.id.litro) {
+                            if(input_monto_litros.getText().toString().equals("")){
+                                calculo_monto_litro.setText("");
+                            }
+                            else {
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    //nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
                                     nuevoprecio = Double.parseDouble(client.getSeguimientoPedido().getPrecio()) * Double.valueOf(input_monto_litros.getText().toString());
                                     calculo_monto_litro.setText(String.valueOf(nuevoprecio));
                                     monto_c = nuevoprecio;
                                     litro_c = Double.parseDouble(input_monto_litros.getText().toString());
+                                } else {
+                                    calculo_monto_litro.setText("");
                                 }
-                                else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
-                                }
-                            } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
+                            }
+                        } else if (rgMontoLitro.getCheckedRadioButtonId() == R.id.monto) {
+                            if (input_monto_litros.getText().toString().equals("")) {
+                                calculo_monto_litro.setText("");
+                            }
+                            else{
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
                                     calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) /  Double.parseDouble(client.getSeguimientoPedido().getPrecio()));
                                     calculo_monto_litro.setText(String.valueOf(calculaLitros));
                                     monto_c = Double.parseDouble(input_monto_litros.getText().toString());
                                     litro_c = calculaLitros;
-                                }
-                                else{
-                                    calculo_monto_litro.setText(String.valueOf(0));
+                                } else {
+                                    calculo_monto_litro.setText("");
                                 }
                             }
-                        }
-                        else {
-                            input_monto_litros.setText("0");
                         }
                     }
                 });
@@ -712,7 +702,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                                 else{
                                    // Toast toast = Toast.makeText(getContext(),  "Espera a que se asigne tu pedido", Toast.LENGTH_LONG);
                                    // toast.show();
-                                    Snackbar.make(view, "por el momento, no es posible actualizar tu pedido.", Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(view, "Por el momento, no es posible actualizar tu pedido.", Snackbar.LENGTH_LONG).show();
 
                                 }
                             } catch (JSONException e) {
@@ -730,7 +720,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                //Log.i("BottomSheets", "Offset: " + slideOffset);
+                Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -742,7 +732,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 params.put(WSkeys.id, Integer.parseInt(order));
                 params.put(WSkeys.cantidad, litro);
                 params.put(WSkeys.monto, monto);
-                //Log.e("PARAMETROSUPDATE", params.toString());
+                Log.e("PARAMETROSUPDATE", params.toString());
 
 
                 String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.pedido+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
@@ -785,7 +775,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
-                        //Log.e("PARAMETROSCANCEL", params.toString());
+                        Log.e("PARAMETROSCANCEL", params.toString());
                         return params;
                     }
 
@@ -841,7 +831,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 // función a ejecutar
                 //actualizarChofer(); // función para refrescar la ubicación del conductor, creada en otra línea de código
-                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Client.getContext());
                 try {
 
                     Task location = mFusedLocationProviderClient.getLastLocation();
@@ -924,7 +914,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                //Log.e("El error", error.toString());
+                Log.e("El error", error.toString());
                 Snackbar.make(vista, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -938,7 +928,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                ////Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1016,10 +1006,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
     private void getMyLocationPermision() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(Client.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(getContext(),
+            if (ContextCompat.checkSelfPermission(Client.getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
@@ -1042,8 +1032,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
                 if (mLocationPermissionGranted) {
                     getDeviceCurrentLocation();
-                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                            && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Client.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ContextCompat.checkSelfPermission(Client.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    Activity#requestPermissions
                         // here to request the missing permissions, and then overriding
@@ -1069,7 +1059,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     private void getDeviceCurrentLocation() {
 
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Client.getContext());
         try {
             if (mLocationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
@@ -1210,7 +1200,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
 
     public void FacturaPedido(Integer pos) {
-
+        progressDialog = ProgressDialog.show(this, "Espera un momento por favor", "Estamos procesando tu petición.", true);
 
         String url = WSkeys.URL_BASE + WSkeys.URL_FACTURA + pos;
         Utilities.SetLog("PIDE FACTURA", url, WSkeys.log);
@@ -1229,8 +1219,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                //Log.e("El error", error.toString());
+                progressDialog.dismiss();
+                Log.e("El error", error.toString());
                 Snackbar.make(facturar, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -1244,7 +1234,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                ////Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1268,28 +1258,42 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
     public void ParserFactura(String response) throws JSONException {
-
+        progressDialog.dismiss();
         Utilities.SetLog("RESPONSE_Factura", response, WSkeys.log);
-        ////Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
         Gson gson = new Gson();
         JSONObject respuesta = new JSONObject(response);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Facturar pedido.");
+
+
 
         // si el response regresa ok, entonces si inicia la sesión
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
+            builder.setMessage(respuesta.getString(WSkeys.data));
 
-            Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_LONG)
-                    .show();
+            //Snackbar.make(facturar, respuesta.getString(WSkeys.data), Snackbar.LENGTH_LONG)
+            //        .show();
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
-            Snackbar.make(facturar, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
-                    .show();
+            //Snackbar.make(facturar, respuesta.getString(WSkeys.messageError), Snackbar.LENGTH_LONG)
+             //       .show();
+            builder.setMessage(respuesta.getString(WSkeys.messageError));
 
             Utilities.SetLog("ERRORPARSER", response, WSkeys.log);
         }
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -1504,7 +1508,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                //Log.e("El error", error.toString());
+                Log.e("El error", error.toString());
                 Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -1518,7 +1522,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                ////Log.e("PARAMETROS", params.toString());
+                //Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1544,7 +1548,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     public void ParserMotivos(String response, Spinner motivos) throws JSONException {
 
         Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
-        ////Log.e("CodeResponse", response);
+        //Log.e("CodeResponse", response);
 
 
         JSONObject respuesta = new JSONObject(response);
@@ -1569,7 +1573,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     e.printStackTrace();
                 }
             }
-            motivos.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
+            motivos.setAdapter(new ArrayAdapter<String>(Client.getContext(),android.R.layout.simple_spinner_dropdown_item,motivoArray));
             motivos.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
