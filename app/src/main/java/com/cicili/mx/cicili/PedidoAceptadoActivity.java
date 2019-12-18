@@ -327,7 +327,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Log.e("onItemSelected",String.valueOf(i));
+                //Log.e("onItemSelected",String.valueOf(i));
 
                 motivo_seleccionado = String.valueOf(motivoAux.get(i).getId());
                 motivo_texto = String.valueOf(motivoAux.get(i).getText());
@@ -373,7 +373,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         break;
                 }
 
-                Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
+                //Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
                 Button btnCancelaPedido = (Button) findViewById(R.id.cancela_pedido);
                 btnCancelaPedido.setOnClickListener(new View.OnClickListener() {
@@ -430,7 +430,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheets", "Offset: " + slideOffset);
+                //Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -441,7 +441,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(WSkeys.pedido, order);
                 params.put(WSkeys.motivo, motivo);
-                Log.e("PARAMETROSCANCEL_B", params.toString());
+                //Log.e("PARAMETROSCANCEL_B", params.toString());
 
 
                 String url = WSkeys.URL_BASE + WSkeys.URL_CANCELA+ "?"+WSkeys.pedido+"="+order+"&"+WSkeys.motivo+"="+motivo+"";
@@ -488,7 +488,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         Map<String, String> params = new HashMap<String, String>();
                         params.put(WSkeys.pedido, order);
                         params.put(WSkeys.motivo, motivo);
-                        Log.e("PARAMETROSCANCEL", params.toString());
+                        //Log.e("PARAMETROSCANCEL", params.toString());
                         return params;
                     }
 
@@ -565,7 +565,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         break;
                 }
 
-                Log.i("BottomSheetsCambiar", "Nuevo estado: " + nuevoEstado);
+                //Log.i("BottomSheetsCambiar", "Nuevo estado: " + nuevoEstado);
                 final RadioGroup rgMontoLitro = (RadioGroup) findViewById(R.id.rgMontoLitro);
                 rgMontoLitro.check(R.id.monto);
                 String formapagoseleccionada="";
@@ -720,7 +720,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheets", "Offset: " + slideOffset);
+                //Log.i("BottomSheets", "Offset: " + slideOffset);
             }
 
 
@@ -732,7 +732,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                 params.put(WSkeys.id, Integer.parseInt(order));
                 params.put(WSkeys.cantidad, litro);
                 params.put(WSkeys.monto, monto);
-                Log.e("PARAMETROSUPDATE", params.toString());
+                //Log.e("PARAMETROSUPDATE", params.toString());
 
 
                 String url = WSkeys.URL_BASE + WSkeys.URL_UPDATE_ORDER+"?"+WSkeys.pedido+"="+order+"&"+WSkeys.cantidad+"="+ litro+"&"+WSkeys.monto+"="+ monto;
@@ -775,7 +775,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
-                        Log.e("PARAMETROSCANCEL", params.toString());
+                        //Log.e("PARAMETROSCANCEL", params.toString());
                         return params;
                     }
 
@@ -914,7 +914,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(vista, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -928,7 +928,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1220,7 +1220,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(facturar, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -1234,7 +1234,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1260,7 +1260,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     public void ParserFactura(String response) throws JSONException {
         progressDialog.dismiss();
         Utilities.SetLog("RESPONSE_Factura", response, WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
         Gson gson = new Gson();
         JSONObject respuesta = new JSONObject(response);
 
@@ -1508,7 +1508,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("El error", error.toString());
+                //Log.e("El error", error.toString());
                 Snackbar.make(linearLayout, R.string.errorlistener, Snackbar.LENGTH_LONG)
                         .show();
             }
@@ -1522,7 +1522,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put(WSkeys.PEMAIL, mCode);
-                //Log.e("PARAMETROS", params.toString());
+                ////Log.e("PARAMETROS", params.toString());
                 return params;
             }
 
@@ -1548,7 +1548,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     public void ParserMotivos(String response, Spinner motivos) throws JSONException {
 
         Utilities.SetLog("RESPONSE_MOTIVOS",response,WSkeys.log);
-        //Log.e("CodeResponse", response);
+        ////Log.e("CodeResponse", response);
 
 
         JSONObject respuesta = new JSONObject(response);
