@@ -11,5 +11,5 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="nav_header_height_xs">88dp</dimen>
     <dimen name="nav__dialog_header_height">128dp</dimen>
-    <dimen name="app_bar_height">100dp</dimen>
+    <dimen name="app_bar_height">140dp</dimen>
 </resources>

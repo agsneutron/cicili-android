@@ -69,7 +69,9 @@ public class LegalActivity extends AppCompatActivity implements Response.Listene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utilities.SetLog("url Documentos ", "entro", WSkeys.log);
         setContentView(R.layout.activity_legal);
+        Utilities.SetLog("url Documentos ", "paso", WSkeys.log);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
