@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -52,6 +53,8 @@ public class RegisterClient extends AppCompatActivity {
     private TextInputEditText mCellPhoneView;
     private View mProgressView;
     private View mRegisterFormView;
+    private CheckBox chkContrato;
+    private Button btnContrato;
     private String token ="";
     //ProgressBar progressBar;
     //TextView strengthStatus;
@@ -83,7 +86,8 @@ public class RegisterClient extends AppCompatActivity {
         //progressBar = (ProgressBar) findViewById(R.id.progressBar);
         //strengthStatus = (TextView) findViewById(R.id.passwordStrength);
         tilpassword = (TextInputLayout) findViewById(R.id.password_text_input);
-
+        chkContrato = findViewById(R.id.chkContrato);
+        btnContrato = findViewById(R.id.verContrato);
 
         mPasswordView.addTextChangedListener(passwordStrength);
         mCPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -110,6 +114,14 @@ public class RegisterClient extends AppCompatActivity {
                 //startActivity(intent);
 
                 attemptRegister();
+            }
+        });
+
+        btnContrato.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterClient.this,contratoActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -207,6 +219,13 @@ public class RegisterClient extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
+        if(!chkContrato.isChecked()){
+
+            Snackbar.make(mEmailView, R.string.errorlistener_contr, Snackbar.LENGTH_LONG)
+                    .show();
+            focusView = chkContrato;
+            cancel = true;
+        }
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !Utilities.isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.helptextpsw));

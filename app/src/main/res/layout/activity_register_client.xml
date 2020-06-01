@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.cicili.cliente.mx.com.cicili.mx.cicili.RegisterClient">
+    tools:context="com.cicili.mx.cicili.RegisterClient">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

@@ -346,5 +346,8 @@
     <string name="title_registra_cliente">Regístrate como cliente</string>
     <string name="fecha_lbl">Fecha</string>
     <string name="litroslbl">litros</string>
+    <string name="leyenda_contrato">Acepto el contrato, aviso de privacidad y autorizo el uso de la información que registre con fines mercadotécnicos o publicitarios.”</string>
+    <string name="ver_contrato"><![CDATA[Ver contrato >>]]></string>
+    <string name="errorlistener_contr">Debes aceptar las condiciones del contrato</string>
 
 </resources>

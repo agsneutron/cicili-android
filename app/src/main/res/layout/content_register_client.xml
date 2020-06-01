@@ -156,6 +156,33 @@
                     android:theme="@style/TextInputLayoutAppearance"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/chkContrato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/leyenda_contrato"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="10dp"/>
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/verContrato"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ver_contrato"
+                android:backgroundTint="@color/white"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimaryDark"
+                />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_button"
                 style="@style/Widget.MaterialComponents.Button"

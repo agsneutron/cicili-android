@@ -64,6 +64,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.0.1'  //Base de Archivos
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
 
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
