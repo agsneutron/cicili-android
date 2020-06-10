@@ -317,7 +317,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
             seguimientoPedido = gson.fromJson(jo_data.toString(), SeguimientoPedido.class);
             seguimientoPedido.setTipo("3");
             client.setSeguimientoPedido(seguimientoPedido);
-            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.getStatus(),WSkeys.log);
+            Utilities.SetLog("PARSER-STATUS_ACTIVO",seguimientoPedido.toString() ,WSkeys.log);
 
             if (interfaceNotificationNewOrder == null && client.getContextNewOrder() != null) {
 

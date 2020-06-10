@@ -1069,8 +1069,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         if (task.isSuccessful()) {
 
                             Location getCurrentLocation = (Location) task.getResult();
-                            latOrderAddress = getCurrentLocation.getLatitude();
-                            lonOrderAddress = getCurrentLocation.getLongitude();
+                            latOrderAddress = Double.parseDouble(seguimientoPedido.getLatitud());//getCurrentLocation.getLatitude();
+                            lonOrderAddress = Double.parseDouble(seguimientoPedido.getLongitud());//getCurrentLocation.getLongitude();
                             moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latOrderAddress, lonOrderAddress));
                             AddMarker(latOrderAddress, lonOrderAddress, seguimientoPedido.getNombreStatus(), seguimientoPedido.getDireccion());
 

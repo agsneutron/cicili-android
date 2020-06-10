@@ -404,7 +404,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
 
-                            Location getCurrentLocation = (Location) task.getResult();
+                            //Location getCurrentLocation = (Location) task.getResult();
                             moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latOrderAddress, lonOrderAddress));
                             AddMarker(latOrderAddress, lonOrderAddress,pedidoData.getNombreStatus(),pedidoData.getDireccion());
 
@@ -608,6 +608,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             }
             //map
             getMyLocationPermision();
+            getDeviceCurrentLocation();
 
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
