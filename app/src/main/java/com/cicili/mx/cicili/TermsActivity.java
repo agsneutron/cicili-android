@@ -2,6 +2,7 @@ package com.cicili.mx.cicili;
 
 import android.os.Bundle;
 
+import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -13,6 +14,7 @@ import android.view.View;
 
 public class TermsActivity extends AppCompatActivity {
 
+    PDFView pdfView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +31,13 @@ public class TermsActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        pdfView = (PDFView)findViewById(R.id.pdfView);
+        pdfView.fitToWidth();
+        pdfView.fromAsset("TCC.pdf")
+                .defaultPage(0)
+                .load();
+
     }
 }
