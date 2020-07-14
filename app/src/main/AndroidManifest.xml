@@ -18,14 +18,15 @@
     <application
         android:name=".domain.Client"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_cicili_launcher"
         android:debuggable="true"
+        android:icon="@mipmap/ic_cicili_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_cicili_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".contratoActivity"></activity>
+        <activity android:name=".Payment"></activity>
+        <activity android:name=".contratoActivity" />
         <activity
             android:name=".RateService"
             android:label="@string/title_activity_score_service"
@@ -269,7 +270,7 @@
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"

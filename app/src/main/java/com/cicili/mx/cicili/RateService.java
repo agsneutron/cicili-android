@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.android.volley.AuthFailureError;
@@ -24,10 +25,14 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -38,13 +43,19 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 public class RateService extends AppCompatActivity {
 
     RatingBar ratingBar;
     EditText etComments;
     MaterialButton bRate;
+    ConstraintLayout rateForm;
+    WebView webView;
     ProgressDialog progressDialog;
     String rateValue="0";
+    String weburl = "";
+    private String LOG = "RateActivity";
 
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
@@ -71,6 +82,52 @@ public class RateService extends AppCompatActivity {
         else{
             finish();
         }
+
+        webView = findViewById(R.id.webviewP);
+        rateForm = findViewById(R.id.rateform);
+
+
+        //webview
+        weburl = "https://api.cicili.com.mx:8443/banorte/3dSecure.jsp?id=" + order + "&cliente=" + client.getIdcte() + "&modo=0";
+        Utilities.SetLog(LOG,weburl,WSkeys.log);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        //webView.loadUrl("https://www.google.com/");
+        webView.loadUrl(weburl);
+
+        webView.setWebViewClient(new WebViewClient() {
+            private int running = 0; // Could be public if you want a timer to check.
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView webView, String urlNewString) {
+                running++;
+                webView.loadUrl(urlNewString);
+                Log.e("URLnew",urlNewString);
+                return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                running = Math.max(running, 1); // First request move it to 1.
+                Log.e("URLnewPS",url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("URLnewPF",url);
+                if(--running == 0) { // just "running--;" if you add a timer.
+                    // TODO: finished... if you want to fire a method.
+                    Log.e("running0",url);
+                    if (webView.getUrl().equals("https://api.cicili.com.mx:8443/banorte/ServletPayWorks")){
+                        webView.setVisibility(View.GONE);
+                       rateForm.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
+
+        //fin webview
 
         ratingBar = findViewById(R.id.ratingBar);
         etComments = findViewById(R.id.etComments);

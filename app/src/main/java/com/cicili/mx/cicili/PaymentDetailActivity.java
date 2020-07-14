@@ -2,20 +2,25 @@ package com.cicili.mx.cicili;
 
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class PaymentDetailActivity extends AppCompatActivity {
 
@@ -24,10 +29,12 @@ public class PaymentDetailActivity extends AppCompatActivity {
     private Spinner spinner;
     private Adapter adapter;
     private TextView tipocta, tipotrj;
-    private TextView numero,vencimiento, cvv,banco;
+    private TextView numero,vencimiento, cvv,banco,estatus;
+    private Button verifica;
     private String LOG = "PaymentDetailActivity";
     private  Integer pos;
-
+    private WebView webView;
+    String weburl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +46,15 @@ public class PaymentDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Find the textviews objects
         //titular = (TextView) findViewById(R.id.titular);
-        tipocta = (TextView) findViewById(R.id.tipocta);
-        tipotrj = (TextView) findViewById(R.id.tipotrj);
-        cvv = (TextView) findViewById(R.id.cvv);
-        numero = (TextView) findViewById(R.id.numt);
-        vencimiento = (TextView) findViewById(R.id.vencimiento);
-        banco = (TextView) findViewById(R.id.banco);
-
+        tipocta = findViewById(R.id.tipocta);
+        tipotrj = findViewById(R.id.tipotrj);
+        cvv = findViewById(R.id.cvv);
+        numero = findViewById(R.id.numt);
+        vencimiento = findViewById(R.id.vencimiento);
+        banco = findViewById(R.id.banco);
+        verifica = findViewById(R.id.btnVerifica);
+        estatus = findViewById(R.id.estatus);
+        webView = findViewById(R.id.webview);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String id="";
@@ -90,12 +99,16 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 tipotrj.setText(R.string.visa);
             }
         }*/
+
         cvv.setText(String.valueOf(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv())));
         numero.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero()));
         vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento());
         banco.setText(client.getPaymentDataArrayList().get(pos).getBanco());
         tipotrj.setText(client.getPaymentDataArrayList().get(pos).getTipoTarjeta());
+        estatus.setText(client.getPaymentDataArrayList().get(pos).getNombreStatus());
         //pais.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()));
+
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -113,6 +126,65 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 //getDialog().dismiss();
             }
         });
+
+
+
+        if (client.getPaymentDataArrayList().get(pos).getStatus() == 2){
+            weburl= "https://api.cicili.com.mx:8443/banorte/3dSecureMetodoPago.jsp?id="+client.getPaymentDataArrayList().get(pos).getId()+"&cliente="+client.getIdcte()+"&modo=0";
+            verifica.setEnabled(true);
+            webView.setVisibility(View.VISIBLE);
+        }else{
+
+            weburl = "";
+            verifica.setEnabled(false);
+            Utilities.SetLog(LOG,weburl,WSkeys.log);
+            webView.setVisibility(View.GONE);
+        }
+
+
+
+        verifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilities.SetLog(LOG,weburl,WSkeys.log);
+                WebSettings webSettings = webView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                //webView.loadUrl("https://www.google.com/");
+                webView.loadUrl(weburl);
+            }
+        });
+        webView.setWebViewClient(new WebViewClient() {
+            private int running = 0; // Could be public if you want a timer to check.
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView webView, String urlNewString) {
+                running++;
+                webView.loadUrl(urlNewString);
+                Log.e("URLnew",urlNewString);
+                return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                running = Math.max(running, 1); // First request move it to 1.
+                Log.e("URLnewPS",url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("URLnewPF",url);
+                if(--running == 0) { // just "running--;" if you add a timer.
+                    // TODO: finished... if you want to fire a method.
+                    Log.e("running0",url);
+                    if (webView.getUrl().equals("https://api.cicili.com.mx:8443/banorte/ServletValidaTarjeta")){
+                        webView.setVisibility(View.GONE);
+                        verifica.setEnabled(false);
+                    }
+                }
+            }
+        });
+
+        //Log.e("url",webView.getUrl());
     }
 
 

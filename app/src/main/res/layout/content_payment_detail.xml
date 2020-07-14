@@ -39,25 +39,35 @@
                     android:gravity="left"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+
 
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="70dp"
                             app:srcCompat="@drawable/ic_credit_card_black_24dp" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tipocta"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:paddingLeft="25dp"
                             android:text="Banco"
-                            android:textSize="10dp" />
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/estatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:paddingLeft="25dp"
+                            android:text="Estatus"
+                            android:textSize="10sp" />
 
                     </LinearLayout>
 
@@ -70,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
                     android:text="****  ****  ****  2445"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
 
                 <TextView
 
@@ -80,7 +90,7 @@
                     android:layout_marginTop="5dp"
                     android:paddingLeft="25dp"
                     android:text="Banco"
-                    android:textSize="10dp" />
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -96,7 +106,7 @@
                         android:layout_weight="2"
                         android:paddingLeft="25dp"
                         android:text="Banco"
-                        android:textSize="16dp" />
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/tipotrj"
@@ -105,7 +115,7 @@
                         android:layout_gravity="center"
                         android:paddingLeft="5dp"
                         android:text="123"
-                        android:textSize="10dp" />
+                        android:textSize="10sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -114,8 +124,8 @@
                         android:layout_weight="3"
                         android:gravity="right"
                         android:paddingLeft="25dp"
-                        android:text="VALID \n THRU"
-                        android:textSize="7dp" />
+                        android:text="VALIDA \n AL"
+                        android:textSize="7sp" />
 
                     <TextView
                         android:id="@+id/vencimiento"
@@ -125,11 +135,39 @@
                         android:layout_weight="3"
                         android:paddingLeft="13dp"
                         android:text="12/18"
-                        android:textSize="16dp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnVerifica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="VALIDAR" />
+
+        <LinearLayout
+            android:id="@+id/validapago"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            >
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_anchor="@+id/validapago"
+                app:layout_anchorGravity="center"
+                android:visibility="gone"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,9 +3,9 @@ package com.cicili.mx.cicili.domain;
 public class PaymentData {
 
     private Integer id;
-    private String status;
+    private Integer status;
     private Integer tipoPago;
-    //private String nombreTitular;
+    private String nombreStatus; //nombreTitular;
     private long numero;
     private String tipoTarjeta;
     //private Integer tipoCuenta;
@@ -18,7 +18,7 @@ public class PaymentData {
     public PaymentData() {
     }
 
-    public PaymentData(Integer id, String status, Integer tipoPago, long numero, String tipoTarjeta, String vencimiento, Integer cvv, String banco) {
+    public PaymentData(Integer id, Integer status, Integer tipoPago, long numero, String tipoTarjeta, String vencimiento, Integer cvv, String banco, String nombreStatus) {
         this.id = id;
         this.status = status;
         this.tipoPago = tipoPago;
@@ -27,6 +27,7 @@ public class PaymentData {
         this.vencimiento = vencimiento;
         this.cvv = cvv;
         this.banco = banco;
+        this.nombreStatus = nombreStatus;
     }
 
     public Integer getId() {
@@ -37,11 +38,11 @@ public class PaymentData {
         this.id = id;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -92,5 +93,13 @@ public class PaymentData {
 
     public void setBanco(String banco) {
         this.banco = banco;
+    }
+
+    public String getNombreStatus() {
+        return nombreStatus;
+    }
+
+    public void setNombreStatus(String nombreStatus) {
+        this.nombreStatus = nombreStatus;
     }
 }

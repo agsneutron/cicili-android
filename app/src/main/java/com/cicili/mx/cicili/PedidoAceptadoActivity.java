@@ -1451,6 +1451,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                             cambiar.setEnabled(false);
                             handler.removeCallbacksAndMessages(null);
                             client.setMessageContext(null);
+
                             Intent intent = new Intent(PedidoAceptadoActivity.this, RateService.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("order",client.getSeguimientoPedido().getId());
