@@ -5,6 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -15,7 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.SeguimientoData;
 import com.cicili.mx.cicili.domain.WSkeys;
@@ -27,21 +36,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,8 +112,8 @@ public class MessageActivity extends AppCompatActivity {
             } else if (uso.equals("2")) {
                 nombre.setText(String.format("%s ", client.getName()));
                 nombreSub.setText(String.format(" Categoría: %s \n Pregunta: %s", bundle.getString("categoria"), bundle.getString("aclaracion")));
-
-                id = "0";
+                id = bundle.getString("id");
+                //id = "0";
                 order = "0";
                 URL_list = WSkeys.URL_OBTENER_SEGUIMIENTO_ACLARACION + id;
                 URL_seguimiento = WSkeys.URL_DAR_SEGUIMIENTO_ACLARACION;

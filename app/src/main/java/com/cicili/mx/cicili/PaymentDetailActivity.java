@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.PaymentData;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -129,7 +130,7 @@ public class PaymentDetailActivity extends AppCompatActivity {
 
 
 
-        if (client.getPaymentDataArrayList().get(pos).getStatus() == 2){
+        if (client.getPaymentDataArrayList().get(pos).getStatus() == 1){
             weburl= "https://api.cicili.com.mx:8443/banorte/3dSecureMetodoPago.jsp?id="+client.getPaymentDataArrayList().get(pos).getId()+"&cliente="+client.getIdcte()+"&modo=0";
             verifica.setEnabled(true);
             webView.setVisibility(View.VISIBLE);
@@ -173,10 +174,20 @@ public class PaymentDetailActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 Log.e("URLnewPF",url);
+                String lastUrl = "";
                 if(--running == 0) { // just "running--;" if you add a timer.
                     // TODO: finished... if you want to fire a method.
                     Log.e("running0",url);
-                    if (webView.getUrl().equals("https://api.cicili.com.mx:8443/banorte/ServletValidaTarjeta")){
+                    lastUrl= webView.getUrl();
+                    if (lastUrl.equals("https://api.cicili.com.mx:8443/banorte/ServletValidaTarjeta?status=2") || lastUrl.equals("https://api.cicili.com.mx:8443/banorte/ServletValidaTarjeta?status=1")){
+                        if (lastUrl.substring(lastUrl.length() - 1).equals("2")) {
+                            estatus.setText("VALIDA");
+                            PaymentData paymentData = new PaymentData();
+                            paymentData = client.getPaymentDataArrayList().get(pos);
+                            paymentData.setNombreStatus("VALIDA");
+                            paymentData.setStatus(2);
+                            client.getPaymentDataArrayList().set(pos,paymentData);
+                        }
                         webView.setVisibility(View.GONE);
                         verifica.setEnabled(false);
                     }

@@ -14,19 +14,10 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,6 +32,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -50,7 +48,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.AutotanquesCercanos;
 import com.cicili.mx.cicili.domain.Client;
@@ -145,7 +142,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
     private ArrayList<Marker> mMarkerArray_dir = new ArrayList<Marker>();
     String pos="";
-
+    ArrayAdapter adapter;
+    AutotanquesCercanos objPipaseleccionada  = new AutotanquesCercanos();
 
     /***** Ejecutar tarea cada 5 segundos < **/
     Handler handler = new Handler();
@@ -608,14 +606,35 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 //Log.i("BottomSheets", "Nuevo estado: " + nuevoEstado);
 
 
+                if (client.getAutotanquesCercanosArrayList().indexOf(objPipaseleccionada)  != -1) {
 
-                concesionario.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConcesionario());
-                conductor.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConductor());
-                costoxlitro.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio()));
-                tiempo.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getTiempoLlegada()));
-                Utilities.SetLog("MO_PS-BS_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
-                Utilities.SetLog("MO_PS-BS_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
 
+                    concesionario.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConcesionario());
+                    conductor.setText(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getConductor());
+                    costoxlitro.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio()));
+                    tiempo.setText(String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getTiempoLlegada()));
+                    Utilities.SetLog("MO_PS-BS_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
+                    Utilities.SetLog("MO_PS-BS_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
+                }else
+                {
+                    pipas.setSelection(0,true);
+                    pipaSeleccionada=0;
+                    bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Pipa no disponible.");
+                    builder.setMessage("Selecciona otra pipa, la pipa seleccionada dejo de estar disponible");
+                    builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //session.logoutSession();
+                            Utilities.SetLog("pipa-outofservice", "not available", WSkeys.log);
+                            dialog.cancel();
+
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
 
                 if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta){
                     formapagoseleccionada = WSkeys.dtarjeta;
@@ -667,7 +686,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             }
                             else {
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    nuevoprecio = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
+                                    nuevoprecio = objPipaseleccionada.getPrecio() * Double.valueOf(input_monto_litros.getText().toString());
                                     calculo_monto_litro.setText(String.valueOf(nuevoprecio));
                                     monto_c = nuevoprecio;
                                     litro_c = Double.parseDouble(input_monto_litros.getText().toString());
@@ -681,7 +700,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             }
                             else{
                                 if (Double.valueOf(input_monto_litros.getText().toString()) > 0) {
-                                    calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) / client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getPrecio());
+                                    calculaLitros = (Double.valueOf(input_monto_litros.getText().toString()) / objPipaseleccionada.getPrecio());
                                     calculo_monto_litro.setText(String.valueOf(calculaLitros));
                                     monto_c = Double.parseDouble(input_monto_litros.getText().toString());
                                     litro_c = calculaLitros;
@@ -796,7 +815,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             pedido.setLatitud(latitudPedido);
                             pedido.setLongitud(longitudPedido);
                             pedido.setFormaPago(finalFormapagoseleccionada);
-                            pedido.setIdAutotanque(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId());
+                            pedido.setIdAutotanque(objPipaseleccionada.getId());
                             Intent intent = new Intent(getActivity(), NewOrderActivity.class);
                             Gson gson = new Gson();
                             String json_pedido = gson.toJson(pedido);
@@ -805,7 +824,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                             Utilities.SetLog("MO_PS-PAGOSELEc", finalFormapagoseleccionada, WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER", json_pedido, WSkeys.log);
                             Utilities.SetLog("MO_PS-JSONORDER_PIPA", String.valueOf(pipaSeleccionada), WSkeys.log);
-                            Utilities.SetLog("MO_PS-JSONORDER_AUT", String.valueOf(client.getAutotanquesCercanosArrayList().get(pipaSeleccionada).getId()), WSkeys.log);
+                            Utilities.SetLog("MO_PS-JSONORDER_AUT", String.valueOf(objPipaseleccionada.getId()), WSkeys.log);
                             bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         }
 
@@ -1628,7 +1647,6 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     public void LlenaPipas(final Spinner pipas){
 
         pipasArray = new ArrayList<String>();
-
         if (autotanquesCercanosAux != null) {
 
             pipasArray.add("Selecciona una pipa");
@@ -1640,7 +1658,12 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             pipasArray.add("No hay pipas disponibles");
             Utilities.SetLog("size dir",String.valueOf(pipasArray.size()),WSkeys.log);
         }
-        pipas.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, pipasArray));
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, pipasArray);
+
+        pipas.setAdapter(adapter);
+       // adapter.notifyDataSetChanged();
+        //pipas.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, pipasArray));
+
     }
 
 
@@ -1711,6 +1734,11 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             JSONArray ja_data = response.getJSONArray(WSkeys.data);
             //Utilities.SetLog("ASENTAMIENTOSARRAY",ja_direcciones.toString(),WSkeys.log);
+            if (ja_data.length() == 0 ){
+                LlenaPipas(pipas);
+                //adapter.notifyDataSetChanged();
+
+            }
             for(int i=0; i<ja_data.length(); i++){
                 AddressData direccion = new AddressData();
                 try {
@@ -1757,6 +1785,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
         if (adapterView.getId()==R.id.spinner1) {
 
             if (i != 0) {
+                pipas.setSelection(0,true);
+                pipaSeleccionada=0;
                 if (client.getAddressDataArrayList() == null) {
                     Intent intent = new Intent(getContext(), PerfilData.class);
                     intent.putExtra("active", WSkeys.datos_direccion);
@@ -1771,6 +1801,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                         longitudPedido=lonCurrent;
                         try {
                             ConsultaPrincipal(new LatLng(latitudPedido, longitudPedido));
+                            MoveCameraSelectedDirection(latitudPedido, longitudPedido, "", 0);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -1802,13 +1834,35 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 startActivity(intent);*/
                 direcciones.setSelection(0);
                 direccionSeleccionada=0;
+                pipas.setSelection(0,true);
+                pipaSeleccionada=0;
             }
         }else if (adapterView.getId()==R.id.spinner2){
             if (i != 0) {
                 //Log.e("onItemSelected PIPA", String.valueOf(i));
                 if(direcciones.getSelectedItemId()>0) {
                     pipaSeleccionada = i - 1;
+                    if(client.getAutotanquesCercanosArrayList().size() > 0){
+                    objPipaseleccionada = client.getAutotanquesCercanosArrayList().get(pipaSeleccionada);
                     bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }else{
+                        pipas.setSelection(0,true);
+                        pipaSeleccionada=0;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Pipa no disponible.");
+                        builder.setMessage("Selecciona otra pipa, la pipa seleccionada dejo de estar disponible");
+                        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //session.logoutSession();
+                                Utilities.SetLog("pipa-outofservice", "not available", WSkeys.log);
+                                dialog.cancel();
+                                bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }else{
                     Snackbar.make(view, R.string.error_noaddressselected, Snackbar.LENGTH_SHORT).show();
                     pipas.setSelection(0,true);
