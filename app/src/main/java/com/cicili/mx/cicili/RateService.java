@@ -6,27 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import com.cicili.mx.cicili.domain.Client;
-import com.cicili.mx.cicili.domain.WSkeys;
-import com.cicili.mx.cicili.io.Utilities;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,13 +16,30 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.domain.Client;
+import com.cicili.mx.cicili.domain.WSkeys;
+import com.cicili.mx.cicili.io.Utilities;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class RateService extends AppCompatActivity {
 
@@ -88,7 +84,7 @@ public class RateService extends AppCompatActivity {
 
 
         //webview
-        weburl = "https://api.cicili.com.mx:8443/banorte/3dSecure.jsp?id=" + order + "&cliente=" + client.getIdcte() + "&modo=0";
+        weburl = "https://api.cicili.com.mx:8443/banorte/3dSecure.jsp?id=" + order + "&cliente=" + client.getIdcte() + "&modo=1";
         Utilities.SetLog(LOG,weburl,WSkeys.log);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);

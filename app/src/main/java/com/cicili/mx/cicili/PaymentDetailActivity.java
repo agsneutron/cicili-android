@@ -131,7 +131,7 @@ public class PaymentDetailActivity extends AppCompatActivity {
 
 
         if (client.getPaymentDataArrayList().get(pos).getStatus() == 1){
-            weburl= "https://api.cicili.com.mx:8443/banorte/3dSecureMetodoPago.jsp?id="+client.getPaymentDataArrayList().get(pos).getId()+"&cliente="+client.getIdcte()+"&modo=0";
+            weburl= "https://api.cicili.com.mx:8443/banorte/3dSecureMetodoPago.jsp?id="+client.getPaymentDataArrayList().get(pos).getId()+"&cliente="+client.getIdcte()+"&modo=1";
             verifica.setEnabled(true);
             webView.setVisibility(View.VISIBLE);
         }else{
