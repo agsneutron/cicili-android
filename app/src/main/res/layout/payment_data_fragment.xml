@@ -196,7 +196,7 @@
                     android:id="@+id/vencimiento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="date"
                     android:textColor="@color/colorPrimaryDark"
                     android:imeOptions="actionNext"
                     android:nextFocusForward="@+id/cvv"/>

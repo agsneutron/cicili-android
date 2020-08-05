@@ -13,6 +13,7 @@
     <string name="error_invalid_password">Contraseña demasiado corta</string>
     <string name="error_incorrect_password">Contraseña Incorrecta</string>
     <string name="error_field_required">Campo requerido</string>
+    <string name="error_field_requiredVenc">La fecha de vencimiento debe ser MM/AA</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

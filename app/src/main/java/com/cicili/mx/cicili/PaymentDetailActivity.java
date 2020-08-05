@@ -101,12 +101,12 @@ public class PaymentDetailActivity extends AppCompatActivity {
             }
         }*/
 
-        cvv.setText(String.valueOf(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv())));
-        numero.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero()));
-        vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento());
-        banco.setText(client.getPaymentDataArrayList().get(pos).getBanco());
-        tipotrj.setText(client.getPaymentDataArrayList().get(pos).getTipoTarjeta());
-        estatus.setText(client.getPaymentDataArrayList().get(pos).getNombreStatus());
+        cvv.setText(String.valueOf(String.valueOf(client.getPaymentDataArrayList().get(pos).getCvv()))+"");
+        numero.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getNumero())+"");
+        vencimiento.setText(client.getPaymentDataArrayList().get(pos).getVencimiento()+"");
+        banco.setText(client.getPaymentDataArrayList().get(pos).getBanco()+"");
+        tipotrj.setText(client.getPaymentDataArrayList().get(pos).getTipoTarjeta()+"");
+        estatus.setText(client.getPaymentDataArrayList().get(pos).getNombreStatus()+"");
         //pais.setText(String.valueOf(client.getPaymentDataArrayList().get(pos).getPais()));
 
 

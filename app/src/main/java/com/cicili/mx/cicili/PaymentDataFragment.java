@@ -5,13 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +15,9 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -30,7 +28,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.Paises;
 import com.cicili.mx.cicili.domain.PaymentData;
@@ -224,7 +221,7 @@ public class PaymentDataFragment extends Fragment {
 
 
 
-        vencimiento.addTextChangedListener(dateExpireValidation);
+       // vencimiento.addTextChangedListener(dateExpireValidation);
 
 
 
@@ -297,15 +294,35 @@ public class PaymentDataFragment extends Fragment {
                     }else{
                         paymentData.setNumero(Long.parseLong(sNumero));
                     }
-                    if(sVencimiento.equals("") || sVencimiento.length() < 5 ){
-                        vencimiento.setError(getString(R.string.error_field_required));
+                    String[] venc = sVencimiento.split("/");
+
+                    Utilities.SetLog("vencimiento1", String.valueOf(venc.length),WSkeys.log);
+                    Utilities.SetLog("vencimiento0",venc[0],WSkeys.log);
+                    if(sVencimiento.equals("") || venc.length != 2){
+                        if (venc[0].length() != 2 || venc[1].length() != 2 )
+                        // || sVencimiento.length() < 5
+                        vencimiento.setError(getString(R.string.error_field_requiredVenc));
                         error =  true;
                         focusView = vencimiento;
                         Utilities.SetLog("vencimiento",sVencimiento,WSkeys.log);
+
                     }
                     else{
                     paymentData.setVencimiento(sVencimiento);
                     }
+
+                    if (venc[0].length() != 2 || venc[1].length() != 2 ) {
+                        // || sVencimiento.length() < 5
+                        vencimiento.setError(getString(R.string.error_field_requiredVenc));
+                        error = true;
+                        focusView = vencimiento;
+                        Utilities.SetLog("vencimiento", sVencimiento, WSkeys.log);
+                    }else{
+                        paymentData.setVencimiento(sVencimiento);
+                    }
+
+
+
                     if(sCvv.equals("") || sCvv.length()<3){
                         cvv.setError(getString(R.string.error_field_helpcvv));
                         error =  true;
@@ -792,7 +809,7 @@ public class PaymentDataFragment extends Fragment {
         }
     }*/
 
-    private final TextWatcher dateExpireValidation = new TextWatcher() {
+   /* private final TextWatcher dateExpireValidation = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
         }
@@ -811,6 +828,6 @@ public class PaymentDataFragment extends Fragment {
             }
 
         }
-    };
+    };*/
 }
 
