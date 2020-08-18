@@ -247,6 +247,8 @@ public class WSkeys {
     public static final String URL_MOTIVO_ACLARACION = "app/catalogos/tiposaclaracion";
 
 
+    //eliminar forma de pago
+    public static final String URL_ELIMINA_FORMAPAGO = "app/mv/cliente/formapago/eliminar/";
     //Eliminar cuenta
     //https://cicili.com.mx:8443/app/mv/cliente/eliminarcuenta
     public static final String URL_ELIMINA_CUENTA = "app/mv/cliente/eliminarcuenta";

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -480,7 +481,7 @@ public class PaymentDataFragment extends Fragment {
             //toadd
             json = gson.toJson(paymentData);
             params = new JSONObject(json);
-            //Log.e("PaymentValuePairs--", json);
+            Log.e("PaymentValuePairs--", json);
             url =  WSkeys.URL_BASE + WSkeys.URL_PAYMENTDATA;
         }
 

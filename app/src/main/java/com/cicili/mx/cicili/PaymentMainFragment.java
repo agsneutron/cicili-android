@@ -4,15 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
@@ -39,6 +38,8 @@ public class PaymentMainFragment extends Fragment {
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
     public ArrayList<PaymentData> PAYMENT_ITEMS = new ArrayList<PaymentData>();
+    MyItemPaymentRecyclerViewAdapter adapter = new MyItemPaymentRecyclerViewAdapter(PAYMENT_ITEMS, mListener);
+
     ImageView img_back;
 
     /**
@@ -80,9 +81,12 @@ public class PaymentMainFragment extends Fragment {
         // Set the adapter
 
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+           adapter = new MyItemPaymentRecyclerViewAdapter(PAYMENT_ITEMS, mListener);
+           RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new MyItemPaymentRecyclerViewAdapter(PAYMENT_ITEMS, mListener));
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
 
         img_back = view.findViewById(R.id.img_back);
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +146,7 @@ public class PaymentMainFragment extends Fragment {
     @Override
     public void onResume() {
 
-
+        adapter.notifyDataSetChanged();
         /*getView().setOnKeyListener(new View.OnKeyListener()
         {
             @Override public boolean onKey(View v, int keyCode, KeyEvent event) {

@@ -1,12 +1,12 @@
 package com.cicili.mx.cicili;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cicili.mx.cicili.PaymentMainFragment.OnListFragmentInteractionListener;
 import com.cicili.mx.cicili.domain.PaymentData;
@@ -51,7 +51,7 @@ public class MyItemPaymentRecyclerViewAdapter extends RecyclerView.Adapter<MyIte
         }else if (itipopago ==  WSkeys.TDC) {
                 stipopago = WSkeys.dTDC;
         }
-
+        Utilities.SetLog("P-TIPOPAGO ",String.valueOf(mValues.get(position).getTipoPago()),WSkeys.log );
         holder.mIdView.setText(stipopago);
         holder.mContentView.setText(String.valueOf(mValues.get(position).getNumero()));
         holder.mDescriptionView.setText(String.valueOf(mValues.get(position).getVencimiento()));
