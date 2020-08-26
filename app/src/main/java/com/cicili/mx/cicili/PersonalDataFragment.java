@@ -8,12 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.fragment.app.Fragment;
-
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,7 +30,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -264,13 +261,13 @@ public class PersonalDataFragment extends Fragment {
                 }else{
                     client.setSexo(ts);
                 }
-
-                if(encodedImage.equals("")){
+                //opcional
+                /*if(encodedImage.equals("")){
                     Snackbar.make(view, getString(R.string.e_imageperfil), Snackbar.LENGTH_LONG)
                             .show();
                     cancel = true;
                     Utilities.SetLog("IMG",encodedImage ,WSkeys.log);
-                }
+                }*/
 
                 if (!cancel){
                     try {
