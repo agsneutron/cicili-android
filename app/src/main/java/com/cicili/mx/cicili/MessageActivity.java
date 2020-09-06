@@ -141,7 +141,9 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //databaseReference.push().setValue(new OutputMessage(txtMensaje.getText().toString(),nombre.getText().toString(),fotoPerfilCadena,"1", ServerValue.TIMESTAMP));
                 try {
-                    SendMessage(txtMensaje.getText().toString(), nombre.getText().toString());
+                    if(!txtMensaje.getText().toString().trim().isEmpty()) {
+                        SendMessage(txtMensaje.getText().toString(), nombre.getText().toString());
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

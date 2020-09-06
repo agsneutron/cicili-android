@@ -308,7 +308,7 @@ public class WSkeys {
     //Actualizar Pedido
     //https://cicili.com.mx:8443/app/mv/cliente/pedido/actualizar
     public static final String URL_UPDATE_ORDER = "app/mv/cliente/pedido/actualizar" ;
-    public static int cplenght = 4;
+    public static int cplenght = 5;
     public static final float CAMERA_ZOOM = 15f;
 
     public static final String latitude = "latitud";

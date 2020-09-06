@@ -32,7 +32,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.Programa;
@@ -206,6 +205,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             public void onClick(View view) {
                 View focusView = null;
                 Boolean error =  false;
+                Log.e("onItemSelected lat",String.valueOf(latitudPedido));
+                Log.e("onItemSelected lon",String.valueOf(longitudPedido));
 
                 if(rgFormaPago.getCheckedRadioButtonId() == R.id.tarjeta){
                     formapagoseleccionada = WSkeys.dtarjeta;
@@ -283,6 +284,8 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
                     schedule.setFormaPago(formapagoseleccionada);
                     schedule.setLatitud(latitudPedido);
                     schedule.setLongitud(longitudPedido);
+
+
 
                     try {
                         progressDialog = ProgressDialog.show(getContext(), "Espera un momento por favor", "Estamos programando tu pedido.", true);
@@ -378,6 +381,9 @@ public class ScheduleDataFragment extends Fragment implements AdapterView.OnItem
             selectedAddress = client.getAddressDataArrayList().get(i-1).getId();
             latitudPedido = client.getAddressDataArrayList().get(i - 1).getLatitud();
             longitudPedido = client.getAddressDataArrayList().get(i - 1).getLongitud();
+            Log.e("onItemSelected lat",String.valueOf(client.getAddressDataArrayList().get(i - 1).getLatitud()));
+            Log.e("onItemSelected lon",String.valueOf(client.getAddressDataArrayList().get(i - 1).getLongitud()));
+
         }
 
     }

@@ -11,15 +11,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,6 +30,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -48,7 +47,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Asentamiento;
 import com.cicili.mx.cicili.domain.Client;
@@ -111,11 +109,13 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
 
+
+
     private ArrayList<String> asentamientoArray;
     private ArrayList<Asentamiento> asentamientoAux;
     private Integer asentamientosel;
     private String asentamientoname = "";
-
+    private  Integer asentamientiIndex;
     //mapa
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private Boolean mLocationPermissionGranted = false;
@@ -177,7 +177,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
         view = inflater.inflate(R.layout.address_data_fragment, container, false);
         alias = view.findViewById(R.id.alias);
         cp = view.findViewById(R.id.cp);
-        colonia = (Spinner) view.findViewById(R.id.spinner1);
+        colonia =  view.findViewById(R.id.spinner1);
         calle = view.findViewById(R.id.calle);
         numext = view.findViewById(R.id.numext);
         numint = view.findViewById(R.id.numint);
@@ -244,8 +244,11 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
                 if (!error){
                     Asentamiento asentamiento = new Asentamiento();
-                    asentamiento.setId(asentamientosel);
-                    asentamiento.setText(asentamientoname);
+                    //asentamiento.setId(asentamientosel);
+                    //asentamiento.setText(asentamientoname);
+                    asentamiento = asentamientoAux.get(asentamientiIndex);
+
+                    Utilities.SetLog(LOG + "dirrr", asentamiento.getMunicipio(), WSkeys.log);
                     addressData.setAlias(alias.getText().toString());
                     addressData.setCp(cp.getText().toString());
                     addressData.setAsentamiento(asentamiento);
@@ -257,39 +260,6 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                     // addressData.setLatitud(LatFTA);
                     //addressData.setLongitud(LonFTA);
                 }
-            }
-        });
-        cp.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(cp.getText().length()==5 && (Utilities.isFieldValid(cp))) {
-                    LlenaColonia(cp.getText().toString());
-                }
-            }
-        });
-
-
-        cp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if((Utilities.isFieldValid(cp)) && cp.length()>= WSkeys.cplenght){
-                    LlenaColonia(cp.getText().toString());
-                }
-                else {
-                    Snackbar.make(cp, "Introduce un Código Postal para mostrar las colonias.", Snackbar.LENGTH_LONG)
-                                .show();
-                }
-
             }
         });
 
@@ -307,6 +277,52 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
         // attaching data adapter to spinner
         colonia.setAdapter(dataAdapter);
+
+        cp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(cp.getText().length()==5 && (Utilities.isFieldValid(cp))) {
+                    LlenaColonia(cp.getText().toString());
+                }
+
+            }
+        });
+
+
+        cp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+                if (!b) {
+
+                    if((Utilities.isFieldValid(cp)) && cp.getText().toString().length()>= WSkeys.cplenght){
+                        //    LlenaColonia(cp.getText().toString());
+                    }
+                    else {
+                        cp.setText("");
+                        Snackbar.make(cp, "Introduce un Código Postal para buscar las colonias disponibles.", Snackbar.LENGTH_LONG)
+                                .show();
+                        List<String> categories = new ArrayList<String>();
+                        categories.add("Colonia");
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
+                        colonia.setAdapter(dataAdapter);
+                    }
+                }
+            }
+        });
+
+
+
 
         //switch
         favorito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -382,6 +398,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
         if (i!=0) {
             asentamientosel = asentamientoAux.get(i).getId();
             asentamientoname = asentamientoAux.get(i).getText();
+            asentamientiIndex = i;
 
         }
 
@@ -476,35 +493,52 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
         if (respuesta.getInt("codeError") == (WSkeys.okresponse)) {
             //obtener nivel data
             String data = respuesta.getString(WSkeys.data);
-            JSONObject jo_data = new JSONObject(data);
+            //JSONObject jo_data = new JSONObject(data);
             //ontener nivel de
             //Utilities.SetLog("RESPONSEASENTAMIENTOS",data,WSkeys.log);
-            JSONArray ja_asentamientos = jo_data.getJSONArray(WSkeys.asentamientos);
+            JSONArray ja_asentamientos = new JSONArray(data);
             Utilities.SetLog("ASENTAMIENTOSARRAY",ja_asentamientos.toString(),WSkeys.log);
-            for(int i=0; i<ja_asentamientos.length(); i++){
-                Asentamiento asentamiento = new Asentamiento();
-                try {
-                    if(i==0){
-                        asentamiento.setId(0);
-                        asentamiento.setText("Selecciona Colonia");
+            if (ja_asentamientos.length() > 0) {
+                for (int i = 0; i < ja_asentamientos.length(); i++) {
+                    Asentamiento asentamiento = new Asentamiento();
+                    try {
+                        if (i == 0) {
+                            asentamiento.setId(0);
+                            asentamiento.setText("Selecciona Colonia");
+                            asentamiento.setMunicipio("");
+                            asentamiento.setEstado("");
+                            asentamiento.setPais("");
+                            asentamientoAux.add(asentamiento);
+                            asentamientoArray.add("Selecciona Colonia");
+                        }
+                        JSONObject jsonObject = (JSONObject) ja_asentamientos.get(i);
+                        asentamiento.setId(jsonObject.getInt("id"));
+                        asentamiento.setText(jsonObject.getString("text"));
+                        asentamiento.setMunicipio(jsonObject.getString("municipio"));
+                        asentamiento.setEstado(jsonObject.getString("estado"));
+                        asentamiento.setPais(jsonObject.getString("pais"));
                         asentamientoAux.add(asentamiento);
-                        asentamientoArray.add("Selecciona Colonia");
+                        asentamientoArray.add(jsonObject.getString("text"));
+                        Utilities.SetLog(LOG + "id", String.valueOf(jsonObject.getInt("id")) + "-" + String.valueOf(selectedtown) + "-" + i, WSkeys.log);
+                        if (jsonObject.getInt("id") == selectedtown) {
+                            posselected = i + 1;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    JSONObject jsonObject = (JSONObject) ja_asentamientos.get(i);
-                    asentamiento.setId(jsonObject.getInt("id"));
-                    asentamiento.setText(jsonObject.getString("text"));
-                    asentamientoAux.add(asentamiento);
-                    asentamientoArray.add(jsonObject.getString("text"));
-                    Utilities.SetLog(LOG+"id",String.valueOf(jsonObject.getInt("id")) + "-" + String.valueOf(selectedtown)+ "-"+i,WSkeys.log);
-                    if(jsonObject.getInt("id") == selectedtown){
-                        posselected = i+1;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+                colonia.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, asentamientoArray));
+                colonia.setSelection(posselected);
+            }else{
+                Snackbar.make(alias, "Sin Colonias disponibles para el CP capturado", Snackbar.LENGTH_SHORT)
+                        .show();
+                cp.setText("");
+                asentamientoAux.clear();
+                asentamientoArray.clear();
+                colonia.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, asentamientoArray));
+
+
             }
-            colonia.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,asentamientoArray));
-            colonia.setSelection(posselected);
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else{
@@ -526,14 +560,14 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             addressData.setId(client.getAddressDataArrayList().get(pos).getId());
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            //Log.e("AddressValuesUpdate--", json);
+            Log.e("AddressValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESUPPDATE;
         }else{
 
             //toadd
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            //Log.e("AddressValuePairs--", json);
+            Log.e("AddressValuePairs--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESSDATA;
 
         }
@@ -839,7 +873,9 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                         //SETPINFORLOCATIONNAME
                         Geocoder geocoder = new Geocoder(getActivity());
                         List<Address> list = new ArrayList<>();
-                        String searchaddress = addressData.getAsentamiento().getPais() + ", " + addressData.getAsentamiento().getEstado() + ", " + addressData.getAsentamiento().getMunicipio() + ", " + addressData.getCp() + ", " + addressData.getAsentamiento().getText() + ", " + addressData.getCalle();
+                        //String searchaddress = addressData.getAsentamiento().getPais() + ", " + addressData.getAsentamiento().getEstado() + ", " + addressData.getAsentamiento().getMunicipio() + ", " + addressData.getCp() + ", " + addressData.getAsentamiento().getText() + ", " + addressData.getCalle() + " " +  addressData.getExterior();
+                        String searchaddress = addressData.getCalle() + " " +  addressData.getExterior() + ", " + addressData.getAsentamiento().getText() + ", " + addressData.getCp() + " " + addressData.getAsentamiento().getMunicipio() + ", " + addressData.getAsentamiento().getEstado()  + ", " + addressData.getAsentamiento().getPais();
+                        //String searchaddress = addressData.getCalle() + " " +  addressData.getExterior() + ", " +  addressData.getAsentamiento().getText() + ", " + addressData.getCp() + " " + "Toluca de Lerdo" + ", " + "Estado de México"  + ", " + "México"   ;
                         Utilities.SetLog("SEARCH ADDRESS", searchaddress, WSkeys.log);
                         try {
                             list = geocoder.getFromLocationName(searchaddress, 1);

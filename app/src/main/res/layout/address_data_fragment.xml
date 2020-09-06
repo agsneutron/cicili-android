@@ -173,7 +173,7 @@
                         android:id="@+id/numint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:imeOptions="actionNext"
                         android:nextFocusForward="@+id/fragment_qc_flSelectWorkDone"
                         />

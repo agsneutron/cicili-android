@@ -338,7 +338,7 @@
     <string name="escribe_un_mensaje">Escribe un mensaje</string>
     <string name="error_invalid_cellnumber">Número incorrecto.</string>
     <string name="passwordlbl">Contraseña</string>
-    <string name="addresslocationexp">manten presionada la pantalla para colocar el pin</string>
+    <string name="addresslocationexp">De ser necesario, mueve el pin para ajustar la ubicación.</string>
     <string name="helptextpsw">La contraseña debe contener de 8 a 12 caracteres, al menos una mayúscula, una minúscula y un caracter especial.</string>
     <string name="slogan">La manera más fácil de pedir el GAS</string>
     <string name="titlecode">Ingresa el código de verificación que llegó a tu correo.</string>

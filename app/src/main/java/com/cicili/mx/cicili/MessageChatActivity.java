@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.ComunicaCC;
 import com.cicili.mx.cicili.domain.WSkeys;
@@ -136,7 +134,9 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             public void onClick(View view) {
                 //databaseReference.push().setValue(new OutputMessage(txtMensaje.getText().toString(),nombre.getText().toString(),fotoPerfilCadena,"1", ServerValue.TIMESTAMP));
                 try {
-                    SendMessage(txtMensaje.getText().toString(), nombre.getText().toString());
+                    if(!txtMensaje.getText().toString().trim().isEmpty()) {
+                        SendMessage(txtMensaje.getText().toString(), nombre.getText().toString());
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -458,6 +458,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     public void onBackPressed() {
         client.setContextChat(null);
         super.onBackPressed();
+        
     }
 
     @Override
