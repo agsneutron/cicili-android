@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -243,11 +244,11 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
                 if (!error){
                     Asentamiento asentamiento = new Asentamiento();
-                    //asentamiento.setId(asentamientosel);
-                    //asentamiento.setText(asentamientoname);
-                    asentamiento = asentamientoAux.get(asentamientiIndex);
+                    asentamiento.setId(asentamientosel);
+                    asentamiento.setText(asentamientoname);
+                    //asentamiento = asentamientoAux.get(asentamientiIndex);
 
-                    Utilities.SetLog(LOG + "dirrr", asentamiento.getMunicipio(), WSkeys.log);
+                   // Utilities.SetLog(LOG + "dirrr", address, WSkeys.log);
                     addressData.setAlias(alias.getText().toString());
                     addressData.setCp(cp.getText().toString());
                     addressData.setAsentamiento(asentamiento);
@@ -255,7 +256,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                     addressData.setExterior(numext.getText().toString());
                     addressData.setInterior(numint.getText().toString());
                     addressData.setFavorito(valFavorito);
-                    DialogValidate(addressData.getAlias(), addressData);
+                    DialogValidate(addressData.getAlias(), addressData, asentamientoAux.get(asentamientiIndex));
                     // addressData.setLatitud(LatFTA);
                     //addressData.setLongitud(LonFTA);
                 }
@@ -559,14 +560,14 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             addressData.setId(client.getAddressDataArrayList().get(pos).getId());
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            //Log.e("AddressValuesUpdate--", json);
+            Log.e("AddressValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESUPPDATE;
         }else{
 
             //toadd
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            //Log.e("AddressValuePairs--", json);
+            Log.e("AddressValuePairs--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESSDATA;
 
         }
@@ -811,7 +812,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
      * */
 
 
-    public void DialogValidate(final String sUser, final  AddressData addressData){
+    public void DialogValidate(final String sUser, final  AddressData addressData, final Asentamiento asentamientoaux){
         getMyLocationPermision();
 
 
@@ -873,7 +874,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                         Geocoder geocoder = new Geocoder(getActivity());
                         List<Address> list = new ArrayList<>();
                         //String searchaddress = addressData.getAsentamiento().getPais() + ", " + addressData.getAsentamiento().getEstado() + ", " + addressData.getAsentamiento().getMunicipio() + ", " + addressData.getCp() + ", " + addressData.getAsentamiento().getText() + ", " + addressData.getCalle() + " " +  addressData.getExterior();
-                        String searchaddress = addressData.getCalle() + " " +  addressData.getExterior() + ", " + addressData.getAsentamiento().getText() + ", " + addressData.getCp() + " " + addressData.getAsentamiento().getMunicipio() + ", " + addressData.getAsentamiento().getEstado()  + ", " + addressData.getAsentamiento().getPais();
+                        String searchaddress = addressData.getCalle() + " " +  addressData.getExterior() + ", " + addressData.getAsentamiento().getText() + ", " + addressData.getCp() + " " + asentamientoaux.getMunicipio() + ", " + asentamientoaux.getEstado()  + ", " + asentamientoaux.getPais();
                         //String searchaddress = addressData.getCalle() + " " +  addressData.getExterior() + ", " +  addressData.getAsentamiento().getText() + ", " + addressData.getCp() + " " + "Toluca de Lerdo" + ", " + "Estado de México"  + ", " + "México"   ;
                         Utilities.SetLog("SEARCH ADDRESS", searchaddress, WSkeys.log);
                         try {
