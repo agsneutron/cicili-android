@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -560,14 +559,14 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             addressData.setId(client.getAddressDataArrayList().get(pos).getId());
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            Log.e("AddressValuesUpdate--", json);
+            //Log.e("AddressValuesUpdate--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESUPPDATE;
         }else{
 
             //toadd
             json = gson.toJson(addressData);
             params = new JSONObject(json);
-            Log.e("AddressValuePairs--", json);
+            //Log.e("AddressValuePairs--", json);
             url = WSkeys.URL_BASE + WSkeys.URL_ADDRESSDATA;
 
         }
