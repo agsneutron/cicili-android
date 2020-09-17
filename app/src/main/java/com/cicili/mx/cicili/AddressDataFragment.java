@@ -59,6 +59,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -107,7 +108,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
     AppCompatButton button;
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
-
+    private MarkerOptions markerOptions = null;
 
 
     private ArrayList<String> asentamientoArray;
@@ -554,6 +555,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
         String url;
         JSONObject params;
 
+
         if(pos != null) {
             //toupdate
             addressData.setId(client.getAddressDataArrayList().get(pos).getId());
@@ -670,8 +672,8 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lon)));
         // Creating a marker
-        MarkerOptions markerOptions = new MarkerOptions();
-
+       // MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions = new MarkerOptions();
         // Setting the position for the marker
         markerOptions.position(new LatLng(lat, lon));
 
@@ -691,6 +693,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
         LatFTA = lat;
         LonFTA = lon;
+        Utilities.SetLog("setPosPin",String.valueOf(LatFTA + " " + LonFTA), WSkeys.log);
     }
 
     private void setPinForLocation(final String alias){
@@ -701,8 +704,8 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             public void onMapClick(LatLng latLng) {
 
                 // Creating a marker
-                MarkerOptions markerOptions = new MarkerOptions();
-
+                //MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions = new MarkerOptions();
                 // Setting the position for the marker
                 markerOptions.position(latLng);
 
@@ -721,6 +724,28 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
                 LatFTA=latLng.latitude;
                 LonFTA=latLng.longitude;
+                Utilities.SetLog("MAP-UPD POS PIN",String.valueOf(LatFTA + " " + LonFTA), WSkeys.log);
+            }
+
+
+        });
+
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                LatFTA = marker.getPosition().latitude;
+                LonFTA = marker.getPosition().longitude;
+                Utilities.SetLog("PIN draged",String.valueOf(LatFTA + " " + LonFTA), WSkeys.log);
             }
         });
     }
@@ -912,14 +937,17 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View v) {
                 // dialog.dismiss();
+
                 try {
                     if (LatFTA == 0.0 || LonFTA == 0.0) {
                         Snackbar.make(calle, "En el mapa ubica tu dirección.", Snackbar.LENGTH_LONG)
                                 .show();
 
                     } else {
+
                         addressData.setLatitud(LatFTA);
                         addressData.setLongitud(LonFTA);
+                        Utilities.SetLog("latlontoSave",LatFTA.toString() + " " + LonFTA.toString(), WSkeys.log);
                         AddressDataTask(addressData, dialog);
 
                     }
@@ -932,5 +960,7 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
 
         dialog.show();
     }
+
+
 
 }
