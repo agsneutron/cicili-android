@@ -1,13 +1,15 @@
 package com.cicili.mx.cicili;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cicili.mx.cicili.OrderMainFragment.OnListFragmentInteractionListener;
 import com.cicili.mx.cicili.domain.PedidoData;
 import com.cicili.mx.cicili.dummy.DummyContent.DummyItem;
+
 import java.util.ArrayList;
 
 /**
@@ -43,7 +45,7 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
         holder.mCantidad.setText(String.valueOf(mValues.get(position).getMonto()));
         holder.mFormaPago.setText(String.valueOf(mValues.get(position).getAlias()));
         holder.mContentView.setText(String.valueOf(mValues.get(position).getDireccion()));
-
+        holder.mStatus.setText(String.valueOf(mValues.get(position).getNombreStatus()));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,18 +71,20 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
         public final TextView mTime;
         public final TextView mCantidad;
         public final TextView mFormaPago;
+        public final TextView mStatus;
         public PedidoData mItem;
 
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-            mDate = (TextView) view.findViewById(R.id.date);
-            mTime = (TextView) view.findViewById(R.id.time);
-            mCantidad = (TextView) view.findViewById(R.id.cantidad);
-            mFormaPago = (TextView) view.findViewById(R.id.formaPago);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
+            mDate = view.findViewById(R.id.date);
+            mTime = view.findViewById(R.id.time);
+            mCantidad = view.findViewById(R.id.cantidad);
+            mFormaPago = view.findViewById(R.id.formaPago);
+            mStatus = view.findViewById(R.id.status_order);
         }
 
         @Override

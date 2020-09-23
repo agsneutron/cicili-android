@@ -4,8 +4,21 @@ import android.Manifest;
 import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -15,7 +28,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.PedidoDetail;
@@ -35,22 +47,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +64,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
     TextView mTime;
     TextView mCantidad;
     TextView mFormaPago;
+    TextView mEstatus;
     TextView mlbl1,mlbl2,mlbl3,mlbl4;
     MapFragment mapFragment;
     Button aclarar, facturar, cancelar;
@@ -114,6 +111,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         mTime = findViewById(R.id.time);
         mCantidad = findViewById(R.id.cantidad);
         mFormaPago = findViewById(R.id.formaPago);
+        mEstatus = findViewById(R.id.estatusOrden);
         mlbl1 = findViewById(R.id.lbl1);
         mlbl2 = findViewById(R.id.lbl2);
         mlbl3 = findViewById(R.id.lbl3);
@@ -585,6 +583,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             mCantidad.setText(String.valueOf(pedidoData.getMonto()));
             mIdView.setText(String.valueOf(pedidoData.getCantidad()));
             mFormaPago.setText(pedidoData.getFormaPago());
+            mEstatus.setText(pedidoData.getNombreStatus());
             mlbl1.setText(String.format("%s: %s", pedidoData.getAlias(), pedidoData.getDireccion()));
             //mlbl2.setText(pedidoData.getNombreConcesionario());
             mlbl2.setText("CONDUCTOR: ");
@@ -592,7 +591,6 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             mlbl4.setText("PLACAS: " + pedidoData.getPlaca());
             latOrderAddress = pedidoData.getLatitud();
             lonOrderAddress = pedidoData.getLongitud();
-
             if (latOrderAddress==null){
                 latOrderAddress=0.0;
             }
