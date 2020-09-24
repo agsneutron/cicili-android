@@ -142,6 +142,7 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
         latOrderAddress = 0.0; // client.getPedidosDataArrayList().get(pos).getLatitud();
         lonOrderAddress = 0.0; //client.getPedidosDataArrayList().get(pos).getLongitud();
 
+
         facturar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -586,9 +587,9 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
             mEstatus.setText(pedidoData.getNombreStatus());
             mlbl1.setText(String.format("%s: %s", pedidoData.getAlias(), pedidoData.getDireccion()));
             //mlbl2.setText(pedidoData.getNombreConcesionario());
-            mlbl2.setText("CONDUCTOR: ");
-            mlbl3.setText(pedidoData.getNombreConductor());
-            mlbl4.setText("PLACAS: " + pedidoData.getPlaca());
+            mlbl2.setText(String.format("CONDUCTOR: %s", pedidoData.getNombreConductor()));
+            mlbl4.setText(String.format("PLACAS: %s", pedidoData.getPlaca()));
+            mlbl3.setText(String.format("PIPA: %s", pedidoData.getNumero()));
             latOrderAddress = pedidoData.getLatitud();
             lonOrderAddress = pedidoData.getLongitud();
             if (latOrderAddress==null){
@@ -598,11 +599,16 @@ public class OrderDetailActivity extends AppCompatActivity implements  OnMapRead
                 lonOrderAddress=0.0;
             }
 
+            if (pedidoData.getStatus().equals(9)){
+                aclarar.setVisibility(View.VISIBLE);
+
+            }else{
             if (pedidoData.getStatus()!=0){
                 aclarar.setVisibility(View.VISIBLE);
                 facturar.setVisibility(View.VISIBLE);
             }else{
                 cancelar.setVisibility(View.VISIBLE);
+            }
             }
             //map
             getMyLocationPermision();

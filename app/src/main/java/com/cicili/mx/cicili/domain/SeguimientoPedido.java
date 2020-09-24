@@ -25,12 +25,13 @@ public class SeguimientoPedido {
     String idCliente;
     String formaPago;
     String precio;
+    String numero;
 
 
     public SeguimientoPedido() {
     }
 
-    public SeguimientoPedido(String id, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago, String precio) {
+    public SeguimientoPedido(String id, String nombreConductor, String clave, String placa, String color, String tiempo, String monto, String latitud, String longitud, String nombreConcesionario, String nombreCliente, String logo, String tipo, String status, String nombreStatus, String horaSolicitada, String direccion, String fechaSolicitada, String fechaPedido, String razonSocial, String cantidad, String idCliente, String formaPago, String precio, String numero) {
         this.id = id;
         this.nombreConductor = nombreConductor;
         this.clave = clave;
@@ -55,6 +56,7 @@ public class SeguimientoPedido {
         this.idCliente = idCliente;
         this.formaPago = formaPago;
         this.precio = precio;
+        this.numero = numero;
     }
 
     public SeguimientoPedido(String id, String tipo, String status, String nombreStatus) {
@@ -257,5 +259,13 @@ public class SeguimientoPedido {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 }

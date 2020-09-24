@@ -1,11 +1,11 @@
 package com.cicili.mx.cicili;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cicili.mx.cicili.ScheduleMainFragment.OnListFragmentInteractionListener;
 import com.cicili.mx.cicili.domain.PedidoData;
@@ -44,7 +44,7 @@ public class MyItemScheduleRecyclerViewAdapter extends RecyclerView.Adapter<MyIt
         holder.mCantidad.setText(String.valueOf(mValues.get(position).getMonto()));
         holder.mFormaPago.setText(String.valueOf(mValues.get(position).getAlias()));
         holder.mContentView.setText(String.valueOf(mValues.get(position).getDireccion()));
-
+        holder.mStatusOrder.setText(String.valueOf(mValues.get(position).getNombreStatus()));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +70,7 @@ public class MyItemScheduleRecyclerViewAdapter extends RecyclerView.Adapter<MyIt
         public final TextView mTime;
         public final TextView mCantidad;
         public final TextView mFormaPago;
+        public final TextView mStatusOrder;
         public PedidoData mItem;
 
 
@@ -82,6 +83,7 @@ public class MyItemScheduleRecyclerViewAdapter extends RecyclerView.Adapter<MyIt
             mTime = (TextView) view.findViewById(R.id.time);
             mCantidad = (TextView) view.findViewById(R.id.cantidad);
             mFormaPago = (TextView) view.findViewById(R.id.formaPago);
+            mStatusOrder = (TextView) view.findViewById(R.id.status_order);
         }
 
         @Override

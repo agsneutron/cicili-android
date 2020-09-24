@@ -63,73 +63,114 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_weight="0.1"
+                                app:srcCompat="@drawable/ic_icon_gauge_01"
+                                android:tint="@color/colorPrimaryDark"/>
+
 
                             <TextView
                                 android:id="@+id/item_number"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="alias"
-                                android:textColor="#9b9b9b"
-                                android:textSize="11.5sp" />
+                                android:layout_marginLeft="6.7dp"
+                                android:layout_weight="0.4"
+                                android:text="Cantidad"
+                                android:textColor="#4a4a4a"
+                                android:textSize="12sp"
+                                />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="16dp"
+                                android:layout_marginLeft="2dp"
+                                app:srcCompat="@drawable/ic_attach_money_black_24dp"
+                                android:tint="@color/colorPrimaryDark"
+                                android:layout_weight="0.1"/>
+
+
+                            <TextView
+                                android:id="@+id/cantidad"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6.7dp"
+                                android:layout_weight="0.4"
+                                android:text="$ 312.00"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15sp"
+                                />
+
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="16dp"
+                                android:layout_marginLeft="2dp"
+                                app:srcCompat="@drawable/ic_date_range_prim_24dp"
+                                android:layout_weight="0.1"/>
+
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6.7dp"
+                                android:layout_weight="0.4"
+                                android:text="Fecha"
+                                android:textColor="#4a4a4a"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="16dp"
+                                android:layout_marginLeft="2dp"
+                                app:srcCompat="@drawable/ic_access_time_black_24dp"
+                                android:tint="@color/colorPrimaryDark"
+                                android:layout_weight="0.1"/>
+
+                            <TextView
+                                android:id="@+id/time"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6.7dp"
+                                android:layout_weight="0.4"
+                                android:text="Hora"
+                                android:textColor="#4a4a4a"
+                                android:textSize="12sp" />
+
+
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/status_order"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="status"
+                            android:textColor="#9b9b9b"
+                            android:textSize="11.5sp"
+                            android:layout_marginEnd="36dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="end"/>
 
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="18dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="2dp"
-                        app:srcCompat="@drawable/ic_date_range_prim_24dp" />
-
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6.7dp"
-                        android:layout_weight="1"
-                        android:text="Fecha"
-                        android:textColor="#4a4a4a"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginLeft="2dp"
-                        app:srcCompat="@drawable/ic_access_time_black_24dp"
-                        android:tint="@color/colorPrimaryDark" />
-
-                    <TextView
-                        android:id="@+id/time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6.7dp"
-                        android:layout_weight="1"
-                        android:text="Hora"
-                        android:textColor="#4a4a4a"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/cantidad"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
-                        android:layout_weight="1"
-                        android:text="$ 312.00"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

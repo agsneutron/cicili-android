@@ -20,12 +20,13 @@ public class PedidoDetail {
     private String nombreStatus;
     private Double latitud;
     private Double longitud;
+    private String numero;
 
     public PedidoDetail() {
 
     }
 
-    public PedidoDetail(Integer id, Double cantidad, String fechaPedido, String fechaSolicitada, String horaSolicitada, Double monto, Integer status, Integer idcliente, String nombreConductor, String nombreConcesionario, String nombreCliente, String formaPago, String placa, String direccion, String alias, String nombreStatus, Double latitud, Double longitud) {
+    public PedidoDetail(Integer id, Double cantidad, String fechaPedido, String fechaSolicitada, String horaSolicitada, Double monto, Integer status, Integer idcliente, String nombreConductor, String nombreConcesionario, String nombreCliente, String formaPago, String placa, String direccion, String alias, String nombreStatus, Double latitud, Double longitud, String numero) {
         this.id = id;
         this.cantidad = cantidad;
         this.fechaPedido = fechaPedido;
@@ -44,6 +45,7 @@ public class PedidoDetail {
         this.nombreStatus = nombreStatus;
         this.latitud = latitud;
         this.longitud = longitud;
+        this.numero = numero;
     }
 
     public Integer getId() {
@@ -188,5 +190,13 @@ public class PedidoDetail {
 
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 }

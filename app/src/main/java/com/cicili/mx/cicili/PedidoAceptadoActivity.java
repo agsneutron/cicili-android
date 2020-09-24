@@ -1,11 +1,5 @@
 package com.cicili.mx.cicili;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Application;
 import android.app.ProgressDialog;
@@ -29,12 +23,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -45,7 +44,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.directionhelpers.FetchURL;
 import com.cicili.mx.cicili.directionhelpers.TaskLoadedCallback;
 import com.cicili.mx.cicili.domain.Client;
@@ -53,7 +51,6 @@ import com.cicili.mx.cicili.domain.MotivoCancela;
 import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -65,8 +62,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -75,12 +72,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
-
-//Google API classes
-//import com.google.api.GoogleAPI;
-//import com.google.api.translate.Language;
-//import com.google.api.translate.Translate;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +79,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+//Google API classes
+//import com.google.api.GoogleAPI;
+//import com.google.api.translate.Language;
+//import com.google.api.translate.Translate;
 
 public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback, MessageReceiverCallback {
 
@@ -209,7 +205,7 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
             time.setText(seguimientoPedido.getTiempo());
             lbl1.setText(String.format("Conductor:  %s", seguimientoPedido.getNombreConductor()));
             lbl2.setText(String.format("Color: %s", seguimientoPedido.getColor()));
-            lbl3.setText("");
+            lbl3.setText(String.format("Pipa: %s", seguimientoPedido.getNumero()));
             lbl4.setText(String.format("Placa:  %s", seguimientoPedido.getPlaca()));
             item_price.setText(String.format("$ %s", seguimientoPedido.getPrecio()));
 
