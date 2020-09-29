@@ -301,6 +301,9 @@ public class WSkeys {
     public static final String calificacion="calificacion";
     public static final String comentario="comentario";
 
+    //direccion, eliminar
+    public static final String URL_ELIMINA_DIRECCION = "mv/cliente/direccion/eliminar/";
+
 
     public static final Boolean log = true; //true
 

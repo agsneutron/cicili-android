@@ -1,12 +1,32 @@
 package com.cicili.mx.cicili;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.Utilities;
@@ -21,15 +41,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import android.view.View;
-import android.widget.TextView;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.cicili.mx.cicili.domain.Client.getContext;
 
 public class AddressDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -48,6 +68,7 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
     private Double latCurrentAddress, lonCurrentAdress;
     MapFragment mapFragment;
     private  Integer pos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +143,35 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
 
 
                 //getActivity().getFragmentManager().beginTransaction().remove().commit();
+
+            }
+        });
+
+        FloatingActionButton fabElimina = (FloatingActionButton) findViewById(R.id.fabElimina);
+        fabElimina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //
+                AlertDialog alertDialog = new AlertDialog.Builder(AddressDetailActivity.this,R.style.MyAlertDialogStyle)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Eliminar Dirección")
+                        .setMessage(" ¿ Está seguro que desea eliminar la dirección: " + alias.getText() + " ?")
+                        .setPositiveButton("     Si     ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deteteAddress(String.valueOf(pos));
+                            }
+                        })
+                        .setNegativeButton("     No     ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //...
+                            }
+                        })
+                        .show();
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
 
             }
         });
@@ -288,5 +338,74 @@ public class AddressDetailActivity extends AppCompatActivity implements OnMapRea
             getFragmentManager().beginTransaction().remove(f).commit();
     }*/
 
+    public void deteteAddress(String posAdd){
 
+        if (client.getAddressDataArrayList().size() > 1){
+
+            String url =  WSkeys.URL_BASE + WSkeys.URL_ELIMINA_DIRECCION+client.getAddressDataArrayList().get(pos).getId() ; //   "{" ++"}";
+            //Log.e("URL", url);
+            RequestQueue queue = Volley.newRequestQueue(getContext());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.e("RESPONSE",response.toString());
+                    //Log.e("paymentsize", String.valueOf(client.getPaymentDataArrayList().size()));
+                    try {
+                        if (response.getString("data").equals("La dirección se eliminó correctamente")) {
+                            AddressData addressData = client.getAddressDataArrayList().get(pos);
+                            client.getAddressDataArrayList().remove(addressData);
+                            //Log.e("NEW paymentsize", String.valueOf(client.getPaymentDataArrayList().size()));
+                        }
+                        Toast.makeText(AddressDetailActivity.this, response.getString("data"),Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    //Log.e("El error", error.toString());
+                    Snackbar.make(street, R.string.errorlistener, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+            }) {
+                @Override
+                public String getBodyContentType()
+                {
+                    return "application/json";
+                }
+
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                /*params.put(WSkeys.user, client.getUsername());
+                params.put(WSkeys.name, vname);
+                params.put(WSkeys.apepat, vpat);
+                params.put(WSkeys.apemat, vmat);
+                params.put(WSkeys.fechanacimiento, vnac);
+                //Log.e("PARAMETROS", params.toString());*/
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    //params.put("Content-Type", "application/x-www-form-urlencoded");
+                    params.put("Content-Type", "application/json; charset=utf-8");
+                    params.put("Authorization", client.getToken());
+                    return params;
+                }
+            };
+
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(9000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            queue.add(jsonObjectRequest);
+
+        }
+
+    }
 }

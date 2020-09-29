@@ -4,15 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
@@ -39,6 +38,8 @@ public class AddressMainFragment extends Fragment {
     Client client = (Client) application;
     public ArrayList<AddressData> ADDRESS_ITEMS = new ArrayList<AddressData>();
     ImageView img_back;
+
+    MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(ADDRESS_ITEMS, mListener);
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -76,15 +77,18 @@ public class AddressMainFragment extends Fragment {
             Utilities.SetLog("MAINADDRESS", ADDRESS_ITEMS.toString(), WSkeys.log);
         }
         // Set the adapter
+
         //if (view instanceof RecyclerView) {
             Context context = view.getContext();
+            adapter = new MyItemRecyclerViewAdapter(ADDRESS_ITEMS, mListener);
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         //    if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
          //   } else {
         //        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         //    }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(ADDRESS_ITEMS, mListener));
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         //}
 
             img_back = view.findViewById(R.id.img_back);

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cliente.AddressDetailActivity"
-    android:background="@color/white">
+    tools:context=".cliente.AddressDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -27,8 +26,17 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/ic_edit_white_24dp"
+        android:layout_marginEnd="80dp"
+        app:srcCompat="@drawable/ic_edit_white_24dp"
+        app:layout_anchor="@id/ldata"
+        app:layout_anchorGravity="top|end"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabElimina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:srcCompat="@android:drawable/ic_menu_delete"
         app:layout_anchor="@id/ldata"
         app:layout_anchorGravity="top|end"/>
 
