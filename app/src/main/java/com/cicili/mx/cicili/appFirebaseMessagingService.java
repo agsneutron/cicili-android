@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -53,6 +54,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
     MessageReceiverCallback interfaceNotificationPipas;
     MessageReceiverCallback interfaceNotificationChat;
     MessageReceiverCallback interfaceNotificationNewOrder;
+    private MediaPlayer mediaplayer;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -137,24 +139,38 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                     }
 
                     break;
+                case 13:
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
+                    break;
                 case 20:
+
+                    mediaplayer = MediaPlayer.create(this, R.raw.text_notification);
+                    mediaplayer.start();
                     GsonBuilder gsonChatBuilder = new GsonBuilder();
                     Gson gsonObjectChat = gsonChatBuilder.create();
+                    //sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
                     sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
                     if (interfaceNotificationChat == null && client.getContextChat() != null) {
                         Utilities.SetLog("NOTIFICATION GETCONTEX?", remoteMessage.getData().toString(), WSkeys.log);
 
                         interfaceNotificationChat = (MessageReceiverCallback) client.getContextChat();
-                        interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), sJSONObject);
+                        interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("idPedido"));
                     }
                     else{
-                        if(getApplicationContext()!=null) {
+
+                        if(MessageChatActivity.mainActivityIsOpen()==false) { //getApplicationContext()!=null
                             Utilities.SetLog("uso 3 pedido", remoteMessage.getData().get("idPedido"), WSkeys.log);
                             Intent intent = new Intent(getApplicationContext(), MessageChatActivity.class);
                             intent.putExtra("idPedido", String.valueOf(remoteMessage.getData().get("idPedido")));
                             intent.putExtra("uso", "3");
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                        }else{
+                            if (interfaceNotificationChat != null && client.getContextChat() != null) {
+                                interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("idPedido"));
+                            }
                         }
                     }
 

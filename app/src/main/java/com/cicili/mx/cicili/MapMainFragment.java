@@ -142,7 +142,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
     private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
     private ArrayList<Marker> mMarkerArray_dir = new ArrayList<Marker>();
     String pos="";
-    ArrayAdapter adapter;
+    ArrayAdapter adapter, addressadapter;
     AutotanquesCercanos objPipaseleccionada  = new AutotanquesCercanos();
 
     /***** Ejecutar tarea cada 5 segundos < **/
@@ -1640,7 +1640,9 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
             direccionArray.add("Agrega una dirección");
             Utilities.SetLog("size dir",String.valueOf(direccionArray.size()),WSkeys.log);
         }
-        direcciones.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, direccionArray));
+        addressadapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, direccionArray);
+        direcciones.setAdapter(addressadapter);
+        addressadapter.notifyDataSetChanged();
     }
 
 
@@ -1989,6 +1991,22 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback, Ada
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         queue.add(jsonObjectRequest);
+
+    }
+
+    @Override
+    public void onResume() {
+
+        addressadapter.notifyDataSetChanged();
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+
+        addressadapter.notifyDataSetChanged();
+        super.onPause();
 
     }
 

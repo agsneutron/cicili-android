@@ -67,6 +67,12 @@
 
     </group>
 
+    <group android:id="@+id/grpV">
+        <item
+            android:id="@+id/nav_vn"
+            android:icon="@drawable/flama_clara"
+            android:title="@string/versionname" />
+    </group>
     <!--<item android:title="Configuración">
        <menu>
           <item

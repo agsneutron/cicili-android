@@ -645,15 +645,20 @@ public class AddressDataFragment extends Fragment implements AdapterView.OnItemS
                 Toast toast = Toast.makeText(getContext(),  R.string.successaddressupdate, Toast.LENGTH_LONG);
                 toast.show();
                 Intent intent = new Intent(getContext(),MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 getActivity().finish();
             }else {
                 Utilities.AddAddressData(jo_address, client);
                 Toast toast = Toast.makeText(getContext(),  R.string.successaddressvalidation, Toast.LENGTH_LONG);
                 toast.show();
-                getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
+                /*getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
                 getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).commit();
-                getActivity().onBackPressed();
+                getActivity().onBackPressed();*/
+                Intent intent = new Intent(getContext(),MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                getActivity().finish();
             }
             //Snackbar.make(calle, R.string.successaddressvalidation, Snackbar.LENGTH_LONG)
             //        .show();

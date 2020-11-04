@@ -17,7 +17,7 @@ import com.cicili.mx.cicili.io.InputMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterMessageChat extends RecyclerView.Adapter<HolderMessage> {
+public class  AdapterMessageChat extends RecyclerView.Adapter<HolderMessage> {
 
     private List<InputMessage> listMensaje = new ArrayList<>();
     private Context c;
@@ -39,7 +39,6 @@ public class AdapterMessageChat extends RecyclerView.Adapter<HolderMessage> {
     public  void clearMensajes(){
         listMensaje.clear();
         notifyDataSetChanged();
-
     }
 
     @Override

@@ -6,12 +6,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -21,7 +41,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.cicili.mx.cicili.domain.AddressData;
 import com.cicili.mx.cicili.domain.Client;
 import com.cicili.mx.cicili.domain.PaymentData;
@@ -32,7 +51,6 @@ import com.cicili.mx.cicili.domain.SeguimientoPedido;
 import com.cicili.mx.cicili.domain.WSkeys;
 import com.cicili.mx.cicili.io.SessionManager;
 import com.cicili.mx.cicili.io.Utilities;
-
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -49,35 +67,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import android.os.Looper;
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
-import android.view.MenuItem;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.view.Menu;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,6 +104,7 @@ public class MenuActivity extends AppCompatActivity
     final Fragment fragmentRfc = new RfcMainFragment();
     final Fragment fragmentSchedule = new ScheduleMainFragment();
     final FragmentManager fm = getSupportFragmentManager();
+    PackageInfo pInfo = null;
     Fragment active = fragmentMain;
     Fragment current = fragmentMain;
     Fragment old = fragmentMain;
@@ -207,6 +200,8 @@ public class MenuActivity extends AppCompatActivity
         //locationcheck
         LocationVerification();
 
+
+
         //FloatingActionButton fab = findViewById(R.id.fab_menu);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setHomeAsUpIndicator(R.id.fab_menu);
@@ -217,7 +212,7 @@ public class MenuActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+        VersionName(navigationView);
         fab_menu = (FloatingActionButton) findViewById(R.id.fab_menu);
         fab_help = (FloatingActionButton) findViewById(R.id.fab_help);
         /*encabezado = findViewById(R.id.encabezado);
@@ -334,6 +329,22 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
+    public void VersionName(NavigationView navigationView){
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String version = pInfo.versionName;
+        //Log.e("VN",version);
+        MenuItem vnItem = (MenuItem) navigationView.getMenu().findItem(R.id.nav_vn);
+        //Log.e("VNitem",vnItem.toString());
+        if (version != null) {
+            vnItem.setTitle(getString(R.string.versionname) + " : " + version + "");
+        }
+
+    }
+
     @Override
     public void onBackPressed() {
         client.setContextMap(null);
@@ -348,6 +359,10 @@ public class MenuActivity extends AppCompatActivity
             } else {
                 Utilities.SetLog("ONBACKPRESED", active.getTag(), WSkeys.log);
                 fm.beginTransaction().hide(active).show(fragmentMain).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .detach(fragmentMain)
+                        .attach(fragmentMain)
+                        .commit();
                 active = fragmentMain;
             }
 
@@ -922,6 +937,7 @@ public class MenuActivity extends AppCompatActivity
                 imageView.setImageBitmap(decodedByte);
             }
         }
+
 
         ActivaMap("0");
 

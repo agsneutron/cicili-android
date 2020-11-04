@@ -8,9 +8,13 @@ public class WSkeys {
 
     //SERVER INFO
     //public static final String SERVERNAME = "https://cicili.com.mx";
+
+    public static final String SERVERNAME_T = "https://pruebas.cicili.com.mx";
+    public static final String PORTNUMBER_T= ":8443/";
+    public static final String URL_BASE = SERVERNAME_T + PORTNUMBER_T ;
     public static final String SERVERNAME = "http://34.66.139.244";
     public static final String PORTNUMBER = ":8080/";
-    public static final String URL_BASE = SERVERNAME + PORTNUMBER ;
+    //public static final String URL_BASE = SERVERNAME + PORTNUMBER ;
 
     public static final String DEVICE_NAME = "device_name";
 
@@ -302,7 +306,7 @@ public class WSkeys {
     public static final String comentario="comentario";
 
     //direccion, eliminar
-    public static final String URL_ELIMINA_DIRECCION = "mv/cliente/direccion/eliminar/";
+    public static final String URL_ELIMINA_DIRECCION = "app/mv/cliente/direccion/eliminar/";
 
 
     public static final Boolean log = true; //true

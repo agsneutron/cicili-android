@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -50,6 +51,8 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     Application application = (Application) Client.getContext();
     Client client = (Client) application;
 
+    private static boolean mainActivityIsOpen;
+
     private CircleImageView fotoPerfil;
     private TextView nombre;
     private TextView nombreSub;
@@ -70,6 +73,9 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     private String fotoPerfilCadena;
     private String id, order, URL_list, URL_seguimiento;
     String uso = "";
+    private MediaPlayer mediaplayer;
+
+
     //USO SEGUIMIENTO ACL
 
 
@@ -96,6 +102,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
+        mainActivityIsOpen = true;
 
 
         if (bundle != null) {
@@ -128,6 +135,8 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         LinearLayoutManager l = new LinearLayoutManager(this);
         rvMensajes.setLayoutManager(l);
         rvMensajes.setAdapter(adapter);
+        adapter.notifyDataSetChanged();   ///***********test
+        rvMensajes.refreshDrawableState();
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +156,8 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mainActivityIsOpen = false;
+                client.setContextChat(null);
                 finish();
             }
         });
@@ -208,6 +219,8 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         });
 */
     }
+
+    public static boolean mainActivityIsOpen() { return mainActivityIsOpen; }
 
     private void setScrollbar() {
         rvMensajes.scrollToPosition(adapter.getItemCount() - 1);
@@ -316,7 +329,6 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
         Utilities.SetLog("RESPONSE_GUARDA", response.toString(), WSkeys.log);
         ////Log.e("CodeResponse", response);
 
-
         // si el response regresa ok, entonces si inicia la sesión
         if (response.getInt("codeError") == (WSkeys.okresponse)) {
             //ontener nivel de data
@@ -331,10 +343,9 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                     Utilities.SetLog("jo_msg", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
+                    adapter.notifyDataSetChanged();
                 }
             }
-
-
         }
         // si ocurre un error al registrar la solicitud se muestra mensaje de error
         else {
@@ -359,15 +370,20 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                 adapter.clearMensajes();
                 for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
-                    Utilities.SetLog("jo_msgLlenalist", jo_message.toString(), WSkeys.log);
+                    Utilities.SetLog("jo_msgLlenalist1--", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
+                    adapter.notifyDataSetChanged();
                 }
+                Utilities.SetLog("here-message-", messageData.toString(), WSkeys.log);
+
 
             }
             // si lista viene vacia
             else {
-             //   Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
+                Utilities.SetLog("here-empty-", messageData.toString(), WSkeys.log);
+
+                //   Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
              //           .show();
             }
         }
@@ -387,9 +403,10 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                 adapter.clearMensajes();
                 for (int i = 0; i < ja_data.length(); i++) {
                     JSONObject jo_message = (JSONObject) ja_data.get(i);
-                    Utilities.SetLog("jo_msgLlenalist", jo_message.toString(), WSkeys.log);
+                    Utilities.SetLog("jo_msgLlenalist2", jo_message.toString(), WSkeys.log);
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
+                    adapter.notifyDataSetChanged();
                 }
 
             }
@@ -456,7 +473,9 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
 
     @Override
     public void onBackPressed() {
+        mainActivityIsOpen = false;
         client.setContextChat(null);
+        finish();
         super.onBackPressed();
         
     }
@@ -464,6 +483,11 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     @Override
     public void getReceiverEstatusPedido(String status, String mensaje) {
         try {
+            mediaplayer = MediaPlayer.create(MessageChatActivity.this, R.raw.text_notification);
+            mediaplayer.start();
+            id = mensaje;
+            Utilities.SetLog("here-receiver-", id, WSkeys.log);
+
             ObtenerMensajesChat();
         } catch (JSONException e) {
             e.printStackTrace();

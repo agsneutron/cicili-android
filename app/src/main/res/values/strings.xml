@@ -363,4 +363,5 @@
         "El Aviso de Privacidad de libre acceso al público, será actualizado en virtud de las modificaciones realizadas por esta empresa.\n"
         "Si usted tiene algún comentario o considera que sus Datos Personales han sufrido algún tipo de vulneración, puede contactar a nuestra Dirección de Protección de Datos Personales, enviando un correo electrónico a la dirección electrónica contacto@cicili.mx.\n "</string>
     <string name="large_text_tcc">a</string>
+    <string name="versionname">Versión</string>
 </resources>
