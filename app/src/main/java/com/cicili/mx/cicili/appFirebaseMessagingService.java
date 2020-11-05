@@ -153,7 +153,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                     //sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
                     sJSONObject = gsonObjectChat.toJson(remoteMessage.getData());
                     if (interfaceNotificationChat == null && client.getContextChat() != null) {
-                        Utilities.SetLog("NOTIFICATION GETCONTEX?", remoteMessage.getData().toString(), WSkeys.log);
+                        //Utilities.SetLog("NOTIFICATION GETCONTEX?", remoteMessage.getData().toString(), WSkeys.log);
 
                         interfaceNotificationChat = (MessageReceiverCallback) client.getContextChat();
                         interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("idPedido"));
@@ -161,7 +161,7 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                     else{
 
                         if(MessageChatActivity.mainActivityIsOpen()==false) { //getApplicationContext()!=null
-                            Utilities.SetLog("uso 3 pedido", remoteMessage.getData().get("idPedido"), WSkeys.log);
+                            //Utilities.SetLog("uso 3 pedido", remoteMessage.getData().get("idPedido"), WSkeys.log);
                             Intent intent = new Intent(getApplicationContext(), MessageChatActivity.class);
                             intent.putExtra("idPedido", String.valueOf(remoteMessage.getData().get("idPedido")));
                             intent.putExtra("uso", "3");
@@ -169,6 +169,8 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
                             startActivity(intent);
                         }else{
                             if (interfaceNotificationChat != null && client.getContextChat() != null) {
+                                //Utilities.SetLog("NOTIFICATIONnonullchatcontxnonull", remoteMessage.getData().toString(), WSkeys.log);
+                                interfaceNotificationChat = (MessageReceiverCallback) client.getContextChat();
                                 interfaceNotificationChat.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("idPedido"));
                             }
                         }

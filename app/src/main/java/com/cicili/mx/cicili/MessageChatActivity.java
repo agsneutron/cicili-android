@@ -365,6 +365,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
 
             JSONArray ja_data = new JSONArray(response.getString(WSkeys.data));
             Gson gson = new Gson();
+
             if (ja_data.length() > 0) {
                 Utilities.SetLog("LOGIN ja_data", ja_data.toString(), WSkeys.log);
                 adapter.clearMensajes();
@@ -374,8 +375,11 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
                     messageData = gson.fromJson(jo_message.toString(), InputMessage.class);
                     adapter.addMensaje(messageData);
                     adapter.notifyDataSetChanged();
+                    Utilities.SetLog("here-message-", adapter.toString(), WSkeys.log);
+                    Utilities.SetLog("here-message-", rvMensajes.toString(), WSkeys.log);
                 }
-                Utilities.SetLog("here-message-", messageData.toString(), WSkeys.log);
+
+
 
 
             }
@@ -475,17 +479,24 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
     public void onBackPressed() {
         mainActivityIsOpen = false;
         client.setContextChat(null);
+        //mediaplayer.release();
         finish();
         super.onBackPressed();
         
     }
 
     @Override
-    public void getReceiverEstatusPedido(String status, String mensaje) {
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void getReceiverEstatusPedido(String status, String id_pedido) {
         try {
             mediaplayer = MediaPlayer.create(MessageChatActivity.this, R.raw.text_notification);
             mediaplayer.start();
-            id = mensaje;
+            id = id_pedido;
             Utilities.SetLog("here-receiver-", id, WSkeys.log);
 
             ObtenerMensajesChat();
