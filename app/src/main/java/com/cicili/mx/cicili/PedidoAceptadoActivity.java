@@ -104,6 +104,8 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     String order ="";
     String getStatus="";
     ProgressDialog progressDialog;
+    private Boolean cameraZoom=false;
+
 
     RequestQueue queue = Volley.newRequestQueue(Client.getContext());
     public static final String TAG = "TagQueue";
@@ -865,7 +867,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
     private void ActualizarUbicacionTask(final Double latitud, final Double longitud) {
-        moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM, new LatLng(latitud, longitud));
+        if (cameraZoom==false){
+            moveCameratoCurrentLocation(WSkeys.CAMERA_ZOOM_CHOFER, new LatLng(latitud, longitud));
+            cameraZoom=true;
+        }
         AddMarkerConductor(latitud, longitud, seguimientoPedido.getNombreConductor(), seguimientoPedido.getRazonSocial(), Double.parseDouble(seguimientoPedido.getPrecio()), seguimientoPedido.getTiempo(), Integer.parseInt(seguimientoPedido.getId()));
     }
 
@@ -1099,12 +1104,17 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
     }
 
     public void AddMarkerConductor(Double lat, Double lon, String conductor, String concesionario, Double precio, String tiempo, Integer id) {
+        Location getCurrentLocation = new Location("");
+        getCurrentLocation.setLatitude(lat);
+        getCurrentLocation.setLongitude(lon);
+
         if (mMarkerConductor != null) {
             mMarkerConductor.remove();
         }
         Utilities.SetLog("pipa : ", lat + " " + lon, WSkeys.log);
         mMarkerConductor = mMap.addMarker(new MarkerOptions()
                 .icon(bitmapDescriptorFromVector(PedidoAceptadoActivity.this, R.drawable.ic_pipa_2_01))
+                .rotation(getCurrentLocation.getBearing())
                 .position(new LatLng(lat, lon))
                 .title("Concesionario: " + concesionario)
                 .snippet("Conductor: " + conductor + "\n" + "Precio: $" + String.valueOf(precio) + "por litro \n" + "Tiempo de Llegada: " + tiempo));
