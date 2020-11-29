@@ -385,7 +385,7 @@ public class MessageChatActivity extends AppCompatActivity implements MessageRec
             }
             // si lista viene vacia
             else {
-                Utilities.SetLog("here-empty-", messageData.toString(), WSkeys.log);
+               // Utilities.SetLog("here-empty-", messageData.toString(), WSkeys.log);
 
                 //   Snackbar.make(nombre, response.getString(WSkeys.messageError), Snackbar.LENGTH_SHORT)
              //           .show();
