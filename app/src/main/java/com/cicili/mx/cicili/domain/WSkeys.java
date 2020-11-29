@@ -317,6 +317,7 @@ public class WSkeys {
     public static final String URL_UPDATE_ORDER = "app/mv/cliente/pedido/actualizar" ;
     public static int cplenght = 5;
     public static final float CAMERA_ZOOM = 15f;
+    public static final float CAMERA_ZOOM_CHOFER = 15f;
 
     public static final String latitude = "latitud";
     public static final String longitude = "longitud";
