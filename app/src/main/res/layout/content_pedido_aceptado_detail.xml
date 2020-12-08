@@ -171,6 +171,15 @@
                                     app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
                                 <TextView
+                                android:id="@+id/timeL"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6.7dp"
+                                android:text="Llega en:"
+                                android:textColor="#4a4a4a"
+                                android:textSize="12sp" />
+
+                                <TextView
                                     android:id="@+id/time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
