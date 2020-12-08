@@ -81,6 +81,16 @@ public class appFirebaseMessagingService extends FirebaseMessagingService {
 
 
                     break;
+                case 3:
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
+                    break;
+                case 4:
+                    if (interfaceNotification != null && client.getMessageContext()!=null) {
+                        interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));
+                    }
+                    break;
                 case 5:
                     if (interfaceNotification != null && client.getMessageContext()!=null) {
                         interfaceNotification.getReceiverEstatusPedido(remoteMessage.getData().get("status"), remoteMessage.getData().get("body"));

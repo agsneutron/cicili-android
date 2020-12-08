@@ -43,6 +43,8 @@
     <string name="errorvalidation">Código incorrecto, intentar nuevamente.</string>
     <string name="title_activity_validate">Verificación de Código</string>
     <string name="mensajeverificacion">Hemos enviado un código de verificación a tu cuenta de correo. Ingresalo para terminar el proceso de registro. </string>
+
+    <string name="mensajeverificacionN">NOTA: Por favor revisa la bandeja de correo no deseado, en caso de no ver el correo de confirmación en la bandeja de entrada.</string>
     <string name="successlogin">Sesión iniciada satisfactoriamente</string>
     <string name="mensajeverificado">Has concluido tu registro satisfactoriamente. Ya puedes iniciar sesión en Cicili</string>
     <string name="bottom_sheet_behavior">android.support.design.widget.BottomSheetBehavior</string>

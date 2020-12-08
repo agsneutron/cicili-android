@@ -87,6 +87,18 @@
                 android:textSize="36sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/textViewN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="10sp"
+            android:text="@string/mensajeverificacionN"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/validate_button"

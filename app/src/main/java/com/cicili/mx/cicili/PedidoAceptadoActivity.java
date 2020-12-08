@@ -229,10 +229,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                         nombreEstatus = "Aceptado";
                         break;
                     case 3:
-                        nombreEstatus = "En Camino";
+                        nombreEstatus = "Menos de un minuto";
                         break;
                     case 4:
-                        nombreEstatus = "Preparando Carga";
+                        nombreEstatus = "CICILI HA LLEGADO"; //Preparando Carga
                         cancelar.setEnabled(false);
                         cambiar.setEnabled(false);
                         break;
@@ -1328,10 +1328,10 @@ public class PedidoAceptadoActivity extends AppCompatActivity implements OnMapRe
                     nombreEstatus = "Aceptado";
                     break;
                 case 3:
-                    nombreEstatus = "En Camino";
+                    nombreEstatus = "Menos de un minuto";
                     break;
                 case 4:
-                    nombreEstatus = "Preparando Carga";
+                    nombreEstatus = "Cicili ha llegado";
                     break;
                 case 5:
                     nombreEstatus = "Cargando";
