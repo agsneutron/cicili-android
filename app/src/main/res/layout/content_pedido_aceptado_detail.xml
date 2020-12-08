@@ -183,7 +183,7 @@
                                     android:id="@+id/time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="6.7dp"
+                                    android:layout_marginLeft="1dp"
                                     android:layout_weight="1"
                                     android:text="Hora"
                                     android:textColor="#4a4a4a"
